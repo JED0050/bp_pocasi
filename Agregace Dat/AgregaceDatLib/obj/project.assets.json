@@ -207,16 +207,6 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
-      },
-      "AgregaceDatLib/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "compile": {
-          "bin/placeholder/AgregaceDatLib.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AgregaceDatLib.dll": {}
-        }
       }
     }
   },
@@ -690,16 +680,10 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
-    },
-    "AgregaceDatLib/1.0.0": {
-      "type": "project",
-      "path": "../AgregaceDatLib/AgregaceDatLib.csproj",
-      "msbuildProject": "../AgregaceDatLib/AgregaceDatLib.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "AgregaceDatLib >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -710,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\Agregace Dat\\Agregace Dat.csproj",
-      "projectName": "Agregace Dat",
-      "projectPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\Agregace Dat\\Agregace Dat.csproj",
+      "projectUniqueName": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj",
+      "projectName": "AgregaceDatLib",
+      "projectPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj",
       "packagesPath": "C:\\Users\\Honza_PC\\.nuget\\packages\\",
-      "outputPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\Agregace Dat\\obj\\",
+      "outputPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -732,11 +716,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj": {
-              "projectPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -749,6 +729,7 @@
       "netcoreapp2.1": {
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true

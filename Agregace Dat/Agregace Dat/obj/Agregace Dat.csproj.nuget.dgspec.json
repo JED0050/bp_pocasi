@@ -29,6 +29,61 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
+            "projectReferences": {
+              "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj": {
+                "projectPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj",
+        "projectName": "AgregaceDatLib",
+        "projectPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\AgregaceDatLib.csproj",
+        "packagesPath": "C:\\Users\\Honza_PC\\.nuget\\packages\\",
+        "outputPath": "D:\\Škola - programy\\Bakalářka - Předpověď počasí\\bp_pocasi\\Agregace Dat\\AgregaceDatLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Honza_PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
             "projectReferences": {}
           }
         },
@@ -42,6 +97,7 @@
         "netcoreapp2.1": {
           "dependencies": {
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
