@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -13,10 +15,16 @@ namespace AgregaceDatLib
     //https://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml
     //http://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml
 
+    //JSON
+    //api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10
+    //API KEY - ea63080a4f8e99972630d2671e3ef805
+    //pro.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appid={your api key}
+    //pro.openweathermap.org/data/2.5/forecast/hourly?lat=30&lon=160&appid=ea63080a4f8e99972630d2671e3ef805
+    //https://samples.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=b1b15e88fa797225412429c1c50c122a1
+
     public interface DataLoader
     {
-
-        Forecast GetForecastByTimeInPrague(DateTime t);
+        Forecast GetForecastByTime(DateTime t);
 
     }
 
@@ -33,19 +41,20 @@ namespace AgregaceDatLib
 
         public string GetXML()
         {
-            string text = "";
+            string xmlText = "";
 
             using (var client = new WebClient())
             {
-                text = client.DownloadString(UrlAdress);
+                xmlText = client.DownloadString(UrlAdress);
             }
 
-            return text;
+            return xmlText;
         }
 
-        public Forecast GetForecastByTimeInPrague(DateTime t)
+        public Forecast GetForecastByTime(DateTime t)
         {
             Forecast f = new Forecast();
+            f.Time = t;
 
             TextReader tr = new StringReader(GetXML());
 
@@ -115,6 +124,101 @@ namespace AgregaceDatLib
 
     }
 
+    public class JSONDataLoader : DataLoader
+    {
+        public string UrlAdress { get; set; }
+
+        public JSONDataLoader (string url)
+        {
+            UrlAdress = url;
+        }
+
+        public string GetJSON()
+        {
+            string JSONText = "";
+
+            using (var client = new WebClient())
+            {
+                JSONText = client.DownloadString(UrlAdress);
+            }
+
+            return JSONText;
+        }
+
+        public Forecast GetForecastByTime(DateTime t)
+        {
+            Forecast f = new Forecast();
+            f.Time = t;
+
+            string JSONtext = GetJSON();
+
+            //JSONForecast jF = JsonConvert.DeserializeObject<JSONForecast>(JSONtext);
+
+            dynamic jsonForecast = JObject.Parse(JSONtext);
+
+            f.City = jsonForecast.city.name;
+            f.Country = jsonForecast.city.country;
+            f.Latitude = jsonForecast.city.coord.lat;
+            f.Longitude = jsonForecast.city.coord.lon;
+
+            JArray jsonForecastArray = (JArray)jsonForecast["list"];
+
+            int counter = 0;
+
+            /*
+            //zaokrouhlení na celou hodinu
+            t.AddMinutes(30);
+            t = new DateTime(t.Year, t.Month, t.Day, t.Hour, 0, 0);
+            */
+
+            foreach (var el in jsonForecastArray)
+            {
+                dynamic jsonElement = JObject.Parse(el.ToString());
+
+                if (counter == 0)
+                {
+                    f.Temperature = Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15;  //Kelvin na celsius
+                    
+                    try
+                    {
+                        f.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));   //jsonElement.main.rain.3h ?
+                    }
+                    catch
+                    {
+                        f.Precipitation = 0;
+                    }
+
+                    counter++;
+                    continue;
+                }
+
+                DateTime from = DateTime.Parse(jsonElement.dt_txt.ToString());
+                DateTime to = from.AddHours(3); //předpověď v 3 hodinovém okně
+
+                if (t >= from && t <= to)
+                {
+                    f.Temperature = Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15;
+
+                    try
+                    {
+                        f.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));
+                    }
+                    catch
+                    {
+                        f.Precipitation = 0;
+                    }
+
+                    break;
+                }
+                
+
+            }
+
+
+            return f;
+        }
+    }
+
     public class Forecast
     {
 
@@ -127,4 +231,5 @@ namespace AgregaceDatLib
         public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
 
     }
+
 }
