@@ -27,8 +27,8 @@ namespace Agregace_Dat
 
             //JSON
 
-            string lat = "50";
-            string lon = "150";
+            string lat = "50.5";   //Praha = DMS latitude longitude coordinates for Prague are: 50°5'16.94"N, 14°25'14.74"E.
+            string lon = "14.25";
             string apiKey = "ea63080a4f8e99972630d2671e3ef805";
 
             JSONDataLoader jL = new JSONDataLoader("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey);
@@ -38,7 +38,17 @@ namespace Agregace_Dat
             Console.WriteLine("Teplota na souřadnicích lat={0}, lon={1} v tuto chvíli", lat, lon);
             Console.WriteLine("Teplota: " + jF.Temperature);
             Console.WriteLine("Srážky na souřadnicích lat={0}, lon={1} v tuto chvíli", lat, lon);
-            Console.WriteLine("Sráž: " + jF.Precipitation);
+            Console.WriteLine("Srážky: " + jF.Precipitation);
+
+
+            //BITMAP
+
+            BitmapDataLoader bL = new BitmapDataLoader("http://radar.bourky.cz/data/pacz2gmaps.z_max3d.20200531.0950.0.png");   //728 x 528
+
+            Console.WriteLine("Srážky v Praze dle vybraného radaru v neurčitý čas");
+            Console.WriteLine("Srážky: " + bL.GetForecastByTime(DateTime.Now).Precipitation);
+
+
 
 
 
