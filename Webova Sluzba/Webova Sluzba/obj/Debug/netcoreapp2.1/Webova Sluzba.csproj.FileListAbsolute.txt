@@ -1,0 +1,32 @@
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.deps.json
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.runtimeconfig.json
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.runtimeconfig.dev.json
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.dll
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.pdb
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.Views.dll
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\bin\Debug\netcoreapp2.1\Webova Sluzba.Views.pdb
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.csprojAssemblyReference.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.csproj.CoreCompileInputs.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.RazorAssemblyInfo.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.RazorAssemblyInfo.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.AssemblyInfoInputs.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.AssemblyInfo.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.TagHelpers.input.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.TagHelpers.output.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.RazorCoreGenerate.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.RazorTargetAssemblyInfo.cache
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.RazorTargetAssemblyInfo.cs
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.Views.pdb
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.dll
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.pdb
+D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Webova Sluzba\Webova Sluzba\obj\Debug\netcoreapp2.1\Webova Sluzba.csproj.CopyComplete

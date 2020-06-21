@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Jak je venku?";
+    ViewData["Message"] = "Zadej místo a čas a dozvíš se to!";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<form>
+    <div class="form-group">
+        <label for="userPos">Místo</label>
+        <input type="text" class="form-control" id="userPos" placeholder="Zeměpisná délka, zeměpisná šířka">
+    </div>
+    <div class="form-group">
+        <label for="userTime">Čas</label>
+        <input type="datetime" class="form-control" id="userTime" placeholder="Datum a čas">
+    </div>
+    <button type="submit" class="btn btn-default">Potvrdit</button>
+</form>
+
+
