@@ -400,7 +400,7 @@ namespace AgregaceDatLib
         public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
 
 
-        public string ToString()
+        public override string ToString()
         {
             string output = "Country: " + Country + " City: " + City + " Time: " + Time + " Temperature: " + Temperature + " Precipitation: " + Precipitation;
 
@@ -449,15 +449,17 @@ namespace AgregaceDatLib
 
             Forecast newF = new Forecast();
 
-            for(int i = 0; i < dLs.Count - 1; i++)
+            for(int i = 0; i < dLs.Count; i++)
             {
-                if(i == 0)
+
+                if (i == 0)
                 {
                     newF = dLs[0].GetForecastByTime(time);
                     continue;
                 }
 
                 newF.AddForecast(dLs[i].GetForecastByTime(time));
+
             }
 
             newF.SetAvgForecast(dLs.Count);

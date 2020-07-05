@@ -68,6 +68,7 @@ namespace Agregace_Dat
 
             Console.WriteLine("Průměrné srážky v tuto chvíli v Praze: " + forecastFactory.GetForecast(DateTime.Now, "-").Precipitation);
 
+
         }
     }
 }
