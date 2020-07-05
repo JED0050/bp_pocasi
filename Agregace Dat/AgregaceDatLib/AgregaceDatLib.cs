@@ -28,7 +28,8 @@ namespace AgregaceDatLib
     //https://www.in-pocasi.cz/radarove-snimky/napoveda/
     //https://www.in-pocasi.cz/data/chmi_v2/20200531_0800_r.png                 //599 x 380
     //http://portal.chmi.cz/files/portal/docs/meteo/rad/img/banner-text.png     
-    //http://radar.bourky.cz/data/pacz2gmaps.z_max3d.20200531.0950.0.png        //728 x 528
+    //http://radar.bourky.cz/data/pacz2gmaps.z_max3d.20200705.1020.0.png        //728 x 528
+    //                                               ROK MĚSÍC DEN.HODINY MINUTY.0.png 
 
     public interface DataLoader
     {
@@ -397,6 +398,72 @@ namespace AgregaceDatLib
         public DateTime Time { get; set; }
         public double Temperature { get; set; }     //teplota celsius
         public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
+
+
+        public string ToString()
+        {
+            string output = "Country: " + Country + " City: " + City + " Time: " + Time + " Temperature: " + Temperature + " Precipitation: " + Precipitation;
+
+            return output;
+        }
+
+        internal void AddForecast(Forecast newF)
+        {
+            Temperature += newF.Temperature;
+            Precipitation += newF.Precipitation;
+        }
+
+        internal void SetAvgForecast(int numOfFcs)
+        {
+            Temperature = Temperature / numOfFcs;
+            Precipitation = Precipitation / numOfFcs;
+        }
+    }
+
+    public class AvgForecast
+    {
+        private List<DataLoader> dLs;
+
+        public AvgForecast()
+        {
+            dLs = new List<DataLoader>();
+        }
+
+        public AvgForecast(List<DataLoader> defDLs)
+        {
+            dLs = defDLs;
+        }
+
+        public void Add(DataLoader newDl)
+        {
+            dLs.Add(newDl);
+        }
+
+        public void Remove(DataLoader remDl)
+        {
+            dLs.Remove(remDl);
+        }
+
+        public Forecast GetForecast(DateTime time, String place)
+        {
+
+            Forecast newF = new Forecast();
+
+            for(int i = 0; i < dLs.Count - 1; i++)
+            {
+                if(i == 0)
+                {
+                    newF = dLs[0].GetForecastByTime(time);
+                    continue;
+                }
+
+                newF.AddForecast(dLs[i].GetForecastByTime(time));
+            }
+
+            newF.SetAvgForecast(dLs.Count);
+
+            return newF;
+        }
 
     }
 
