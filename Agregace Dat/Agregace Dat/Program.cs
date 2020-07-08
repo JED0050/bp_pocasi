@@ -45,9 +45,9 @@ namespace Agregace_Dat
 
             DateTime now = DateTime.Now;
 
-            BitmapDataLoader bL = new BitmapDataLoader("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + now.Year + now.ToString("MM") + now.ToString("dd") + ".1020.0.png");   //728 x 528
+            BitmapDataLoader bL = new BitmapDataLoader("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + now.Year + now.ToString("MM") + now.ToString("dd") + ".0600.0.png");   //728 x 528
 
-            Console.WriteLine("Srážky dnes v Praze dle vybraného radaru v 10:20");
+            Console.WriteLine("Srážky dnes v Praze dle vybraného radaru v 06:00");
             Console.WriteLine("Srážky: " + bL.GetForecastByTime(DateTime.Now).Precipitation);
 
 
@@ -64,7 +64,7 @@ namespace Agregace_Dat
 
             forecastFactory.Add(new XMLDataLoader("http://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml"));
             forecastFactory.Add(new JSONDataLoader("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey));
-            forecastFactory.Add(new BitmapDataLoader("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + now.Year + now.ToString("MM") + now.ToString("dd") + ".1020.0.png"));
+            forecastFactory.Add(new BitmapDataLoader("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + now.Year + now.ToString("MM") + now.ToString("dd") + ".0600.0.png"));
 
             Console.WriteLine("Průměrné srážky v tuto chvíli v Praze: " + forecastFactory.GetForecast(DateTime.Now, "-").Precipitation);
 
