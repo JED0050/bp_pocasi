@@ -28,6 +28,7 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
+        /*
         public Forecast GetForecast(DateTime time, String place)
         {
 
@@ -50,6 +51,6 @@ namespace AgregaceDatLib
 
             return newF;
         }
-
+        */
     }
 }

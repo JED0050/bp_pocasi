@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Drawing;
 using System.Net;
 
 namespace AgregaceDatLib
@@ -96,6 +97,11 @@ namespace AgregaceDatLib
 
 
             return f;
+        }
+
+        public Bitmap GetForecastBitmap(DateTime forTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }

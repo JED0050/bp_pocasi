@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace AgregaceDatLib
 {
@@ -26,7 +27,8 @@ namespace AgregaceDatLib
 
     public interface DataLoader
     {
-        Forecast GetForecastByTime(DateTime t);
+
+        Bitmap GetForecastBitmap(DateTime forTime);
 
     }
 }
