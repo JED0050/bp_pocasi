@@ -74,7 +74,11 @@ namespace Agregace_Dat
             bL.GetForecastBitmap(DateTime.Now);
 
             XMLDataLoader xL = new XMLDataLoader();
-            xL.GetForecastBitmap(DateTime.Now.AddDays(2));
+            xL.GetForecastBitmap(DateTime.Now);
+
+            JSONDataLoader jL = new JSONDataLoader();
+            jL.GetForecastBitmap(DateTime.Now);
+
 
         }
     }

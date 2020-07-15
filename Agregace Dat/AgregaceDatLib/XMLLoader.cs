@@ -95,13 +95,13 @@ namespace AgregaceDatLib
 
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
-            Bitmap tmpB = new Bitmap(728, 528);
+            Bitmap forBitmap = new Bitmap(728, 528);
 
             List<string> locations = new List<string>();
             locations.Add("https://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml");           //Olomouc
             locations.Add("https://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml");             //Praha
             locations.Add("https://www.yr.no/place/Czech_Republic/South_Moravia/Brno/forecast.xml");        //Brno
-            locations.Add("https://www.yr.no/place/Czech_Republic/Moravia-Silesia/Ostrava/forecast.xml");   //ostrava
+            locations.Add("https://www.yr.no/place/Czech_Republic/Moravia-Silesia/Ostrava/forecast.xml");   //Ostrava
             locations.Add("https://www.yr.no/place/Czech_Republic/Plze%C5%88/Plze%C5%88/forecast.xml");     //Plzeň
             locations.Add("https://www.yr.no/place/Czech_Republic/Hradec_Kr%C3%A1lov%C3%A9/Hradec_Kr%C3%A1lov%C3%A9/forecast.xml"); //Hradec Králové
             locations.Add("https://www.yr.no/place/Czech_Republic/Karlovy_Vary/Karlovy_Vary/forecast.xml"); //Karlovy Vary
@@ -119,8 +119,8 @@ namespace AgregaceDatLib
                 double lonDif = 20.21 - 10.06;
                 double latDif = 51.88 - 47.09;
 
-                double PixelLon = lonDif / tmpB.Width;
-                double PixelLat = latDif / tmpB.Height;
+                double PixelLon = lonDif / forBitmap.Width;
+                double PixelLat = latDif / forBitmap.Height;
 
                 double bY = 51.88;
                 double bX = 10.06;
@@ -129,7 +129,7 @@ namespace AgregaceDatLib
                 double locLat = f.DLatitude;
 
                 int x;
-                for(x = 0 ; x < tmpB.Width; x++)
+                for(x = 0 ; x < forBitmap.Width; x++)
                 {
                     if (bX >= locLon && locLon <= bX + locLon)
                         break;
@@ -138,7 +138,7 @@ namespace AgregaceDatLib
                 }
 
                 int y;
-                for (y = 0; y < tmpB.Height; y++)
+                for (y = 0; y < forBitmap.Height; y++)
                 {
                     if (bY - PixelLat <= locLat && locLat <= bY)
                             break;   
@@ -155,14 +155,14 @@ namespace AgregaceDatLib
                     for (int i = x - (int)r; i <= x + r; i++)
                         for (int j = y - (int)r; j <= y + r; j++)
                             if (Math.Abs(Math.Pow(i - x, 2) + Math.Pow(j - y, 2) - rr) <= r)
-                                tmpB.SetPixel(i, j, f.GetPrecipitationColor());
+                                forBitmap.SetPixel(i, j, f.GetPrecipitationColor());
                 }
             }
 
 
-            //tmpB.Save("bit.bmp", ImageFormat.Bmp);
+            //forBitmap.Save("XMLBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
 
-            return tmpB;
+            return forBitmap;
 
         }
 
