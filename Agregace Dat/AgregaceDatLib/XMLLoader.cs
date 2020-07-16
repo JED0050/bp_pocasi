@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace AgregaceDatLib
 {
 
-    public class XMLDataLoader : DataLoader
+    public class XMLDataLoader : BitmapHelper, DataLoader
     {
 
         public string GetXML(string url)
@@ -93,6 +93,7 @@ namespace AgregaceDatLib
             return f;
         }
 
+
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
             Bitmap forBitmap = new Bitmap(728, 528);
@@ -148,15 +149,8 @@ namespace AgregaceDatLib
 
                 //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
 
-                for (double r = 1; r <= 30; r += 1)
-                {
-                    double rr = Math.Pow(r, 2);
+                DrawIntersectionCircle(40, x, y, forBitmap, f.GetPrecipitationColor());
 
-                    for (int i = x - (int)r; i <= x + r; i++)
-                        for (int j = y - (int)r; j <= y + r; j++)
-                            if (Math.Abs(Math.Pow(i - x, 2) + Math.Pow(j - y, 2) - rr) <= r)
-                                forBitmap.SetPixel(i, j, f.GetPrecipitationColor());
-                }
             }
 
 

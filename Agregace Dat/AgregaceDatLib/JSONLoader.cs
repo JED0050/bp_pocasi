@@ -7,7 +7,7 @@ using System.Net;
 
 namespace AgregaceDatLib
 {
-    public class JSONDataLoader : DataLoader
+    public class JSONDataLoader : BitmapHelper, DataLoader
     {
 
         public string GetJSON(string url)
@@ -159,16 +159,8 @@ namespace AgregaceDatLib
 
                 //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
 
-                for (double r = 1; r <= 30; r += 1)
-                {
-                    double rr = Math.Pow(r, 2);
+                DrawIntersectionCircle(40, x, y, forBitmap, f.GetPrecipitationColor());
 
-                    for (int i = x - (int)r; i <= x + r; i++)
-                        for (int j = y - (int)r; j <= y + r; j++)
-                            if (Math.Abs(Math.Pow(i - x, 2) + Math.Pow(j - y, 2) - rr) <= r)
-                                forBitmap.SetPixel(i, j, f.GetPrecipitationColor());
-                }
-                
             }
 
             //forBitmap.Save("JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
