@@ -52,10 +52,10 @@ namespace AgregaceDatLib
 
         public Color GetPrecipitationColor()
         {
-            Color col = Color.FromArgb(0, 0, 0);
+            Color col = Color.FromArgb(0, 0, 0, 0);
 
             if (Precipitation == 0)
-                col = Color.FromArgb(0, 0, 0);
+                col = Color.FromArgb(0, 0, 0, 0);
             else if (Precipitation > 0 && Precipitation <= 0.1)
                 col = Color.FromArgb(48, 0, 168);
             else if (Precipitation > 0.1 && Precipitation <= 0.2)

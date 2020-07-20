@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class AvgForecast
+    public class AvgForecast : BitmapHelper
     {
         private List<DataLoader> dLs;
 
@@ -28,29 +30,43 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
-        /*
-        public Forecast GetForecast(DateTime time, String place)
+        
+        public Bitmap GetAvgBitmap(DateTime time)
         {
 
-            Forecast newF = new Forecast();
+            Bitmap avgBitmap = new Bitmap(728, 528);
 
-            for (int i = 0; i < dLs.Count; i++)
+            List<Bitmap> loaderBitmaps = new List<Bitmap>();
+
+            foreach (DataLoader dL in dLs)
             {
-
-                if (i == 0)
-                {
-                    newF = dLs[0].GetForecastByTime(time);
-                    continue;
-                }
-
-                newF.AddForecast(dLs[i].GetForecastByTime(time));
-
+                loaderBitmaps.Add(dL.GetForecastBitmap(time));
             }
 
-            newF.SetAvgForecast(dLs.Count);
+            for (int y = 0; y < avgBitmap.Height; y++)
+            {
+                for(int x = 0; x < avgBitmap.Width; x++)
+                {
+                    foreach(Bitmap b in loaderBitmaps)
+                    {
+                        avgBitmap.SetPixel(x, y, GetAvgCol(avgBitmap.GetPixel(x, y), b.GetPixel(x, y)));
+                    }
+                }
+            }
 
-            return newF;
+            //avgBitmap.Save("ForecastBitmap" + time.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
+
+            return avgBitmap;
         }
-        */
+
+        public Forecast GetForecast(DateTime time, double lat, double lon)
+        {
+            BitmapForecast bF = new BitmapForecast(GetAvgBitmap(time));
+
+            Forecast f = bF.GetForecast(time, lat, lon);
+
+            return f;
+        }
+        
     }
 }

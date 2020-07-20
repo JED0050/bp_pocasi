@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using AgregaceDatLib;
 
 namespace Agregace_Dat
@@ -70,15 +71,29 @@ namespace Agregace_Dat
             Console.WriteLine("Průměrné srážky v tuto chvíli v Praze: " + forecastFactory.GetForecast(DateTime.Now, "-").Precipitation);
             */
 
+
+
             BitmapDataLoader bL = new BitmapDataLoader();
-            bL.GetForecastBitmap(DateTime.Now);
+            //bL.GetForecastBitmap(DateTime.Now);
+            //Console.WriteLine(bL.GetForecastBitmap(DateTime.Now).GetPixel(100,100));
 
             XMLDataLoader xL = new XMLDataLoader();
-            xL.GetForecastBitmap(DateTime.Now);
+            //xL.GetForecastBitmap(DateTime.Now);
 
             JSONDataLoader jL = new JSONDataLoader();
-            jL.GetForecastBitmap(DateTime.Now);
+            //jL.GetForecastBitmap(DateTime.Now);
+            
+            
+            AvgForecast aF = new AvgForecast();
+            aF.Add(bL);
+            aF.Add(xL);
+            aF.Add(jL);
 
+            //aF.GetAvgBitmap(DateTime.Now);
+
+            Console.WriteLine("Srážky právě teď v Praze");  
+            Console.WriteLine(aF.GetForecast(DateTime.Now, 50.0598058, 14.325542).Precipitation);
+            
 
         }
     }

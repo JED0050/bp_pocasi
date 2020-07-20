@@ -101,7 +101,7 @@ namespace AgregaceDatLib
         }
 
 
-        public Forecast GetForecastByPoint(DateTime time, double targetLat, double targetLon)
+        public Forecast GetForecast(DateTime time, double targetLat, double targetLon)
         {
             SetPixelCoord(Bitmap.Width, Bitmap.Height);
 

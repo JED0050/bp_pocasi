@@ -54,6 +54,32 @@ namespace AgregaceDatLib
 
         }
 
+        protected Color GetAvgCol(Color oldC, Color newC)
+        {
+            Color avgC;
+
+            if (oldC == Color.FromArgb(255, 196, 196, 196) || oldC == Color.FromArgb(0, 255, 255, 255))     //BitmapHelper vrací šedé okraje kolem ČR, zde se je snažím vyfiltrovat
+                oldC = Color.FromArgb(0, 0, 0, 0);
+
+            if (newC == Color.FromArgb(255, 196, 196, 196) || newC == Color.FromArgb(0, 255, 255, 255))
+                newC = Color.FromArgb(0, 0, 0, 0);
+
+            if (oldC == Color.FromArgb(0, 0, 0, 0))  
+            {
+                avgC = newC;
+            }
+            else if (newC == Color.FromArgb(0, 0, 0, 0))
+            {
+                avgC = oldC;
+            }
+            else                                                            
+            {
+                avgC = Color.FromArgb(AvgCol(oldC.R, newC.R), AvgCol(oldC.G, newC.G), AvgCol(oldC.B, newC.B));
+            }
+
+            return avgC;
+        }
+
     }
 
 }
