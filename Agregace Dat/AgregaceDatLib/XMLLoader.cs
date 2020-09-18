@@ -18,7 +18,12 @@ namespace AgregaceDatLib
 
             using (var client = new WebClient())
             {
-                xmlText = client.DownloadString(url);
+                try
+                {
+                    xmlText = client.DownloadString(url);
+                }
+                catch { }
+                
             }
 
             return xmlText;
@@ -29,8 +34,15 @@ namespace AgregaceDatLib
             Forecast f = new Forecast();
             f.Time = t;
 
-            TextReader tr = new StringReader(GetXML(url));
+            string xmlText = GetXML(url);
 
+            TextReader tr = new StringReader(xmlText);
+
+            if (xmlText == "")
+            {
+                f.Temperature = -1;
+                return f;
+            }
 
             XDocument xmlDoc = XDocument.Load(tr);
 
@@ -98,24 +110,95 @@ namespace AgregaceDatLib
         {
             Bitmap forBitmap = new Bitmap(728, 528);
 
-            List<string> locations = new List<string>();
-            locations.Add("https://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml");           //Olomouc
-            locations.Add("https://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml");             //Praha
-            locations.Add("https://www.yr.no/place/Czech_Republic/South_Moravia/Brno/forecast.xml");        //Brno
-            locations.Add("https://www.yr.no/place/Czech_Republic/Moravia-Silesia/Ostrava/forecast.xml");   //Ostrava
-            locations.Add("https://www.yr.no/place/Czech_Republic/Plze%C5%88/Plze%C5%88/forecast.xml");     //Plzeň
-            locations.Add("https://www.yr.no/place/Czech_Republic/Hradec_Kr%C3%A1lov%C3%A9/Hradec_Kr%C3%A1lov%C3%A9/forecast.xml"); //Hradec Králové
-            locations.Add("https://www.yr.no/place/Czech_Republic/Karlovy_Vary/Karlovy_Vary/forecast.xml"); //Karlovy Vary
-            locations.Add("https://www.yr.no/place/Czech_Republic/Liberec/Liberec/forecast.xml");           //Liberec
-            locations.Add("https://www.yr.no/place/Czech_Republic/Pardubice/Pardubice/forecast.xml");       //Pardubice
-            locations.Add("https://www.yr.no/place/Czech_Republic/%C3%9Ast%C3%AD_nad_Labem/%C3%9Ast%C3%AD_nad_Labem/forecast.xml"); //Ústí nad Labem
-            locations.Add("https://www.yr.no/place/Czech_Republic/Vyso%C4%8Dina/Jihlava/forecast.xml");     //Jihlava
-            locations.Add("https://www.yr.no/place/Czech_Republic/Zl%C3%ADn/Zl%C3%ADn/forecast.xml");       //Zlín
-            locations.Add("https://www.yr.no/place/Czech_Republic/South_Bohemia/Okres_%C4%8Cesk%C3%A9_Bud%C4%9Bjovice/forecast.xml");//České Budějovice
+            string links = @"http://www.yr.no/place/Czech_Republic/Other/HavÃ­Å™ov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/TÅ™inec/forecast.xml
+http://www.yr.no/place/Czech_Republic/Other/OrlovÃ¡/forecast.xml
+http://www.yr.no/place/Czech_Republic/Other/ÄŒeskÃ½_TÄ›Å¡Ã­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/Brno/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/Ostrava/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/PlzeÅˆ/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/ModÅ™any/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/LibeÅˆ/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/ÄŒernÃ½_Most/forecast.xml
+http://www.yr.no/place/Czech_Republic/Prague/BranÃ­k/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/Brno/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/Znojmo/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/HodonÃ­n~3075654/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/BÅ™eclav/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Moravia/VyÅ¡kov/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Bohemia/Budweis/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Bohemia/TÃ¡bor/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Bohemia/PÃ­sek/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Bohemia/Strakonice/forecast.xml
+http://www.yr.no/place/Czech_Republic/South_Bohemia/JindÅ™ichÅ¯v_Hradec/forecast.xml
+http://www.yr.no/place/Czech_Republic/VysoÄina/Jihlava/forecast.xml
+http://www.yr.no/place/Czech_Republic/VysoÄina/TÅ™ebÃ­Ä/forecast.xml
+http://www.yr.no/place/Czech_Republic/VysoÄina/HavlÃ­ÄkÅ¯v_Brod/forecast.xml
+http://www.yr.no/place/Czech_Republic/VysoÄina/Å½ÄÃ¡r_nad_SÃ¡zavou/forecast.xml
+http://www.yr.no/place/Czech_Republic/VysoÄina/PelhÅ™imov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Karlovy_Vary/Karlovy_Vary/forecast.xml
+http://www.yr.no/place/Czech_Republic/Karlovy_Vary/Cheb/forecast.xml
+http://www.yr.no/place/Czech_Republic/Karlovy_Vary/Sokolov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Karlovy_Vary/Ostrov~3068766/forecast.xml
+http://www.yr.no/place/Czech_Republic/Karlovy_Vary/Chodov~3077706/forecast.xml
+http://www.yr.no/place/Czech_Republic/Hradec_KrÃ¡lovÃ©/Hradec_KrÃ¡lovÃ©/forecast.xml
+http://www.yr.no/place/Czech_Republic/Hradec_KrÃ¡lovÃ©/Trutnov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Hradec_KrÃ¡lovÃ©/NÃ¡chod/forecast.xml
+http://www.yr.no/place/Czech_Republic/Hradec_KrÃ¡lovÃ©/JiÄÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/Hradec_KrÃ¡lovÃ©/Rychnov_nad_KnÄ›Å¾nou/forecast.xml
+http://www.yr.no/place/Czech_Republic/Liberec/Liberec/forecast.xml
+http://www.yr.no/place/Czech_Republic/Liberec/Jablonec_nad_Nisou/forecast.xml
+http://www.yr.no/place/Czech_Republic/Liberec/ÄŒeskÃ¡_LÃ­pa/forecast.xml
+http://www.yr.no/place/Czech_Republic/Liberec/Semily/forecast.xml
+http://www.yr.no/place/Czech_Republic/Liberec/VelkÃ¡_JavorskÃ¡/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/ProstÄ›jov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/PÅ™erov/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/Å umperk/forecast.xml
+http://www.yr.no/place/Czech_Republic/Olomouc/Hranice/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/Ostrava/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/KarvinÃ¡~3073789/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/Opava/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/FrÃ½dek-MÃ­stek/forecast.xml
+http://www.yr.no/place/Czech_Republic/Moravia-Silesia/NovÃ½_JiÄÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/Pardubice/Pardubice/forecast.xml
+http://www.yr.no/place/Czech_Republic/Pardubice/Chrudim/forecast.xml
+http://www.yr.no/place/Czech_Republic/Pardubice/Svitavy/forecast.xml
+http://www.yr.no/place/Czech_Republic/Pardubice/ÄŒeskÃ¡_TÅ™ebovÃ¡/forecast.xml
+http://www.yr.no/place/Czech_Republic/Pardubice/ÃšstÃ­_nad_OrlicÃ­/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/PlzeÅˆ/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/Klatovy/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/Rokycany/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/Tachov/forecast.xml
+http://www.yr.no/place/Czech_Republic/PlzeÅˆ/SuÅ¡ice/forecast.xml
+http://www.yr.no/place/Czech_Republic/Central_Bohemia/Kladno/forecast.xml
+http://www.yr.no/place/Czech_Republic/Central_Bohemia/MladÃ¡_Boleslav/forecast.xml
+http://www.yr.no/place/Czech_Republic/Central_Bohemia/PÅ™Ã­bram/forecast.xml
+http://www.yr.no/place/Czech_Republic/Central_Bohemia/KolÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/Central_Bohemia/KutnÃ¡_Hora/forecast.xml
+http://www.yr.no/place/Czech_Republic/ÃšstÃ­_nad_Labem/ÃšstÃ­_nad_Labem/forecast.xml
+http://www.yr.no/place/Czech_Republic/ÃšstÃ­_nad_Labem/Most/forecast.xml
+http://www.yr.no/place/Czech_Republic/ÃšstÃ­_nad_Labem/DÄ›ÄÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/ÃšstÃ­_nad_Labem/Teplice/forecast.xml
+http://www.yr.no/place/Czech_Republic/ÃšstÃ­_nad_Labem/Chomutov/forecast.xml
+http://www.yr.no/place/Czech_Republic/ZlÃ­n/ZlÃ­n~3061369/forecast.xml
+http://www.yr.no/place/Czech_Republic/ZlÃ­n/ZlÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/ZlÃ­n/KromÄ›Å™Ã­Å¾/forecast.xml
+http://www.yr.no/place/Czech_Republic/ZlÃ­n/VsetÃ­n/forecast.xml
+http://www.yr.no/place/Czech_Republic/ZlÃ­n/ValaÅ¡skÃ©_MeziÅ™Ã­ÄÃ­/forecast.xml";
+
+            string[] locations = links.Split("\n");
 
             foreach (string loc in locations)
             {
+
                 Forecast f = GetForecastByTime(forTime, loc);
+
+                if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
+                    continue;
 
                 double lonDif = 20.21 - 10.06;
                 double latDif = 51.88 - 47.09;
@@ -149,7 +232,7 @@ namespace AgregaceDatLib
 
                 //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
 
-                DrawIntersectionCircle(40, x, y, forBitmap, f.GetPrecipitationColor());
+                DrawIntersectionCircle(30, x, y, forBitmap, f.GetPrecipitationColor());
 
             }
 
