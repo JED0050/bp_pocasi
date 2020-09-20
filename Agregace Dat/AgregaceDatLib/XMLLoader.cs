@@ -190,7 +190,7 @@ http://www.yr.no/place/Czech_Republic/ZlÃ­n/KromÄ›Å™Ã­Å¾/forecast.xm
 http://www.yr.no/place/Czech_Republic/ZlÃ­n/VsetÃ­n/forecast.xml
 http://www.yr.no/place/Czech_Republic/ZlÃ­n/ValaÅ¡skÃ©_MeziÅ™Ã­ÄÃ­/forecast.xml";
 
-            string[] locations = links.Split("\n");
+            string[] locations = links.Split("\r\n");   //jen \n nestačí a velká část linků neprojde, je potřeba použít \r\n
 
             foreach (string loc in locations)
             {
@@ -198,7 +198,12 @@ http://www.yr.no/place/Czech_Republic/ZlÃ­n/ValaÅ¡skÃ©_MeziÅ™Ã­ÄÃ
                 Forecast f = GetForecastByTime(forTime, loc);
 
                 if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
+                {
+                    //Console.WriteLine("N " + loc);
                     continue;
+                }
+                //else
+                //    Console.WriteLine("A " + loc);
 
                 double lonDif = 20.21 - 10.06;
                 double latDif = 51.88 - 47.09;
@@ -232,7 +237,7 @@ http://www.yr.no/place/Czech_Republic/ZlÃ­n/ValaÅ¡skÃ©_MeziÅ™Ã­ÄÃ
 
                 //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
 
-                DrawIntersectionCircle(30, x, y, forBitmap, f.GetPrecipitationColor());
+                DrawIntersectionCircle(20, x, y, forBitmap, f.GetPrecipitationColor());
 
             }
 
