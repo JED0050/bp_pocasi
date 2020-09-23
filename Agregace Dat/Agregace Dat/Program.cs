@@ -85,9 +85,9 @@ namespace Agregace_Dat
             
             
             AvgForecast aF = new AvgForecast();
-            aF.Add(bL);
+            //aF.Add(bL);
             aF.Add(xL);
-            aF.Add(jL);
+            //aF.Add(jL);
 
             //aF.GetAvgBitmap(DateTime.Now);
 
