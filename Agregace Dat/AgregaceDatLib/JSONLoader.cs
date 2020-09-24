@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace AgregaceDatLib
 {
@@ -97,75 +99,118 @@ namespace AgregaceDatLib
 
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
-            /*
-            try
+            string bitmapName = "JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+
+            if (File.Exists(bitmapName))
             {
-                return new Bitmap(@"JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp");
+                return new Bitmap(bitmapName);
             }
-            catch { }
-            */
-
-            Bitmap forBitmap = new Bitmap(728, 528);
-
-            List<string> locations = new List<string>();
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.5952379&lon=17.2094959&appid=ea63080a4f8e99972630d2671e3ef805");     //Olomouc
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.0598058&lon=14.325542&appid=ea63080a4f8e99972630d2671e3ef805");      //Praha
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.2021611&lon=16.5079211&appid=ea63080a4f8e99972630d2671e3ef805");     //Brno
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.8198311&lon=18.1673551&appid=ea63080a4f8e99972630d2671e3ef805");     //Ostrava
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.741787&lon=13.3018839&appid=ea63080a4f8e99972630d2671e3ef805");      //Plzeň
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.2140083&lon=15.7711033&appid=ea63080a4f8e99972630d2671e3ef805");     //Hradec Králové
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.2169842&lon=12.7942751&appid=ea63080a4f8e99972630d2671e3ef805");     //Karlovy Vary
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.7662021&lon=14.9796305&appid=ea63080a4f8e99972630d2671e3ef805");     //Liberec
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.0347806&lon=15.688131&appid=ea63080a4f8e99972630d2671e3ef805");      //Pardubice
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=50.651363&lon=13.9713279&appid=ea63080a4f8e99972630d2671e3ef805");      //Ústí nad Labem
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.4045045&lon=15.5105797&appid=ea63080a4f8e99972630d2671e3ef805");     //Jihlava
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=49.2311334&lon=17.6064674&appid=ea63080a4f8e99972630d2671e3ef805");     //Zlín
-            locations.Add("https://api.openweathermap.org/data/2.5/forecast?lat=48.9764035&lon=14.4555279&appid=ea63080a4f8e99972630d2671e3ef805");     //České Budějovice
-
-
-            foreach (string loc in locations)
+            else
             {
-                Forecast f = GetForecastByTime(forTime, loc);
-                
-                double lonDif = 20.21 - 10.06;
-                double latDif = 51.88 - 47.09;
+                Bitmap forBitmap = new Bitmap(728, 528);
 
-                double PixelLon = lonDif / forBitmap.Width;
-                double PixelLat = latDif / forBitmap.Height;
+                List<string> locations = GetUrls();
 
-                double bY = 51.88;
-                double bX = 10.06;
-
-                double locLon = f.DLongitude;
-                double locLat = f.DLatitude;
-
-                int x;
-                for (x = 0; x < forBitmap.Width; x++)
+                foreach (string loc in locations)
                 {
-                    if (bX >= locLon && locLon <= bX + locLon)
-                        break;
+                    Forecast f = GetForecastByTime(forTime, loc);
 
-                    bX += PixelLon;
+                    double lonDif = 20.21 - 10.06;
+                    double latDif = 51.88 - 47.09;
+
+                    double PixelLon = lonDif / forBitmap.Width;
+                    double PixelLat = latDif / forBitmap.Height;
+
+                    double bY = 51.88;
+                    double bX = 10.06;
+
+                    double locLon = f.DLongitude;
+                    double locLat = f.DLatitude;
+
+                    int x;
+                    for (x = 0; x < forBitmap.Width; x++)
+                    {
+                        if (bX >= locLon && locLon <= bX + locLon)
+                            break;
+
+                        bX += PixelLon;
+                    }
+
+                    int y;
+                    for (y = 0; y < forBitmap.Height; y++)
+                    {
+                        if (bY - PixelLat <= locLat && locLat <= bY)
+                            break;
+
+                        bY -= PixelLat;
+                    }
+
+                    //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
+                    //DrawIntersectionCircle(10, x, y, forBitmap, Color.Red);
+                    DrawIntersectionCircle(5, x, y, forBitmap, f.GetPrecipitationColor());
+
                 }
 
-                int y;
-                for (y = 0; y < forBitmap.Height; y++)
-                {
-                    if (bY - PixelLat <= locLat && locLat <= bY)
-                        break;
+                forBitmap.Save(bitmapName, ImageFormat.Bmp);
 
-                    bY -= PixelLat;
+                return forBitmap;
+            }
+
+        }
+
+        public List<string> GetUrls()
+        {
+            List<string> jsonUrls = new List<string>();
+            
+            if(File.Exists("JSON_links.txt"))
+            {
+                using(StreamReader sr = File.OpenText("JSON_links.txt"))
+                {
+                    {
+                        string line = "";
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if (String.IsNullOrWhiteSpace(line))
+                                continue;
+
+                            jsonUrls.Add(line);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                string JSONText = File.ReadAllText("city.list.json");
+
+                JArray jsCityList = JArray.Parse(JSONText);
+
+                Parallel.ForEach(jsCityList, el =>
+                {
+                    dynamic jsonElement = JObject.Parse(el.ToString());
+
+                    if (jsonElement.country.ToString() == "CZ")
+                    {
+                        string lat = jsonElement.coord.lat;
+                        string lon = jsonElement.coord.lon;
+
+                        string link = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=ea63080a4f8e99972630d2671e3ef805";
+
+                        jsonUrls.Add(link);
+                    }
+                });
+
+                using(StreamWriter sw = File.CreateText("JSON_links.txt"))
+                {
+                    foreach(string link in jsonUrls)
+                    {
+                        sw.WriteLine(link);
+                    }
                 }
 
-                //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
-
-                DrawIntersectionCircle(40, x, y, forBitmap, f.GetPrecipitationColor());
 
             }
 
-            //forBitmap.Save("JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
-
-            return forBitmap;
+            return jsonUrls;
         }
     }
 }

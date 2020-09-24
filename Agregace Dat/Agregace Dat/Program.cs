@@ -83,11 +83,10 @@ namespace Agregace_Dat
             JSONDataLoader jL = new JSONDataLoader();
             //jL.GetForecastBitmap(DateTime.Now);
             
-            
             AvgForecast aF = new AvgForecast();
-            //aF.Add(bL);
+            aF.Add(bL);
             aF.Add(xL);
-            //aF.Add(jL);
+            aF.Add(jL);
 
             //aF.GetAvgBitmap(DateTime.Now);
 

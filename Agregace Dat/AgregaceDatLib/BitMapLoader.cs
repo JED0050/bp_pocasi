@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 
@@ -30,27 +31,48 @@ namespace AgregaceDatLib
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
 
-            for(int i = forTime.Hour; i > 0; i--)
+            string bitmapName = "RadarBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+
+            if(File.Exists(bitmapName))
             {
-                try
+                return new Bitmap(bitmapName);
+            }
+            else
+            {
+                Bitmap radarBitmap;
+
+                for (int i = forTime.Hour; i > 0; i--)
                 {
-                    return GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2,'0') + "00.0.png");
+                    try
+                    {
+                        radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
+                        radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+
+                        return radarBitmap;
+                    }
+                    catch { }
                 }
-                catch { }
+
+                forTime.AddDays(-1);
+
+                for (int i = 24; i > 0; i--)
+                {
+                    try
+                    {
+                        radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
+                        radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+
+                        return radarBitmap;
+                    }
+                    catch { }
+                }
+
+                radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + ".0000.0.png");
+                radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+
+                return radarBitmap;
             }
 
-            forTime.AddDays(-1);
-
-            for (int i = 24; i > 0; i--)
-            {
-                try
-                {
-                    return GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
-                }
-                catch { }
-            }
-
-            return GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + ".0000.0.png");
         }
     }
 }

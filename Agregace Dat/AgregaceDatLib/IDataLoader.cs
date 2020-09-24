@@ -7,6 +7,7 @@ namespace AgregaceDatLib
     //Yr.no - https://www.yr.no/place/Norway/Vestfold_og_Telemark/Midt-Telemark/Gvarv/forecast.xml
     //https://www.yr.no/place/Czech_Republic/Olomouc/Olomouc/forecast.xml
     //http://www.yr.no/place/Czech_Republic/Prague/Prague/forecast.xml
+    //http://fil.nrk.no/yr/viktigestader/verda.txt
 
     //JSON
     //api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10

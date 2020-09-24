@@ -89,110 +89,145 @@ namespace AgregaceDatLib
 
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
-            Bitmap forBitmap = new Bitmap(728, 528);
+            string bitmapName = "XMLBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
 
-            List<string> locations = GetUrls();
-
-            using (var client = new WebClient())
+            if(File.Exists(bitmapName))
             {
+                return new Bitmap(bitmapName);
+            }
+            else
+            {
+                Bitmap forBitmap = new Bitmap(728, 528);
 
-                //Parallel.ForEach(locations, loc =>
-                foreach(string loc in locations)
+                List<string> locations = GetUrls();
+
+                using (var client = new WebClient())
                 {
-                    string xmlText = "";
 
-                    try
+                    //Parallel.ForEach(locations, loc =>
+                    foreach (string loc in locations)
                     {
-                        xmlText = client.DownloadString(loc);
-                    }
-                    catch { }
+                        string xmlText = "";
 
-                    Forecast f = GetForecastByTime(forTime, xmlText);
+                        try
+                        {
+                            xmlText = client.DownloadString(loc);
+                        }
+                        catch { }
 
-                    if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
-                    {
-                        //Console.WriteLine("N " + loc);
-                        //return;
-                        continue;
-                    }/*
+                        Forecast f = GetForecastByTime(forTime, xmlText);
+
+                        if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
+                        {
+                            //Console.WriteLine("N " + loc);
+                            //return;
+                            continue;
+                        }/*
                     else
                     {
                         Console.WriteLine("A " + loc);
                     }*/
 
-                    double lonDif = 20.21 - 10.06;
-                    double latDif = 51.88 - 47.09;
+                        double lonDif = 20.21 - 10.06;
+                        double latDif = 51.88 - 47.09;
 
-                    double PixelLon = lonDif / forBitmap.Width;
-                    double PixelLat = latDif / forBitmap.Height;
+                        double PixelLon = lonDif / forBitmap.Width;
+                        double PixelLat = latDif / forBitmap.Height;
 
-                    double bY = 51.88;
-                    double bX = 10.06;
+                        double bY = 51.88;
+                        double bX = 10.06;
 
-                    double locLon = f.DLongitude;
-                    double locLat = f.DLatitude;
+                        double locLon = f.DLongitude;
+                        double locLat = f.DLatitude;
 
-                    int x;
-                    for (x = 0; x < forBitmap.Width; x++)
-                    {
-                        if (bX >= locLon && locLon <= bX + locLon)
-                            break;
+                        int x;
+                        for (x = 0; x < forBitmap.Width; x++)
+                        {
+                            if (bX >= locLon && locLon <= bX + locLon)
+                                break;
 
-                        bX += PixelLon;
-                    }
+                            bX += PixelLon;
+                        }
 
-                    int y;
-                    for (y = 0; y < forBitmap.Height; y++)
-                    {
-                        if (bY - PixelLat <= locLat && locLat <= bY)
-                            break;
+                        int y;
+                        for (y = 0; y < forBitmap.Height; y++)
+                        {
+                            if (bY - PixelLat <= locLat && locLat <= bY)
+                                break;
 
-                        bY -= PixelLat;
-                    }
+                            bY -= PixelLat;
+                        }
 
-                    //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
+                        //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
 
-                    DrawIntersectionCircle(20, x, y, forBitmap, f.GetPrecipitationColor());
-                    //DrawIntersectionCircle(10, x, y, forBitmap, Color.Red);
+                        DrawIntersectionCircle(10, x, y, forBitmap, f.GetPrecipitationColor());
+                        //DrawIntersectionCircle(10, x, y, forBitmap, Color.Red);
 
-                }//);
+                    }//);
+                }
+
+                forBitmap.Save(bitmapName, ImageFormat.Bmp);
+
+                return forBitmap;
             }
-
-            //forBitmap.Save("XMLBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
-
-            return forBitmap;
 
         }
 
         private List<string> GetUrls()
         {
             string allUrls = "http://fil.nrk.no/yr/viktigestader/verda.txt";
-            string webContent = "";
+            string fileName = "XML_Links.txt";
             List<string> czechForecast = new List<string>();
 
-            using(var client = new WebClient())
+            if (File.Exists(fileName))
             {
-                webContent = client.DownloadString(allUrls);
-            }
-            
-            string[] lines = webContent.Split("\r\n");
-            Parallel.ForEach(lines, (line, state) =>
-            {
-                try
+                using (StreamReader sr = File.OpenText(fileName))
                 {
-                    string url = line.Substring(line.IndexOf("http://www.yr.no/place/Czech_Republic"));
-
-                    if(url.Length > 10)
+                    string line = "";
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        czechForecast.Add(url);
-                    }
+                        if (String.IsNullOrWhiteSpace(line))
+                            continue;
 
+                        czechForecast.Add(line);
+                    }
                 }
-                catch
+            }
+            else
+            {
+                string webContent = "";
+
+                using (var client = new WebClient())
                 {
-                    return;
+                    webContent = client.DownloadString(allUrls);
                 }
-            });
+
+                string[] lines = webContent.Split("\r\n");
+
+                Parallel.ForEach(lines, (line, state) =>
+                {
+                    try
+                    {
+                        string url = line.Substring(line.IndexOf("http://www.yr.no/place/Czech_Republic"));
+
+                        if (url.Length > 10)
+                        {
+                            czechForecast.Add(url);
+                        }
+
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                });
+
+                using (StreamWriter sw = File.CreateText(fileName))
+                {
+                    foreach (string line in czechForecast)
+                        sw.WriteLine(line);
+                }
+            }
 
             return czechForecast;
         }
