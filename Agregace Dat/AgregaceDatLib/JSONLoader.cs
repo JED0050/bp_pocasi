@@ -24,12 +24,10 @@ namespace AgregaceDatLib
             return JSONText;
         }
 
-        public Forecast GetForecastByTime(DateTime t, string url)
+        public Forecast GetForecastByTime(DateTime t, string JSONtext)
         {
             Forecast f = new Forecast();
             f.Time = t;
-
-            string JSONtext = GetJSON(url);
 
             //JSONForecast jF = JsonConvert.DeserializeObject<JSONForecast>(JSONtext);
 
@@ -100,21 +98,41 @@ namespace AgregaceDatLib
         public Bitmap GetForecastBitmap(DateTime forTime)
         {
             string bitmapName = "JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
 
-            if (File.Exists(bitmapName))
+
+            if (File.Exists(bitmapPath))
             {
-                return new Bitmap(bitmapName);
+                return new Bitmap(bitmapPath);
             }
             else
             {
                 Bitmap forBitmap = new Bitmap(728, 528);
 
                 List<string> locations = GetUrls();
+                List<Forecast> forecasts = new List<Forecast>();
 
-                foreach (string loc in locations)
+                Parallel.ForEach(locations, loc =>
                 {
-                    Forecast f = GetForecastByTime(forTime, loc);
+                    string JSONText;
 
+                    try
+                    {
+                        using (var client = new WebClient())
+                            JSONText = client.DownloadString(loc);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+
+                    Forecast f = GetForecastByTime(forTime, JSONText);
+
+                    forecasts.Add(f);
+                });
+
+                foreach(Forecast f in forecasts)
+                { 
                     double lonDif = 20.21 - 10.06;
                     double latDif = 51.88 - 47.09;
 
@@ -146,12 +164,12 @@ namespace AgregaceDatLib
                     }
 
                     //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
-                    //DrawIntersectionCircle(10, x, y, forBitmap, Color.Red);
+                    //DrawIntersectionCircle(5, x, y, forBitmap, Color.Red);
                     DrawIntersectionCircle(5, x, y, forBitmap, f.GetPrecipitationColor());
 
                 }
 
-                forBitmap.Save(bitmapName, ImageFormat.Bmp);
+                forBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                 return forBitmap;
             }
@@ -161,10 +179,13 @@ namespace AgregaceDatLib
         public List<string> GetUrls()
         {
             List<string> jsonUrls = new List<string>();
-            
-            if(File.Exists("JSON_links.txt"))
+
+            string fileName = "JSON_links.txt";
+            string filePath = GetPathToDataDirectory(fileName);
+
+            if (File.Exists(filePath))
             {
-                using(StreamReader sr = File.OpenText("JSON_links.txt"))
+                using(StreamReader sr = File.OpenText(filePath))
                 {
                     {
                         string line = "";
@@ -180,7 +201,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                string JSONText = File.ReadAllText("city.list.json");
+                string JSONText = File.ReadAllText(GetPathToDataDirectory("city.list.json"));
 
                 JArray jsCityList = JArray.Parse(JSONText);
 
@@ -199,7 +220,7 @@ namespace AgregaceDatLib
                     }
                 });
 
-                using(StreamWriter sw = File.CreateText("JSON_links.txt"))
+                using(StreamWriter sw = File.CreateText(filePath))
                 {
                     foreach(string link in jsonUrls)
                     {
@@ -211,6 +232,13 @@ namespace AgregaceDatLib
             }
 
             return jsonUrls;
+        }
+
+        private string GetPathToDataDirectory(string fileName)
+        {
+            string workingDirectory = Environment.CurrentDirectory;
+
+            return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Openweathermap\" + fileName;
         }
     }
 }

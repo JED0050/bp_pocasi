@@ -24,6 +24,9 @@ namespace AgregaceDatLib
     //http://radar.bourky.cz/data/pacz2gmaps.z_max3d.20200705.1020.0.png        //728 x 528
     //                                               ROK MĚSÍC DEN.HODINY MINUTY.0.png 
 
+    //2. BITMAP
+    //http://www.medard-online.cz/
+
 
 
     public interface DataLoader

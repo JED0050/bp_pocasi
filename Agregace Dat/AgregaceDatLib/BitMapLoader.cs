@@ -32,10 +32,11 @@ namespace AgregaceDatLib
         {
 
             string bitmapName = "RadarBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
 
-            if(File.Exists(bitmapName))
+            if (File.Exists(bitmapPath))
             {
-                return new Bitmap(bitmapName);
+                return new Bitmap(bitmapPath);
             }
             else
             {
@@ -46,7 +47,7 @@ namespace AgregaceDatLib
                     try
                     {
                         radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
-                        radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+                        radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                         return radarBitmap;
                     }
@@ -60,7 +61,7 @@ namespace AgregaceDatLib
                     try
                     {
                         radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
-                        radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+                        radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                         return radarBitmap;
                     }
@@ -68,11 +69,18 @@ namespace AgregaceDatLib
                 }
 
                 radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + ".0000.0.png");
-                radarBitmap.Save(bitmapName, ImageFormat.Bmp);
+                radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                 return radarBitmap;
             }
 
+        }
+
+        private string GetPathToDataDirectory(string fileName)
+        {
+            string workingDirectory = Environment.CurrentDirectory;
+
+            return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Radar.bourky\" + fileName;
         }
     }
 }
