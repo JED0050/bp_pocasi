@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using DelaunayTriangulator;
 
 namespace AgregaceDatLib
 {
-    public class Forecast
+    public class Forecast : Vertex
     {
 
         public string City { get; set; }
@@ -18,7 +19,7 @@ namespace AgregaceDatLib
         {
             get
             {
-                return Double.Parse(Latitude.Replace('.',','));
+                return Double.Parse(Latitude.Replace('.', ','));
             }
         }
 
@@ -85,6 +86,43 @@ namespace AgregaceDatLib
 
             return col;
                 
+        }
+
+        public void SetXY(Bitmap forBitmap)
+        {
+            double lonDif = 20.21 - 10.06;
+            double latDif = 51.88 - 47.09;
+
+            double PixelLon = lonDif / forBitmap.Width;
+            double PixelLat = latDif / forBitmap.Height;
+
+            double bY = 51.88;
+            double bX = 10.06;
+
+            double locLon = DLongitude;
+            double locLat = DLatitude;
+
+            int x;
+            for (x = 0; x < forBitmap.Width; x++)
+            {
+                if (bX >= locLon && locLon <= bX + locLon)
+                    break;
+
+                bX += PixelLon;
+            }
+
+            this.x = x;
+
+            int y;
+            for (y = 0; y < forBitmap.Height; y++)
+            {
+                if (bY - PixelLat <= locLat && locLat <= bY)
+                    break;
+
+                bY -= PixelLat;
+            }
+
+            this.y = y;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DelaunayTriangulator;
 
 namespace AgregaceDatLib
 {
@@ -134,44 +135,40 @@ namespace AgregaceDatLib
 
                 });
 
-                foreach (Forecast f in forecasts)
+                foreach(Forecast f in forecasts)
+                    f.SetXY(forBitmap);
+
+                Triangulator angulator = new Triangulator();
+
+                List<Vertex> vertexes = forecasts.ConvertAll(x => (Vertex)x);
+
+                List<Triad> triangles = angulator.Triangulation(vertexes, true);
+
+                for (int i = 0; i < triangles.Count; i++)
                 {
+                    Triad t = triangles[i];
 
-                    double lonDif = 20.21 - 10.06;
-                    double latDif = 51.88 - 47.09;
+                    Point p1 = new Point((int)forecasts[t.a].x, (int)forecasts[t.a].y);
+                    Point p2 = new Point((int)forecasts[t.b].x, (int)forecasts[t.b].y);
+                    Point p3 = new Point((int)forecasts[t.c].x, (int)forecasts[t.c].y);
 
-                    double PixelLon = lonDif / forBitmap.Width;
-                    double PixelLat = latDif / forBitmap.Height;
+                    Point[] arP = new Point[] { p1, p2, p3 };
 
-                    double bY = 51.88;
-                    double bX = 10.06;
+                    int xMin = Math.Min(p1.X, Math.Min(p2.X, p3.X));
+                    int xMax = Math.Max(p1.X, Math.Max(p2.X, p3.X));
+                    int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
+                    int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
 
-                    double locLon = f.DLongitude;
-                    double locLat = f.DLatitude;
-
-                    int x;
-                    for (x = 0; x < forBitmap.Width; x++)
+                    for (int x = xMin; x <= xMax; x++)
                     {
-                        if (bX >= locLon && locLon <= bX + locLon)
-                            break;
+                        for (int y = yMin; y <= yMax; y++)
+                        {
+                            Point newPoint = new Point(x, y);
 
-                        bX += PixelLon;
+                            if (PointInTriangle(newPoint, p1, p2, p3))
+                                forBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
+                        }
                     }
-
-                    int y;
-                    for (y = 0; y < forBitmap.Height; y++)
-                    {
-                        if (bY - PixelLat <= locLat && locLat <= bY)
-                            break;
-
-                        bY -= PixelLat;
-                    }
-
-                    //tmpB.SetPixel(x, y, f.GetPrecipitationColor());
-
-                    DrawIntersectionCircle(10, x, y, forBitmap, f.GetPrecipitationColor());
-                    //DrawIntersectionCircle(10, x, y, forBitmap, Color.Red);
-
                 }
 
                 forBitmap.Save(bitmapPath, ImageFormat.Bmp);

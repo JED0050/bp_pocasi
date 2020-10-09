@@ -40,17 +40,44 @@ namespace AgregaceDatLib
 
             foreach (DataLoader dL in dLs)
             {
-                loaderBitmaps.Add(dL.GetForecastBitmap(time));
+                try
+                {
+                    loaderBitmaps.Add(dL.GetForecastBitmap(time));
+                }
+                catch
+                {
+                    continue;
+                }
             }
 
             for (int y = 0; y < avgBitmap.Height; y++)
             {
                 for(int x = 0; x < avgBitmap.Width; x++)
                 {
+                    //double precSum = 0;
+                    double rSum = 0;
+                    double gSum = 0;
+                    double bSum = 0;
+
                     foreach(Bitmap b in loaderBitmaps)
                     {
-                        avgBitmap.SetPixel(x, y, GetAvgCol(avgBitmap.GetPixel(x, y), b.GetPixel(x, y)));
+                        //precSum += new BitmapForecast(b).GetPrecipitationFromPixel(b.GetPixel(x,y));
+                        //avgBitmap.SetPixel(x, y, GetAvgCol(avgBitmap.GetPixel(x, y), b.GetPixel(x, y)));
+
+                        rSum += b.GetPixel(x, y).R;
+                        gSum += b.GetPixel(x, y).G;
+                        bSum += b.GetPixel(x, y).B;
                     }
+                    
+                    rSum /= loaderBitmaps.Count;
+                    gSum /= loaderBitmaps.Count;
+                    bSum /= loaderBitmaps.Count;
+
+                    Color col = Color.FromArgb((int)rSum, (int)gSum, (int)bSum);
+
+                    avgBitmap.SetPixel(x, y, col);
+                    
+                    //avgBitmap.SetPixel(x, y, new Forecast() { Precipitation = precSum / loaderBitmaps.Count }.GetPrecipitationColor());
                 }
             }
 
@@ -64,6 +91,8 @@ namespace AgregaceDatLib
             BitmapForecast bF = new BitmapForecast(GetAvgBitmap(time));
 
             Forecast f = bF.GetForecast(time, lat, lon);
+
+            //Console.WriteLine(f.GetPrecipitationColor());
 
             return f;
         }

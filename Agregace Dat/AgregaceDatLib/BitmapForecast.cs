@@ -131,6 +131,8 @@ namespace AgregaceDatLib
                         Console.WriteLine("praha x: {0} y: {1}", targetLon, targetLat);
                         */
 
+                        //Console.WriteLine(Bitmap.GetPixel(x, y));
+
                         f.Precipitation = GetPrecipitationFromPixel(Bitmap.GetPixel(x, y));
                     }
 

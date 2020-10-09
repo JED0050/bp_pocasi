@@ -11,24 +11,17 @@ namespace Agregace_Dat
         {
 
             BitmapDataLoader bL = new BitmapDataLoader();
-            //bL.GetForecastBitmap(DateTime.Now);
-            //Console.WriteLine(bL.GetForecastBitmap(DateTime.Now).GetPixel(100,100));
-
             XMLDataLoader xL = new XMLDataLoader();
-            //xL.GetForecastBitmap(DateTime.Now);
-
             JSONDataLoader jL = new JSONDataLoader();
-            //jL.GetForecastBitmap(DateTime.Now);
             
             AvgForecast aF = new AvgForecast();
             aF.Add(bL);
             aF.Add(xL);
             aF.Add(jL);
 
-            //aF.GetAvgBitmap(DateTime.Now);
-
-            Console.WriteLine("Srážky právě teď v Praze");  
-            Console.WriteLine(aF.GetForecast(DateTime.Now, 50.0598058, 14.325542).Precipitation);
+            Console.WriteLine("Srážky v Praze");  
+            DateTime dT = new DateTime(2020,10,10,12,20,20);
+            Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
         }
     }
 }
