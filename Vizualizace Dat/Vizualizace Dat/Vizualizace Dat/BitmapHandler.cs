@@ -4,12 +4,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace Vizualizace_Dat
 {
     class BitmapHandler
     {
-        public double GetPrecipitationFromPixel(Color pixel)
+        
+        public static double GetPrecipitationFromPixel(Color pixel)
         {
             double precipitation = 0;
 
@@ -64,9 +68,71 @@ namespace Vizualizace_Dat
             return precipitation;
         }
 
-        private bool ColInRange(int min, int max, int val)
+        private static bool ColInRange(int min, int max, int val)
         {
             return (min <= val) && (val <= max);
+        }
+
+        public static double GetLon(int x, int bW)
+        {
+            double lonDif = 20.21 - 10.06;
+            double pixelLon = lonDif / bW;
+            double leftCorner = 10.06;
+
+            return Math.Round(leftCorner + x * pixelLon, 6);
+        }
+
+        public static double GetLat(int y, int bH)
+        {
+            double latDif = 51.88 - 47.09;
+            double pixelLat = latDif / bH;
+            double leftCorner = 51.88;
+
+            return Math.Round(leftCorner - y * pixelLat, 6);
+        }
+
+        public static string GetAdressFromLonLat(double lon, double lat)
+        {
+            //Geocoder geocoder = new Geocoder("AIzaSyB-dtdURExB2aYlfNr071TDkx3ZNxZ5jD8");
+            string output = "";
+
+            string jsonUrl = "https://api.opencagedata.com/geocode/v1/json?key=d4727b73fca44443ab1ac1581abad71a&q=" + lat + "%2C" + lon + "8&pretty=1";
+            string jsonText = "";
+
+            using (var client = new WebClient())
+            {
+                jsonText = client.DownloadString(jsonUrl);
+            }
+
+            dynamic jsonGeo = JObject.Parse(jsonText);
+
+            JArray jResAr = (JArray)jsonGeo["results"];
+
+            foreach(var el in jResAr)
+            {
+                dynamic jsonElement = JObject.Parse(el.ToString());
+
+                string state_code = jsonElement.components.country_code;
+                string state_fullName = jsonElement.components.country;
+                string county = jsonElement.components.county;
+                string municipality = jsonElement.components.municipality;
+                string state = jsonElement.components.state;
+                string village = jsonElement.components.village;
+                string road = jsonElement.components.road;
+                string suburb = jsonElement.components.suburb;
+                string city = jsonElement.components.city;
+
+                string cityOrVil = "";
+
+                if (city != null && city.Length >= 2)
+                    cityOrVil = "\nMěsto: " + city;
+                else if (village != null && village.Length >= 2)
+                    cityOrVil = "\nVesnice: " + village;
+
+                output = "Zamě: " + state_code + "\nKraj: " + county + cityOrVil;
+            }
+
+            return output;
         }
     }
 }

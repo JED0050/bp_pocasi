@@ -28,32 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lLonY = new System.Windows.Forms.Label();
-            this.lLatX = new System.Windows.Forms.Label();
+            this.lLonX = new System.Windows.Forms.Label();
+            this.lLatY = new System.Windows.Forms.Label();
             this.pBForecast = new System.Windows.Forms.PictureBox();
             this.lPrec = new System.Windows.Forms.Label();
+            this.lCity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
             this.SuspendLayout();
             // 
-            // lLonY
+            // lLonX
             // 
-            this.lLonY.AutoSize = true;
-            this.lLonY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLonY.Location = new System.Drawing.Point(768, 150);
-            this.lLonY.Name = "lLonY";
-            this.lLonY.Size = new System.Drawing.Size(73, 16);
-            this.lLonY.TabIndex = 0;
-            this.lLonY.Text = "[Y] Lon: 0";
+            this.lLonX.AutoSize = true;
+            this.lLonX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lLonX.Location = new System.Drawing.Point(768, 127);
+            this.lLonX.Name = "lLonX";
+            this.lLonX.Size = new System.Drawing.Size(116, 16);
+            this.lLonX.TabIndex = 0;
+            this.lLonX.Text = "[X: 0] Lon: 10.06";
             // 
-            // lLatX
+            // lLatY
             // 
-            this.lLatX.AutoSize = true;
-            this.lLatX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLatX.Location = new System.Drawing.Point(768, 134);
-            this.lLatX.Name = "lLatX";
-            this.lLatX.Size = new System.Drawing.Size(68, 16);
-            this.lLatX.TabIndex = 1;
-            this.lLatX.Text = "[X] Lat: 0";
+            this.lLatY.AutoSize = true;
+            this.lLatY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lLatY.Location = new System.Drawing.Point(768, 143);
+            this.lLatY.Name = "lLatY";
+            this.lLatY.Size = new System.Drawing.Size(117, 16);
+            this.lLatY.TabIndex = 1;
+            this.lLatY.Text = "[Y: 0] Lon: 51.88";
             // 
             // pBForecast
             // 
@@ -71,22 +72,33 @@
             // 
             this.lPrec.AutoSize = true;
             this.lPrec.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPrec.Location = new System.Drawing.Point(768, 180);
+            this.lPrec.Location = new System.Drawing.Point(768, 185);
             this.lPrec.Name = "lPrec";
             this.lPrec.Size = new System.Drawing.Size(109, 16);
             this.lPrec.TabIndex = 3;
             this.lPrec.Text = "Srážky: 0 [mm]";
+            // 
+            // lCity
+            // 
+            this.lCity.AutoSize = true;
+            this.lCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lCity.Location = new System.Drawing.Point(768, 223);
+            this.lCity.Name = "lCity";
+            this.lCity.Size = new System.Drawing.Size(99, 16);
+            this.lCity.TabIndex = 4;
+            this.lCity.Text = "Město: Praha";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(903, 557);
+            this.ClientSize = new System.Drawing.Size(1073, 557);
+            this.Controls.Add(this.lCity);
             this.Controls.Add(this.lPrec);
             this.Controls.Add(this.pBForecast);
-            this.Controls.Add(this.lLatX);
-            this.Controls.Add(this.lLonY);
+            this.Controls.Add(this.lLatY);
+            this.Controls.Add(this.lLonX);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -98,10 +110,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lLonY;
-        private System.Windows.Forms.Label lLatX;
+        private System.Windows.Forms.Label lLonX;
+        private System.Windows.Forms.Label lLatY;
         private System.Windows.Forms.PictureBox pBForecast;
         private System.Windows.Forms.Label lPrec;
+        private System.Windows.Forms.Label lCity;
     }
 }
 

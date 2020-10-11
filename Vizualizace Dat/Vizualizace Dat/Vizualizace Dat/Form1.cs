@@ -26,12 +26,18 @@ namespace Vizualizace_Dat
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
 
-            lLonY.Text = "[Y] Lon: " + coordinates.Y;
-            lLatX.Text = "[X] Lat: " + coordinates.X;
+            int x = coordinates.X;
+            int y = coordinates.Y;
 
-            Color c = ((Bitmap)pBForecast.Image).GetPixel(coordinates.X, coordinates.Y);
+            double lon = BitmapHandler.GetLon(x, pBForecast.Image.Width);
+            double lat = BitmapHandler.GetLat(y, pBForecast.Image.Height);
 
-            lPrec.Text = $"Srážky: {new BitmapHandler().GetPrecipitationFromPixel(c)} [mm]";
+            Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+
+            lLonX.Text = $"[X: {x}] Lon: {lon}";
+            lLatY.Text = $"[Y: {y}] Lat: {lat}";
+            lCity.Text = BitmapHandler.GetAdressFromLonLat(lon, lat);
+            lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]";
 
         }
 
