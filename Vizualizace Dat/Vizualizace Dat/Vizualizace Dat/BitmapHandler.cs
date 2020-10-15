@@ -91,6 +91,46 @@ namespace Vizualizace_Dat
             return Math.Round(leftCorner - y * pixelLat, 6);
         }
 
+        public static int GetX(double lon, int bW, double bX, double bX2)
+        {
+            //double lonDif = 20.21 - 10.06;
+            //double bX = 10.06;
+
+            double lonDif = Math.Abs(bX2 - bX);
+            double pixelLon = lonDif / bW;
+
+            int x;
+            for (x = 0; x < bW; x++)
+            {
+                if (bX >= lon && lon <= bX + lon)
+                    break;
+
+                bX += pixelLon;
+            }
+
+            return x;
+        }
+
+        public static int GetY(double lat, int bH, double bY, double bY2)
+        {
+            //double latDif = 51.88 - 47.09;
+            //double bY = 51.88;
+
+            double latDif = Math.Abs(bY - bY2);
+            double pixelLat = latDif / bH;
+
+            int y;
+            for (y = 0; y < bH - 1; y++)
+            {
+                if (bY - pixelLat <= lat && lat <= bY)
+                    break;
+
+                bY -= pixelLat;
+            }
+
+            return y;
+        }
+
         public static string GetAdressFromLonLat(double lon, double lat)
         {
             //Geocoder geocoder = new Geocoder("AIzaSyB-dtdURExB2aYlfNr071TDkx3ZNxZ5jD8");

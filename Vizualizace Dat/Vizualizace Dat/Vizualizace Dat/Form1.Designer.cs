@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lLonX = new System.Windows.Forms.Label();
             this.lLatY = new System.Windows.Forms.Label();
             this.pBForecast = new System.Windows.Forms.PictureBox();
             this.lPrec = new System.Windows.Forms.Label();
             this.lCity = new System.Windows.Forms.Label();
+            this.axMap1 = new AxMapWinGIS.AxMap();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.SuspendLayout();
             // 
             // lLonX
@@ -66,7 +71,6 @@
             this.pBForecast.Size = new System.Drawing.Size(728, 528);
             this.pBForecast.TabIndex = 2;
             this.pBForecast.TabStop = false;
-            this.pBForecast.Click += new System.EventHandler(this.clickInMap);
             // 
             // lPrec
             // 
@@ -88,12 +92,46 @@
             this.lCity.TabIndex = 4;
             this.lCity.Text = "Město: Praha";
             // 
+            // axMap1
+            // 
+            this.axMap1.Enabled = true;
+            this.axMap1.Location = new System.Drawing.Point(12, 12);
+            this.axMap1.Name = "axMap1";
+            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
+            this.axMap1.Size = new System.Drawing.Size(728, 528);
+            this.axMap1.TabIndex = 5;
+            this.axMap1.DblClick += new System.EventHandler(this.doubleclickInMap);
+            this.axMap1.MouseMoveEvent += new AxMapWinGIS._DMapEvents_MouseMoveEventHandler(this.mouseMoveInMap);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(771, 517);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "kreslit body";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.canDrawPointChange);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(852, 517);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(87, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "vymazat body";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.clearAllPoints);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(1073, 557);
+            this.ClientSize = new System.Drawing.Size(1012, 556);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.axMap1);
             this.Controls.Add(this.lCity);
             this.Controls.Add(this.lPrec);
             this.Controls.Add(this.pBForecast);
@@ -103,6 +141,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,6 +154,9 @@
         private System.Windows.Forms.PictureBox pBForecast;
         private System.Windows.Forms.Label lPrec;
         private System.Windows.Forms.Label lCity;
+        private AxMapWinGIS.AxMap axMap1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
