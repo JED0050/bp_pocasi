@@ -44,7 +44,7 @@ namespace Vizualizace_Dat
                 precipitation = 0.1;
             else if (ColInRange(0, 0, pixel.R) && ColInRange(0, 107, pixel.G) && ColInRange(193, 252, pixel.B))
                 precipitation = 0.2;
-            else if (ColInRange(0, 0, pixel.R) && ColInRange(108, 159, pixel.G) && ColInRange(1, 192, pixel.B))
+            else if (ColInRange(0, 0, pixel.R) && ColInRange(107, 159, pixel.G) && ColInRange(0, 192, pixel.B))
                 precipitation = 0.4;
             else if (ColInRange(0, 0, pixel.R) && ColInRange(160, 187, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 0.8;
@@ -56,11 +56,11 @@ namespace Vizualizace_Dat
                 precipitation = 4;
             else if (ColInRange(224, 251, pixel.R) && ColInRange(177, 220, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 8;
-            else if (ColInRange(252, 255, pixel.R) && ColInRange(133, 176, pixel.G) && ColInRange(0, 0, pixel.B))
+            else if (ColInRange(250, 255, pixel.R) && ColInRange(133, 176, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 10;
-            else if (ColInRange(252, 255, pixel.R) && ColInRange(89, 132, pixel.G) && ColInRange(0, 0, pixel.B))
+            else if (ColInRange(250, 255, pixel.R) && ColInRange(89, 132, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 30;
-            else if (ColInRange(252, 255, pixel.R) && ColInRange(1, 88, pixel.G) && ColInRange(0, 0, pixel.B))
+            else if (ColInRange(250, 255, pixel.R) && ColInRange(1, 88, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 60;
             else if (ColInRange(150, 255, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 100;

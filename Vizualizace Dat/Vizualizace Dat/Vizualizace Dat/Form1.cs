@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Vizualizace_Dat
         private double lonD = 0;
         private double latD = 0;
         private bool canDrawPoint = false;
+        private int picIndex = 0;
 
         public Form1()
         {
@@ -82,6 +84,43 @@ namespace Vizualizace_Dat
         private void clearAllPoints(object sender, EventArgs e)
         {
             axMap1.ClearDrawings();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            axMap1.Visible = !axMap1.Visible;
+        }
+
+        private void clickInBitmap(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            System.Drawing.Point coordinates = me.Location;
+
+            int x = coordinates.X;
+            int y = coordinates.Y;
+
+            double lon = BitmapHandler.GetLon(x, pBForecast.Image.Width);
+            double lat = BitmapHandler.GetLat(y, pBForecast.Image.Height);
+
+            Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+
+            lLonX.Text = $"[X: {x}] Lon: {lon}";
+            lLatY.Text = $"[Y: {y}] Lat: {lat}";
+            lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]\n" + c.ToString();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string filePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\Bitmaps";
+
+            string[] files = Directory.GetFiles(filePath);
+            picIndex++;
+            if (picIndex > files.Length - 1)
+            {
+                picIndex = 0;
+            }
+
+            pBForecast.Image = System.Drawing.Image.FromFile(files[picIndex]);
         }
     }
 }
