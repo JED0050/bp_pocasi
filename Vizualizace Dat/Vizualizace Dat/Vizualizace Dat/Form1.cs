@@ -111,6 +111,7 @@ namespace Vizualizace_Dat
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //změna bitmapy
             string filePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\Bitmaps";
 
             string[] files = Directory.GetFiles(filePath);
@@ -121,6 +122,50 @@ namespace Vizualizace_Dat
             }
 
             pBForecast.Image = System.Drawing.Image.FromFile(files[picIndex]);
+
+            //vykreslení bitmapy na mapu
+
+            Bitmap bFor = (Bitmap)pBForecast.Image;
+
+            double bX = 10.06;
+            int bW = bFor.Width;
+            int bH = bFor.Height;
+            double pixelLon = (20.21 - 10.06) / bW;
+            double pixelLat = (51.88 - 47.09) / bH;
+
+            axMap1.ClearDrawings();
+            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+
+            for (int x = 0; x < bW; x++)
+            {
+                double bY = 51.88;
+
+                for (int y = 0; y < bH; y++)
+                {
+
+                    Color c = bFor.GetPixel(x, y);
+
+                    if(c.R == 0 && c.G == 0 && c.B == 0)
+                    {
+                        bY -= pixelLat;
+                        continue;
+                    }
+
+                    uint u = (UInt32)c.A << 24;
+                    u += (UInt32)c.B << 16;
+                    u += (UInt32)c.G << 8;
+                    u += c.R;
+
+                    //axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+                    axMap1.DrawCircle(bX, bY, 1, u, true);
+
+                    bY -= pixelLat;
+                }
+
+                bX += pixelLon;
+            }
+
+            Console.WriteLine("DONE");
         }
     }
 }
