@@ -17,11 +17,12 @@ namespace Agregace_Dat
             AvgForecast aF = new AvgForecast();
             aF.Add(bL);
             aF.Add(xL);
-            aF.Add(jL);
+            //aF.Add(jL);
 
-            //Console.WriteLine("Srážky v Praze");  
+            Console.WriteLine("Srážky v Praze");
             //DateTime dT = new DateTime(2020,10,10,12,20,20);
-            //Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
+            DateTime dT = DateTime.Now;
+            Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
         }
 
 

@@ -1,9 +1,0 @@
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\bin\Debug\netcoreapp2.1\AgregaceDatLib.deps.json
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\bin\Debug\netcoreapp2.1\AgregaceDatLib.dll
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\bin\Debug\netcoreapp2.1\AgregaceDatLib.pdb
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.csproj.CoreCompileInputs.cache
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.AssemblyInfoInputs.cache
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.AssemblyInfo.cs
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.dll
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.pdb
-D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\AgregaceDatLib\obj\Debug\netcoreapp2.1\AgregaceDatLib.csprojAssemblyReference.cache

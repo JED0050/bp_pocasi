@@ -1,5 +1,14 @@
-.vs/
 *.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+.vs/
+*.dll
+*.suo
+*.pdb
+*.cache
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
