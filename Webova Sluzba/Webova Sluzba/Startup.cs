@@ -55,6 +55,12 @@ namespace Webova_Sluzba
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                "Precipitation",                                      
+                "forec",                        
+                new { controller = "Home", action = "Forecast" } 
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

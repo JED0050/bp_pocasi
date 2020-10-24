@@ -235,9 +235,11 @@ namespace AgregaceDatLib
 
         private string GetPathToDataDirectory(string fileName)
         {
-            string workingDirectory = Environment.CurrentDirectory;
+            //string workingDirectory = Environment.CurrentDirectory;
+            //return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Openweathermap\" + fileName;
 
-            return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Openweathermap\" + fileName;
+            string workingDirectory = Environment.CurrentDirectory;
+            return workingDirectory + @"\Data\Openweathermap\" + fileName;
         }
     }
 }

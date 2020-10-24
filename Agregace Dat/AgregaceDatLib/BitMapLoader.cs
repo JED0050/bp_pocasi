@@ -78,9 +78,11 @@ namespace AgregaceDatLib
 
         private string GetPathToDataDirectory(string fileName)
         {
-            string workingDirectory = Environment.CurrentDirectory;
+            //string workingDirectory = Environment.CurrentDirectory;
+            //return Directory.GetParent(workingDirectory).FullName + @"\Data\Radar.bourky\" + fileName;
 
-            return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Radar.bourky\" + fileName;
+            string workingDirectory = Environment.CurrentDirectory;
+            return workingDirectory + @"\Data\Radar.bourky\" + fileName;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.IO;
 
 namespace Vizualizace_Dat
 {
@@ -173,6 +174,27 @@ namespace Vizualizace_Dat
             }
 
             return output;
+        }
+
+        public static Bitmap GetBitmapFromServer(string type, DateTime dateTime)
+        {
+            string time = dateTime.ToString("yyyy.MM.dd.HH.mm");
+
+            string baseUrl = "https://localhost:44336/";
+            string precUrl = $"forec?type={type}&time={time}";
+            string fullUrl = baseUrl + precUrl;
+
+            Bitmap precBitmap;
+
+            using (WebClient wc = new WebClient())
+            {
+                using (Stream s = wc.OpenRead(fullUrl))
+                {
+                    precBitmap = new Bitmap(s);
+                }
+            }
+
+            return precBitmap;
         }
     }
 }

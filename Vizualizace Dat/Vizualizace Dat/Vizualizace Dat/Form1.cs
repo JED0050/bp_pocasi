@@ -29,6 +29,9 @@ namespace Vizualizace_Dat
             axMap1.TileProvider = tkTileProvider.OpenStreetMap;
             axMap1.SendMouseMove = true;
 
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -164,8 +167,52 @@ namespace Vizualizace_Dat
 
                 bX += pixelLon;
             }
+        }
 
-            Console.WriteLine("DONE");
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DateTime selectedTime = dateTimePicker1.Value;
+
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime);
+
+            pBForecast.Image = bFor;
+
+            int bW = bFor.Width;
+            int bH = bFor.Height;
+            double pixelLon = (20.21 - 10.06) / bW;
+            double pixelLat = (51.88 - 47.09) / bH;
+
+            axMap1.ClearDrawings();
+            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+
+            double bX = 10.06;
+            for (int x = 0; x < bW; x++)
+            {
+                double bY = 51.88;
+
+                for (int y = 0; y < bH; y++)
+                {
+
+                    Color c = bFor.GetPixel(x, y);
+
+                    if (c.R == 0 && c.G == 0 && c.B == 0)
+                    {
+                        bY -= pixelLat;
+                        continue;
+                    }
+
+                    uint u = (UInt32)c.A << 24;
+                    u += (UInt32)c.B << 16;
+                    u += (UInt32)c.G << 8;
+                    u += c.R;
+
+                    axMap1.DrawCircle(bX, bY, 1, u, true);
+
+                    bY -= pixelLat;
+                }
+
+                bX += pixelLon;
+            }
         }
     }
 }

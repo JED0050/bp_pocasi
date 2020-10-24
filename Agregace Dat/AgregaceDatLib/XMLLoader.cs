@@ -242,9 +242,11 @@ namespace AgregaceDatLib
 
         private string GetPathToDataDirectory(string fileName)
         {
-            string workingDirectory = Environment.CurrentDirectory;
+            //string workingDirectory = Environment.CurrentDirectory;
+            //return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Yr.no\" + fileName;
 
-            return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Yr.no\" + fileName;
+            string workingDirectory = Environment.CurrentDirectory;
+            return workingDirectory + @"\Data\Yr.no\" + fileName;
         }
     }
 

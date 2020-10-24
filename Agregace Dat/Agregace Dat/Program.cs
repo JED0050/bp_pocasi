@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using AgregaceDatLib;
 
 namespace Agregace_Dat
@@ -19,10 +20,12 @@ namespace Agregace_Dat
             aF.Add(xL);
             //aF.Add(jL);
 
-            Console.WriteLine("Srážky v Praze");
+            //Console.WriteLine("Srážky v Praze");
             //DateTime dT = new DateTime(2020,10,10,12,20,20);
             DateTime dT = DateTime.Now;
             Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
+
+            
         }
 
 
