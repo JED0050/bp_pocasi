@@ -47,6 +47,8 @@ namespace AgregaceDatLib
                     try
                     {
                         radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
+                        ClearBitmap(radarBitmap);
+
                         radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                         return radarBitmap;
@@ -61,6 +63,8 @@ namespace AgregaceDatLib
                     try
                     {
                         radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + "00.0.png");
+                        ClearBitmap(radarBitmap);
+
                         radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                         return radarBitmap;
@@ -69,6 +73,8 @@ namespace AgregaceDatLib
                 }
 
                 radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + ".0000.0.png");
+                ClearBitmap(radarBitmap);
+
                 radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
                 return radarBitmap;
@@ -84,5 +90,29 @@ namespace AgregaceDatLib
             string workingDirectory = Environment.CurrentDirectory;
             return workingDirectory + @"\Data\Radar.bourky\" + fileName;
         }
+
+        private void ClearBitmap(Bitmap bitmap)
+        {
+            for(int x = 0; x < bitmap.Width; x++)
+            {
+                for(int y = 0; y < bitmap.Height; y++)
+                {
+                    if(x >= 0 && x <= 345 && y >= 510 && y <= bitmap.Height)
+                    {
+                        bitmap.SetPixel(x, y, Color.Transparent);
+                    }
+                    else
+                    {
+                        Color c = bitmap.GetPixel(x, y);
+
+                        if (c == Color.Empty || c == Color.FromArgb(255, 0, 0, 0) || c == Color.FromArgb(255, 196, 196, 196) || c == Color.FromArgb(255, 255, 255, 255))
+                        {
+                            bitmap.SetPixel(x, y, Color.Transparent);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Agregace_Dat
             
             AvgForecast aF = new AvgForecast();
             aF.Add(bL);
-            aF.Add(xL);
+            //aF.Add(xL);
             //aF.Add(jL);
 
             //Console.WriteLine("Srážky v Praze");

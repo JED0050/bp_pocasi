@@ -50,13 +50,20 @@ namespace Webova_Sluzba.Controllers
 
                 DateTime dateTime;
 
-                try
+                if(time == "0")
                 {
-                    dateTime = new DateTime(timeParts[0], timeParts[1], timeParts[2], timeParts[3], timeParts[4], 0);  //rok mesic den hodina minuta sekunda
+                    dateTime = DateTime.Now;
                 }
-                catch
+                else
                 {
-                    throw new Exception("Formát času není správně vyplněn! (yyyy.mm.dd.hh.mm)");
+                    try
+                    {
+                        dateTime = new DateTime(timeParts[0], timeParts[1], timeParts[2], timeParts[3], timeParts[4], 0);  //rok mesic den hodina minuta sekunda
+                    }
+                    catch
+                    {
+                        throw new Exception("Formát času není správně vyplněn! (yyyy.MM.dd.HH.mm)");
+                    }
                 }
 
                 if (type.ToLower() == "prec")

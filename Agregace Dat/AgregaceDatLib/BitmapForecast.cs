@@ -124,12 +124,6 @@ namespace AgregaceDatLib
                 {
                     if (bX <= targetLon && targetLon <= bX + PixelLon && bY - PixelLat <= targetLat && targetLat <= bY)
                     {
-                        /*
-                        Console.WriteLine("Bingo!");
-                        Console.WriteLine("cyklus x: {0} y: {1}", x, y);
-                        Console.WriteLine("bitmapa x: {0} y: {1}", bX, bY);
-                        Console.WriteLine("praha x: {0} y: {1}", targetLon, targetLat);
-                        */
 
                         //Console.WriteLine(Bitmap.GetPixel(x, y));
 

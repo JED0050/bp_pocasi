@@ -53,7 +53,7 @@ namespace AgregaceDatLib
 
         public Color GetPrecipitationColor()
         {
-            Color col = Color.FromArgb(0, 0, 0, 0);
+            Color col = Color.Transparent;
 
             if (Precipitation == 0)
                 col = Color.FromArgb(0, 0, 0);
