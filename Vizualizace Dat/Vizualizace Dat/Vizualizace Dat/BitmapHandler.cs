@@ -176,12 +176,14 @@ namespace Vizualizace_Dat
             return output;
         }
 
-        public static Bitmap GetBitmapFromServer(string type, DateTime dateTime)
+        public static Bitmap GetBitmapFromServer(string type, DateTime dateTime, string loaders)
         {
-            string time = dateTime.ToString("yyyy.MM.dd.HH.mm");
+            string time = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
+
+
 
             string baseUrl = "https://localhost:44336/";
-            string precUrl = $"forec?type={type}&time={time}";
+            string precUrl = $"forec?type={type}&time={time}&loaders={loaders}";
             string fullUrl = baseUrl + precUrl;
 
             Bitmap precBitmap;

@@ -171,9 +171,20 @@ namespace Vizualizace_Dat
 
         private void button5_Click(object sender, EventArgs e)
         {
+            string loaders = null;
+
+            if (checkBox1.Checked)
+                loaders += "b";
+
+            if (checkBox2.Checked)
+                loaders += "x";
+
+            if (checkBox3.Checked)
+                loaders += "j";
+
             DateTime selectedTime = dateTimePicker1.Value;
 
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime);
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders);
 
             pBForecast.Image = bFor;
 

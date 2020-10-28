@@ -37,16 +37,17 @@ namespace Webova_Sluzba.Controllers
             return View();
         }
 
-        public IActionResult Forecast(string type, string time)
+        public IActionResult Forecast(string type, string time, string loaders)
         {
+
+            //https://localhost:44336/forec?type=prec&time=2020-10-28T16:44:10&loaders=bx
 
             if (type == null || time == null)
             {
-                throw new Exception("Oba vstupní parametry musí být vyplněny!");
+                throw new Exception("Vstupní parametry type a time musí být vyplněny!");
             }
             else
             {
-                List<int> timeParts = time.Split('.').Select(Int32.Parse).ToList();
 
                 DateTime dateTime;
 
@@ -56,32 +57,60 @@ namespace Webova_Sluzba.Controllers
                 }
                 else
                 {
+
                     try
                     {
-                        dateTime = new DateTime(timeParts[0], timeParts[1], timeParts[2], timeParts[3], timeParts[4], 0);  //rok mesic den hodina minuta sekunda
+                        string[] dateTimeParts = time.Split('T');   //ISO 8601 = yyyy-MM-ddTHH:mm:ss
+
+                        List<int> date = dateTimeParts[0].Split('-').Select(Int32.Parse).ToList();
+                        List<int> hours = dateTimeParts[1].Split(':').Select(Int32.Parse).ToList();
+
+                        dateTime = new DateTime(date[0], date[1], date[2], hours[0], hours[1], hours[2]);  //rok mesic den hodina minuta sekunda
                     }
                     catch
                     {
-                        throw new Exception("Formát času není správně vyplněn! (yyyy.MM.dd.HH.mm)");
+                        throw new Exception("Formát času není správně vyplněn! (yyyy-MM-ddTHH:mm:ss)");
                     }
+                }
+
+                AvgForecast aF = new AvgForecast();
+
+                if (loaders == null)
+                {
+                    BitmapDataLoader bL = new BitmapDataLoader();
+                    XMLDataLoader xL = new XMLDataLoader();
+                    //JSONDataLoader jL = new JSONDataLoader();
+
+                    aF.Add(bL);
+                    aF.Add(xL);
+                    //aF.Add(jL);
+                }
+                else
+                {
+                    if(loaders.ToLower().Contains('b'))
+                    {
+                        BitmapDataLoader bL = new BitmapDataLoader();
+                        aF.Add(bL);
+                    }
+
+                    if (loaders.ToLower().Contains('x'))
+                    {
+                        XMLDataLoader xL = new XMLDataLoader();
+                        aF.Add(xL);
+                    }
+
+                    if (loaders.ToLower().Contains('j'))
+                    {
+                        //JSONDataLoader jL = new JSONDataLoader();
+                        //aF.Add(jL);
+                    }
+
                 }
 
                 if (type.ToLower() == "prec")
                 {
 
-                    //string workingDirectory = Environment.CurrentDirectory;
-                    //string p = workingDirectory + @"\Data\Yr.no\" + "radar.xml";
-
-                    BitmapDataLoader bL = new BitmapDataLoader();
-                    XMLDataLoader xL = new XMLDataLoader();
-                    JSONDataLoader jL = new JSONDataLoader();
-
-                    AvgForecast aF = new AvgForecast();
-                    aF.Add(bL);
-                    aF.Add(xL);
-                    //aF.Add(jL);
-
-                    Bitmap precBitmap = aF.GetAvgBitmap(dateTime);
+                    Bitmap precBitmap = aF.GetAvgForecBitmap(dateTime);
 
                     var bitmapBytes = BitmapToBytes(precBitmap);
 

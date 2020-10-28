@@ -31,7 +31,7 @@ namespace AgregaceDatLib
         }
 
         
-        public Bitmap GetAvgBitmap(DateTime time)
+        public Bitmap GetAvgForecBitmap(DateTime time)
         {
 
             Bitmap avgBitmap = new Bitmap(728, 528);
@@ -72,7 +72,7 @@ namespace AgregaceDatLib
 
         public Forecast GetForecast(DateTime time, double lat, double lon)
         {
-            BitmapForecast bF = new BitmapForecast(GetAvgBitmap(time));
+            BitmapForecast bF = new BitmapForecast(GetAvgForecBitmap(time));
 
             Forecast f = bF.GetForecast(time, lat, lon);
 

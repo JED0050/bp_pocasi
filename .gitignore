@@ -1,5 +1,6 @@
 *.suo
 *.user
+*.bmp
 _ReSharper.*
 bin
 obj
