@@ -24,7 +24,10 @@ namespace Vizualizace_Dat
         private int picIndex = 0;
         private GMapOverlay markers = new GMapOverlay("markers");
         private GMapMarker marker;
+        private GMapMarker marker2;
         private GMapOverlay polygons;
+        private List<PointLatLng> routeP = new List<PointLatLng>();
+        private GMapOverlay routes;
 
         public Form1()
         {
@@ -38,8 +41,8 @@ namespace Vizualizace_Dat
             gMap.DragButton = MouseButtons.Left;
             gMap.MapProvider = GMapProviders.GoogleMap;
             gMap.Position = new PointLatLng(0, 0);
-            gMap.MinZoom = 1;
-            gMap.MaxZoom = 10;
+            gMap.MinZoom = 2;
+            gMap.MaxZoom = 15;
             gMap.Zoom = 5;
             gMap.Position = new PointLatLng(49.89, 15.16);
             gMap.ShowCenter = false;
@@ -69,9 +72,14 @@ namespace Vizualizace_Dat
         {
             gMap.Overlays.Remove(markers);
             markers.Markers.Remove(marker);
+            markers.Markers.Remove(marker2);
+            gMap.Overlays.Remove(polygons);
+            gMap.Overlays.Remove(routes);
+
+            routeP.Clear();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void showDownloadedBitmap(object sender, EventArgs e)
         {
             gMap.Visible = !gMap.Visible;
         }
@@ -79,7 +87,7 @@ namespace Vizualizace_Dat
         private void clickInBitmap(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
-            System.Drawing.Point coordinates = me.Location;
+            Point coordinates = me.Location;
 
             int x = coordinates.X;
             int y = coordinates.Y;
@@ -94,7 +102,7 @@ namespace Vizualizace_Dat
             lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]\n" + c.ToString();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void drawDownloadedBitmap(object sender, EventArgs e)
         {
             //změna bitmapy
             string filePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\Bitmaps";
@@ -163,7 +171,7 @@ namespace Vizualizace_Dat
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void drawBitmapFromServer(object sender, EventArgs e)
         {
             string loaders = null;
 
@@ -256,17 +264,63 @@ namespace Vizualizace_Dat
 
             if (canDrawPoint)
             {
-                gMap.Overlays.Remove(markers);
-                markers.Markers.Remove(marker);
+                if(radioButton1.Checked)
+                {
+                    gMap.Overlays.Remove(markers);
+                    markers.Markers.Remove(marker);
+                    markers.Markers.Remove(marker2);
+                    gMap.Overlays.Remove(routes);
 
-                Console.WriteLine("lat: " + latD + " lon: " + lonD);
+                    PointLatLng point = new PointLatLng(latD, lonD);
 
-                PointLatLng point = new PointLatLng(latD, lonD);
+                    marker = new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin);
 
-                marker = new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin);
+                    gMap.Overlays.Add(markers);
+                    markers.Markers.Add(marker);
+                }
+                else if(radioButton2.Checked)
+                {
+                    gMap.Overlays.Remove(routes);
+                    routeP.Add(new PointLatLng(latD, lonD));
 
-                gMap.Overlays.Add(markers);
-                markers.Markers.Add(marker);
+                    if (routeP.Count == 2)
+                    {
+
+                        List<PointLatLng> routePints = BitmapHandler.GetRoutePoints(routeP[0], routeP[1]);
+
+                        var r = new GMapRoute(routePints, "route");
+                        routes = new GMapOverlay("routes");
+
+                        routes.Routes.Add(r);
+
+                        gMap.Overlays.Add(routes);
+
+                        PointLatLng point = routeP[1];
+
+                        marker = new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin);
+
+                        gMap.Overlays.Add(markers);
+                        markers.Markers.Add(marker);
+
+                        routeP.Clear();
+
+                        gMap.Zoom = gMap.Zoom + 1;
+                        gMap.Zoom = gMap.Zoom - 1;
+                    }
+                    else if(routeP.Count == 1)
+                    {
+                        gMap.Overlays.Remove(markers);
+                        markers.Markers.Remove(marker);
+                        markers.Markers.Remove(marker2);
+
+                        PointLatLng point = routeP[0];
+
+                        marker2 = new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin);
+
+                        gMap.Overlays.Add(markers);
+                        markers.Markers.Add(marker2);
+                    }
+                }
                 
             }
 

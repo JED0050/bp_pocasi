@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
+using System.Net.NetworkInformation;
+using GMap.NET;
 
 namespace Vizualizace_Dat
 {
@@ -197,6 +199,53 @@ namespace Vizualizace_Dat
             }
 
             return precBitmap;
+        }
+
+        public static List<PointLatLng> GetRoutePoints(PointLatLng start, PointLatLng end)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+            
+            points.Add(start);
+
+            try
+            {
+                string jsonText = "";
+
+                string str_origin = "origin=" + Math.Round(start.Lat, 6).ToString().Replace(',', '.') + "," + Math.Round(start.Lng, 6).ToString().Replace(',', '.');
+                string str_dest = "destination=" + Math.Round(end.Lat, 6).ToString().Replace(',', '.') + "," + Math.Round(end.Lng, 6).ToString().Replace(',', '.');
+                string sensor = "sensor=false";
+                string parameters = str_origin + "&" + str_dest + "&" + sensor;
+                string output = "json";
+                string url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyB-dtdURExB2aYlfNr071TDkx3ZNxZ5jD8";
+
+                using (var client = new WebClient())
+                {
+                    jsonText = client.DownloadString(url);
+                }
+
+                dynamic jsonGeo = JObject.Parse(jsonText);
+                JArray jRoutesAr = (JArray)jsonGeo["routes"];
+                JArray jLegsAr = (JArray)jRoutesAr[0]["legs"];
+                JArray jStepsAr = (JArray)jLegsAr[0]["steps"];
+
+                foreach (var step in jStepsAr)
+                {
+                    dynamic jsonElement = JObject.Parse(step.ToString());
+
+                    double latD = double.Parse(jsonElement.start_location.lat.ToString().Replace('.', ','));
+                    double lonD = double.Parse(jsonElement.start_location.lng.ToString().Replace('.', ','));
+
+                    points.Add(new PointLatLng(latD, lonD));
+                }
+            }
+            catch
+            {
+
+            }
+
+            points.Add(end);
+
+            return points;
         }
     }
 }
