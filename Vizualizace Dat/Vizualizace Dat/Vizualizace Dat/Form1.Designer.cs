@@ -28,13 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lLonX = new System.Windows.Forms.Label();
             this.lLatY = new System.Windows.Forms.Label();
             this.pBForecast = new System.Windows.Forms.PictureBox();
             this.lPrec = new System.Windows.Forms.Label();
             this.lCity = new System.Windows.Forms.Label();
-            this.axMap1 = new AxMapWinGIS.AxMap();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -44,8 +42,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.gMap = new GMap.NET.WindowsForms.GMapControl();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.SuspendLayout();
             // 
             // lLonX
@@ -99,17 +97,6 @@
             this.lCity.Size = new System.Drawing.Size(99, 16);
             this.lCity.TabIndex = 4;
             this.lCity.Text = "Město: Praha";
-            // 
-            // axMap1
-            // 
-            this.axMap1.Enabled = true;
-            this.axMap1.Location = new System.Drawing.Point(12, 12);
-            this.axMap1.Name = "axMap1";
-            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(728, 528);
-            this.axMap1.TabIndex = 5;
-            this.axMap1.DblClick += new System.EventHandler(this.doubleclickInMap);
-            this.axMap1.MouseMoveEvent += new AxMapWinGIS._DMapEvents_MouseMoveEventHandler(this.mouseMoveInMap);
             // 
             // button1
             // 
@@ -202,12 +189,41 @@
             this.checkBox3.Text = "JSON Loader";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
+            // gMap
+            // 
+            this.gMap.Bearing = 0F;
+            this.gMap.CanDragMap = true;
+            this.gMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gMap.GrayScaleMode = false;
+            this.gMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMap.LevelsKeepInMemmory = 5;
+            this.gMap.Location = new System.Drawing.Point(12, 12);
+            this.gMap.MarkersEnabled = true;
+            this.gMap.MaxZoom = 2;
+            this.gMap.MinZoom = 2;
+            this.gMap.MouseWheelZoomEnabled = true;
+            this.gMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMap.Name = "gMap";
+            this.gMap.NegativeMode = false;
+            this.gMap.PolygonsEnabled = true;
+            this.gMap.RetryLoadTile = 0;
+            this.gMap.RoutesEnabled = true;
+            this.gMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gMap.ShowTileGridLines = false;
+            this.gMap.Size = new System.Drawing.Size(728, 528);
+            this.gMap.TabIndex = 15;
+            this.gMap.Zoom = 0D;
+            this.gMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mouseDoubleClickInMap);
+            this.gMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMoveInMap);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(1012, 556);
+            this.ClientSize = new System.Drawing.Size(1022, 556);
+            this.Controls.Add(this.gMap);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -217,7 +233,6 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.axMap1);
             this.Controls.Add(this.lCity);
             this.Controls.Add(this.lPrec);
             this.Controls.Add(this.pBForecast);
@@ -227,7 +242,6 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,7 +254,6 @@
         private System.Windows.Forms.PictureBox pBForecast;
         private System.Windows.Forms.Label lPrec;
         private System.Windows.Forms.Label lCity;
-        private AxMapWinGIS.AxMap axMap1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
@@ -250,6 +263,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private GMap.NET.WindowsForms.GMapControl gMap;
     }
 }
 

@@ -1,14 +1,18 @@
-﻿using MapWinGIS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
 namespace Vizualizace_Dat
 {
@@ -18,6 +22,9 @@ namespace Vizualizace_Dat
         private double latD = 0;
         private bool canDrawPoint = false;
         private int picIndex = 0;
+        private GMapOverlay markers = new GMapOverlay("markers");
+        private GMapMarker marker;
+        private GMapOverlay polygons;
 
         public Form1()
         {
@@ -25,12 +32,17 @@ namespace Vizualizace_Dat
 
             pBForecast.BackColor = Color.Transparent;
 
-            axMap1.Projection = tkMapProjection.PROJECTION_WGS84;
-            axMap1.TileProvider = tkTileProvider.OpenStreetMap;
-            axMap1.SendMouseMove = true;
-
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+
+            gMap.DragButton = MouseButtons.Left;
+            gMap.MapProvider = GMapProviders.GoogleMap;
+            gMap.Position = new PointLatLng(0, 0);
+            gMap.MinZoom = 1;
+            gMap.MaxZoom = 10;
+            gMap.Zoom = 5;
+            gMap.Position = new PointLatLng(49.89, 15.16);
+            gMap.ShowCenter = false;
 
         }
 
@@ -39,40 +51,9 @@ namespace Vizualizace_Dat
 
         }
 
-        private void mouseMoveInMap(object sender, AxMapWinGIS._DMapEvents_MouseMoveEvent e)
-        {
-
-            double mapX = 0, mapY = 0;
-            axMap1.PixelToProj(e.x, e.y, ref mapX, ref mapY);
-
-            lonD = mapX;
-            latD = mapY;
-
-            lLonX.Text = $"Lon: {Math.Round(mapX,6)}";
-            lLatY.Text = $"Lat: {Math.Round(mapY,6)}";
-        }
-
-        private void doubleclickInMap(object sender, EventArgs e)
-        {
-            int x = BitmapHandler.GetX(lonD, pBForecast.Image.Width, 10.06, 20.21);
-            int y = BitmapHandler.GetY(latD, pBForecast.Image.Height, 51.88, 47.09);
-
-            Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
-
-            lCity.Text = BitmapHandler.GetAdressFromLonLat(lonD, latD);
-            lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]";
-
-            if(canDrawPoint)
-            {
-                axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-                axMap1.DrawCircle(lonD, latD, 5, new Utils().ColorByName(tkMapColor.Red), true);
-            }
-            
-        }
-
         private void canDrawPointChange(object sender, EventArgs e)
-        { 
-            if(canDrawPoint)
+        {
+            if (canDrawPoint)
             {
                 button1.ForeColor = Color.Black;
             }
@@ -86,12 +67,13 @@ namespace Vizualizace_Dat
 
         private void clearAllPoints(object sender, EventArgs e)
         {
-            axMap1.ClearDrawings();
+            gMap.Overlays.Remove(markers);
+            markers.Markers.Remove(marker);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            axMap1.Visible = !axMap1.Visible;
+            gMap.Visible = !gMap.Visible;
         }
 
         private void clickInBitmap(object sender, EventArgs e)
@@ -124,7 +106,7 @@ namespace Vizualizace_Dat
                 picIndex = 0;
             }
 
-            pBForecast.Image = System.Drawing.Image.FromFile(files[picIndex]);
+            pBForecast.Image = Image.FromFile(files[picIndex]);
 
             //vykreslení bitmapy na mapu
 
@@ -136,8 +118,9 @@ namespace Vizualizace_Dat
             double pixelLon = (20.21 - 10.06) / bW;
             double pixelLat = (51.88 - 47.09) / bH;
 
-            axMap1.ClearDrawings();
-            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+
+            gMap.Overlays.Remove(polygons);
+            polygons = new GMapOverlay("polygons");
 
             for (int x = 0; x < bW; x++)
             {
@@ -148,25 +131,36 @@ namespace Vizualizace_Dat
 
                     Color c = bFor.GetPixel(x, y);
 
-                    if(c.R == 0 && c.G == 0 && c.B == 0)
+                    if (c.R == 0 && c.G == 0 && c.B == 0)
                     {
                         bY -= pixelLat;
                         continue;
                     }
 
-                    uint u = (UInt32)c.A << 24;
-                    u += (UInt32)c.B << 16;
-                    u += (UInt32)c.G << 8;
-                    u += c.R;
 
-                    //axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-                    axMap1.DrawCircle(bX, bY, 1, u, true);
+                    List<PointLatLng> points = new List<PointLatLng>();
+                    points.Add(new PointLatLng(bY, bX));
+                    points.Add(new PointLatLng(bY - pixelLat, bX));
+                    points.Add(new PointLatLng(bY - pixelLat, bX + pixelLon));
+                    points.Add(new PointLatLng(bY, bX + pixelLon));
+
+                    var polygon = new GMapPolygon(points, "pixel")
+                    {
+                        Stroke = new Pen(Color.Transparent, 0),
+                        Fill = new SolidBrush(c)
+                    };
+
+                    polygons.Polygons.Add(polygon);
+
 
                     bY -= pixelLat;
                 }
 
                 bX += pixelLon;
             }
+
+            gMap.Overlays.Add(polygons);
+
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -193,8 +187,8 @@ namespace Vizualizace_Dat
             double pixelLon = (20.21 - 10.06) / bW;
             double pixelLat = (51.88 - 47.09) / bH;
 
-            axMap1.ClearDrawings();
-            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            gMap.Overlays.Remove(polygons);
+            polygons = new GMapOverlay("polygons");
 
             double bX = 10.06;
             for (int x = 0; x < bW; x++)
@@ -212,18 +206,70 @@ namespace Vizualizace_Dat
                         continue;
                     }
 
-                    uint u = (UInt32)c.A << 24;
-                    u += (UInt32)c.B << 16;
-                    u += (UInt32)c.G << 8;
-                    u += c.R;
 
-                    axMap1.DrawCircle(bX, bY, 1, u, true);
+                    List<PointLatLng> points = new List<PointLatLng>();
+                    points.Add(new PointLatLng(bY, bX));
+                    points.Add(new PointLatLng(bY - pixelLat, bX));
+                    points.Add(new PointLatLng(bY - pixelLat, bX + pixelLon));
+                    points.Add(new PointLatLng(bY, bX + pixelLon));
+
+                    var polygon = new GMapPolygon(points, "pixel")
+                    {
+                        Stroke = new Pen(Color.Transparent, 0),
+                        Fill = new SolidBrush(c)
+                    };
+
+                    polygons.Polygons.Add(polygon);
+
 
                     bY -= pixelLat;
                 }
 
                 bX += pixelLon;
             }
+
+            gMap.Overlays.Add(polygons);
+        }
+
+        private void mouseMoveInMap(object sender, MouseEventArgs e)
+        {
+            double lat = gMap.FromLocalToLatLng(e.X, e.Y).Lat;
+            double lon = gMap.FromLocalToLatLng(e.X, e.Y).Lng;
+
+            lonD = lon;
+            latD = lat;
+
+            lLonX.Text = $"Lon: {Math.Round(lon, 6)}";
+            lLatY.Text = $"Lat: {Math.Round(lat, 6)}";
+        }
+
+        private void mouseDoubleClickInMap(object sender, MouseEventArgs e)
+        {
+
+            int x = BitmapHandler.GetX(lonD, pBForecast.Image.Width, 10.06, 20.21);
+            int y = BitmapHandler.GetY(latD, pBForecast.Image.Height, 51.88, 47.09);
+
+            Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+
+            lCity.Text = BitmapHandler.GetAdressFromLonLat(lonD, latD);
+            lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]";
+
+            if (canDrawPoint)
+            {
+                gMap.Overlays.Remove(markers);
+                markers.Markers.Remove(marker);
+
+                Console.WriteLine("lat: " + latD + " lon: " + lonD);
+
+                PointLatLng point = new PointLatLng(latD, lonD);
+
+                marker = new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin);
+
+                gMap.Overlays.Add(markers);
+                markers.Markers.Add(marker);
+                
+            }
+
         }
     }
 }
