@@ -32,7 +32,9 @@ namespace AgregaceDatLib
     public interface DataLoader
     {
 
-        Bitmap GetForecastBitmap(DateTime forTime);
+        Bitmap GetPrecipitationBitmap(DateTime forTime);
+
+        void SaveNewDeleteOldBmps(int days);
 
     }
 }

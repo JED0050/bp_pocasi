@@ -30,6 +30,20 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
+        public void SaveForecastBitmaps()
+        {
+            int days = 3;
+
+            foreach(DataLoader dL in dLs)
+            {
+
+                dL.SaveNewDeleteOldBmps(days);
+
+            }
+
+
+        }
+
         
         public Bitmap GetAvgForecBitmap(DateTime time)
         {
@@ -42,7 +56,7 @@ namespace AgregaceDatLib
             {
                 try
                 {
-                    loaderBitmaps.Add(dL.GetForecastBitmap(time));
+                    loaderBitmaps.Add(dL.GetPrecipitationBitmap(time));
                 }
                 catch
                 {

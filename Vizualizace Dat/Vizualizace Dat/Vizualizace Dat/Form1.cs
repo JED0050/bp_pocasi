@@ -169,6 +169,8 @@ namespace Vizualizace_Dat
 
             gMap.Overlays.Add(polygons);
 
+            zoomReload();
+
         }
 
         private void drawBitmapFromServer(object sender, EventArgs e)
@@ -237,6 +239,8 @@ namespace Vizualizace_Dat
             }
 
             gMap.Overlays.Add(polygons);
+
+            zoomReload();
         }
 
         private void mouseMoveInMap(object sender, MouseEventArgs e)
@@ -304,8 +308,7 @@ namespace Vizualizace_Dat
 
                         routeP.Clear();
 
-                        gMap.Zoom = gMap.Zoom + 1;
-                        gMap.Zoom = gMap.Zoom - 1;
+                        zoomReload();
                     }
                     else if(routeP.Count == 1)
                     {
@@ -324,6 +327,12 @@ namespace Vizualizace_Dat
                 
             }
 
+        }
+
+        private void zoomReload()
+        {
+            gMap.Zoom = gMap.Zoom + 1;
+            gMap.Zoom = gMap.Zoom - 1;
         }
     }
 }

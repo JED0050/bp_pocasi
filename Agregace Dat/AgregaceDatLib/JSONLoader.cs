@@ -7,6 +7,9 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using DelaunayTriangulator;
+using System.Threading;
+using System.Diagnostics;
+using System.Linq;
 
 namespace AgregaceDatLib
 {
@@ -96,9 +99,20 @@ namespace AgregaceDatLib
             return f;
         }
 
-        public Bitmap GetForecastBitmap(DateTime forTime)
+        public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
-            string bitmapName = "JSBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+            DateTime updatedTime = forTime;
+
+            if (updatedTime.Hour % 3 < 1)
+            {
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
+            }
+
+            string bitmapName = "JSBitmap" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
 
@@ -108,26 +122,37 @@ namespace AgregaceDatLib
             }
             else
             {
+                DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory("json_cache"));
+                FileInfo[] files = dI.GetFiles("*.txt");
+
                 Bitmap forBitmap = new Bitmap(728, 528);
 
-                List<string> locations = GetUrls();
                 List<Forecast> forecasts = new List<Forecast>();
 
-                Parallel.ForEach(locations, loc =>
+                Parallel.ForEach(files, file =>
                 {
-                    string JSONText;
+                    string JSONText = "";
 
                     try
                     {
-                        using (var client = new WebClient())
-                            JSONText = client.DownloadString(loc);
+                        using (StreamReader sr = file.OpenText())
+                        {
+                            string s = "";
+                            while ((s = sr.ReadLine()) != null)
+                            {
+                                JSONText += s;
+                            }
+                        }
                     }
                     catch
                     {
                         return;
                     }
 
-                    Forecast f = GetForecastByTime(forTime, JSONText);
+                    if (JSONText == "")
+                        return;
+
+                    Forecast f = GetForecastByTime(updatedTime, JSONText);
 
                     forecasts.Add(f);
                 });
@@ -233,6 +258,52 @@ namespace AgregaceDatLib
             return jsonUrls;
         }
 
+        private void SaveJsonToCache()
+        {
+            int c = 0;
+
+            List<string> locations = GetUrls();
+            string JSONText;
+
+            Stopwatch s = new Stopwatch();
+            s.Start();
+
+            foreach(string loc in locations)    //nemá smysl používat vlákna když se musí čekat 60s na stažení 60 souborů
+            {
+                try
+                {
+                    using (var client = new WebClient())
+                        JSONText = client.DownloadString(loc);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH") + "-" + c + ".txt";
+
+                using (StreamWriter sW = File.CreateText(GetPathToDataDirectory(@"json_cache\" + fileName)))
+                {
+                    sW.Write(JSONText);
+                }
+
+                c++;
+
+                if(c % 60 == 0)
+                {
+                    s.Stop();
+
+                    if(s.ElapsedMilliseconds < 60_000)
+                    {
+                        int ms = 60_000 - (int)s.ElapsedMilliseconds;
+
+                        Thread.Sleep(ms);   //limit 60 stažení za minutu ~ 20 minut pro stažení dat pro celou ČR na týden
+                    }
+
+                }
+            }
+        }
+
         private string GetPathToDataDirectory(string fileName)
         {
             //string workingDirectory = Environment.CurrentDirectory;
@@ -240,6 +311,72 @@ namespace AgregaceDatLib
 
             string workingDirectory = Environment.CurrentDirectory;
             return workingDirectory + @"\Data\Openweathermap\" + fileName;
+        }
+
+        public void SaveNewDeleteOldBmps(int days)
+        {
+            DateTime lastUpdate = DateTime.Now;
+
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory("json_cache"));
+            foreach (var f in dI.GetFiles("*.txt"))
+            {
+                string onlyDateName = f.Name.Substring(0, 13);
+
+                string[] timeParts = onlyDateName.Split("-");
+
+                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+
+                if (dateTime < DateTime.Now.AddDays(-1)) 
+                {
+                    f.Delete();
+                }
+                
+                lastUpdate = dateTime;
+                
+            }
+
+            if(lastUpdate < DateTime.Now.AddDays(-1) || dI.GetFiles("*.txt").Length == 0)
+            {
+                SaveJsonToCache();
+            }
+
+
+            dI = new DirectoryInfo(GetPathToDataDirectory(""));
+            foreach (var f in dI.GetFiles("*.bmp"))
+            {
+                string onlyDateName = f.Name.Substring(8, 13);
+
+                string[] timeParts = onlyDateName.Split("-");
+
+                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+
+                if (dateTime < DateTime.Now) //smazání starých bitmap
+                {
+                    f.Delete();
+                }
+                else if (dateTime > DateTime.Now.AddDays(1))  //přemazání bitmap
+                {
+                    f.Delete();
+                }
+
+            }
+
+            
+            int hours = days * 24;
+
+            DateTime now = DateTime.Now;
+
+            for (int i = 0; i < hours; i++)
+            {
+                DateTime time = now.AddHours(i);
+
+                if (time.Hour % 3 == 0)
+                {
+                    GetPrecipitationBitmap(time);
+                }
+
+            }
+            
         }
     }
 }

@@ -89,9 +89,20 @@ namespace AgregaceDatLib
         }
 
 
-        public Bitmap GetForecastBitmap(DateTime forTime)
+        public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
-            string bitmapName = "XMLBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+            DateTime updatedTime = forTime;
+
+            if (updatedTime.Hour % 6 < 3)
+            {
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 6));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(6 - updatedTime.Hour % 6);
+            }
+
+            string bitmapName = "XMLBitmap" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if(File.Exists(bitmapPath))
@@ -123,7 +134,7 @@ namespace AgregaceDatLib
                         //continue;
                     }
 
-                    Forecast f = GetForecastByTime(forTime, xmlText);
+                    Forecast f = GetForecastByTime(updatedTime, xmlText);
 
                     if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
                     {
@@ -247,6 +258,45 @@ namespace AgregaceDatLib
 
             string workingDirectory = Environment.CurrentDirectory;
             return workingDirectory + @"\Data\Yr.no\" + fileName;
+        }
+
+        public void SaveNewDeleteOldBmps(int days)
+        {
+
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+            foreach (var f in dI.GetFiles("*.bmp"))
+            {
+                string onlyDateName = f.Name.Substring(9, 13);
+
+                string[] timeParts = onlyDateName.Split("-");
+
+                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+
+                if(dateTime < DateTime.Now) //smazání starých bitmap
+                {
+                    f.Delete();
+                }else if(dateTime > DateTime.Now.AddDays(1))  //přemazání bitmap
+                {
+                    f.Delete();
+                }
+
+            }
+
+            int hours = days * 24;
+
+            DateTime now = DateTime.Now;
+
+            for (int i = 0; i < hours; i++)
+            {
+                DateTime time = now.AddHours(i);
+
+                if (time.Hour % 6 == 0)
+                {
+                    GetPrecipitationBitmap(time);
+                }
+
+            }
+
         }
     }
 

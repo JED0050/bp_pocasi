@@ -28,7 +28,7 @@ namespace AgregaceDatLib
 
         }
 
-        public Bitmap GetForecastBitmap(DateTime forTime)
+        public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
 
             string bitmapName = "RadarBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
@@ -122,5 +122,9 @@ namespace AgregaceDatLib
             }
         }
 
+        public void SaveNewDeleteOldBmps(int days)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,6 +18,23 @@ namespace Webova_Sluzba.Controllers
             return View();
         }
 
+        public IActionResult Loader()
+        {
+            AvgForecast aF = new AvgForecast();
+
+            //BitmapDataLoader bL = new BitmapDataLoader();
+            XMLDataLoader xL = new XMLDataLoader();
+            JSONDataLoader jL = new JSONDataLoader();
+
+            //aF.Add(bL);
+            aF.Add(xL);
+            aF.Add(jL);
+
+            aF.SaveForecastBitmaps();
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Cíl bakalářské práce.";
