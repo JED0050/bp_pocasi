@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Jak je venku?";
-    ViewData["Message"] = "Zadej místo a čas a dozvíš se to!";
+    ViewData["Message"] = "Zadej čas a dozvíš se to!";
 }
 
 
@@ -9,6 +9,9 @@
 
 <div>
     API: https://localhost:44336/forec?type={prec}&time={2020-10-28T16:44:10}&loaders={bj}
+</div>
+<div>
+    <a href="https://localhost:44336/forec?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=bx">Příklad: https://localhost:44336/forec?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=bx</a>
 </div>
 
 <div>

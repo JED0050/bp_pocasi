@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AgregaceDatLib
 {
@@ -30,17 +31,13 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
-        public void SaveForecastBitmaps()
+        public void SaveForecastBitmaps(int days)
         {
-            int days = 3;
 
-            foreach(DataLoader dL in dLs)
+            Parallel.ForEach(dLs, dL =>
             {
-
                 dL.SaveNewDeleteOldBmps(days);
-
-            }
-
+            });
 
         }
 

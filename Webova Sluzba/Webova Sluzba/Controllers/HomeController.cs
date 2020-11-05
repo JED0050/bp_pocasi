@@ -30,7 +30,9 @@ namespace Webova_Sluzba.Controllers
             aF.Add(xL);
             aF.Add(jL);
 
-            aF.SaveForecastBitmaps();
+            int days = 3;
+
+            aF.SaveForecastBitmaps(days);
 
             return RedirectToAction("Index");
         }
@@ -96,11 +98,11 @@ namespace Webova_Sluzba.Controllers
                 {
                     BitmapDataLoader bL = new BitmapDataLoader();
                     XMLDataLoader xL = new XMLDataLoader();
-                    //JSONDataLoader jL = new JSONDataLoader();
+                    JSONDataLoader jL = new JSONDataLoader();
 
                     aF.Add(bL);
                     aF.Add(xL);
-                    //aF.Add(jL);
+                    aF.Add(jL);
                 }
                 else
                 {
@@ -118,8 +120,8 @@ namespace Webova_Sluzba.Controllers
 
                     if (loaders.ToLower().Contains('j'))
                     {
-                        //JSONDataLoader jL = new JSONDataLoader();
-                        //aF.Add(jL);
+                        JSONDataLoader jL = new JSONDataLoader();
+                        aF.Add(jL);
                     }
 
                 }

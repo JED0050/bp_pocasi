@@ -268,7 +268,9 @@ namespace AgregaceDatLib
             Stopwatch s = new Stopwatch();
             s.Start();
 
-            foreach(string loc in locations)    //nemá smysl používat vlákna když se musí čekat 60s na stažení 60 souborů
+            string timePart = DateTime.Now.ToString("yyyy-MM-dd-HH");
+
+            foreach (string loc in locations)    //nemá smysl používat vlákna když se musí čekat 60s na stažení 60 souborů - 25 minut běh pro celou ČR
             {
                 try
                 {
@@ -280,7 +282,7 @@ namespace AgregaceDatLib
                     continue;
                 }
 
-                string fileName = DateTime.Now.ToString("yyyy-MM-dd-HH") + "-" + c + ".txt";
+                string fileName = timePart + "-" + c + ".txt";
 
                 using (StreamWriter sW = File.CreateText(GetPathToDataDirectory(@"json_cache\" + fileName)))
                 {
@@ -335,9 +337,11 @@ namespace AgregaceDatLib
                 
             }
 
+            bool newCacheCreated = false;
             if(lastUpdate < DateTime.Now.AddDays(-1) || dI.GetFiles("*.txt").Length == 0)
             {
                 SaveJsonToCache();
+                newCacheCreated = true;
             }
 
 
@@ -354,7 +358,7 @@ namespace AgregaceDatLib
                 {
                     f.Delete();
                 }
-                else if (dateTime > DateTime.Now.AddDays(1))  //přemazání bitmap
+                else if (newCacheCreated)  //přemazání bitmap, mazání proběhne pokud byla vytvořená nová cache
                 {
                     f.Delete();
                 }
@@ -365,18 +369,27 @@ namespace AgregaceDatLib
             int hours = days * 24;
 
             DateTime now = DateTime.Now;
-
+            
             for (int i = 0; i < hours; i++)
             {
                 DateTime time = now.AddHours(i);
 
                 if (time.Hour % 3 == 0)
                 {
-                    GetPrecipitationBitmap(time);
+                    for(int j = 0; j < 10; j++)
+                    {
+                        try
+                        {
+                            GetPrecipitationBitmap(time);
+                            break;
+                        }
+                        catch
+                        {}
+                    }
+                    
                 }
 
             }
-            
         }
     }
 }
