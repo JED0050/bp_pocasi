@@ -94,7 +94,6 @@ namespace AgregaceDatLib
             double lonDif = 20.21 - 10.06;
             double latDif = 51.88 - 47.09;
 
-
             PixelLon = lonDif / w;
             PixelLat = latDif / h;
 

@@ -154,7 +154,10 @@ namespace AgregaceDatLib
 
                     Forecast f = GetForecastByTime(updatedTime, JSONText);
 
-                    forecasts.Add(f);
+                    if (f != null)
+                    {
+                        forecasts.Add(f);
+                    }
                 });
 
                 foreach (Forecast f in forecasts)

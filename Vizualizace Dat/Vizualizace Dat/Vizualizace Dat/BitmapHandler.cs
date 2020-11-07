@@ -10,6 +10,7 @@ using System.Net;
 using System.IO;
 using System.Net.NetworkInformation;
 using GMap.NET;
+using GMap.NET.WindowsForms;
 
 namespace Vizualizace_Dat
 {
@@ -178,14 +179,23 @@ namespace Vizualizace_Dat
             return output;
         }
 
-        public static Bitmap GetBitmapFromServer(string type, DateTime dateTime, string loaders)
+        public static Bitmap GetBitmapFromServer(string type, DateTime dateTime, string loaders, List<PointLatLng> bounds)
         {
             string time = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
 
+            string pointUrl = "";
 
+            if(bounds[0].Lng == 10.06 && bounds[0].Lat == 51.88 && bounds[1].Lng == 20.21 && bounds[1].Lat == 47.09)
+            {
+                pointUrl = "";
+            }
+            else
+            {
+                pointUrl = "&p1=" + bounds[0].Lat + "a" + bounds[0].Lng + "&p2=" + bounds[1].Lat + "a" + bounds[1].Lng;
+            }
 
             string baseUrl = "https://localhost:44336/";
-            string precUrl = $"forec?type={type}&time={time}&loaders={loaders}";
+            string precUrl = $"forec?type={type}&time={time}&loaders={loaders}" + pointUrl;
             string fullUrl = baseUrl + precUrl;
 
             Bitmap precBitmap;
@@ -246,6 +256,34 @@ namespace Vizualizace_Dat
             points.Add(end);
 
             return points;
+        }
+
+        public static List<PointLatLng> GetBounds(int zoom, PointLatLng center)
+        {
+            List<PointLatLng> bounds = new List<PointLatLng>();
+
+            if (zoom < 8)
+            {
+                bounds.Add(new PointLatLng(51.88, 10.06));
+                bounds.Add(new PointLatLng(47.09, 20.21));
+
+                return bounds;
+            }
+
+            double degreePerPixel = (156543.04 * Math.Cos(center.Lat * Math.PI / 180)) / (111325 * Math.Pow(2, zoom));
+
+            double mHalfWidthInDegrees = 728 * degreePerPixel / 0.9;
+            double mHalfHeightInDegrees = 528 * degreePerPixel / 1.7;
+
+            double mNorth = center.Lat + mHalfHeightInDegrees;
+            double mWest = center.Lng - mHalfWidthInDegrees;
+            double mSouth = center.Lat - mHalfHeightInDegrees;
+            double mEast = center.Lng + mHalfWidthInDegrees;
+
+            bounds.Add(new PointLatLng(mNorth, mWest));
+            bounds.Add(new PointLatLng(mSouth, mEast));
+
+            return bounds;
         }
     }
 }

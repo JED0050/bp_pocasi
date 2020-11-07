@@ -30,7 +30,7 @@ namespace Webova_Sluzba.Controllers
             aF.Add(xL);
             aF.Add(jL);
 
-            int days = 3;
+            int days = 6;
 
             aF.SaveForecastBitmaps(days);
 
@@ -56,7 +56,7 @@ namespace Webova_Sluzba.Controllers
             return View();
         }
 
-        public IActionResult Forecast(string type, string time, string loaders)
+        public IActionResult Forecast(string type, string time, string loaders, string p1, string p2)
         {
 
             //https://localhost:44336/forec?type=prec&time=2020-10-28T16:44:10&loaders=bx
@@ -128,8 +128,31 @@ namespace Webova_Sluzba.Controllers
 
                 if (type.ToLower() == "prec")
                 {
+                    Bitmap precBitmap;
 
-                    Bitmap precBitmap = aF.GetAvgForecBitmap(dateTime);
+                    if (p1 == null || p2 == null)
+                    {
+                        precBitmap = aF.GetAvgForecBitmap(dateTime);
+                    }
+                    else
+                    {
+                        string[] p1LatLon = p1.Replace(".",",").Split("a");
+                        string[] p2LatLon = p2.Replace(".", ",").Split("a");
+
+                        PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1]), double.Parse(p1LatLon[0]));
+                        PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1]), double.Parse(p2LatLon[0]));
+
+                        precBitmap = aF.GetAvgForecBitmap(dateTime, point1, point2);
+
+                        /*
+                        for(int x = 0; x < precBitmap.Width; x++)
+                        {
+                            for(int y = 0; y < precBitmap.Height; y++)
+                            {
+                                precBitmap.SetPixel(x, y, Color.Red);
+                            }
+                        }*/
+                    }
 
                     var bitmapBytes = BitmapToBytes(precBitmap);
 

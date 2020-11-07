@@ -4,6 +4,7 @@
 _ReSharper.*
 bin
 obj
+json_cache/
 .vs/
 *.dll
 *.suo

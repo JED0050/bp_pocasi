@@ -38,21 +38,23 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.gMap = new GMap.NET.WindowsForms.GMapControl();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // lLonX
             // 
             this.lLonX.AutoSize = true;
             this.lLonX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLonX.Location = new System.Drawing.Point(768, 127);
+            this.lLonX.Location = new System.Drawing.Point(768, 77);
             this.lLonX.Name = "lLonX";
             this.lLonX.Size = new System.Drawing.Size(116, 16);
             this.lLonX.TabIndex = 0;
@@ -62,7 +64,7 @@
             // 
             this.lLatY.AutoSize = true;
             this.lLatY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLatY.Location = new System.Drawing.Point(768, 143);
+            this.lLatY.Location = new System.Drawing.Point(768, 93);
             this.lLatY.Name = "lLatY";
             this.lLatY.Size = new System.Drawing.Size(117, 16);
             this.lLatY.TabIndex = 1;
@@ -84,7 +86,7 @@
             // 
             this.lPrec.AutoSize = true;
             this.lPrec.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPrec.Location = new System.Drawing.Point(768, 185);
+            this.lPrec.Location = new System.Drawing.Point(768, 135);
             this.lPrec.Name = "lPrec";
             this.lPrec.Size = new System.Drawing.Size(109, 16);
             this.lPrec.TabIndex = 3;
@@ -94,7 +96,7 @@
             // 
             this.lCity.AutoSize = true;
             this.lCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCity.Location = new System.Drawing.Point(768, 223);
+            this.lCity.Location = new System.Drawing.Point(768, 173);
             this.lCity.Name = "lCity";
             this.lCity.Size = new System.Drawing.Size(99, 16);
             this.lCity.TabIndex = 4;
@@ -142,20 +144,13 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(771, 339);
+            this.button5.Location = new System.Drawing.Point(760, 267);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(200, 23);
             this.button5.TabIndex = 10;
             this.button5.Text = "Bitmap from server";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.drawBitmapFromServer);
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(771, 369);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 11;
             // 
             // checkBox1
             // 
@@ -241,19 +236,39 @@
             this.radioButton2.Text = "cesta";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(757, 293);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(128, 16);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "05. 11. 2020 10:30";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(754, 312);
+            this.trackBar1.Maximum = 168;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(242, 45);
+            this.trackBar1.TabIndex = 19;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1006, 552);
+            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.gMap);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -268,6 +283,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,13 +301,14 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private GMap.NET.WindowsForms.GMapControl gMap;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 

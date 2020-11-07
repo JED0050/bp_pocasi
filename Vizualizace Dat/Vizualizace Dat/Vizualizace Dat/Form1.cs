@@ -28,6 +28,8 @@ namespace Vizualizace_Dat
         private GMapOverlay polygons;
         private List<PointLatLng> routeP = new List<PointLatLng>();
         private GMapOverlay routes;
+        private DateTime selectedTime;
+        private List<PointLatLng> bounds;
 
         public Form1()
         {
@@ -35,17 +37,18 @@ namespace Vizualizace_Dat
 
             pBForecast.BackColor = Color.Transparent;
 
-            dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm:ss";
-
             gMap.DragButton = MouseButtons.Left;
             gMap.MapProvider = GMapProviders.GoogleMap;
-            gMap.Position = new PointLatLng(0, 0);
             gMap.MinZoom = 2;
             gMap.MaxZoom = 15;
-            gMap.Zoom = 5;
+            gMap.Zoom = 6;
             gMap.Position = new PointLatLng(49.89, 15.16);
             gMap.ShowCenter = false;
+
+            selectedTime = DateTime.Now;
+            label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+
+            bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
         }
 
@@ -126,7 +129,6 @@ namespace Vizualizace_Dat
             double pixelLon = (20.21 - 10.06) / bW;
             double pixelLat = (51.88 - 47.09) / bH;
 
-
             gMap.Overlays.Remove(polygons);
             polygons = new GMapOverlay("polygons");
 
@@ -186,24 +188,24 @@ namespace Vizualizace_Dat
             if (checkBox3.Checked)
                 loaders += "j";
 
-            DateTime selectedTime = dateTimePicker1.Value;
+            bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders);
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders, bounds);
 
             pBForecast.Image = bFor;
 
             int bW = bFor.Width;
             int bH = bFor.Height;
-            double pixelLon = (20.21 - 10.06) / bW;
-            double pixelLat = (51.88 - 47.09) / bH;
+            double pixelLon = (bounds[1].Lng - bounds[0].Lng) / bW;
+            double pixelLat = (bounds[0].Lat - bounds[1].Lat) / bH;
 
             gMap.Overlays.Remove(polygons);
             polygons = new GMapOverlay("polygons");
 
-            double bX = 10.06;
+            double bX = bounds[0].Lng;
             for (int x = 0; x < bW; x++)
             {
-                double bY = 51.88;
+                double bY = bounds[0].Lat;
 
                 for (int y = 0; y < bH; y++)
                 {
@@ -253,15 +255,31 @@ namespace Vizualizace_Dat
 
             lLonX.Text = $"Lon: {Math.Round(lon, 6)}";
             lLatY.Text = $"Lat: {Math.Round(lat, 6)}";
+
+            /*
+            int i = 1;
+            foreach(PointLatLng p in BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position))
+            {
+                Console.WriteLine(i + ": " + p.Lng + " " + p.Lat);
+                i++;
+            }
+            */
         }
 
         private void mouseDoubleClickInMap(object sender, MouseEventArgs e)
         {
 
-            int x = BitmapHandler.GetX(lonD, pBForecast.Image.Width, 10.06, 20.21);
-            int y = BitmapHandler.GetY(latD, pBForecast.Image.Height, 51.88, 47.09);
+            int x = BitmapHandler.GetX(lonD, pBForecast.Image.Width, bounds[0].Lng, bounds[1].Lng);
+            int y = BitmapHandler.GetY(latD, pBForecast.Image.Height, bounds[0].Lat, bounds[1].Lat);
 
-            Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+            try
+            {
+                Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+            }
+            catch
+            {
+                Color c = Color.Transparent;
+            }
 
             lCity.Text = BitmapHandler.GetAdressFromLonLat(lonD, latD);
             lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]";
@@ -333,6 +351,14 @@ namespace Vizualizace_Dat
         {
             gMap.Zoom = gMap.Zoom + 1;
             gMap.Zoom = gMap.Zoom - 1;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            selectedTime = DateTime.Now.AddHours(trackBar1.Value);
+
+            label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+
         }
     }
 }
