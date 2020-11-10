@@ -272,14 +272,14 @@ namespace Vizualizace_Dat
             int x = BitmapHandler.GetX(lonD, pBForecast.Image.Width, bounds[0].Lng, bounds[1].Lng);
             int y = BitmapHandler.GetY(latD, pBForecast.Image.Height, bounds[0].Lat, bounds[1].Lat);
 
+            Color c = Color.Transparent;
+
             try
             {
-                Color c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
+                c = ((Bitmap)pBForecast.Image).GetPixel(x, y);
             }
             catch
-            {
-                Color c = Color.Transparent;
-            }
+            { }
 
             lCity.Text = BitmapHandler.GetAdressFromLonLat(lonD, latD);
             lPrec.Text = $"Srážky: {BitmapHandler.GetPrecipitationFromPixel(c)} [mm]";
@@ -308,9 +308,9 @@ namespace Vizualizace_Dat
                     if (routeP.Count == 2)
                     {
 
-                        List<PointLatLng> routePints = BitmapHandler.GetRoutePoints(routeP[0], routeP[1]);
+                        List<PointLatLng> routePoints = BitmapHandler.GetRoutePoints(routeP[0], routeP[1]);
 
-                        var r = new GMapRoute(routePints, "route");
+                        var r = new GMapRoute(routePoints, "route");
                         routes = new GMapOverlay("routes");
 
                         routes.Routes.Add(r);
@@ -358,6 +358,91 @@ namespace Vizualizace_Dat
             selectedTime = DateTime.Now.AddHours(trackBar1.Value);
 
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+
+        }
+
+        private void getGPXPath(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var fileContent = string.Empty;
+                var filePath = string.Empty;
+
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.InitialDirectory = "c:\\";
+                    openFileDialog.Filter = "gpx files(*.gpx)| *.gpx";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        filePath = openFileDialog.FileName;
+
+                        var fileStream = openFileDialog.OpenFile();
+
+                        using (StreamReader reader = new StreamReader(fileStream))
+                        {
+                            fileContent = reader.ReadToEnd();
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Soubor nelze otevřít a zpracovat");
+                    }
+
+                    List<PointLatLng> routePoints = BitmapHandler.GetRoutePoints(fileContent);
+
+                    if(routePoints.Count < 2)
+                    {
+                        throw new Exception("Nebyl nalezen dostatečný počet bodů");
+                    }
+
+                    gMap.Overlays.Remove(routes);
+                    gMap.Overlays.Remove(markers);
+                    markers.Markers.Remove(marker);
+                    markers.Markers.Remove(marker2);
+
+                    PointLatLng point1 = routePoints[0];
+
+                    marker2 = new GMarkerGoogle(point1, GMarkerGoogleType.red_pushpin);
+
+                    gMap.Overlays.Add(markers);
+                    markers.Markers.Add(marker2);
+
+                    var r = new GMapRoute(routePoints, "route");
+                    routes = new GMapOverlay("routes");
+
+                    routes.Routes.Add(r);
+
+                    gMap.Overlays.Add(routes);
+
+                    PointLatLng point2 = routePoints[routePoints.Count - 1];
+
+                    marker = new GMarkerGoogle(point2, GMarkerGoogleType.red_pushpin);
+
+                    gMap.Overlays.Add(markers);
+                    markers.Markers.Add(marker);
+
+                    routeP.Clear();
+
+                    zoomReload();
+
+                }
+
+                if(fileContent == string.Empty)
+                {
+                    throw new Exception("Soubor nelze otevřít a zpracovat");
+                }
+
+                
+
+            }
+            catch
+            {
+                MessageBox.Show("Vlož gpx soubor!", "Chyba při zpracování gpx souboru", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
     }

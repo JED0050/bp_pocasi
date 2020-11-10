@@ -11,6 +11,7 @@ using System.IO;
 using System.Net.NetworkInformation;
 using GMap.NET;
 using GMap.NET.WindowsForms;
+using System.Xml.Linq;
 
 namespace Vizualizace_Dat
 {
@@ -254,6 +255,24 @@ namespace Vizualizace_Dat
             }
 
             points.Add(end);
+
+            return points;
+        }
+
+        public static List<PointLatLng> GetRoutePoints(string xmlContent)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            XDocument xmlDoc = XDocument.Parse(xmlContent);
+            XNamespace ns = "http://www.topografix.com/GPX/1/1";
+                
+            foreach(XElement x in xmlDoc.Descendants(ns + "trkpt"))
+            {
+                double latD = double.Parse(x.Attribute("lat").Value.Replace('.', ','));
+                double lonD = double.Parse(x.Attribute("lon").Value.Replace('.', ','));
+
+                points.Add(new PointLatLng(latD, lonD));
+            }
 
             return points;
         }

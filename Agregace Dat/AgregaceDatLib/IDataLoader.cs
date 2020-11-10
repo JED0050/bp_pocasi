@@ -26,6 +26,7 @@ namespace AgregaceDatLib
 
     //2. BITMAP
     //http://www.medard-online.cz/
+    //http://www.medard-online.cz/apipreview?run=201108_18&forecast=precip&layer=eu
 
 
 
