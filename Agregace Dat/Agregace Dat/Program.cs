@@ -25,14 +25,10 @@ namespace Agregace_Dat
             Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
             */
 
-            AvgForecast aF = new AvgForecast();
+            BitmapLoader2 bL = new BitmapLoader2();
+            bL.SaveNewDeleteOldBmps(7);
+            bL.GetPrecipitationBitmap(DateTime.Now.AddHours(15));
 
-            PointLonLat p1 = new PointLonLat(12.7606, 51.1035);
-            PointLonLat p2 = new PointLonLat(16.7486, 49.2534);
-
-            aF.Test(p1, p2);
-
-            
         }
 
 
