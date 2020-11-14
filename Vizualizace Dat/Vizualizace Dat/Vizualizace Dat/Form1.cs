@@ -355,7 +355,7 @@ namespace Vizualizace_Dat
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            selectedTime = DateTime.Now.AddHours(trackBar1.Value);
+            selectedTime = DateTime.Now.AddMinutes(trackBar1.Value * 10);
 
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
@@ -363,9 +363,29 @@ namespace Vizualizace_Dat
 
         private void getGPXPath(object sender, EventArgs e)
         {
+            string loaders = null;
+
+            if (checkBox1.Checked)
+                loaders += "b";
+
+            if (checkBox2.Checked)
+                loaders += "x";
+
+            if (checkBox3.Checked)
+                loaders += "j";
 
             try
             {
+                double kmPerMin;    //kolo = 0.25, auto = 1, chůze = 0,06
+
+                FormGpxChooseTravelForm travelMenu = new FormGpxChooseTravelForm();
+                var dialogResult = travelMenu.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                    kmPerMin = FormGpxChooseTravelForm.KmPerMinute;
+                else
+                    throw new Exception("Nebyla zvolena žádní varianta dopravy!");
+
                 var fileContent = string.Empty;
                 var filePath = string.Empty;
 
@@ -399,6 +419,19 @@ namespace Vizualizace_Dat
                         throw new Exception("Nebyl nalezen dostatečný počet bodů");
                     }
 
+                    
+                    double distanceKm = 0;
+
+                    for(int i = 0; i < routePoints.Count - 1; i++)
+                    {
+                        distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]);
+                    }
+
+                    distanceKm /= 1000;
+                    distanceKm = Math.Round(distanceKm, 2);
+
+                    int timeMin = (int)(distanceKm / kmPerMin);
+
                     gMap.Overlays.Remove(routes);
                     gMap.Overlays.Remove(markers);
                     markers.Markers.Remove(marker);
@@ -406,10 +439,26 @@ namespace Vizualizace_Dat
 
                     PointLatLng point1 = routePoints[0];
 
-                    marker2 = new GMarkerGoogle(point1, GMarkerGoogleType.red_pushpin);
+                    Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders, bounds);
+                    int x = BitmapHandler.GetX(point1.Lng, bFor.Width, bounds[0].Lng, bounds[1].Lng);
+                    int y = BitmapHandler.GetY(point1.Lat, bFor.Height, bounds[0].Lat, bounds[1].Lat);
+
+                    Color c = Color.Transparent;
+
+                    try
+                    {
+                        c = bFor.GetPixel(x, y);
+                    }
+                    catch
+                    { }
+
+                    string precVal = BitmapHandler.GetPrecipitationFromPixel(c).ToString();
+
+                    marker = new GMarkerGoogle(point1, GMarkerGoogleType.red_pushpin);
+                    marker.ToolTipText = $"Start\nčas: {selectedTime.ToString("HH:mm - dd. MM.")}\nsrážky: {precVal} mm";
 
                     gMap.Overlays.Add(markers);
-                    markers.Markers.Add(marker2);
+                    markers.Markers.Add(marker);
 
                     var r = new GMapRoute(routePoints, "route");
                     routes = new GMapOverlay("routes");
@@ -420,14 +469,33 @@ namespace Vizualizace_Dat
 
                     PointLatLng point2 = routePoints[routePoints.Count - 1];
 
-                    marker = new GMarkerGoogle(point2, GMarkerGoogleType.red_pushpin);
+                    bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime.AddMinutes(timeMin), loaders, bounds);
+                    x = BitmapHandler.GetX(point2.Lng, bFor.Width, bounds[0].Lng, bounds[1].Lng);
+                    y = BitmapHandler.GetY(point2.Lat, bFor.Height, bounds[0].Lat, bounds[1].Lat);
+
+                    c = Color.Transparent;
+
+                    try
+                    {
+                        c = bFor.GetPixel(x, y);
+                    }
+                    catch
+                    { }
+
+                    precVal = BitmapHandler.GetPrecipitationFromPixel(c).ToString();
+
+                    marker2 = new GMarkerGoogle(point2, GMarkerGoogleType.red_pushpin);
+                    marker2.ToolTipText = $"Cíl\nčas: {selectedTime.AddMinutes(timeMin).ToString("HH: mm - dd.MM.")}\nsrážky: {precVal} mm\n\nvzdálenost: {distanceKm} km\nzabere: {timeMin} min";
 
                     gMap.Overlays.Add(markers);
-                    markers.Markers.Add(marker);
+                    markers.Markers.Add(marker2);
 
                     routeP.Clear();
 
-                    zoomReload();
+                    gMap.Position = routePoints[routePoints.Count / 2];
+
+                    //zoomReload();
+
 
                 }
 

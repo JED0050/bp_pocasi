@@ -158,7 +158,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(771, 396);
+            this.checkBox1.Location = new System.Drawing.Point(771, 363);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(94, 17);
             this.checkBox1.TabIndex = 12;
@@ -170,7 +170,7 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(771, 419);
+            this.checkBox2.Location = new System.Drawing.Point(771, 386);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(84, 17);
             this.checkBox2.TabIndex = 13;
@@ -180,7 +180,7 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(771, 442);
+            this.checkBox3.Location = new System.Drawing.Point(771, 409);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(90, 17);
             this.checkBox3.TabIndex = 14;
@@ -250,7 +250,7 @@
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(754, 312);
-            this.trackBar1.Maximum = 168;
+            this.trackBar1.Maximum = 864;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(242, 45);
             this.trackBar1.TabIndex = 19;

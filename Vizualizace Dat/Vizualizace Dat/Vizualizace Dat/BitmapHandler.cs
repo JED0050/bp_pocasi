@@ -184,9 +184,9 @@ namespace Vizualizace_Dat
         {
             string time = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
 
-            string pointUrl = "";
+            string pointUrl;
 
-            if(bounds[0].Lng == 10.06 && bounds[0].Lat == 51.88 && bounds[1].Lng == 20.21 && bounds[1].Lat == 47.09)
+            if((bounds.Count < 2) || (bounds[0].Lng == 10.06 && bounds[0].Lat == 51.88 && bounds[1].Lng == 20.21 && bounds[1].Lat == 47.09))
             {
                 pointUrl = "";
             }
@@ -303,6 +303,32 @@ namespace Vizualizace_Dat
             bounds.Add(new PointLatLng(mSouth, mEast));
 
             return bounds;
+        }
+
+        public static double GetDistance(PointLatLng p1, PointLatLng p2)
+        {
+            //https://www.movable-type.co.uk/scripts/latlong.html
+
+            double lat1 = p1.Lat;
+            double lon1 = p1.Lng;
+
+            double lat2 = p2.Lat;
+            double lon2 = p2.Lng;
+
+            double R = 6371e3; // metres
+            double φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            double φ2 = lat2 * Math.PI / 180;
+            double Δφ = (lat2 - lat1) * Math.PI / 180;
+            double Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            double a = Math.Sin(Δφ / 2) * Math.Sin(Δφ / 2) +
+              Math.Cos(φ1) * Math.Cos(φ2) *
+              Math.Sin(Δλ / 2) * Math.Sin(Δλ / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            double d = R * c; // in metres
+
+            return d;
         }
     }
 }
