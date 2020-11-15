@@ -21,6 +21,9 @@ namespace AgregaceDatLib
         {
             double precipitation = 0;
 
+            //Color colorWithoutAlfa = Color.FromArgb(0, pixel.R, pixel.G, pixel.B);
+            //int colorValue = colorWithoutAlfa.ToArgb();
+
             /*
             srážky dle RGB barev
 
@@ -49,6 +52,15 @@ namespace AgregaceDatLib
 
             */
 
+            /*
+            if (colorValue < Color.FromArgb(0, 0, 56, 231).ToArgb())
+                precipitation = 0.1;
+            else if (colorValue <= Color.FromArgb(0, 0, 56, 231).ToArgb())
+            {
+                precipitation = 0.4;
+            }
+            */
+            
             if (ColInRange(0, 56, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(0, 167, pixel.B))
                 precipitation = 0;
             else if (ColInRange(0, 48, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(168, 251, pixel.B))
@@ -75,6 +87,7 @@ namespace AgregaceDatLib
                 precipitation = 60;
             else if (ColInRange(150, 255, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 100;
+            
 
             return precipitation;
         }

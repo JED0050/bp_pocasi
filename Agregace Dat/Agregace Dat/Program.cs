@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using AgregaceDatLib;
@@ -27,8 +28,9 @@ namespace Agregace_Dat
 
             BitmapLoader2 bL = new BitmapLoader2();
             bL.SaveNewDeleteOldBmps(7);
-            bL.GetPrecipitationBitmap(DateTime.Now.AddHours(15));
-
+            
+            //Bitmap bmp = bL.GetPrecipitationBitmap(DateTime.Now, new PointLonLat(10.88,51.88), new PointLonLat(20.21,47.09));
+            //bmp.Save("t.bmp", ImageFormat.Bmp);
         }
 
 
