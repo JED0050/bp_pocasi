@@ -35,7 +35,7 @@ namespace AgregaceDatLib
 
         Bitmap GetPrecipitationBitmap(DateTime forTime);
 
-        void SaveNewDeleteOldBmps(int days);
+        void SaveNewDeleteOldBmps();
 
     }
 }

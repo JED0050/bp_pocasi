@@ -32,12 +32,12 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
-        public void SaveForecastBitmaps(int days)
+        public void SaveForecastBitmaps()
         {
 
             Parallel.ForEach(dLs, dL =>
             {
-                dL.SaveNewDeleteOldBmps(days);
+                dL.SaveNewDeleteOldBmps();
             });
 
         }

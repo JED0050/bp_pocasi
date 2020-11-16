@@ -14,6 +14,25 @@ namespace AgregaceDatLib
 
     public class XMLDataLoader : BitmapHelper, DataLoader
     {
+        public XMLDataLoader()
+        {
+            if (!Directory.Exists(GetPathToDataDirectory("")))
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"Yr.no\";
+
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+
+                    Directory.CreateDirectory(loaderDir);
+                }
+                else if (!Directory.Exists(loaderDir))
+                {
+                    Directory.CreateDirectory(loaderDir);
+                }
+            }
+        }
         public Forecast GetForecastByTime(DateTime t, string xmlText)
         {
             Forecast f = new Forecast();
@@ -260,7 +279,7 @@ namespace AgregaceDatLib
             return workingDirectory + @"\Data\Yr.no\" + fileName;
         }
 
-        public void SaveNewDeleteOldBmps(int days)
+        public void SaveNewDeleteOldBmps()  //8 dnů +-
         {
 
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
@@ -282,6 +301,7 @@ namespace AgregaceDatLib
 
             }
 
+            int days = 7;
             int hours = days * 24;
 
             DateTime now = DateTime.Now;

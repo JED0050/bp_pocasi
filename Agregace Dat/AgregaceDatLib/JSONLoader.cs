@@ -16,6 +16,31 @@ namespace AgregaceDatLib
     public class JSONDataLoader : BitmapHelper, DataLoader
     {
 
+        public JSONDataLoader()
+        {
+            if (!Directory.Exists(GetPathToDataDirectory(@"json_cache\")))
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"Openweathermap\";
+                string cacheDir = loaderDir + @"json_cache\";
+
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+                    Directory.CreateDirectory(loaderDir);
+                    Directory.CreateDirectory(cacheDir);
+                }
+                else if (!Directory.Exists(loaderDir))
+                {
+                    Directory.CreateDirectory(loaderDir);
+                    Directory.CreateDirectory(cacheDir);
+                }
+                else if(!Directory.Exists(cacheDir))
+                {
+                    Directory.CreateDirectory(cacheDir);
+                }
+            }
+        }
         public string GetJSON(string url)
         {
             string JSONText = "";
@@ -318,7 +343,7 @@ namespace AgregaceDatLib
             return workingDirectory + @"\Data\Openweathermap\" + fileName;
         }
 
-        public void SaveNewDeleteOldBmps(int days)
+        public void SaveNewDeleteOldBmps() //7dnů +-
         {
             DateTime lastUpdate = DateTime.Now;
 
@@ -368,8 +393,8 @@ namespace AgregaceDatLib
 
             }
 
-            
-            int hours = days * 24;
+            int days = 7;
+            int hours = (days * 24) - 12;   //6.5 dne
 
             DateTime now = DateTime.Now;
             

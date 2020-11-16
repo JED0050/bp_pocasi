@@ -11,11 +11,11 @@ namespace Agregace_Dat
     {
         static void Main(string[] args)
         {
-            /*
+            
             BitmapDataLoader bL = new BitmapDataLoader();
             XMLDataLoader xL = new XMLDataLoader();
             JSONDataLoader jL = new JSONDataLoader();
-            
+            /*
             AvgForecast aF = new AvgForecast();
             aF.Add(bL);
             aF.Add(xL);
@@ -26,10 +26,10 @@ namespace Agregace_Dat
             Console.WriteLine(aF.GetForecast(dT, 50.0680297, 12.8445248).Precipitation);
             */
 
-            BitmapLoader2 bL = new BitmapLoader2();
-            bL.SaveNewDeleteOldBmps(7);
+            BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+            //bL2.SaveNewDeleteOldBmps(7);
             
-            //Bitmap bmp = bL.GetPrecipitationBitmap(DateTime.Now, new PointLonLat(10.88,51.88), new PointLonLat(20.21,47.09));
+            //Bitmap bmp = bL2.GetPrecipitationBitmap(DateTime.Now, new PointLonLat(10.88,51.88), new PointLonLat(20.21,47.09));
             //bmp.Save("t.bmp", ImageFormat.Bmp);
         }
 

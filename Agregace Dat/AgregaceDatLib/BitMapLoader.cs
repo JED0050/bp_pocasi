@@ -8,7 +8,25 @@ namespace AgregaceDatLib
 {
     public class BitmapDataLoader : DataLoader
     {
+        public BitmapDataLoader()
+        {
+            if (!Directory.Exists(GetPathToDataDirectory("")))
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"Radar.bourky\";
 
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+
+                    Directory.CreateDirectory(loaderDir);
+                }
+                else if (!Directory.Exists(loaderDir))
+                {
+                    Directory.CreateDirectory(loaderDir);
+                }
+            }
+        }
         public Bitmap GetBitmap(string url)
         {
 
@@ -31,7 +49,7 @@ namespace AgregaceDatLib
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
 
-            string bitmapName = "RadarBitmap" + forTime.ToString("yyyyMMddHH") + ".bmp";
+            string bitmapName = "RadarBitmap" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if (File.Exists(bitmapPath))
@@ -122,9 +140,28 @@ namespace AgregaceDatLib
             }
         }
 
-        public void SaveNewDeleteOldBmps(int days)
+        public void SaveNewDeleteOldBmps() //1 hodina +- (nepoužitelnéprakticky krom aktuálního počasí)
         {
-            throw new NotImplementedException();
+            DateTime now = DateTime.Now;
+
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+            foreach (var f in dI.GetFiles("*.bmp"))
+            {
+
+                string onlyDateName = f.Name.Substring(0, 11);
+
+                string[] timeParts = onlyDateName.Split("-");
+
+                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+
+                if (dateTime < now) //smazání starých bitmap
+                {
+                    f.Delete();
+                }
+            }
+
+            GetPrecipitationBitmap(now);
+            GetPrecipitationBitmap(now.AddHours(1));
         }
     }
 }

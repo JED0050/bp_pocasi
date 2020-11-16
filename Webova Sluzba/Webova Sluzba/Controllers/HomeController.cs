@@ -22,17 +22,17 @@ namespace Webova_Sluzba.Controllers
         {
             AvgForecast aF = new AvgForecast();
 
-            //BitmapDataLoader bL = new BitmapDataLoader();
+            BitmapDataLoader bL = new BitmapDataLoader();
             XMLDataLoader xL = new XMLDataLoader();
             JSONDataLoader jL = new JSONDataLoader();
+            BitmapDataLoader2 bL2 = new BitmapDataLoader2();
 
-            //aF.Add(bL);
+            aF.Add(bL);
             aF.Add(xL);
             aF.Add(jL);
+            aF.Add(bL2);
 
-            int days = 6;
-
-            aF.SaveForecastBitmaps(days);
+            aF.SaveForecastBitmaps();
 
             return RedirectToAction("Index");
         }

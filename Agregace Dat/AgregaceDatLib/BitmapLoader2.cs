@@ -9,8 +9,29 @@ using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class BitmapLoader2 : DataLoader
+    public class BitmapDataLoader2 : DataLoader
     {
+
+        public BitmapDataLoader2()
+        {
+            if (!Directory.Exists(GetPathToDataDirectory("")))
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"medard-online\";
+
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+
+                    Directory.CreateDirectory(loaderDir);
+                }
+                else if(!Directory.Exists(loaderDir))
+                {
+                    Directory.CreateDirectory(loaderDir);
+                }
+            }
+        }
+
         public Bitmap GetBigPrecipitationBitmap(DateTime forTime)   //všechny data evropa
         {
 
@@ -127,7 +148,7 @@ namespace AgregaceDatLib
             return ResizeBitmap(smallBitmap, 728, 528);
         }
 
-        public void SaveNewDeleteOldBmps(int days)
+        public void SaveNewDeleteOldBmps()  //4 dny +-
         {
             //odstranění starých bitmap
             DateTime now = DateTime.Now;
