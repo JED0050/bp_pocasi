@@ -148,7 +148,7 @@ namespace AgregaceDatLib
             foreach (var f in dI.GetFiles("*.bmp"))
             {
 
-                string onlyDateName = f.Name.Substring(0, 11);
+                string onlyDateName = f.Name.Substring(11, 13);
 
                 string[] timeParts = onlyDateName.Split("-");
 

@@ -177,16 +177,7 @@ namespace Vizualizace_Dat
 
         private void drawBitmapFromServer(object sender, EventArgs e)
         {
-            string loaders = null;
-
-            if (checkBox1.Checked)
-                loaders += "b";
-
-            if (checkBox2.Checked)
-                loaders += "x";
-
-            if (checkBox3.Checked)
-                loaders += "j";
+            string loaders = SetLoaders();
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
@@ -363,16 +354,7 @@ namespace Vizualizace_Dat
 
         private void getGPXPath(object sender, EventArgs e)
         {
-            string loaders = null;
-
-            if (checkBox1.Checked)
-                loaders += "b";
-
-            if (checkBox2.Checked)
-                loaders += "x";
-
-            if (checkBox3.Checked)
-                loaders += "j";
+            string loaders = SetLoaders();
 
             try
             {
@@ -512,6 +494,25 @@ namespace Vizualizace_Dat
                 MessageBox.Show("Vlož gpx soubor!", "Chyba při zpracování gpx souboru", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private string SetLoaders()
+        {
+            string loaders = "";
+
+            if (checkBox1.Checked)
+                loaders += "b1";
+
+            if (checkBox2.Checked)
+                loaders += "x";
+
+            if (checkBox3.Checked)
+                loaders += "j";
+
+            if (checkBox4.Checked)
+                loaders += "b2";
+
+            return loaders;
         }
     }
 }

@@ -99,17 +99,25 @@ namespace Webova_Sluzba.Controllers
                     BitmapDataLoader bL = new BitmapDataLoader();
                     XMLDataLoader xL = new XMLDataLoader();
                     JSONDataLoader jL = new JSONDataLoader();
+                    BitmapDataLoader2 bL2 = new BitmapDataLoader2();
 
                     aF.Add(bL);
                     aF.Add(xL);
                     aF.Add(jL);
+                    aF.Add(bL2);
                 }
                 else
                 {
-                    if(loaders.ToLower().Contains('b'))
+                    if(loaders.ToLower().Contains("b1"))
                     {
                         BitmapDataLoader bL = new BitmapDataLoader();
                         aF.Add(bL);
+                    }
+
+                    if (loaders.ToLower().Contains("b2"))
+                    {
+                        BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+                        aF.Add(bL2);
                     }
 
                     if (loaders.ToLower().Contains('x'))
