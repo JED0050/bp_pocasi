@@ -330,5 +330,26 @@ namespace Vizualizace_Dat
 
             return d;
         }
+
+        public static double GetFullPrecInPoint(DateTime time, PointLatLng point, string type, string loaders, List<PointLatLng> bounds)
+        {
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer(type, time, loaders, bounds);
+
+            int x = BitmapHandler.GetX(point.Lng, bFor.Width, bounds[0].Lng, bounds[1].Lng);
+            int y = BitmapHandler.GetY(point.Lat, bFor.Height, bounds[0].Lat, bounds[1].Lat);
+
+            Color c = Color.Transparent;
+
+            try
+            {
+                c = bFor.GetPixel(x, y);
+            }
+            catch
+            { }
+
+            double precVal = BitmapHandler.GetPrecipitationFromPixel(c);
+
+            return precVal;
+        }
     }
 }
