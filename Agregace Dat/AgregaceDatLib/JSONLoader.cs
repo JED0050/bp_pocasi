@@ -15,7 +15,9 @@ namespace AgregaceDatLib
 {
     public class JSONDataLoader : BitmapHelper, DataLoader
     {
-
+        //bounds
+        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
         public JSONDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory(@"json_cache\")))
@@ -62,8 +64,8 @@ namespace AgregaceDatLib
 
             dynamic jsonForecast = JObject.Parse(JSONtext);
 
-            f.City = jsonForecast.city.name;
-            f.Country = jsonForecast.city.country;
+            //f.City = jsonForecast.city.name;
+            //f.Country = jsonForecast.city.country;
             f.Latitude = jsonForecast.city.coord.lat;
             f.Longitude = jsonForecast.city.coord.lon;
 
@@ -209,9 +211,9 @@ namespace AgregaceDatLib
                     int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
                     int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
 
-                    for (int x = xMin; x <= xMax; x++)
+                    for (int x = xMin; x < xMax; x++)
                     {
-                        for (int y = yMin; y <= yMax; y++)
+                        for (int y = yMin; y < yMax; y++)
                         {
                             Point newPoint = new Point(x, y);
 
@@ -261,15 +263,21 @@ namespace AgregaceDatLib
                 {
                     dynamic jsonElement = JObject.Parse(el.ToString());
 
-                    if (jsonElement.country.ToString() == "CZ")
-                    {
-                        string lat = jsonElement.coord.lat;
-                        string lon = jsonElement.coord.lon;
+                    string sLat = jsonElement.coord.lat;
+                    string sLon = jsonElement.coord.lon;
 
-                        string link = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=ea63080a4f8e99972630d2671e3ef805";
+                    double lat = double.Parse(sLat.Replace(".", ","));
+                    double lon = double.Parse(sLon.Replace(".", ","));
+
+                    if (lat >= botRight.Lat && lat <= topLeft.Lat && lon >= topLeft.Lon && lon <= botRight.Lon)    //hranice mapy 
+                    {
+                        //string link = "https://api.openweathermap.org/data/2.5/forecast?lat=" + sLat + "&lon=" + sLon + "&appid=ea63080a4f8e99972630d2671e3ef805";
+                        string link = "https://api.openweathermap.org/data/2.5/forecast?id=" + jsonElement.id + "&appid=";
 
                         jsonUrls.Add(link);
                     }
+
+
                 });
 
                 using(StreamWriter sw = File.CreateText(filePath))
@@ -290,6 +298,12 @@ namespace AgregaceDatLib
         {
             int c = 0;
 
+            List<string> keys = new List<string>();
+            keys.Add("ea63080a4f8e99972630d2671e3ef805");
+            keys.Add("621f630a81701821a6309170b5ec310f");
+            keys.Add("58efa6edb4c39e14d88acd636986dec5");
+            keys.Add("5c6924655aea1fde4c178d274f5b6afc");
+
             List<string> locations = GetUrls();
             string JSONText;
 
@@ -298,23 +312,29 @@ namespace AgregaceDatLib
 
             string timePart = DateTime.Now.ToString("yyyy-MM-dd-HH");
 
-            foreach (string loc in locations)    //nemá smysl používat vlákna když se musí čekat 60s na stažení 60 souborů - 25 minut běh pro celou ČR
+            for(int i = 0; i < locations.Count; )    //nemá smysl používat vlákna když se musí čekat 60s na stažení 60 souborů - 25 minut běh pro celou ČR
             {
-                try
+                foreach(string key in keys)
                 {
-                    using (var client = new WebClient())
-                        JSONText = client.DownloadString(loc);
-                }
-                catch
-                {
-                    continue;
-                }
 
-                string fileName = timePart + "-" + c + ".txt";
+                    try
+                    {
+                        using (var client = new WebClient())
+                            JSONText = client.DownloadString(locations[i] + key);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
 
-                using (StreamWriter sW = File.CreateText(GetPathToDataDirectory(@"json_cache\" + fileName)))
-                {
-                    sW.Write(JSONText);
+                    string fileName = timePart + "-" + i + ".txt";
+
+                    using (StreamWriter sW = File.CreateText(GetPathToDataDirectory(@"json_cache\" + fileName)))
+                    {
+                        sW.Write(JSONText);
+                    }
+
+                    i++;
                 }
 
                 c++;
@@ -364,7 +384,7 @@ namespace AgregaceDatLib
                 lastUpdate = dateTime;
                 
             }
-
+            
             bool newCacheCreated = false;
             if(lastUpdate < DateTime.Now.AddDays(-1) || dI.GetFiles("*.txt").Length == 0)
             {

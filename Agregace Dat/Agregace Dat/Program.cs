@@ -27,6 +27,8 @@ namespace Agregace_Dat
             */
 
             BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+
+            xL.GetPrecipitationBitmap(DateTime.Now);
             //bL2.SaveNewDeleteOldBmps(7);
             
             //Bitmap bmp = bL2.GetPrecipitationBitmap(DateTime.Now, new PointLonLat(10.88,51.88), new PointLonLat(20.21,47.09));

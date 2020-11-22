@@ -14,6 +14,10 @@ namespace AgregaceDatLib
 
     public class XMLDataLoader : BitmapHelper, DataLoader
     {
+        //bounds
+        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+
         public XMLDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory("")))
@@ -189,9 +193,9 @@ namespace AgregaceDatLib
                     int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
                     int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
 
-                    for (int x = xMin; x <= xMax; x++)
+                    for (int x = xMin; x < xMax; x++)
                     {
-                        for (int y = yMin; y <= yMax; y++)
+                        for (int y = yMin; y < yMax; y++)
                         {
                             Point newPoint = new Point(x, y);
 
@@ -244,12 +248,23 @@ namespace AgregaceDatLib
 
                 Parallel.ForEach(lines, (line, state) =>
                 {
+
                     try
                     {
-                        string url = line.Substring(line.IndexOf("http://www.yr.no/place/Czech_Republic"));
+                        string[] lineParts = line.Split('\t');
 
-                        if (url.Length > 30)
+                        //index 12 - latitude
+                        //index 13 - longitude
+                        //index 15-17 - web url (17 - english url)
+
+                        double lat = double.Parse(lineParts[12].Replace(".", ","));
+                        double lon = double.Parse(lineParts[13].Replace(".", ","));
+
+
+                        if (lat >= botRight.Lat && lat <= topLeft.Lat && lon >= topLeft.Lon && lon <= botRight.Lon)    //hranice mapy 
                         {
+                            string url = lineParts[17];
+
                             czechForecast.Add(url);
                         }
 
@@ -285,6 +300,7 @@ namespace AgregaceDatLib
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
+                
                 string onlyDateName = f.Name.Substring(9, 13);
 
                 string[] timeParts = onlyDateName.Split("-");
@@ -298,6 +314,8 @@ namespace AgregaceDatLib
                 {
                     f.Delete();
                 }
+
+                //f.Delete(); //smazání všech bitmap
 
             }
 

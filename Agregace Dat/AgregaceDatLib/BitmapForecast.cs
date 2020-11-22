@@ -60,14 +60,14 @@ namespace AgregaceDatLib
                 precipitation = 0.4;
             }
             */
-            
+
             if (ColInRange(0, 56, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(0, 167, pixel.B))
                 precipitation = 0;
             else if (ColInRange(0, 48, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(168, 251, pixel.B))
                 precipitation = 0.1;
             else if (ColInRange(0, 0, pixel.R) && ColInRange(0, 107, pixel.G) && ColInRange(193, 252, pixel.B))
                 precipitation = 0.2;
-            else if (ColInRange(0, 0, pixel.R) && ColInRange(108, 159, pixel.G) && ColInRange(1, 192, pixel.B))
+            else if (ColInRange(0, 0, pixel.R) && ColInRange(107, 159, pixel.G) && ColInRange(0, 192, pixel.B))
                 precipitation = 0.4;
             else if (ColInRange(0, 0, pixel.R) && ColInRange(160, 187, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 0.8;
@@ -87,7 +87,7 @@ namespace AgregaceDatLib
                 precipitation = 60;
             else if (ColInRange(150, 255, pixel.R) && ColInRange(0, 0, pixel.G) && ColInRange(0, 0, pixel.B))
                 precipitation = 100;
-            
+
 
             return precipitation;
         }
