@@ -48,15 +48,20 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.button6 = new System.Windows.Forms.Button();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.pGraph = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
+            this.lGraphMax = new System.Windows.Forms.Label();
+            this.lGraphMin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.pGraph.SuspendLayout();
             this.SuspendLayout();
             // 
             // lLonX
             // 
             this.lLonX.AutoSize = true;
             this.lLonX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLonX.Location = new System.Drawing.Point(768, 77);
+            this.lLonX.Location = new System.Drawing.Point(780, 26);
             this.lLonX.Name = "lLonX";
             this.lLonX.Size = new System.Drawing.Size(116, 16);
             this.lLonX.TabIndex = 0;
@@ -66,7 +71,7 @@
             // 
             this.lLatY.AutoSize = true;
             this.lLatY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLatY.Location = new System.Drawing.Point(768, 93);
+            this.lLatY.Location = new System.Drawing.Point(780, 42);
             this.lLatY.Name = "lLatY";
             this.lLatY.Size = new System.Drawing.Size(117, 16);
             this.lLatY.TabIndex = 1;
@@ -88,7 +93,7 @@
             // 
             this.lPrec.AutoSize = true;
             this.lPrec.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPrec.Location = new System.Drawing.Point(768, 135);
+            this.lPrec.Location = new System.Drawing.Point(780, 84);
             this.lPrec.Name = "lPrec";
             this.lPrec.Size = new System.Drawing.Size(109, 16);
             this.lPrec.TabIndex = 3;
@@ -98,7 +103,7 @@
             // 
             this.lCity.AutoSize = true;
             this.lCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCity.Location = new System.Drawing.Point(768, 173);
+            this.lCity.Location = new System.Drawing.Point(780, 122);
             this.lCity.Name = "lCity";
             this.lCity.Size = new System.Drawing.Size(99, 16);
             this.lCity.TabIndex = 4;
@@ -106,7 +111,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(771, 517);
+            this.button1.Location = new System.Drawing.Point(771, 605);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -116,7 +121,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(852, 517);
+            this.button2.Location = new System.Drawing.Point(852, 605);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(87, 23);
             this.button2.TabIndex = 7;
@@ -126,7 +131,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(771, 488);
+            this.button3.Location = new System.Drawing.Point(771, 576);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 8;
@@ -136,7 +141,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(852, 488);
+            this.button4.Location = new System.Drawing.Point(852, 576);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(87, 23);
             this.button4.TabIndex = 9;
@@ -146,7 +151,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(760, 267);
+            this.button5.Location = new System.Drawing.Point(771, 322);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(200, 23);
             this.button5.TabIndex = 10;
@@ -159,7 +164,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(771, 363);
+            this.checkBox1.Location = new System.Drawing.Point(782, 418);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(94, 17);
             this.checkBox1.TabIndex = 12;
@@ -171,7 +176,7 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(771, 386);
+            this.checkBox2.Location = new System.Drawing.Point(782, 441);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(84, 17);
             this.checkBox2.TabIndex = 13;
@@ -181,7 +186,7 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(871, 386);
+            this.checkBox3.Location = new System.Drawing.Point(882, 441);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(90, 17);
             this.checkBox3.TabIndex = 14;
@@ -219,7 +224,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(945, 491);
+            this.radioButton1.Location = new System.Drawing.Point(945, 579);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(43, 17);
             this.radioButton1.TabIndex = 16;
@@ -230,7 +235,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(945, 514);
+            this.radioButton2.Location = new System.Drawing.Point(945, 602);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(51, 17);
             this.radioButton2.TabIndex = 17;
@@ -242,7 +247,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(757, 293);
+            this.label1.Location = new System.Drawing.Point(768, 348);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 16);
             this.label1.TabIndex = 18;
@@ -250,7 +255,7 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(754, 312);
+            this.trackBar1.Location = new System.Drawing.Point(765, 367);
             this.trackBar1.Maximum = 864;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(242, 45);
@@ -259,7 +264,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(852, 459);
+            this.button6.Location = new System.Drawing.Point(852, 547);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(87, 23);
             this.button6.TabIndex = 20;
@@ -270,19 +275,62 @@
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(871, 363);
+            this.checkBox4.Location = new System.Drawing.Point(882, 418);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(100, 17);
             this.checkBox4.TabIndex = 21;
             this.checkBox4.Text = "Bitmap2 Loader";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
+            // pGraph
+            // 
+            this.pGraph.BackColor = System.Drawing.SystemColors.Window;
+            this.pGraph.Controls.Add(this.lGraphMin);
+            this.pGraph.Controls.Add(this.lGraphMax);
+            this.pGraph.Location = new System.Drawing.Point(12, 547);
+            this.pGraph.Name = "pGraph";
+            this.pGraph.Size = new System.Drawing.Size(728, 100);
+            this.pGraph.TabIndex = 22;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(771, 547);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 23;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // lGraphMax
+            // 
+            this.lGraphMax.AutoSize = true;
+            this.lGraphMax.BackColor = System.Drawing.Color.Transparent;
+            this.lGraphMax.Location = new System.Drawing.Point(0, 0);
+            this.lGraphMax.Name = "lGraphMax";
+            this.lGraphMax.Size = new System.Drawing.Size(10, 13);
+            this.lGraphMax.TabIndex = 0;
+            this.lGraphMax.Text = " ";
+            this.lGraphMax.Click += new System.EventHandler(this.lGraphMax_Click);
+            // 
+            // lGraphMin
+            // 
+            this.lGraphMin.AutoSize = true;
+            this.lGraphMin.BackColor = System.Drawing.Color.Transparent;
+            this.lGraphMin.Location = new System.Drawing.Point(0, 87);
+            this.lGraphMin.Name = "lGraphMin";
+            this.lGraphMin.Size = new System.Drawing.Size(10, 13);
+            this.lGraphMin.TabIndex = 1;
+            this.lGraphMin.Text = " ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(1006, 552);
+            this.ClientSize = new System.Drawing.Size(1006, 653);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.pGraph);
             this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.trackBar1);
@@ -308,6 +356,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.pGraph.ResumeLayout(false);
+            this.pGraph.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,6 +385,10 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Panel pGraph;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label lGraphMin;
+        private System.Windows.Forms.Label lGraphMax;
     }
 }
 

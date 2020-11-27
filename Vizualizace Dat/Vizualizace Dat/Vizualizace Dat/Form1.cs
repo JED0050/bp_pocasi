@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -77,6 +78,8 @@ namespace Vizualizace_Dat
             gMap.Overlays.Remove(routes);
 
             routeP.Clear();
+
+            pGraph.Refresh();
         }
 
         private void clearMarkers()
@@ -286,14 +289,28 @@ namespace Vizualizace_Dat
 
             if (canDrawPoint)
             {
-                if(radioButton1.Checked)
+                if (radioButton1.Checked)
                 {
                     clearMarkers();
                     gMap.Overlays.Remove(routes);
 
                     PointLatLng point = new PointLatLng(latD, lonD);
 
-                    string precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, point, "prec", SetLoaders(), bounds).ToString();
+                    string precVal = ""; // = BitmapHandler.GetFullPrecInPoint(selectedTime, point, "prec", SetLoaders(), bounds).ToString();
+
+                    List<double> precValues = new List<double>();
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, "prec", SetLoaders(), bounds);
+
+                        if (i == 0)
+                            precVal = val.ToString();
+
+                        precValues.Add(val);
+                    }
+
+                    DrawGraph(precValues);
 
                     listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin));
                     listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm";
@@ -512,6 +529,70 @@ namespace Vizualizace_Dat
             return loaders;
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double[] ar = new[] { 8.2, 7.4, 3.1, 10, 0, 5.1, 9.2, 5.1, 2.3, 3.4 };
+            List<double> ar2 = new List<double>(ar);
 
+            DrawGraph(ar2);
+        }
+
+        private void DrawGraph(List<double> values)
+        {
+            pGraph.Refresh();
+
+            int panelW = pGraph.Width;
+            int panelH = pGraph.Height;
+
+            Graphics g = pGraph.CreateGraphics();
+
+            Pen p;
+            p = new Pen(Color.Black, 2);
+
+            g.DrawLine(p, 15, 5, 15, (float)panelH - 5);
+            g.DrawLine(p, 15, (float)panelH - 5, (float)panelW - 5, (float)panelH - 5);
+
+            double max = values[0];
+            double min = 0; //values[0];
+
+            foreach(double v in values)
+            {
+                if (max < v)
+                    max = v;
+
+                if (min > v)
+                    min = v;
+            }
+
+            lGraphMax.Text = max.ToString();
+            lGraphMin.Text = min.ToString();
+
+            double recW = (panelW / (values.Count + 1));
+            double recFullH = panelH - 10 - 10;
+
+            int x = 20;
+            int y = 10;
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                SolidBrush brush = new SolidBrush(Color.Blue);
+
+                double perc = values[i] / (double)(max - min);
+
+                double recH = recFullH * perc;
+
+                Rectangle r;
+
+                r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
+                g.FillRectangle(brush, r);
+
+                x += (int)recW + 5;
+            }
+        }
+
+        private void lGraphMax_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
