@@ -88,13 +88,13 @@ namespace AgregaceDatLib
                 
         }
 
-        public void SetXY(Bitmap forBitmap)
+        public void SetXY(int bW, int bH)
         {
             double lonDif = 20.21 - 10.06;
             double latDif = 51.88 - 47.09;
 
-            double PixelLon = lonDif / forBitmap.Width;
-            double PixelLat = latDif / forBitmap.Height;
+            double PixelLon = lonDif / bW;
+            double PixelLat = latDif / bH;
 
             double bY = 51.88;
             double bX = 10.06;
@@ -103,7 +103,7 @@ namespace AgregaceDatLib
             double locLat = DLatitude;
 
             int x;
-            for (x = 0; x < forBitmap.Width; x++)
+            for (x = 0; x < bW; x++)
             {
                 if (bX >= locLon && locLon <= bX + locLon)
                     break;
@@ -114,7 +114,7 @@ namespace AgregaceDatLib
             this.x = x;
 
             int y;
-            for (y = 0; y < forBitmap.Height; y++)
+            for (y = 0; y < bH; y++)
             {
                 if (bY - PixelLat <= locLat && locLat <= bY)
                     break;

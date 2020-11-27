@@ -71,39 +71,13 @@ namespace AgregaceDatLib
 
             JArray jsonForecastArray = (JArray)jsonForecast["list"];
 
-            int counter = 0;
-
-            /*
-            //zaokrouhlení na celou hodinu
-            t.AddMinutes(30);
-            t = new DateTime(t.Year, t.Month, t.Day, t.Hour, 0, 0);
-            */
-
             foreach (var el in jsonForecastArray)
             {
                 dynamic jsonElement = JObject.Parse(el.ToString());
 
-                if (counter == 0)
-                {
-                    f.Temperature = Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15;  //Kelvin na celsius
+                DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
 
-                    try
-                    {
-                        f.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));   //jsonElement.main.rain.3h ?
-                    }
-                    catch
-                    {
-                        f.Precipitation = 0;
-                    }
-
-                    counter++;
-                    continue;
-                }
-
-                DateTime from = DateTime.Parse(jsonElement.dt_txt.ToString());
-                DateTime to = from.AddHours(3); //předpověď v 3 hodinovém okně
-
-                if (t >= from && t <= to)
+                if (t == elementTime)
                 {
                     f.Temperature = Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15;
 
@@ -117,6 +91,7 @@ namespace AgregaceDatLib
                     }
 
                     break;
+
                 }
 
 
@@ -128,9 +103,9 @@ namespace AgregaceDatLib
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
-            DateTime updatedTime = forTime;
+            DateTime updatedTime = new DateTime(forTime.AddMinutes(30).Year, forTime.AddMinutes(30).Month, forTime.AddMinutes(30).Day, forTime.AddMinutes(30).Hour, 0, 0);
 
-            if (updatedTime.Hour % 3 < 1)
+            if (updatedTime.Hour % 3 < 2)
             {
                 updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
             }
@@ -149,6 +124,9 @@ namespace AgregaceDatLib
             }
             else
             {
+                //Stopwatch st = new Stopwatch();
+                //st.Start();
+
                 DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory("json_cache"));
                 FileInfo[] files = dI.GetFiles("*.txt");
 
@@ -156,6 +134,17 @@ namespace AgregaceDatLib
 
                 List<Forecast> forecasts = new List<Forecast>();
 
+                int bH = forBitmap.Height;
+                int bW = forBitmap.Width;
+
+                //st.Stop();
+                //Console.WriteLine("0: " + st.ElapsedMilliseconds / 1000.0);
+                //st.Reset();
+                //st.Start();
+
+                object lockObj = new object();
+
+                //foreach(FileInfo file in files)
                 Parallel.ForEach(files, file =>
                 {
                     string JSONText = "";
@@ -164,11 +153,7 @@ namespace AgregaceDatLib
                     {
                         using (StreamReader sr = file.OpenText())
                         {
-                            string s = "";
-                            while ((s = sr.ReadLine()) != null)
-                            {
-                                JSONText += s;
-                            }
+                            JSONText = sr.ReadToEnd();
                         }
                     }
                     catch
@@ -176,19 +161,35 @@ namespace AgregaceDatLib
                         return;
                     }
 
-                    if (JSONText == "")
-                        return;
+                    Forecast forecast = GetForecastByTime(updatedTime, JSONText);
+                    forecast.SetXY(bW, bH);
 
-                    Forecast f = GetForecastByTime(updatedTime, JSONText);
-
-                    if (f != null)
+                    lock (lockObj)
                     {
-                        forecasts.Add(f);
+                        bool dup = false;
+
+                        foreach(Forecast oldForecast in forecasts)
+                        {
+                            if (forecast.x == oldForecast.x && forecast.y == oldForecast.y)
+                            {
+                                dup = true;
+                                //Console.WriteLine("DUP!");
+                                break;
+                            }
+                        }
+
+                        if(!dup)
+                            forecasts.Add(forecast);
                     }
+
                 });
 
-                foreach (Forecast f in forecasts)
-                    f.SetXY(forBitmap);
+                //st.Stop();
+
+                //Console.WriteLine("1: " + st.ElapsedMilliseconds / 1000.0 + " " + forecasts.Count);
+
+                //st.Reset();
+                //st.Start();
 
                 Triangulator angulator = new Triangulator();
 
@@ -222,6 +223,10 @@ namespace AgregaceDatLib
                         }
                     }
                 }
+
+                //st.Stop();
+
+                //Console.WriteLine("2: " + st.ElapsedMilliseconds);
 
                 forBitmap.Save(bitmapPath, ImageFormat.Bmp);
 
@@ -406,38 +411,227 @@ namespace AgregaceDatLib
                 {
                     f.Delete();
                 }
-                else if (newCacheCreated)  //přemazání bitmap, mazání proběhne pokud byla vytvořená nová cache
-                {
-                    f.Delete();
-                }
 
             }
 
-            int days = 7;
-            int hours = (days * 24) - 12;   //6.5 dne
-
-            DateTime now = DateTime.Now;
-            
-            for (int i = 0; i < hours; i++)
+            if(newCacheCreated)
             {
-                DateTime time = now.AddHours(i);
+                LoadAllBitmapsFromCache();
+            }
+        }
 
-                if (time.Hour % 3 == 0)
+        public List<Forecast> GetAllForecastsFromCache(DateTime now, string JSONtext)
+        {
+            List<Forecast> forecasts = new List<Forecast>();
+
+            //JSONForecast jF = JsonConvert.DeserializeObject<JSONForecast>(JSONtext);
+
+            dynamic jsonForecast = JObject.Parse(JSONtext);
+
+            JArray jsonForecastArray = (JArray)jsonForecast["list"];
+
+            string lon = jsonForecast.city.coord.lon;
+            string lat = jsonForecast.city.coord.lat;
+
+            foreach (var el in jsonForecastArray)
+            {
+                Forecast f = new Forecast();
+                f.Latitude = lat;
+                f.Longitude = lon;
+
+                dynamic jsonElement = JObject.Parse(el.ToString());
+                DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
+
+                if (elementTime < now)
+                    continue;
+
+                f.Time = elementTime;
+
+                f.Temperature = Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15;
+
+                try
                 {
-                    for(int j = 0; j < 10; j++)
-                    {
-                        try
-                        {
-                            GetPrecipitationBitmap(time);
-                            break;
-                        }
-                        catch
-                        {}
-                    }
-                    
+                    f.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));
+                }
+                catch
+                {
+                    f.Precipitation = 0;
                 }
 
+                forecasts.Add(f);
             }
+
+
+            return forecasts;
+        }
+        public void LoadAllBitmapsFromCache()
+        {
+
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory("json_cache"));
+            FileInfo[] files = dI.GetFiles("*.txt");
+
+            DateTime now = DateTime.Now.AddHours(-2);
+
+            List<List<Forecast>> allForecasts = new List<List<Forecast>>();
+
+            int bH = 528;
+            int bW = 728;
+
+            object lockObj = new object();
+
+            //foreach(FileInfo file in files)
+            Parallel.ForEach(files, file =>
+            {
+                string JSONText = "";
+
+                try
+                {
+                    using (StreamReader sr = file.OpenText())
+                    {
+                        JSONText = sr.ReadToEnd();
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+                List<Forecast> newForecasts = GetAllForecastsFromCache(now, JSONText);
+
+                foreach (Forecast f in newForecasts)
+                    f.SetXY(bW, bH);
+
+                lock (lockObj)
+                {
+                    bool dup = false;
+
+                    foreach (List<Forecast> oldForecasts in allForecasts)
+                    {
+                        if (oldForecasts[0].x == newForecasts[0].x && oldForecasts[0].y == newForecasts[0].y)
+                        {
+                            dup = true;
+                        }
+
+                        if (dup)
+                            break;
+                    }
+
+                    if (!dup)
+                        allForecasts.Add(newForecasts);
+                }
+
+            });
+
+            List<List<Forecast>> sortedForecasts = new List<List<Forecast>>();
+
+            for (int j = 0; j < allForecasts[0].Count; j++)
+            {
+                List<Forecast> forecasts = new List<Forecast>();
+
+                foreach (List<Forecast> pointFullForecast in allForecasts)
+                {
+                    forecasts.Add(pointFullForecast[j]);
+                }
+
+                sortedForecasts.Add(forecasts);
+            }
+
+            Parallel.ForEach(sortedForecasts, forecasts => {
+
+                string bitmapName = "JSBitmap" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+                Triangulator angulator = new Triangulator();
+
+                List<Vertex> vertexes = forecasts.ConvertAll(x => (Vertex)x);
+
+                List<Triad> triangles = angulator.Triangulation(vertexes, true);
+
+                Bitmap newBitmap = new Bitmap(bW, bH);
+
+                for (int i = 0; i < triangles.Count; i++)
+                {
+
+                    Triad t = triangles[i];
+
+                    Point p1 = new Point((int)forecasts[t.a].x, (int)forecasts[t.a].y);
+                    Point p2 = new Point((int)forecasts[t.b].x, (int)forecasts[t.b].y);
+                    Point p3 = new Point((int)forecasts[t.c].x, (int)forecasts[t.c].y);
+
+                    Point[] arP = new Point[] { p1, p2, p3 };
+
+                    int xMin = Math.Min(p1.X, Math.Min(p2.X, p3.X));
+                    int xMax = Math.Max(p1.X, Math.Max(p2.X, p3.X));
+                    int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
+                    int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
+
+                    for (int x = xMin; x < xMax; x++)
+                    {
+                        for (int y = yMin; y < yMax; y++)
+                        {
+                            Point newPoint = new Point(x, y);
+
+                            if (PointInTriangle(newPoint, p1, p2, p3))
+                                newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
+                        }
+                    }
+                }
+
+                newBitmap.Save(bitmapPath, ImageFormat.Bmp);
+
+            });
+
+            /*
+            for(int j = 0; j < allForecasts[0].Count; j++)
+            {
+                List<Forecast> forecasts = new List<Forecast>();
+
+                foreach(List<Forecast> pointFullForecast in allForecasts)
+                {
+                    forecasts.Add(pointFullForecast[j]);
+                }
+                
+                string bitmapName = "JSBitmap" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+                Triangulator angulator = new Triangulator();
+
+                List<Vertex> vertexes = forecasts.ConvertAll(x => (Vertex)x);
+
+                List<Triad> triangles = angulator.Triangulation(vertexes, true);
+
+                forBitmap = new Bitmap(728, 528);
+
+                for (int i = 0; i < triangles.Count; i++)
+                {
+
+                    Triad t = triangles[i];
+
+                    Point p1 = new Point((int)forecasts[t.a].x, (int)forecasts[t.a].y);
+                    Point p2 = new Point((int)forecasts[t.b].x, (int)forecasts[t.b].y);
+                    Point p3 = new Point((int)forecasts[t.c].x, (int)forecasts[t.c].y);
+
+                    Point[] arP = new Point[] { p1, p2, p3 };
+
+                    int xMin = Math.Min(p1.X, Math.Min(p2.X, p3.X));
+                    int xMax = Math.Max(p1.X, Math.Max(p2.X, p3.X));
+                    int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
+                    int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
+
+                    for (int x = xMin; x < xMax; x++)
+                    {
+                        for (int y = yMin; y < yMax; y++)
+                        {
+                            Point newPoint = new Point(x, y);
+
+                            if (PointInTriangle(newPoint, p1, p2, p3))
+                                forBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
+                        }
+                    }
+                }
+
+                forBitmap.Save(bitmapPath, ImageFormat.Bmp);
+            }*/
         }
     }
 }
