@@ -49,9 +49,9 @@
             this.button6 = new System.Windows.Forms.Button();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.pGraph = new System.Windows.Forms.Panel();
-            this.button7 = new System.Windows.Forms.Button();
-            this.lGraphMax = new System.Windows.Forms.Label();
             this.lGraphMin = new System.Windows.Forms.Label();
+            this.lGraphMax = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.pGraph.SuspendLayout();
@@ -292,15 +292,15 @@
             this.pGraph.Size = new System.Drawing.Size(728, 100);
             this.pGraph.TabIndex = 22;
             // 
-            // button7
+            // lGraphMin
             // 
-            this.button7.Location = new System.Drawing.Point(771, 547);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 23;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.lGraphMin.AutoSize = true;
+            this.lGraphMin.BackColor = System.Drawing.Color.Transparent;
+            this.lGraphMin.Location = new System.Drawing.Point(0, 87);
+            this.lGraphMin.Name = "lGraphMin";
+            this.lGraphMin.Size = new System.Drawing.Size(10, 13);
+            this.lGraphMin.TabIndex = 1;
+            this.lGraphMin.Text = " ";
             // 
             // lGraphMax
             // 
@@ -313,15 +313,15 @@
             this.lGraphMax.Text = " ";
             this.lGraphMax.Click += new System.EventHandler(this.lGraphMax_Click);
             // 
-            // lGraphMin
+            // button7
             // 
-            this.lGraphMin.AutoSize = true;
-            this.lGraphMin.BackColor = System.Drawing.Color.Transparent;
-            this.lGraphMin.Location = new System.Drawing.Point(0, 87);
-            this.lGraphMin.Name = "lGraphMin";
-            this.lGraphMin.Size = new System.Drawing.Size(10, 13);
-            this.lGraphMin.TabIndex = 1;
-            this.lGraphMin.Text = " ";
+            this.button7.Location = new System.Drawing.Point(771, 547);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 23;
+            this.button7.Text = "test graf";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 

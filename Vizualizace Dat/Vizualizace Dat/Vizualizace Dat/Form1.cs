@@ -79,7 +79,7 @@ namespace Vizualizace_Dat
 
             routeP.Clear();
 
-            pGraph.Refresh();
+            GraphClear();
         }
 
         private void clearMarkers()
@@ -531,7 +531,9 @@ namespace Vizualizace_Dat
 
         private void button7_Click(object sender, EventArgs e)
         {
+            //double[] ar = new[] { 8.2, 7.4, 3.1, 10, 0 };
             double[] ar = new[] { 8.2, 7.4, 3.1, 10, 0, 5.1, 9.2, 5.1, 2.3, 3.4 };
+
             List<double> ar2 = new List<double>(ar);
 
             DrawGraph(ar2);
@@ -539,7 +541,7 @@ namespace Vizualizace_Dat
 
         private void DrawGraph(List<double> values)
         {
-            pGraph.Refresh();
+            GraphClear();
 
             int panelW = pGraph.Width;
             int panelH = pGraph.Height;
@@ -549,8 +551,14 @@ namespace Vizualizace_Dat
             Pen p;
             p = new Pen(Color.Black, 2);
 
-            g.DrawLine(p, 15, 5, 15, (float)panelH - 5);
-            g.DrawLine(p, 15, (float)panelH - 5, (float)panelW - 5, (float)panelH - 5);
+            int recGap = 5;
+            int startSpaceX = 20;
+            int endSpaxeX = 10;
+            int startSpaceY = 10;
+            int endSpaceY = 10;
+
+            g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)panelH - 5);
+            g.DrawLine(p, startSpaceX, (float)panelH - 5, (float)panelW - 5, (float)panelH - 5);
 
             double max = values[0];
             double min = 0; //values[0];
@@ -567,11 +575,11 @@ namespace Vizualizace_Dat
             lGraphMax.Text = max.ToString();
             lGraphMin.Text = min.ToString();
 
-            double recW = (panelW / (values.Count + 1));
-            double recFullH = panelH - 10 - 10;
+            double recW = (double)(panelW - startSpaceX - endSpaxeX - (values.Count - 1) * recGap) / (double)(values.Count);
+            double recFullH = panelH - startSpaceY - endSpaceY;
 
-            int x = 20;
-            int y = 10;
+            int x = startSpaceX + 5;
+            int y = startSpaceY;
 
             for (int i = 0; i < values.Count; i++)
             {
@@ -586,8 +594,15 @@ namespace Vizualizace_Dat
                 r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
                 g.FillRectangle(brush, r);
 
-                x += (int)recW + 5;
+                x += (int)recW + recGap;
             }
+        }
+
+        private void GraphClear()
+        {
+            pGraph.Refresh();
+            lGraphMax.Text = "";
+            lGraphMin.Text = "";
         }
 
         private void lGraphMax_Click(object sender, EventArgs e)

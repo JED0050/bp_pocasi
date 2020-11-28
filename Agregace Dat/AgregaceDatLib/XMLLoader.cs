@@ -114,21 +114,12 @@ namespace AgregaceDatLib
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
-            DateTime updatedTime = forTime;
-
-            if (updatedTime.Hour % 6 < 3)
-            {
-                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 6));
-            }
-            else
-            {
-                updatedTime = updatedTime.AddHours(6 - updatedTime.Hour % 6);
-            }
+            DateTime updatedTime = GetValidTime(forTime);
 
             string bitmapName = "XMLBitmap" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
-            if(File.Exists(bitmapPath))
+            if (File.Exists(bitmapPath))
             {
                 return new Bitmap(bitmapPath);
             }
@@ -306,14 +297,14 @@ namespace AgregaceDatLib
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-                
+
                 string onlyDateName = f.Name.Substring(9, 13);
 
                 string[] timeParts = onlyDateName.Split("-");
 
                 DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
 
-                if(dateTime < DateTime.Now) //smazání starých bitmap
+                if (dateTime < DateTime.Now) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -343,7 +334,7 @@ namespace AgregaceDatLib
                 string lon = "";
                 string lat = "";
 
-                
+
                 foreach (var location in xmlDoc.Descendants("location"))
                 {
                     if (counter == 0)
@@ -362,7 +353,7 @@ namespace AgregaceDatLib
                         break;
                     }
                 }
-                
+
 
                 foreach (var forecast in xmlDoc.Descendants("forecast"))
                 {
@@ -465,19 +456,58 @@ namespace AgregaceDatLib
             for (int j = 0; j < allForecasts[0].Count; j++)
             {
                 List<Forecast> forecasts = new List<Forecast>();
+                bool valid = true;
 
                 foreach (List<Forecast> pointFullForecast in allForecasts)
                 {
-                    forecasts.Add(pointFullForecast[j]);
+                    try
+                    {
+                        if(forecasts.Count > 0)
+                        {
+                            if (forecasts[0].Time == pointFullForecast[j].Time)
+                            {
+                                forecasts.Add(pointFullForecast[j]);
+                                //Console.WriteLine(pointFullForecast[j].Time);
+                            }
+                            else if(j > 0 && forecasts[0].Time == pointFullForecast[j - 1].Time)
+                            {
+                                forecasts.Add(pointFullForecast[j - 1]);
+                                //Console.WriteLine(pointFullForecast[j - 1].Time);
+                            }
+                            else if(j < allForecasts[0].Count && forecasts[0].Time == pointFullForecast[j + 1].Time)
+                            {
+                                forecasts.Add(pointFullForecast[j + 1]);
+                                //Console.WriteLine(pointFullForecast[j + 1].Time);
+                            }
+                        }
+                        else
+                        {
+                            forecasts.Add(pointFullForecast[j]);
+                            //Console.WriteLine(pointFullForecast[j].Time);
+                        }
+                        //forecasts.Add(pointFullForecast[j]);
+
+                        //Console.WriteLine(pointFullForecast[j].Time);
+                    }
+                    catch
+                    {
+                        //Console.WriteLine("REEEE");
+                        valid = false;
+                        break;
+                    }
                 }
 
-                sortedForecasts.Add(forecasts);
+                //Console.WriteLine(forecasts.Count + "\n");
+
+                if (valid)
+                    sortedForecasts.Add(forecasts);
             }
 
-            
             Parallel.ForEach(sortedForecasts, forecasts => {
 
-                string bitmapName = "XMLBitmap" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
+                DateTime forTime = GetValidTime(forecasts[0].Time);
+
+                string bitmapName = "XMLBitmap" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
                 string bitmapPath = GetPathToDataDirectory(bitmapName);
 
                 Triangulator angulator = new Triangulator();
@@ -521,5 +551,24 @@ namespace AgregaceDatLib
             });
 
         }
+
+        private DateTime GetValidTime(DateTime forTime)
+        {
+            forTime = forTime.AddMinutes(30);
+
+            DateTime updatedTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
+
+            if (updatedTime.Hour % 6 < 3)
+            {
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 6));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(6 - updatedTime.Hour % 6);
+            }
+
+            return updatedTime;
+        }
+
     }
 }
