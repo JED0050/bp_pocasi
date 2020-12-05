@@ -5,19 +5,19 @@ using System.Net;
 
 namespace AgregaceDatLib
 {
-    public class BitmapForecast
+    public class BitmapHandler
     {
         public Bitmap Bitmap { get; set; }
 
         public double PixelLon { get; set; }
         public double PixelLat { get; set; }
 
-        public BitmapForecast(Bitmap bitmap)
+        public BitmapHandler(Bitmap bitmap)
         {
             Bitmap = bitmap;
         }
 
-        public double GetPrecipitationFromPixel(Color pixel)
+        public static double GetPrecipitationFromPixel(Color pixel)
         {
             double precipitation = 0;
 
@@ -92,7 +92,7 @@ namespace AgregaceDatLib
             return precipitation;
         }
 
-        private bool ColInRange(int min, int max, int val)
+        private static bool ColInRange(int min, int max, int val)
         {
             return (min <= val) && (val <= max);
         }

@@ -56,7 +56,7 @@ namespace AgregaceDatLib
             Color col = Color.Transparent;
 
             if (Precipitation == 0)
-                col = Color.FromArgb(0, 0, 0);
+                col = Color.FromArgb(255, 0, 0, 0);
             else if (Precipitation > 0 && Precipitation <= 0.1)
                 col = Color.FromArgb(48, 0, 168);
             else if (Precipitation > 0.1 && Precipitation <= 0.2)
@@ -85,7 +85,7 @@ namespace AgregaceDatLib
                 col = Color.FromArgb(160, 0, 0);
 
             return col;
-                
+
         }
 
         public void SetXY(int bW, int bH)
@@ -124,5 +124,6 @@ namespace AgregaceDatLib
 
             this.y = y;
         }
+
     }
 }

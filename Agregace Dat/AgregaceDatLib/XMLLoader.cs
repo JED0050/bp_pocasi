@@ -12,7 +12,7 @@ using DelaunayTriangulator;
 namespace AgregaceDatLib
 {
 
-    public class XMLDataLoader : BitmapHelper, DataLoader
+    public class XMLDataLoader : BitmapCustomDraw, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);

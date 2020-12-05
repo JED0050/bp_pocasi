@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AgregaceDatLib
 {
-    public class AvgForecast : BitmapHelper
+    public class AvgForecast : BitmapCustomDraw
     {
         private List<DataLoader> dLs;
 
@@ -70,7 +70,7 @@ namespace AgregaceDatLib
 
                     foreach(Bitmap b in loaderBitmaps)
                     {
-                        precSum += new BitmapForecast(b).GetPrecipitationFromPixel(b.GetPixel(x,y));
+                        precSum += BitmapHandler.GetPrecipitationFromPixel(b.GetPixel(x,y));
                     }
 
                     avgBitmap.SetPixel(x, y, new Forecast() { Precipitation = precSum / loaderBitmaps.Count }.GetPrecipitationColor());
@@ -160,7 +160,7 @@ namespace AgregaceDatLib
 
         public Forecast GetForecast(DateTime time, double lat, double lon)
         {
-            BitmapForecast bF = new BitmapForecast(GetAvgForecBitmap(time));
+            BitmapHandler bF = new BitmapHandler(GetAvgForecBitmap(time));
 
             Forecast f = bF.GetForecast(time, lat, lon);
 

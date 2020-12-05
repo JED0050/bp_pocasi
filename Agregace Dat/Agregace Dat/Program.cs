@@ -58,14 +58,53 @@ namespace Agregace_Dat
             s.Stop();
             Console.WriteLine(s.ElapsedMilliseconds / 1000.0);
             */
+            /*
+            Dictionary<string, int> dic = new Dictionary<string, int>();
 
-            Stopwatch s = new Stopwatch();
-            s.Start();
+            int x2 = 5;
 
-            xL.LoadAllBitmapsFromUrls();
+            dic.Add("x", x2);
 
-            s.Stop();
-            Console.WriteLine(s.ElapsedMilliseconds / 1000.0);
+            int y2;
+
+            dic.TryGetValue("x", out y2);
+
+            Console.WriteLine(y2);
+            y2 = 3;
+
+            dic["x"] = y2;
+
+            Console.WriteLine(dic["x"]);
+
+            Console.ReadLine();
+            */
+
+            jL.LoadAllBitmapsFromCache();
+
+            //jL.SaveJsonToCache();
+
+
+
+            Bitmap b2 = new Bitmap(728, 528);
+
+            b2.SetPixel(10, 10, Color.FromArgb(255, 0, 0, 1));
+
+            b2.Save("bitmaaaap.bmp", ImageFormat.Bmp);
+
+            b2 = new Bitmap("bitmaaaap.bmp");
+
+            for (int x = 0; x < b2.Width; x++)
+            {
+                for (int y = 0; y < b2.Height; y++)
+                {
+                    if(b2.GetPixel(x,y).ToArgb() != -16777216)
+                    {
+                        Console.WriteLine(b2.GetPixel(x, y));
+                    }
+                }
+            }
+
+
 
         }
 
