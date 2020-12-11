@@ -28,170 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lLonX = new System.Windows.Forms.Label();
-            this.lLatY = new System.Windows.Forms.Label();
-            this.pBForecast = new System.Windows.Forms.PictureBox();
-            this.lPrec = new System.Windows.Forms.Label();
-            this.lCity = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.gMap = new GMap.NET.WindowsForms.GMapControl();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.button6 = new System.Windows.Forms.Button();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.pGraph = new System.Windows.Forms.Panel();
             this.lGraphMin = new System.Windows.Forms.Label();
             this.lGraphMax = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).BeginInit();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.nastaveníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adresaServeruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nastavitVlastníAdresuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vlastníAdresaToolStripMenuItem = new System.Windows.Forms.ToolStripTextBox();
+            this.nastavitVýchozíAdresuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.datovéZdrojeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.pGraph.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lLonX
-            // 
-            this.lLonX.AutoSize = true;
-            this.lLonX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLonX.Location = new System.Drawing.Point(780, 26);
-            this.lLonX.Name = "lLonX";
-            this.lLonX.Size = new System.Drawing.Size(116, 16);
-            this.lLonX.TabIndex = 0;
-            this.lLonX.Text = "[X: 0] Lon: 10.06";
-            // 
-            // lLatY
-            // 
-            this.lLatY.AutoSize = true;
-            this.lLatY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lLatY.Location = new System.Drawing.Point(780, 42);
-            this.lLatY.Name = "lLatY";
-            this.lLatY.Size = new System.Drawing.Size(117, 16);
-            this.lLatY.TabIndex = 1;
-            this.lLatY.Text = "[Y: 0] Lon: 51.88";
-            // 
-            // pBForecast
-            // 
-            this.pBForecast.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pBForecast.Image = global::Vizualizace_Dat.Properties.Resources.RadarBitmap2020100911;
-            this.pBForecast.InitialImage = null;
-            this.pBForecast.Location = new System.Drawing.Point(12, 12);
-            this.pBForecast.Name = "pBForecast";
-            this.pBForecast.Size = new System.Drawing.Size(728, 528);
-            this.pBForecast.TabIndex = 2;
-            this.pBForecast.TabStop = false;
-            this.pBForecast.Click += new System.EventHandler(this.clickInBitmap);
-            // 
-            // lPrec
-            // 
-            this.lPrec.AutoSize = true;
-            this.lPrec.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPrec.Location = new System.Drawing.Point(780, 84);
-            this.lPrec.Name = "lPrec";
-            this.lPrec.Size = new System.Drawing.Size(109, 16);
-            this.lPrec.TabIndex = 3;
-            this.lPrec.Text = "Srážky: 0 [mm]";
-            // 
-            // lCity
-            // 
-            this.lCity.AutoSize = true;
-            this.lCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCity.Location = new System.Drawing.Point(780, 122);
-            this.lCity.Name = "lCity";
-            this.lCity.Size = new System.Drawing.Size(99, 16);
-            this.lCity.TabIndex = 4;
-            this.lCity.Text = "Město: Praha";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(771, 605);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "kreslit body";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.canDrawPointChange);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(852, 605);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(87, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "vymazat body";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.clearAllPoints);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(771, 576);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "bitmapa";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.showDownloadedBitmap);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(852, 576);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(87, 23);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "next bitmap";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.drawDownloadedBitmap);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(771, 322);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(200, 23);
-            this.button5.TabIndex = 10;
-            this.button5.Text = "Bitmap from server";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.drawBitmapFromServer);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(782, 418);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(94, 17);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "Bitmap Loader";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(782, 441);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(84, 17);
-            this.checkBox2.TabIndex = 13;
-            this.checkBox2.Text = "XML Loader";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(882, 441);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(90, 17);
-            this.checkBox3.TabIndex = 14;
-            this.checkBox3.Text = "JSON Loader";
-            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // gMap
             // 
@@ -201,7 +57,7 @@
             this.gMap.GrayScaleMode = false;
             this.gMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gMap.LevelsKeepInMemmory = 5;
-            this.gMap.Location = new System.Drawing.Point(12, 12);
+            this.gMap.Location = new System.Drawing.Point(7, 30);
             this.gMap.MarkersEnabled = true;
             this.gMap.MaxZoom = 2;
             this.gMap.MinZoom = 2;
@@ -218,36 +74,15 @@
             this.gMap.Size = new System.Drawing.Size(728, 528);
             this.gMap.TabIndex = 15;
             this.gMap.Zoom = 0D;
+            this.gMap.Load += new System.EventHandler(this.gMap_Load);
             this.gMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mouseDoubleClickInMap);
             this.gMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMoveInMap);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(945, 579);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(43, 17);
-            this.radioButton1.TabIndex = 16;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "bod";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(945, 602);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(51, 17);
-            this.radioButton2.TabIndex = 17;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "cesta";
-            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(768, 348);
+            this.label1.Location = new System.Drawing.Point(12, 671);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 16);
             this.label1.TabIndex = 18;
@@ -255,39 +90,20 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(765, 367);
+            this.trackBar1.Location = new System.Drawing.Point(8, 695);
             this.trackBar1.Maximum = 864;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(242, 45);
+            this.trackBar1.Size = new System.Drawing.Size(728, 45);
             this.trackBar1.TabIndex = 19;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(852, 547);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(87, 23);
-            this.button6.TabIndex = 20;
-            this.button6.Text = "gpx cesta";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.getGPXPath);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(882, 418);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(100, 17);
-            this.checkBox4.TabIndex = 21;
-            this.checkBox4.Text = "Bitmap2 Loader";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.trackBar1.MouseCaptureChanged += new System.EventHandler(this.trackBar1_MouseCaptureChanged);
             // 
             // pGraph
             // 
             this.pGraph.BackColor = System.Drawing.SystemColors.Window;
             this.pGraph.Controls.Add(this.lGraphMin);
             this.pGraph.Controls.Add(this.lGraphMax);
-            this.pGraph.Location = new System.Drawing.Point(12, 547);
+            this.pGraph.Location = new System.Drawing.Point(8, 563);
             this.pGraph.Name = "pGraph";
             this.pGraph.Size = new System.Drawing.Size(728, 100);
             this.pGraph.TabIndex = 22;
@@ -313,82 +129,128 @@
             this.lGraphMax.Text = " ";
             this.lGraphMax.Click += new System.EventHandler(this.lGraphMax_Click);
             // 
-            // button7
+            // menuStrip1
             // 
-            this.button7.Location = new System.Drawing.Point(771, 547);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 23;
-            this.button7.Text = "test graf";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nastaveníToolStripMenuItem,
+            this.akceToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(741, 24);
+            this.menuStrip1.TabIndex = 23;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // nastaveníToolStripMenuItem
+            // 
+            this.nastaveníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adresaServeruToolStripMenuItem,
+            this.datovéZdrojeToolStripMenuItem});
+            this.nastaveníToolStripMenuItem.Name = "nastaveníToolStripMenuItem";
+            this.nastaveníToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.nastaveníToolStripMenuItem.Text = "Nastavení";
+            // 
+            // adresaServeruToolStripMenuItem
+            // 
+            this.adresaServeruToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nastavitVlastníAdresuToolStripMenuItem,
+            this.nastavitVýchozíAdresuToolStripMenuItem});
+            this.adresaServeruToolStripMenuItem.Name = "adresaServeruToolStripMenuItem";
+            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adresaServeruToolStripMenuItem.Text = "Adresa serveru";
+            // 
+            // nastavitVlastníAdresuToolStripMenuItem
+            // 
+            this.nastavitVlastníAdresuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vlastníAdresaToolStripMenuItem});
+            this.nastavitVlastníAdresuToolStripMenuItem.Name = "nastavitVlastníAdresuToolStripMenuItem";
+            this.nastavitVlastníAdresuToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.nastavitVlastníAdresuToolStripMenuItem.Text = "Nastavit vlastní adresu";
+            // 
+            // vlastníAdresaToolStripMenuItem
+            // 
+            this.vlastníAdresaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.vlastníAdresaToolStripMenuItem.Name = "vlastníAdresaToolStripMenuItem";
+            this.vlastníAdresaToolStripMenuItem.Size = new System.Drawing.Size(180, 23);
+            this.vlastníAdresaToolStripMenuItem.TextChanged += new System.EventHandler(this.vlastníAdresaToolStripMenuItem_TextChanged);
+            // 
+            // nastavitVýchozíAdresuToolStripMenuItem
+            // 
+            this.nastavitVýchozíAdresuToolStripMenuItem.Name = "nastavitVýchozíAdresuToolStripMenuItem";
+            this.nastavitVýchozíAdresuToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.nastavitVýchozíAdresuToolStripMenuItem.Text = "Nastavit výchozí adresu";
+            this.nastavitVýchozíAdresuToolStripMenuItem.Click += new System.EventHandler(this.nastavitVýchozíAdresuToolStripMenuItem_Click);
+            // 
+            // datovéZdrojeToolStripMenuItem
+            // 
+            this.datovéZdrojeToolStripMenuItem.Name = "datovéZdrojeToolStripMenuItem";
+            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.datovéZdrojeToolStripMenuItem.Text = "Datové zdroje";
+            this.datovéZdrojeToolStripMenuItem.Click += new System.EventHandler(this.datovéZdrojeToolStripMenuItem_Click);
+            // 
+            // akceToolStripMenuItem
+            // 
+            this.akceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nahrátCestuZGPXSouboruToolStripMenuItem,
+            this.přemazatMapuToolStripMenuItem});
+            this.akceToolStripMenuItem.Name = "akceToolStripMenuItem";
+            this.akceToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.akceToolStripMenuItem.Text = "Akce";
+            // 
+            // nahrátCestuZGPXSouboruToolStripMenuItem
+            // 
+            this.nahrátCestuZGPXSouboruToolStripMenuItem.Name = "nahrátCestuZGPXSouboruToolStripMenuItem";
+            this.nahrátCestuZGPXSouboruToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.nahrátCestuZGPXSouboruToolStripMenuItem.Text = "Nahrát trasu z GPX souboru";
+            this.nahrátCestuZGPXSouboruToolStripMenuItem.Click += new System.EventHandler(this.nahrátCestuZGPXSouboruToolStripMenuItem_Click);
+            // 
+            // přemazatMapuToolStripMenuItem
+            // 
+            this.přemazatMapuToolStripMenuItem.Name = "přemazatMapuToolStripMenuItem";
+            this.přemazatMapuToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.přemazatMapuToolStripMenuItem.Text = "Přemazat mapu";
+            this.přemazatMapuToolStripMenuItem.Click += new System.EventHandler(this.přemazatMapuToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(1006, 653);
-            this.Controls.Add(this.button7);
+            this.ClientSize = new System.Drawing.Size(741, 743);
             this.Controls.Add(this.pGraph);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.gMap);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.lCity);
-            this.Controls.Add(this.lPrec);
-            this.Controls.Add(this.pBForecast);
-            this.Controls.Add(this.lLatY);
-            this.Controls.Add(this.lLonX);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pBForecast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.pGraph.ResumeLayout(false);
             this.pGraph.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lLonX;
-        private System.Windows.Forms.Label lLatY;
-        private System.Windows.Forms.PictureBox pBForecast;
-        private System.Windows.Forms.Label lPrec;
-        private System.Windows.Forms.Label lCity;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
         private GMap.NET.WindowsForms.GMapControl gMap;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Panel pGraph;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label lGraphMin;
         private System.Windows.Forms.Label lGraphMax;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem nastaveníToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adresaServeruToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem akceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nahrátCestuZGPXSouboruToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem přemazatMapuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nastavitVlastníAdresuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nastavitVýchozíAdresuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox vlastníAdresaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem datovéZdrojeToolStripMenuItem;
     }
 }
 

@@ -105,11 +105,14 @@ namespace AgregaceDatLib
             int x;
             for (x = 0; x < bW; x++)
             {
-                if (bX >= locLon && locLon <= bX + locLon)
+                if (bX >= locLon && locLon <= bX + PixelLon)
                     break;
 
                 bX += PixelLon;
             }
+
+            if (x == bW)
+                x--;
 
             this.x = x;
 
@@ -121,6 +124,9 @@ namespace AgregaceDatLib
 
                 bY -= PixelLat;
             }
+
+            if (y == bH)
+                y--;
 
             this.y = y;
         }

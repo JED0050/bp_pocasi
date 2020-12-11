@@ -17,7 +17,7 @@ namespace Vizualizace_Dat
 {
     class BitmapHandler
     {
-        
+        public static string baseUrl = "https://localhost:44336/";
         public static double GetPrecipitationFromPixel(Color pixel)
         {
             double precipitation = 0;
@@ -195,7 +195,6 @@ namespace Vizualizace_Dat
                 pointUrl = "&p1=" + bounds[0].Lat + "a" + bounds[0].Lng + "&p2=" + bounds[1].Lat + "a" + bounds[1].Lng;
             }
 
-            string baseUrl = "https://localhost:44336/";
             string precUrl = $"forec?type={type}&time={time}&loaders={loaders}" + pointUrl;
             string fullUrl = baseUrl + precUrl;
 

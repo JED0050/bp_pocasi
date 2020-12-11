@@ -79,33 +79,28 @@ namespace Agregace_Dat
             Console.ReadLine();
             */
 
-            jL.LoadAllBitmapsFromCache();
+            //jL.LoadAllBitmapsFromCache();
 
             //jL.SaveJsonToCache();
 
+            Bitmap b = new Bitmap(@"C:\Users\Honza_PC\Desktop\2020-12-10-06-prec.bmp");
 
+            b.SetPixel(0, 0, Color.FromArgb(255, 0, 0, 1));
 
-            Bitmap b2 = new Bitmap(728, 528);
+            int c = 0;
 
-            b2.SetPixel(10, 10, Color.FromArgb(255, 0, 0, 1));
-
-            b2.Save("bitmaaaap.bmp", ImageFormat.Bmp);
-
-            b2 = new Bitmap("bitmaaaap.bmp");
-
-            for (int x = 0; x < b2.Width; x++)
+            for(int x = 0; x < b.Width; x++)
             {
-                for (int y = 0; y < b2.Height; y++)
+                for (int y = 0; y < b.Height; y++)
                 {
-                    if(b2.GetPixel(x,y).ToArgb() != -16777216)
+                    if(b.GetPixel(x,y).ToArgb() != -16777216)
                     {
-                        Console.WriteLine(b2.GetPixel(x, y));
+                        c++;
                     }
                 }
             }
 
-
-
+            Console.WriteLine(c);
         }
 
 
