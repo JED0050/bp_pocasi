@@ -8,6 +8,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GMap.NET;
@@ -29,7 +30,7 @@ namespace Vizualizace_Dat
         private DateTime selectedTime;
         private List<PointLatLng> bounds;
         private Bitmap dataBitmap = new Bitmap(728,528);
-        private string loaders = "xb2";
+        private string loaders = ApkConfig.Loaders;
 
         public Form1()
         {
@@ -47,7 +48,6 @@ namespace Vizualizace_Dat
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -85,16 +85,10 @@ namespace Vizualizace_Dat
 
             int x = coordinates.X;
             int y = coordinates.Y;
-
-            double lon = BitmapHandler.GetLon(x, dataBitmap.Width);
-            double lat = BitmapHandler.GetLat(y, dataBitmap.Height);
-
-            Color c = dataBitmap.GetPixel(x, y);
         }
 
-        private void drawBitmapFromServer(object sender, EventArgs e)
+        private void drawBitmapFromServer()
         {
-            //string loaders = SetLoaders();
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
@@ -149,6 +143,8 @@ namespace Vizualizace_Dat
             }
 
             gMap.Overlays.Add(polygons);
+
+            //gMap.Refresh();
 
             zoomReload();
         }
@@ -208,8 +204,8 @@ namespace Vizualizace_Dat
 
         private void zoomReload()
         {
-            gMap.Zoom = gMap.Zoom + 1;
-            gMap.Zoom = gMap.Zoom - 1;
+            gMap.Zoom = gMap.Zoom + 0.001;
+            gMap.Zoom = gMap.Zoom - 0.001;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -285,11 +281,6 @@ namespace Vizualizace_Dat
             pGraph.Refresh();
             lGraphMax.Text = "";
             lGraphMin.Text = "";
-        }
-
-        private void lGraphMax_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void nahrátCestuZGPXSouboruToolStripMenuItem_Click(object sender, EventArgs e)
@@ -437,7 +428,7 @@ namespace Vizualizace_Dat
 
         private void nastavitVýchozíAdresuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BitmapHandler.baseUrl = "https://localhost:44336/";
+            ApkConfig.ServerAddress = "https://localhost:44336/";
         }
 
         private void gMap_Load(object sender, EventArgs e)
@@ -454,12 +445,36 @@ namespace Vizualizace_Dat
 
         private void vlastníAdresaToolStripMenuItem_TextChanged(object sender, EventArgs e)
         {
-            BitmapHandler.baseUrl = vlastníAdresaToolStripMenuItem.Text;
+            ApkConfig.ServerAddress = vlastníAdresaToolStripMenuItem.Text;
         }
 
         private void trackBar1_MouseCaptureChanged(object sender, EventArgs e)
         {
-            drawBitmapFromServer(sender, e);
+            drawBitmapFromServer();
+        }
+
+        private void bAnim_Click(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                drawBitmapFromServer();
+
+                label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+                label1.Update();
+
+                selectedTime = selectedTime.AddHours(1);
+
+                if(i != 0)
+                    trackBar1.Value += 6;
+
+            }
+
+        }
+
+        private void nastavitVlastníAdresuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            vlastníAdresaToolStripMenuItem.Text = ApkConfig.ServerAddress;
         }
     }
 }

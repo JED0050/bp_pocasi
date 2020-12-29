@@ -44,6 +44,7 @@
             this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bAnim = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.pGraph.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -127,7 +128,6 @@
             this.lGraphMax.Size = new System.Drawing.Size(10, 13);
             this.lGraphMax.TabIndex = 0;
             this.lGraphMax.Text = " ";
-            this.lGraphMax.Click += new System.EventHandler(this.lGraphMax_Click);
             // 
             // menuStrip1
             // 
@@ -165,6 +165,7 @@
             this.nastavitVlastníAdresuToolStripMenuItem.Name = "nastavitVlastníAdresuToolStripMenuItem";
             this.nastavitVlastníAdresuToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.nastavitVlastníAdresuToolStripMenuItem.Text = "Nastavit vlastní adresu";
+            this.nastavitVlastníAdresuToolStripMenuItem.Click += new System.EventHandler(this.nastavitVlastníAdresuToolStripMenuItem_Click);
             // 
             // vlastníAdresaToolStripMenuItem
             // 
@@ -210,12 +211,24 @@
             this.přemazatMapuToolStripMenuItem.Text = "Přemazat mapu";
             this.přemazatMapuToolStripMenuItem.Click += new System.EventHandler(this.přemazatMapuToolStripMenuItem_Click);
             // 
+            // bAnim
+            // 
+            this.bAnim.BackColor = System.Drawing.Color.Lime;
+            this.bAnim.Location = new System.Drawing.Point(703, 666);
+            this.bAnim.Name = "bAnim";
+            this.bAnim.Size = new System.Drawing.Size(32, 23);
+            this.bAnim.TabIndex = 24;
+            this.bAnim.Text = "|>";
+            this.bAnim.UseVisualStyleBackColor = false;
+            this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(741, 743);
+            this.Controls.Add(this.bAnim);
             this.Controls.Add(this.pGraph);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
@@ -251,6 +264,7 @@
         private System.Windows.Forms.ToolStripMenuItem nastavitVýchozíAdresuToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox vlastníAdresaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem datovéZdrojeToolStripMenuItem;
+        private System.Windows.Forms.Button bAnim;
     }
 }
 

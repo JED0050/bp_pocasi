@@ -12,11 +12,13 @@ namespace Vizualizace_Dat
 {
     public partial class FormChooseDataLoaders : Form
     {
-        public static string loaders = "";
+        public static string loaders = ApkConfig.Loaders;
 
         public FormChooseDataLoaders()
         {
             InitializeComponent();
+
+            ChechUncheckLoaders();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,6 +48,31 @@ namespace Vizualizace_Dat
 
             if (checkBox4.Checked)
                 loaders += "b2";
+
+            ApkConfig.Loaders = loaders;
+        }
+
+        private void ChechUncheckLoaders()
+        {
+            if (loaders.Contains("b1"))
+                checkBox1.Checked = true;
+            else
+                checkBox1.Checked = false;
+
+            if (loaders.Contains("x"))
+                checkBox2.Checked = true;
+            else
+                checkBox2.Checked = false;
+
+            if (loaders.Contains("j"))
+                checkBox3.Checked = true;
+            else
+                checkBox3.Checked = false;
+
+            if (loaders.Contains("b2"))
+                checkBox4.Checked = true;
+            else
+                checkBox4.Checked = false;
         }
     }
 }

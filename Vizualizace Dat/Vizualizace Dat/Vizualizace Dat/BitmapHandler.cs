@@ -17,7 +17,7 @@ namespace Vizualizace_Dat
 {
     class BitmapHandler
     {
-        public static string baseUrl = "https://localhost:44336/";
+        public static string baseUrl = ApkConfig.ServerAddress;
         public static double GetPrecipitationFromPixel(Color pixel)
         {
             double precipitation = 0;
