@@ -53,39 +53,7 @@ namespace AgregaceDatLib
 
         public Color GetPrecipitationColor()
         {
-            Color col = Color.Transparent;
-
-            if (Precipitation == 0)
-                col = Color.FromArgb(255, 0, 0, 0);
-            else if (Precipitation > 0 && Precipitation <= 0.1)
-                col = Color.FromArgb(48, 0, 168);
-            else if (Precipitation > 0.1 && Precipitation <= 0.2)
-                col = Color.FromArgb(0, 0, 252);
-            else if (Precipitation > 0.2 && Precipitation <= 0.4)
-                col = Color.FromArgb(0, 108, 192);
-            else if (Precipitation > 0.4 && Precipitation <= 0.8)
-                col = Color.FromArgb(0, 160, 0);
-            else if (Precipitation > 0.8 && Precipitation <= 1)
-                col = Color.FromArgb(0, 188, 0);
-            else if (Precipitation > 1 && Precipitation <= 2)
-                col = Color.FromArgb(52, 216, 0);
-            else if (Precipitation > 2 && Precipitation <= 4)
-                col = Color.FromArgb(156, 220, 0);
-            else if (Precipitation > 4 && Precipitation <= 8)
-                col = Color.FromArgb(224, 220, 0);
-            else if (Precipitation > 8 && Precipitation <= 10)
-                col = Color.FromArgb(252, 176, 0);
-            else if (Precipitation > 10 && Precipitation <= 30)
-                col = Color.FromArgb(252, 132, 0);
-            else if (Precipitation > 30 && Precipitation <= 60)
-                col = Color.FromArgb(252, 88, 0);
-            else if (Precipitation > 60 && Precipitation <= 100)
-                col = Color.FromArgb(252, 0, 0);
-            else if (Precipitation > 100)
-                col = Color.FromArgb(160, 0, 0);
-
-            return col;
-
+            return ColorValueHandler.GetPrecipitationColor(Precipitation);
         }
 
         public void SetXY(int bW, int bH)

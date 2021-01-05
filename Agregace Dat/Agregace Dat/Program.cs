@@ -83,24 +83,7 @@ namespace Agregace_Dat
 
             //jL.SaveJsonToCache();
 
-            Bitmap b = new Bitmap(@"C:\Users\Honza_PC\Desktop\2020-12-10-06-prec.bmp");
-
-            b.SetPixel(0, 0, Color.FromArgb(255, 0, 0, 1));
-
-            int c = 0;
-
-            for(int x = 0; x < b.Width; x++)
-            {
-                for (int y = 0; y < b.Height; y++)
-                {
-                    if(b.GetPixel(x,y).ToArgb() != -16777216)
-                    {
-                        c++;
-                    }
-                }
-            }
-
-            Console.WriteLine(c);
+            bL.GetPrecipitationBitmap(DateTime.Now);
         }
 
 

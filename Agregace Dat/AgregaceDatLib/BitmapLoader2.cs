@@ -203,9 +203,7 @@ namespace AgregaceDatLib
                 {
                     double prec = GetPrecFromColor(allDataBitmap.GetPixel(w,h));
 
-                    Forecast f = new Forecast() { Precipitation = prec };
-
-                    allDataBitmap.SetPixel(w,h, f.GetPrecipitationColor());
+                    allDataBitmap.SetPixel(w,h, ColorValueHandler.GetPrecipitationColor(prec));
                 }
             }
 

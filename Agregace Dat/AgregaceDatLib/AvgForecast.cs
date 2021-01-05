@@ -70,10 +70,10 @@ namespace AgregaceDatLib
 
                     foreach(Bitmap b in loaderBitmaps)
                     {
-                        precSum += BitmapHandler.GetPrecipitationFromPixel(b.GetPixel(x,y));
+                        precSum += ColorValueHandler.GetPrecipitationValue(b.GetPixel(x,y));
                     }
 
-                    avgBitmap.SetPixel(x, y, new Forecast() { Precipitation = precSum / loaderBitmaps.Count }.GetPrecipitationColor());
+                    avgBitmap.SetPixel(x, y, ColorValueHandler.GetPrecipitationColor(precSum / loaderBitmaps.Count));
                 }
             }
 
@@ -156,17 +156,6 @@ namespace AgregaceDatLib
             }
 
             return smallBitmap;
-        }
-
-        public Forecast GetForecast(DateTime time, double lat, double lon)
-        {
-            BitmapHandler bF = new BitmapHandler(GetAvgForecBitmap(time));
-
-            Forecast f = bF.GetForecast(time, lat, lon);
-
-            //Console.WriteLine(f.GetPrecipitationColor());
-
-            return f;
         }
 
     }

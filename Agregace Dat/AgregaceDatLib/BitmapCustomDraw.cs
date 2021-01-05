@@ -50,6 +50,37 @@ namespace AgregaceDatLib
             else
                 w3 = 0;
 
+            double val1 = ColorValueHandler.GetPrecipitationValue(c1);
+            double val2 = ColorValueHandler.GetPrecipitationValue(c2);
+            double val3 = ColorValueHandler.GetPrecipitationValue(c3);
+
+            double avgVal = (w1 * val1 + w2 * val2 + w3 * val3) / (w1 + w2 + w3);
+
+            return ColorValueHandler.GetPrecipitationColor(avgVal);
+        }
+        protected Color GetCollorInTriangleOld(Point p, Point v1, Point v2, Point v3, Color c1, Color c2, Color c3)
+        {
+            double dis1 = Math.Sqrt(Math.Pow(v1.X - p.X, 2) + Math.Pow(v1.Y - p.Y, 2));
+            double dis2 = Math.Sqrt(Math.Pow(v2.X - p.X, 2) + Math.Pow(v2.Y - p.Y, 2));
+            double dis3 = Math.Sqrt(Math.Pow(v3.X - p.X, 2) + Math.Pow(v3.Y - p.Y, 2));
+
+            double w1, w2, w3;
+
+            if (dis1 > 0)
+                w1 = 1 / dis1;
+            else
+                w1 = 0;
+
+            if (dis2 > 0)
+                w2 = 1 / dis2;
+            else
+                w2 = 0;
+
+            if (dis3 > 0)
+                w3 = 1 / dis3;
+            else
+                w3 = 0;
+
 
             double r = (w1 * c1.R + w2 * c2.R + w3 * c3.R) / (w1 + w2 + w3);
 

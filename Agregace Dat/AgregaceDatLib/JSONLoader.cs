@@ -283,7 +283,7 @@ namespace AgregaceDatLib
 
                         Bitmap b = new Bitmap(bmp.Value);
 
-                        Console.WriteLine(bmp.Key);
+                        //Console.WriteLine(bmp.Key);
 
                         b.Save(bmp.Key, ImageFormat.Bmp);
                         //b.Dispose();
@@ -448,7 +448,7 @@ namespace AgregaceDatLib
 
                             Forecast forecast = new Forecast();
 
-                            forecast.Precipitation = BitmapHandler.GetPrecipitationFromPixel(cacheBmp.GetPixel(x, y));
+                            forecast.Precipitation = ColorValueHandler.GetPrecipitationValue(cacheBmp.GetPixel(x, y));
 
                             if (forecast.Precipitation > 0)
                                 hasRain = true;
