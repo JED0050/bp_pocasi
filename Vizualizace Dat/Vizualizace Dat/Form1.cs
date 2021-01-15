@@ -36,6 +36,8 @@ namespace Vizualizace_Dat
         {
             InitializeComponent();
 
+            this.MinimumSize = new Size(800, 600);
+
             gMap.DragButton = MouseButtons.Left;
             gMap.MapProvider = GMapProviders.GoogleMap;
             gMap.MinZoom = 2;
@@ -220,8 +222,8 @@ namespace Vizualizace_Dat
         {
             GraphClear();
 
-            int panelW = pGraph.Width;
-            int panelH = pGraph.Height;
+            //int panelW = pGraph.Width;
+            //int panelH = pGraph.Height;
 
             Graphics g = pGraph.CreateGraphics();
 
@@ -229,58 +231,74 @@ namespace Vizualizace_Dat
             p = new Pen(Color.Black, 2);
 
             int recGap = 5;
-            int startSpaceX = 20;
+            int startSpaceX = 40;
             int endSpaxeX = 10;
             int startSpaceY = 10;
             int endSpaceY = 10;
+            int botLineH = 100;
+            int botLineW = pGraph.Width - 40;
 
-            g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)panelH - 5);
-            g.DrawLine(p, startSpaceX, (float)panelH - 5, (float)panelW - 5, (float)panelH - 5);
+            g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)botLineH - 5);
+            g.DrawLine(p, startSpaceX, (float)botLineH - 5, (float)botLineW - 5, (float)botLineH - 5);
 
-            double max = 30;//values[0];
-            double min = 0; //values[0];
+            double max = 30;
+            double min = 0;
 
-            /*
-            foreach(double v in values)
-            {
-                if (max < v)
-                    max = v;
-
-                if (min > v)
-                    min = v;
-            }*/
-
-            lGraphMax.Text = max.ToString();
-            lGraphMin.Text = min.ToString();
-
-            double recW = (double)(panelW - startSpaceX - endSpaxeX - (values.Count - 1) * recGap) / (double)(values.Count);
-            double recFullH = panelH - startSpaceY - endSpaceY;
+            double recW = (double)(botLineW - startSpaceX - endSpaxeX - (values.Count - 1) * recGap) / (double)(values.Count);
+            double recFullH = botLineH - startSpaceY - endSpaceY;
 
             int x = startSpaceX + 5;
             int y = startSpaceY;
+
+            Font valueFont = new Font("Arial", 10);
+            SolidBrush valueBrush = new SolidBrush(Color.Black);
+
+            DateTime firstDate = selectedTime;
 
             for (int i = 0; i < values.Count; i++)
             {
                 SolidBrush brush = new SolidBrush(Color.Blue);
 
-                double perc = values[i] / (double)(max - min);
+                double perc = (values[i]) / (double)(max - min);
+
+                //if (perc == 0)
+                //    perc = 0.01;
 
                 double recH = recFullH * perc;
 
                 Rectangle r;
 
                 r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
+                
                 g.FillRectangle(brush, r);
+                
+                
+                Point[] point = new Point[] { new Point(x + 7, botLineH) };
+
+                string dateText = firstDate.ToString("dd.MM.yyyy HH:mm");
+
+                g.Transform.TransformPoints(point);
+                g.RotateTransform(20, MatrixOrder.Append);
+                g.TranslateTransform(point[0].X, point[0].Y, MatrixOrder.Append);
+                g.DrawString(dateText, valueFont, valueBrush, 0, 0);
+
+                g.ResetTransform();
 
                 x += (int)recW + recGap;
+
+                firstDate = firstDate.AddHours(1);
             }
+
+            g.DrawString("[°C]", valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
+            g.DrawString("[datetime]", valueFont, valueBrush, botLineW - 30, botLineH);
+
+            g.DrawString(max.ToString(), valueFont, valueBrush, 1, startSpaceY - 10);
+            g.DrawString(min.ToString(), valueFont, valueBrush, 1, botLineH - endSpaceY - 10);
         }
 
         private void GraphClear()
         {
             pGraph.Refresh();
-            lGraphMax.Text = "";
-            lGraphMin.Text = "";
         }
 
         private void nahrátCestuZGPXSouboruToolStripMenuItem_Click(object sender, EventArgs e)
@@ -429,11 +447,6 @@ namespace Vizualizace_Dat
         private void nastavitVýchozíAdresuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.ServerAddress = "https://localhost:44336/";
-        }
-
-        private void gMap_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void datovéZdrojeToolStripMenuItem_Click(object sender, EventArgs e)

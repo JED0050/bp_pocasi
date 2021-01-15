@@ -32,8 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.pGraph = new System.Windows.Forms.Panel();
-            this.lGraphMin = new System.Windows.Forms.Label();
-            this.lGraphMax = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.nastaveníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adresaServeruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,12 +44,14 @@
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bAnim = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            this.pGraph.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gMap
             // 
+            this.gMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gMap.Bearing = 0F;
             this.gMap.CanDragMap = true;
             this.gMap.EmptyTileColor = System.Drawing.Color.Navy;
@@ -72,18 +72,18 @@
             this.gMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gMap.ShowTileGridLines = false;
-            this.gMap.Size = new System.Drawing.Size(728, 528);
+            this.gMap.Size = new System.Drawing.Size(1112, 432);
             this.gMap.TabIndex = 15;
             this.gMap.Zoom = 0D;
-            this.gMap.Load += new System.EventHandler(this.gMap_Load);
             this.gMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mouseDoubleClickInMap);
             this.gMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMoveInMap);
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(12, 671);
+            this.label1.Location = new System.Drawing.Point(12, 634);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 16);
             this.label1.TabIndex = 18;
@@ -91,43 +91,25 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(8, 695);
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.Location = new System.Drawing.Point(8, 658);
             this.trackBar1.Maximum = 864;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(728, 45);
+            this.trackBar1.Size = new System.Drawing.Size(1112, 45);
             this.trackBar1.TabIndex = 19;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             this.trackBar1.MouseCaptureChanged += new System.EventHandler(this.trackBar1_MouseCaptureChanged);
             // 
             // pGraph
             // 
+            this.pGraph.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pGraph.BackColor = System.Drawing.SystemColors.Window;
-            this.pGraph.Controls.Add(this.lGraphMin);
-            this.pGraph.Controls.Add(this.lGraphMax);
-            this.pGraph.Location = new System.Drawing.Point(8, 563);
+            this.pGraph.Location = new System.Drawing.Point(8, 468);
             this.pGraph.Name = "pGraph";
-            this.pGraph.Size = new System.Drawing.Size(728, 100);
+            this.pGraph.Size = new System.Drawing.Size(1112, 150);
             this.pGraph.TabIndex = 22;
-            // 
-            // lGraphMin
-            // 
-            this.lGraphMin.AutoSize = true;
-            this.lGraphMin.BackColor = System.Drawing.Color.Transparent;
-            this.lGraphMin.Location = new System.Drawing.Point(0, 87);
-            this.lGraphMin.Name = "lGraphMin";
-            this.lGraphMin.Size = new System.Drawing.Size(10, 13);
-            this.lGraphMin.TabIndex = 1;
-            this.lGraphMin.Text = " ";
-            // 
-            // lGraphMax
-            // 
-            this.lGraphMax.AutoSize = true;
-            this.lGraphMax.BackColor = System.Drawing.Color.Transparent;
-            this.lGraphMax.Location = new System.Drawing.Point(0, 0);
-            this.lGraphMax.Name = "lGraphMax";
-            this.lGraphMax.Size = new System.Drawing.Size(10, 13);
-            this.lGraphMax.TabIndex = 0;
-            this.lGraphMax.Text = " ";
             // 
             // menuStrip1
             // 
@@ -136,7 +118,7 @@
             this.akceToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(741, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1125, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -155,7 +137,7 @@
             this.nastavitVlastníAdresuToolStripMenuItem,
             this.nastavitVýchozíAdresuToolStripMenuItem});
             this.adresaServeruToolStripMenuItem.Name = "adresaServeruToolStripMenuItem";
-            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.adresaServeruToolStripMenuItem.Text = "Adresa serveru";
             // 
             // nastavitVlastníAdresuToolStripMenuItem
@@ -184,7 +166,7 @@
             // datovéZdrojeToolStripMenuItem
             // 
             this.datovéZdrojeToolStripMenuItem.Name = "datovéZdrojeToolStripMenuItem";
-            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.datovéZdrojeToolStripMenuItem.Text = "Datové zdroje";
             this.datovéZdrojeToolStripMenuItem.Click += new System.EventHandler(this.datovéZdrojeToolStripMenuItem_Click);
             // 
@@ -213,8 +195,9 @@
             // 
             // bAnim
             // 
+            this.bAnim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bAnim.BackColor = System.Drawing.Color.Lime;
-            this.bAnim.Location = new System.Drawing.Point(703, 666);
+            this.bAnim.Location = new System.Drawing.Point(1087, 629);
             this.bAnim.Name = "bAnim";
             this.bAnim.Size = new System.Drawing.Size(32, 23);
             this.bAnim.TabIndex = 24;
@@ -227,7 +210,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(741, 743);
+            this.ClientSize = new System.Drawing.Size(1125, 706);
             this.Controls.Add(this.bAnim);
             this.Controls.Add(this.pGraph);
             this.Controls.Add(this.trackBar1);
@@ -238,8 +221,6 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            this.pGraph.ResumeLayout(false);
-            this.pGraph.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -252,8 +233,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Panel pGraph;
-        private System.Windows.Forms.Label lGraphMin;
-        private System.Windows.Forms.Label lGraphMax;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem nastaveníToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adresaServeruToolStripMenuItem;
