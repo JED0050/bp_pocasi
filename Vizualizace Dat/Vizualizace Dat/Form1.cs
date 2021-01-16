@@ -31,6 +31,9 @@ namespace Vizualizace_Dat
         private List<PointLatLng> bounds;
         private Bitmap dataBitmap = new Bitmap(728,528);
         private string loaders = ApkConfig.Loaders;
+        private FormWindowState lastWindowState = FormWindowState.Normal;
+        private Size appSize = new Size(800, 600);
+        private List<double> graphValues = new List<double>();
 
         public Form1()
         {
@@ -78,15 +81,6 @@ namespace Vizualizace_Dat
             }
 
             listMarkers.Clear();
-        }
-
-        private void clickInBitmap(object sender, EventArgs e)
-        {
-            MouseEventArgs me = (MouseEventArgs)e;
-            Point coordinates = me.Location;
-
-            int x = coordinates.X;
-            int y = coordinates.Y;
         }
 
         private void drawBitmapFromServer()
@@ -194,7 +188,9 @@ namespace Vizualizace_Dat
                 precValues.Add(val);
             }
 
-            DrawGraph(precValues);
+            graphValues = precValues;
+
+            DrawGraph();
 
             listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin));
             listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm";
@@ -218,9 +214,16 @@ namespace Vizualizace_Dat
             
         }
 
-        private void DrawGraph(List<double> values)
+        private void DrawGraph()
         {
-            GraphClear();
+            
+            if (graphValues.Count == 0)
+            {
+                GraphClear();
+                return;
+            }
+
+            pGraph.Refresh();
 
             //int panelW = pGraph.Width;
             //int panelH = pGraph.Height;
@@ -244,7 +247,7 @@ namespace Vizualizace_Dat
             double max = 30;
             double min = 0;
 
-            double recW = (double)(botLineW - startSpaceX - endSpaxeX - (values.Count - 1) * recGap) / (double)(values.Count);
+            double recW = (double)(botLineW - startSpaceX - endSpaxeX - (graphValues.Count - 1) * recGap) / (double)(graphValues.Count);
             double recFullH = botLineH - startSpaceY - endSpaceY;
 
             int x = startSpaceX + 5;
@@ -255,11 +258,11 @@ namespace Vizualizace_Dat
 
             DateTime firstDate = selectedTime;
 
-            for (int i = 0; i < values.Count; i++)
+            for (int i = 0; i < graphValues.Count; i++)
             {
                 SolidBrush brush = new SolidBrush(Color.Blue);
 
-                double perc = (values[i]) / (double)(max - min);
+                double perc = (graphValues[i]) / (double)(max - min);
 
                 //if (perc == 0)
                 //    perc = 0.01;
@@ -299,6 +302,7 @@ namespace Vizualizace_Dat
         private void GraphClear()
         {
             pGraph.Refresh();
+            graphValues = new List<double>();
         }
 
         private void nahrátCestuZGPXSouboruToolStripMenuItem_Click(object sender, EventArgs e)
@@ -488,6 +492,38 @@ namespace Vizualizace_Dat
         private void nastavitVlastníAdresuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             vlastníAdresaToolStripMenuItem.Text = ApkConfig.ServerAddress;
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+
+            if (this.Size != appSize)
+            {
+                appSize = this.Size;
+
+                DrawGraph();
+            }
+
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {           
+            
+            if (WindowState != lastWindowState)
+            {
+                lastWindowState = WindowState;
+
+                if (WindowState == FormWindowState.Maximized)   //kliknutí na fullscreen talčítko
+                {
+                    DrawGraph();
+                }
+
+                else if (WindowState == FormWindowState.Normal)   //vrácení z fullscreenu do menšího okna
+                {
+                    DrawGraph();
+                }
+            }
+            
         }
     }
 }
