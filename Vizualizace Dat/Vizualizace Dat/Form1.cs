@@ -33,7 +33,7 @@ namespace Vizualizace_Dat
         private string loaders = ApkConfig.Loaders;
         private FormWindowState lastWindowState = FormWindowState.Normal;
         private Size appSize = new Size(800, 600);
-        private List<double> graphValues = new List<double>();
+        private List<GraphElement> graphCols = new List<GraphElement>();
 
         public Form1()
         {
@@ -176,7 +176,7 @@ namespace Vizualizace_Dat
 
             string precVal = ""; // = BitmapHandler.GetFullPrecInPoint(selectedTime, point, "prec", SetLoaders(), bounds).ToString();
 
-            List<double> precValues = new List<double>();
+            graphCols = new List<GraphElement>();
 
             for (int i = 0; i < 10; i++)
             {
@@ -185,10 +185,8 @@ namespace Vizualizace_Dat
                 if (i == 0)
                     precVal = val.ToString();
 
-                precValues.Add(val);
+                graphCols.Add(new GraphElement(val, selectedTime.AddHours(i)));
             }
-
-            graphValues = precValues;
 
             DrawGraph();
 
@@ -217,7 +215,7 @@ namespace Vizualizace_Dat
         private void DrawGraph()
         {
             
-            if (graphValues.Count == 0)
+            if (graphCols.Count == 0)
             {
                 GraphClear();
                 return;
@@ -247,7 +245,7 @@ namespace Vizualizace_Dat
             double max = 30;
             double min = 0;
 
-            double recW = (double)(botLineW - startSpaceX - endSpaxeX - (graphValues.Count - 1) * recGap) / (double)(graphValues.Count);
+            double recW = (double)(botLineW - startSpaceX - endSpaxeX - (graphCols.Count - 1) * recGap) / (double)(graphCols.Count);
             double recFullH = botLineH - startSpaceY - endSpaceY;
 
             int x = startSpaceX + 5;
@@ -258,11 +256,11 @@ namespace Vizualizace_Dat
 
             DateTime firstDate = selectedTime;
 
-            for (int i = 0; i < graphValues.Count; i++)
+            for (int i = 0; i < graphCols.Count; i++)
             {
                 SolidBrush brush = new SolidBrush(Color.Blue);
 
-                double perc = (graphValues[i]) / (double)(max - min);
+                double perc = (graphCols[i].Value) / (double)(max - min);
 
                 //if (perc == 0)
                 //    perc = 0.01;
@@ -278,7 +276,7 @@ namespace Vizualizace_Dat
                 
                 Point[] point = new Point[] { new Point(x + 7, botLineH) };
 
-                string dateText = firstDate.ToString("dd.MM.yyyy HH:mm");
+                string dateText = graphCols[i].TimeInfo;
 
                 g.Transform.TransformPoints(point);
                 g.RotateTransform(20, MatrixOrder.Append);
@@ -302,7 +300,7 @@ namespace Vizualizace_Dat
         private void GraphClear()
         {
             pGraph.Refresh();
-            graphValues = new List<double>();
+            graphCols = new List<GraphElement>();
         }
 
         private void nahrátCestuZGPXSouboruToolStripMenuItem_Click(object sender, EventArgs e)
@@ -357,7 +355,7 @@ namespace Vizualizace_Dat
                     gMap.Overlays.Remove(routes);
                     clearMarkers();
 
-                    int numberOfPoints = 5; //včetně začátku a cíle
+                    int numberOfPoints = 10; //včetně začátku a cíle
                     int step = routePoints.Count / (numberOfPoints - 1);
 
                     double distanceKm = 0;
@@ -376,7 +374,9 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointStart = routePoints[i];
 
-                            string precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, "prec", loaders, bounds).ToString();
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, "prec", loaders, bounds);
+
+                            graphCols.Add(new GraphElement(precVal, selectedTime, 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_pushpin));
                             listMarkers[0].ToolTipText = $"Start\nčas: {selectedTime.ToString("HH:mm - dd. MM.")}\nsrážky: {precVal} mm";
@@ -390,8 +390,10 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            string precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, "prec", loaders, bounds).ToString();
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, "prec", loaders, bounds);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                            graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_pushpin));
                             listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
@@ -407,8 +409,10 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            string precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, "prec", loaders, bounds).ToString();
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, "prec", loaders, bounds);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                            graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_pushpin));
                             listMarkers[listMarkers.Count - 1].ToolTipText = $"čas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
@@ -422,6 +426,8 @@ namespace Vizualizace_Dat
                     routeP.Clear();
 
                     gMap.Position = routePoints[routePoints.Count / 2];
+
+                    DrawGraph();
 
                 }
 
