@@ -89,6 +89,8 @@ namespace Vizualizace_Dat
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
             Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders, bounds);
+            //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\XMLBitmap2021-01-22-00.bmp");
+            //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\download.png");
 
             dataBitmap = bFor;
 
@@ -116,12 +118,22 @@ namespace Vizualizace_Dat
                         continue;
                     }
 
+                    double oldBY = bY;
+                    bool samePixelFound = false;
+
+                    while (y < bH && c == bFor.GetPixel(x, y))
+                    {
+                        bY -= pixelLat;
+                        y++;
+                        samePixelFound = true;
+                    }
+
 
                     List<PointLatLng> points = new List<PointLatLng>();
-                    points.Add(new PointLatLng(bY, bX));
+                    points.Add(new PointLatLng(oldBY, bX));
                     points.Add(new PointLatLng(bY - pixelLat, bX));
                     points.Add(new PointLatLng(bY - pixelLat, bX + pixelLon));
-                    points.Add(new PointLatLng(bY, bX + pixelLon));
+                    points.Add(new PointLatLng(oldBY, bX + pixelLon));
 
                     var polygon = new GMapPolygon(points, "pixel")
                     {
@@ -131,16 +143,18 @@ namespace Vizualizace_Dat
 
                     polygons.Polygons.Add(polygon);
 
+                    if (!samePixelFound)
+                    {
+                        bY -= pixelLat;
+                    }
 
-                    bY -= pixelLat;
                 }
 
                 bX += pixelLon;
+
             }
 
             gMap.Overlays.Add(polygons);
-
-            //gMap.Refresh();
 
             zoomReload();
         }
