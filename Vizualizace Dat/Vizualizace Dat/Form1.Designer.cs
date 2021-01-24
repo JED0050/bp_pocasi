@@ -43,6 +43,8 @@
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bAnim = new System.Windows.Forms.Button();
+            this.rBPrec = new System.Windows.Forms.RadioButton();
+            this.rBTemp = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -205,12 +207,38 @@
             this.bAnim.UseVisualStyleBackColor = false;
             this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
             // 
+            // rBPrec
+            // 
+            this.rBPrec.AutoSize = true;
+            this.rBPrec.BackColor = System.Drawing.SystemColors.Control;
+            this.rBPrec.Checked = true;
+            this.rBPrec.Location = new System.Drawing.Point(12, 35);
+            this.rBPrec.Name = "rBPrec";
+            this.rBPrec.Size = new System.Drawing.Size(82, 17);
+            this.rBPrec.TabIndex = 25;
+            this.rBPrec.TabStop = true;
+            this.rBPrec.Text = "Srážky [mm]";
+            this.rBPrec.UseVisualStyleBackColor = false;
+            // 
+            // rBTemp
+            // 
+            this.rBTemp.AutoSize = true;
+            this.rBTemp.BackColor = System.Drawing.SystemColors.Control;
+            this.rBTemp.Location = new System.Drawing.Point(12, 58);
+            this.rBTemp.Name = "rBTemp";
+            this.rBTemp.Size = new System.Drawing.Size(81, 17);
+            this.rBTemp.TabIndex = 26;
+            this.rBTemp.Text = "Teplota [°C]";
+            this.rBTemp.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 706);
+            this.Controls.Add(this.rBTemp);
+            this.Controls.Add(this.rBPrec);
             this.Controls.Add(this.bAnim);
             this.Controls.Add(this.pGraph);
             this.Controls.Add(this.trackBar1);
@@ -246,6 +274,8 @@
         private System.Windows.Forms.ToolStripTextBox vlastníAdresaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem datovéZdrojeToolStripMenuItem;
         private System.Windows.Forms.Button bAnim;
+        private System.Windows.Forms.RadioButton rBPrec;
+        private System.Windows.Forms.RadioButton rBTemp;
     }
 }
 

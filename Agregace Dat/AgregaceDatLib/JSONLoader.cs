@@ -535,5 +535,10 @@ namespace AgregaceDatLib
 
             });
         }
+
+        public Bitmap GetTemperatureBitmap(DateTime forTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

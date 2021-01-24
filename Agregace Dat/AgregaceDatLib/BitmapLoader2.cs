@@ -32,28 +32,42 @@ namespace AgregaceDatLib
             }
         }
 
-        public Bitmap GetBigPrecipitationBitmap(DateTime forTime)   //všechny data evropa
+        public Bitmap GetBigForecastBitmap(DateTime forTime, string type)
         {
-
             forTime = forTime.AddMinutes(30);
             forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
 
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-                string onlyDateName = f.Name.Substring(0, 13);
-
-                string[] timeParts = onlyDateName.Split("-");
-
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
-
-                if (dateTime == forTime)
+                if (f.Name.StartsWith(type + "-"))
                 {
-                    return new Bitmap(f.FullName);
+
+                    string onlyDateName = f.Name.Split('.')[0];
+
+                    string[] timeParts = onlyDateName.Split("-");
+
+                    DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
+
+                    if (dateTime == forTime)
+                    {
+                        return new Bitmap(f.FullName);
+                    }
+
                 }
             }
 
             throw new Exception("Bitmapa pro požadovaný čas nebyla nalezena");
+        }
+
+        public Bitmap GetBigPrecipitationBitmap(DateTime forTime)   //všechny data srážek evropa
+        {
+            return GetBigForecastBitmap(forTime, "prec");
+        }
+
+        public Bitmap GetBigTemperatureBitmap(DateTime forTime)   //všechny data srážek evropa
+        {
+            return GetBigForecastBitmap(forTime, "temp");
         }
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)  //celá ČR
@@ -61,20 +75,18 @@ namespace AgregaceDatLib
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight  = new PointLonLat(20.21, 47.09);
 
-            return GetPrecipitationBitmap(forTime, topLeft, botRight);
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime));
         }
 
-        public Bitmap GetPrecipitationBitmap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight)
+        public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap)
         {
-
-            Bitmap image = GetBigPrecipitationBitmap(forTime);
 
             //56.13636792495879 -21.123962402343754 - levý horní bod
             //56.134837449127744 41.11633300781251 - pravý horní bod
             //33.25246979589199 29.696044921875 - pravý dolní bod
             //59.68195494710389 9.96940612792969 - střed horní bod
 
-            Bitmap bigBitmap = ResizeBitmap(image, 980, 600);
+            Bitmap bigBitmap = ResizeBitmap(fullBitmap, 980, 600);
 
             Point p1 = new Point();
             Point p2 = new Point();
@@ -157,11 +169,11 @@ namespace AgregaceDatLib
             foreach (var f in dI.GetFiles("*.bmp"))
             {
 
-                string onlyDateName = f.Name.Substring(0, 13);
+                string onlyDateName = f.Name.Split('.')[0];
 
                 string[] timeParts = onlyDateName.Split("-");
 
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
 
                 if (dateTime < now) //smazání starých bitmap
                 {
@@ -171,7 +183,8 @@ namespace AgregaceDatLib
 
             //vytvoření nových bitmap
 
-            Bitmap allDataBitmap = new Bitmap(1,1);
+            Bitmap allDataPrecipBitmap = new Bitmap(1,1);
+            Bitmap allDataTempBitmap = new Bitmap(1, 1);
 
             DateTime bitmapTime = now;
 
@@ -180,11 +193,15 @@ namespace AgregaceDatLib
             for(int i = 0; i < 8; i++)
             {           
                 string timePart = bitmapTime.ToString("yyMMdd_HH");    //201112_12
-                string url = @"http://www.medard-online.cz/apipreview?run=" + timePart + @"&forecast=precip&layer=eu";
-                
+
+                string baseUrl = @"http://www.medard-online.cz/apipreview?run=";
+                string precipUrl = baseUrl + timePart + @"&forecast=precip&layer=eu";
+                string tempUrl = baseUrl + timePart + @"&forecast=temp&layer=eu";
+
                 try
                 {
-                    allDataBitmap = GetBitmap(url);
+                    allDataPrecipBitmap = GetBitmap(precipUrl);
+                    allDataTempBitmap = GetBitmap(tempUrl);
                     break;
                 }
                 catch
@@ -195,26 +212,25 @@ namespace AgregaceDatLib
                 bitmapTime = bitmapTime.AddHours(-6);
             }
 
-            //
-
-            for(int w = 0; w < allDataBitmap.Width; w++)
-            {
-                for(int h = 0; h < allDataBitmap.Height; h++)
-                {
-                    double prec = GetPrecFromColor(allDataBitmap.GetPixel(w,h));
-
-                    allDataBitmap.SetPixel(w,h, ColorValueHandler.GetPrecipitationColor(prec));
-                }
-            }
-
-
-            if(allDataBitmap.Width == 1 || allDataBitmap.Height == 1)
+            if (allDataPrecipBitmap.Width == 1 || allDataPrecipBitmap.Height == 1 || allDataTempBitmap.Width == 1 || allDataTempBitmap.Height == 1)
             {
                 throw new Exception("Nebyla nalezena žádná bitmapa s daty o počasí");
             }
 
-            int sBW = allDataBitmap.Width / 10;
-            int sBH = allDataBitmap.Height / 8;
+            //přebarvení kvůli použití různých škál
+
+            for (int w = 0; w < allDataPrecipBitmap.Width; w++)
+            {
+                for(int h = 0; h < allDataPrecipBitmap.Height; h++)
+                {
+                    double prec = GetPrecFromColor(allDataPrecipBitmap.GetPixel(w,h));
+
+                    allDataPrecipBitmap.SetPixel(w,h, ColorValueHandler.GetPrecipitationColor(prec));
+                }
+            }
+
+            int sBW = allDataPrecipBitmap.Width / 10;
+            int sBH = allDataPrecipBitmap.Height / 8;
 
             int nBW = 0;
             int nBH = 0;
@@ -225,7 +241,8 @@ namespace AgregaceDatLib
                 if (bitmapTime >= now)
                 {
 
-                    Bitmap newBmp = new Bitmap(sBW, sBH);
+                    Bitmap newPrecBmp = new Bitmap(sBW, sBH);
+                    Bitmap newTempBmp = new Bitmap(sBW, sBH);
 
                     int tmpX = 0;
                     for(int w = nBW; w < nBW + sBW; w++)
@@ -235,9 +252,11 @@ namespace AgregaceDatLib
 
                         for (int h = nBH; h < nBH + sBH; h++)
                         {
-                            Color c = allDataBitmap.GetPixel(w, h);
+                            Color c = allDataPrecipBitmap.GetPixel(w, h);
+                            newPrecBmp.SetPixel(tmpX, tmpY, c);
 
-                            newBmp.SetPixel(tmpX, tmpY, c);
+                            c = allDataTempBitmap.GetPixel(w, h);
+                            newTempBmp.SetPixel(tmpX, tmpY, c);
 
                             tmpY++;
                         }
@@ -245,7 +264,8 @@ namespace AgregaceDatLib
                         tmpX++;
                     }
 
-                    newBmp.Save(GetPathToDataDirectory(bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                    newPrecBmp.Save(GetPathToDataDirectory("prec-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                    newTempBmp.Save(GetPathToDataDirectory("temp-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
 
                 }
 
@@ -253,7 +273,7 @@ namespace AgregaceDatLib
 
                 nBW += sBW;
 
-                if(nBW >= allDataBitmap.Width)
+                if(nBW >= allDataPrecipBitmap.Width)
                 {
                     nBW = 0;
                     nBH += sBH;
@@ -393,6 +413,14 @@ namespace AgregaceDatLib
             //Console.WriteLine($"prec: {precipitation} cV: {colorValue} col: {pixel}");
 
             return precipitation;
+        }
+
+        public Bitmap GetTemperatureBitmap(DateTime forTime)
+        {
+            PointLonLat topLeft = new PointLonLat(10.88, 51.88);
+            PointLonLat botRight = new PointLonLat(20.21, 47.09);
+
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime));
         }
     }
 }

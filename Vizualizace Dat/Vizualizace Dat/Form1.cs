@@ -88,7 +88,7 @@ namespace Vizualizace_Dat
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer("prec", selectedTime, loaders, bounds);
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer(GetForecastType(), selectedTime, loaders, bounds);
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\XMLBitmap2021-01-22-00.bmp");
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\download.png");
 
@@ -190,11 +190,13 @@ namespace Vizualizace_Dat
 
             string precVal = ""; // = BitmapHandler.GetFullPrecInPoint(selectedTime, point, "prec", SetLoaders(), bounds).ToString();
 
+            
+
             graphCols = new List<GraphElement>();
 
             for (int i = 0; i < 10; i++)
             {
-                double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, "prec", loaders, bounds);
+                double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, GetForecastType(), loaders, bounds);
 
                 if (i == 0)
                     precVal = val.ToString();
@@ -388,7 +390,7 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointStart = routePoints[i];
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, "prec", loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, GetForecastType(), loaders, bounds);
 
                             graphCols.Add(new GraphElement(precVal, selectedTime, 0));
 
@@ -404,7 +406,7 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, "prec", loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, GetForecastType(), loaders, bounds);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
@@ -423,7 +425,7 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, "prec", loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, GetForecastType(), loaders, bounds);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
@@ -544,6 +546,19 @@ namespace Vizualizace_Dat
                 }
             }
             
+        }
+
+        private string GetForecastType()
+        {
+            if(rBPrec.Checked)
+            {
+                return "prec";
+            }
+            else
+            {
+                return "temp";
+            }    
+
         }
     }
 }

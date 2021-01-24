@@ -243,5 +243,10 @@ namespace AgregaceDatLib
         {
             return (min <= val) && (val <= max);
         }
+
+        public Bitmap GetTemperatureBitmap(DateTime forTime)
+        {
+            throw new NotImplementedException();    //služba poskytuje pouze srážky na aktuální čas
+        }
     }
 }

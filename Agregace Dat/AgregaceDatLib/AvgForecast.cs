@@ -32,6 +32,11 @@ namespace AgregaceDatLib
             dLs.Remove(remDl);
         }
 
+        public int GetNumberOfLoaders()
+        {
+            return dLs.Count;
+        }
+
         public void SaveForecastBitmaps()
         {
 
@@ -43,7 +48,7 @@ namespace AgregaceDatLib
         }
 
         
-        public Bitmap GetAvgForecBitmap(DateTime time)
+        public Bitmap GetAvgForecBitmap(DateTime time, string type)
         {
 
             Bitmap avgBitmap = new Bitmap(728, 528);
@@ -54,12 +59,25 @@ namespace AgregaceDatLib
             {
                 try
                 {
-                    loaderBitmaps.Add(dL.GetPrecipitationBitmap(time));
+                    if(type == "prec")
+                    {
+                        loaderBitmaps.Add(dL.GetPrecipitationBitmap(time));
+                    }
+                    else if(type == "temp")
+                    {
+                        loaderBitmaps.Add(dL.GetTemperatureBitmap(time));
+                    }
+
                 }
                 catch
                 {
                     continue;
                 }
+            }
+
+            if(loaderBitmaps.Count == 0)
+            {
+                throw new Exception("");
             }
 
             for (int y = 0; y < avgBitmap.Height; y++)
@@ -77,14 +95,12 @@ namespace AgregaceDatLib
                 }
             }
 
-            //avgBitmap.Save("ForecastBitmap" + time.ToString("yyyyMMddHH") + ".bmp", ImageFormat.Bmp);
-
             return avgBitmap;
         }
 
-        public Bitmap GetAvgForecBitmap(DateTime time, PointLonLat topLeft, PointLonLat botRight)   //vyříznutí části mapy
+        public Bitmap GetAvgForecBitmap(DateTime time, string type, PointLonLat topLeft, PointLonLat botRight)   //vyříznutí části mapy
         {
-            Bitmap bigBitmap = GetAvgForecBitmap(time);
+            Bitmap bigBitmap = GetAvgForecBitmap(time,type);
 
             Point p1 = new Point();
             Point p2 = new Point();

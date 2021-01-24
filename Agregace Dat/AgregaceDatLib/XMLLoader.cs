@@ -570,5 +570,9 @@ namespace AgregaceDatLib
             return updatedTime;
         }
 
+        public Bitmap GetTemperatureBitmap(DateTime forTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

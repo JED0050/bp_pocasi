@@ -79,12 +79,7 @@ namespace Webova_Sluzba.Controllers
 
                     try
                     {
-                        string[] dateTimeParts = time.Split('T');   //ISO 8601 = yyyy-MM-ddTHH:mm:ss
-
-                        List<int> date = dateTimeParts[0].Split('-').Select(Int32.Parse).ToList();
-                        List<int> hours = dateTimeParts[1].Split(':').Select(Int32.Parse).ToList();
-
-                        dateTime = new DateTime(date[0], date[1], date[2], hours[0], hours[1], hours[2]);  //rok mesic den hodina minuta sekunda
+                        dateTime = DateTime.Parse(time);    //ISO 8601 = yyyy-MM-ddTHH:mm:ss
                     }
                     catch
                     {
@@ -132,15 +127,22 @@ namespace Webova_Sluzba.Controllers
                         aF.Add(jL);
                     }
 
+                    if(aF.GetNumberOfLoaders() == 0)
+                    {
+                        throw new Exception("Nebyl přiřazen žádný z datových zrdrojů!");
+                    }
+
                 }
 
-                if (type.ToLower() == "prec")
+                type = type.ToLower();
+
+                if (type == "prec" || type ==  "temp")
                 {
                     Bitmap precBitmap;
 
                     if (p1 == null || p2 == null)
                     {
-                        precBitmap = aF.GetAvgForecBitmap(dateTime);
+                        precBitmap = aF.GetAvgForecBitmap(dateTime, type);
                     }
                     else
                     {
@@ -150,22 +152,16 @@ namespace Webova_Sluzba.Controllers
                         PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1]), double.Parse(p1LatLon[0]));
                         PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1]), double.Parse(p2LatLon[0]));
 
-                        precBitmap = aF.GetAvgForecBitmap(dateTime, point1, point2);
+                        precBitmap = aF.GetAvgForecBitmap(dateTime, type, point1, point2);
 
-                        /*
-                        for(int x = 0; x < precBitmap.Width; x++)
-                        {
-                            for(int y = 0; y < precBitmap.Height; y++)
-                            {
-                                precBitmap.SetPixel(x, y, Color.Red);
-                            }
-                        }*/
                     }
 
                     var bitmapBytes = BitmapToBytes(precBitmap);
 
                     return File(bitmapBytes, "image/jpeg");
                 }
+
+
             }
 
             throw new Exception("Požadovaná bitmapa nenalezena!");

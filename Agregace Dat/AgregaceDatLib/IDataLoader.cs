@@ -27,14 +27,14 @@ namespace AgregaceDatLib
     //2. BITMAP
     //http://www.medard-online.cz/
     //http://www.medard-online.cz/apipreview?run=201108_18&forecast=precip&layer=eu
-
+    //http://www.medard-online.cz/apiforecast?run=210124_06&forecast=precip&layer=eu&step=78    //1 - 78
 
 
     public interface DataLoader
     {
 
         Bitmap GetPrecipitationBitmap(DateTime forTime);
-
+        Bitmap GetTemperatureBitmap(DateTime forTime);
         void SaveNewDeleteOldBmps();
 
     }
