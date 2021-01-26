@@ -34,6 +34,8 @@ namespace Vizualizace_Dat
         private FormWindowState lastWindowState = FormWindowState.Normal;
         private Size appSize = new Size(800, 600);
         private List<GraphElement> graphCols = new List<GraphElement>();
+        private ForecType forecTypeTemp = new ForecType("temp");
+        private ForecType forecTypePrec = new ForecType("prec");
 
         public Form1()
         {
@@ -88,7 +90,7 @@ namespace Vizualizace_Dat
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer(GetForecastType(), selectedTime, loaders, bounds);
+            Bitmap bFor = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\XMLBitmap2021-01-22-00.bmp");
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\download.png");
 
@@ -188,15 +190,13 @@ namespace Vizualizace_Dat
 
             PointLatLng point = new PointLatLng(latD, lonD);
 
-            string precVal = ""; // = BitmapHandler.GetFullPrecInPoint(selectedTime, point, "prec", SetLoaders(), bounds).ToString();
-
-            
+            string precVal = "";    
 
             graphCols = new List<GraphElement>();
 
             for (int i = 0; i < 10; i++)
             {
-                double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, GetForecastType(), loaders, bounds);
+                double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, GetForecastType());
 
                 if (i == 0)
                     precVal = val.ToString();
@@ -207,7 +207,7 @@ namespace Vizualizace_Dat
             DrawGraph();
 
             listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_pushpin));
-            listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm";
+            listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}";
 
             gMap.Overlays.Add(markers);
             markers.Markers.Add(listMarkers[0]);
@@ -258,8 +258,8 @@ namespace Vizualizace_Dat
             g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)botLineH - 5);
             g.DrawLine(p, startSpaceX, (float)botLineH - 5, (float)botLineW - 5, (float)botLineH - 5);
 
-            double max = 30;
-            double min = 0;
+            double max = GetForecastType().GraphMaxValue;
+            double min = GetForecastType().GraphMinValue;
 
             double recW = (double)(botLineW - startSpaceX - endSpaxeX - (graphCols.Count - 1) * recGap) / (double)(graphCols.Count);
             double recFullH = botLineH - startSpaceY - endSpaceY;
@@ -269,14 +269,36 @@ namespace Vizualizace_Dat
 
             Font valueFont = new Font("Arial", 10);
             SolidBrush valueBrush = new SolidBrush(Color.Black);
+            Pen zeroValuePen = new Pen(Color.Red, 1);
+            SolidBrush zeroValueBrush = new SolidBrush(Color.Red);
 
             DateTime firstDate = selectedTime;
+
+            double incVal = 0;
+
+            if (min < 0)
+            {
+                incVal = min * -1;
+
+                double perc = (incVal + 0) / (double)(max - min);
+
+                if (perc == 0)
+                    perc = 0.01;
+
+                double recH = recFullH * perc;
+
+                int zeroY = (int)(y + recFullH - recH);
+
+                g.DrawLine(zeroValuePen, startSpaceX + 2, zeroY, (float)botLineW - 25, zeroY);
+
+                g.DrawString("0", valueFont, zeroValueBrush, 1, zeroY - 5);
+            }
 
             for (int i = 0; i < graphCols.Count; i++)
             {
                 SolidBrush brush = new SolidBrush(Color.Blue);
 
-                double perc = (graphCols[i].Value) / (double)(max - min);
+                double perc = (incVal + graphCols[i].Value) / (double)(max - min);
 
                 //if (perc == 0)
                 //    perc = 0.01;
@@ -288,8 +310,9 @@ namespace Vizualizace_Dat
                 r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
                 
                 g.FillRectangle(brush, r);
-                
-                
+
+                g.DrawString(graphCols[i].Value.ToString(), valueFont, valueBrush, x + (int)(recW/2) - 5, startSpaceY - 10);
+
                 Point[] point = new Point[] { new Point(x + 7, botLineH) };
 
                 string dateText = graphCols[i].TimeInfo;
@@ -306,7 +329,7 @@ namespace Vizualizace_Dat
                 firstDate = firstDate.AddHours(1);
             }
 
-            g.DrawString("[°C]", valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
+            g.DrawString(GetForecastType().Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
             g.DrawString("[datetime]", valueFont, valueBrush, botLineW - 30, botLineH);
 
             g.DrawString(max.ToString(), valueFont, valueBrush, 1, startSpaceY - 10);
@@ -390,12 +413,12 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointStart = routePoints[i];
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, GetForecastType(), loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime, pointStart, loaders, bounds, GetForecastType());
 
                             graphCols.Add(new GraphElement(precVal, selectedTime, 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_pushpin));
-                            listMarkers[0].ToolTipText = $"Start\nčas: {selectedTime.ToString("HH:mm - dd. MM.")}\nsrážky: {precVal} mm";
+                            listMarkers[0].ToolTipText = $"Start\nčas: {selectedTime.ToString("HH:mm - dd. MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}";
 
                             gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[0]);
@@ -406,13 +429,13 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, GetForecastType(), loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointEnd, loaders, bounds, GetForecastType());
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_pushpin));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
 
                             gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
@@ -425,13 +448,13 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, GetForecastType(), loaders, bounds);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(selectedTime.AddMinutes(timeMin), pointInner, loaders, bounds, GetForecastType());
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, selectedTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_pushpin));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"čas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\nsrážky: {precVal} mm\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"čas: {selectedTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
 
                             markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
                         }
@@ -548,15 +571,15 @@ namespace Vizualizace_Dat
             
         }
 
-        private string GetForecastType()
+        private ForecType GetForecastType()
         {
             if(rBPrec.Checked)
             {
-                return "prec";
+                return forecTypePrec;
             }
             else
             {
-                return "temp";
+                return forecTypeTemp;
             }    
 
         }

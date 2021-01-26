@@ -226,6 +226,11 @@ namespace AgregaceDatLib
                     double prec = GetPrecFromColor(allDataPrecipBitmap.GetPixel(w,h));
 
                     allDataPrecipBitmap.SetPixel(w,h, ColorValueHandler.GetPrecipitationColor(prec));
+
+
+                    double temp = ColorValueHandler.GetTemperatureValue(allDataTempBitmap.GetPixel(w, h));
+
+                    allDataTempBitmap.SetPixel(w, h, ColorValueHandler.GetTemperatureColor(temp));
                 }
             }
 
