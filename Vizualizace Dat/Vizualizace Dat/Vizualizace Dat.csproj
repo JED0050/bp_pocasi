@@ -95,6 +95,12 @@
     <Compile Include="FormChooseDataLoaders.Designer.cs">
       <DependentUpon>FormChooseDataLoaders.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormGpxBeginTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGpxBeginTime.Designer.cs">
+      <DependentUpon>FormGpxBeginTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormGpxChooseTravelForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChooseDataLoaders.resx">
       <DependentUpon>FormChooseDataLoaders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGpxBeginTime.resx">
+      <DependentUpon>FormGpxBeginTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGpxChooseTravelForm.resx">
       <DependentUpon>FormGpxChooseTravelForm.cs</DependentUpon>
