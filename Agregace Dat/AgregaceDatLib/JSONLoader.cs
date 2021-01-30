@@ -61,7 +61,7 @@ namespace AgregaceDatLib
                 updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
             }
 
-            string bitmapName = "JSBitmap" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = "prec-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
 
@@ -71,7 +71,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                throw new Exception("Bitmap not found!");
+                throw new Exception("Bitmapa srážek pro daný čas nebyla nalezena!");
             }
 
         }
@@ -246,7 +246,7 @@ namespace AgregaceDatLib
                             }
                             else
                             {
-                                pixelColor = forecast.GetPrecipitationColor();
+                                pixelColor = ColorValueHandler.GetPrecipitationColor(forecast.Precipitation);
                                 //pixelColor = Color.Red;
                             }
 
@@ -323,11 +323,11 @@ namespace AgregaceDatLib
             DirectoryInfo dICache = new DirectoryInfo(GetPathToDataDirectory("json_cache"));
             foreach (var f in dICache.GetFiles("*.bmp"))
             {
-                string onlyDateName = f.Name.Substring(0, 13);
+                string onlyDateName = f.Name.Split('.')[0];
 
                 string[] timeParts = onlyDateName.Split("-");
 
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
 
                 if (dateTime < DateTime.Now.AddDays(-1)) 
                 {
@@ -342,11 +342,11 @@ namespace AgregaceDatLib
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-                string onlyDateName = f.Name.Substring(8, 13);
+                string onlyDateName = f.Name.Split('.')[0];
 
                 string[] timeParts = onlyDateName.Split("-");
 
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
 
                 if (dateTime < DateTime.Now.AddHours(-2)) //smazání starých bitmap
                 {
@@ -489,7 +489,7 @@ namespace AgregaceDatLib
 
             Parallel.ForEach(allForecasts, forecasts => {
 
-                string bitmapName = "JSBitmap" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string bitmapName = "prec-" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
                 string bitmapPath = GetPathToDataDirectory(bitmapName);
 
                 Bitmap newBitmap = new Bitmap(bitmapW, bitmapH);
@@ -525,7 +525,7 @@ namespace AgregaceDatLib
                                 Point newPoint = new Point(x, y);
 
                                 if (PointInTriangle(newPoint, p1, p2, p3))
-                                    newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
+                                    newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, ColorValueHandler.GetPrecipitationColor(forecasts[t.a].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.b].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.c].Precipitation)));
                             }
                         }
                     }
@@ -538,7 +538,28 @@ namespace AgregaceDatLib
 
         public Bitmap GetTemperatureBitmap(DateTime forTime)
         {
-            throw new NotImplementedException();
+            DateTime updatedTime = new DateTime(forTime.AddMinutes(30).Year, forTime.AddMinutes(30).Month, forTime.AddMinutes(30).Day, forTime.AddMinutes(30).Hour, 0, 0);
+
+            if (updatedTime.Hour % 3 < 2)
+            {
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
+            }
+
+            string bitmapName = "temp-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+            if (File.Exists(bitmapPath))
+            {
+                return new Bitmap(bitmapPath);
+            }
+            else
+            {
+                throw new Exception("Bitmapa teploty pro daný čas nebyla nalezena!");
+            }
         }
     }
 }

@@ -151,7 +151,7 @@ namespace Vizualizace_Dat
                 }
             }
 
-            Debug.WriteLine(type);
+            //Debug.WriteLine(type);
 
             return precBitmap;
         }
@@ -277,12 +277,12 @@ namespace Vizualizace_Dat
 
         public static double GetFullPrecInPoint(DateTime time, PointLatLng point, string loaders, List<PointLatLng> bounds, ForecType forecType)
         {
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer(forecType.Type, time, loaders, bounds);
+            Bitmap bFor = GetBitmapFromServer(forecType.Type, time, loaders, bounds);
 
             //bFor.Save(@"C:\Users\Honza_PC\Desktop\testMap.bmp", ImageFormat.Bmp);
 
-            int x = BitmapHandler.GetX(point.Lng, bFor.Width, bounds[0].Lng, bounds[1].Lng);
-            int y = BitmapHandler.GetY(point.Lat, bFor.Height, bounds[0].Lat, bounds[1].Lat);
+            int x = GetX(point.Lng, bFor.Width, bounds[0].Lng, bounds[1].Lng);
+            int y = GetY(point.Lat, bFor.Height, bounds[0].Lat, bounds[1].Lat);
 
             Color c = Color.Transparent;
 

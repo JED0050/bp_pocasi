@@ -39,23 +39,6 @@ namespace AgregaceDatLib
             return output;
         }
 
-        internal void AddForecast(Forecast newF)
-        {
-            Temperature += newF.Temperature;
-            Precipitation += newF.Precipitation;
-        }
-
-        internal void SetAvgForecast(int numOfFcs)
-        {
-            Temperature = Temperature / numOfFcs;
-            Precipitation = Precipitation / numOfFcs;
-        }
-
-        public Color GetPrecipitationColor()
-        {
-            return ColorValueHandler.GetPrecipitationColor(Precipitation);
-        }
-
         public void SetXY(int bW, int bH)
         {
             double lonDif = 20.21 - 10.06;

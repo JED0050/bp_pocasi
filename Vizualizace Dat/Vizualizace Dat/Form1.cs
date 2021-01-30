@@ -85,12 +85,24 @@ namespace Vizualizace_Dat
             listMarkers.Clear();
         }
 
-        private void drawBitmapFromServer()
+        private int drawBitmapFromServer()
         {
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            Bitmap bFor = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
+            Bitmap bFor;
+
+            try
+            {
+                bFor = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
+            }
+            catch
+            {
+                MessageBox.Show("Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                return 1;
+            }
+
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\XMLBitmap2021-01-22-00.bmp");
             //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\download.png");
 
@@ -159,6 +171,8 @@ namespace Vizualizace_Dat
             gMap.Overlays.Add(polygons);
 
             zoomReload();
+
+            return 0;
         }
 
         private void mouseMoveInMap(object sender, MouseEventArgs e)
@@ -222,7 +236,7 @@ namespace Vizualizace_Dat
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            selectedTime = DateTime.Now.AddMinutes(trackBar1.Value * 10);
+            selectedTime = DateTime.Now.AddMinutes(trackBar1.Value);
 
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
             
@@ -530,7 +544,12 @@ namespace Vizualizace_Dat
 
             for (int i = 0; i < 10; i++)
             {
-                drawBitmapFromServer();
+                int res = drawBitmapFromServer();
+
+                if (res == 1)
+                {
+                    break;
+                }
 
                 label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
                 label1.Update();
@@ -538,7 +557,7 @@ namespace Vizualizace_Dat
                 selectedTime = selectedTime.AddHours(1);
 
                 if(i != 0)
-                    trackBar1.Value += 6;
+                    trackBar1.Value += 60;
 
             }
 

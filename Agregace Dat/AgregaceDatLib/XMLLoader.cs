@@ -37,86 +37,12 @@ namespace AgregaceDatLib
                 }
             }
         }
-        public Forecast GetForecastByTime(DateTime t, string xmlText)
-        {
-            Forecast f = new Forecast();
-            f.Time = t;
-
-            if (xmlText == "")
-            {
-                f.Temperature = -1;
-                return f;
-            }
-
-            TextReader tr = new StringReader(xmlText);
-
-            XDocument xmlDoc = XDocument.Load(tr);
-
-
-            foreach (var weatherData in xmlDoc.Descendants("weatherdata"))
-            {
-                int counter = 0;
-
-                foreach (var location in xmlDoc.Descendants("location"))
-                {
-                    if (counter == 0)
-                    {
-                        f.Country = location.Element("country").Value;
-                        f.City = location.Element("name").Value;
-
-                        counter++;
-                    } else
-                    {
-
-                        f.Latitude = location.Attribute("latitude").Value;
-                        f.Longitude = location.Attribute("longitude").Value;
-                    }
-                }
-
-                counter = 0;
-
-                foreach (var forecast in xmlDoc.Descendants("forecast"))
-                {
-                    foreach (var tabular in xmlDoc.Descendants("tabular"))
-                    {
-                        foreach (var time in xmlDoc.Descendants("time"))
-                        {
-                            if (counter == 0)    //nastavení první hodnoty pokud není žádná jiná známá
-                            {
-                                counter++;
-
-                                f.Temperature = Double.Parse(time.Element("temperature").Attribute("value").Value.Replace('.', ','));
-                                f.Precipitation = Double.Parse(time.Element("precipitation").Attribute("value").Value.Replace('.', ','));
-
-                                continue;
-                            }
-
-                            DateTime from = DateTime.Parse(time.Attribute("from").Value);
-                            DateTime to = DateTime.Parse(time.Attribute("to").Value);
-
-                            if (t >= from && t <= to)
-                            {
-                                f.Temperature = Double.Parse(time.Element("temperature").Attribute("value").Value.Replace('.', ','));
-                                f.Precipitation = Double.Parse(time.Element("precipitation").Attribute("value").Value.Replace('.', ','));
-
-                                break;
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-            return f;
-        }
-
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
             DateTime updatedTime = GetValidTime(forTime);
 
-            string bitmapName = "XMLBitmap" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = "prec-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if (File.Exists(bitmapPath))
@@ -125,86 +51,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                Bitmap forBitmap = new Bitmap(728, 528);
-                int bW = forBitmap.Width;
-                int bH = forBitmap.Height;
-
-                List<string> locations = GetUrls();
-
-                List<Forecast> forecasts = new List<Forecast>();
-
-                object lockObj = new object();
-
-                Parallel.ForEach(locations, loc =>
-                //foreach(string loc in locations)    
-                {
-                    string xmlText = "";
-
-                    try
-                    {
-                        using (var client = new WebClient())    //volání download stringu na jedné instanci a její zamykání je pomalejší než vytváření spousty instancí
-                            xmlText = client.DownloadString(loc);
-
-                    }
-                    catch
-                    {
-                        return;
-                        //continue;
-                    }
-
-                    Forecast f = GetForecastByTime(updatedTime, xmlText);
-
-                    if (f.Temperature == -1)    //neplatná předpověď, webová služba vrátila error místo XML dat
-                    {
-                        return;
-                        //continue;
-                    }
-
-                    f.SetXY(bW, bH);
-
-                    lock (lockObj)
-                    {
-                        forecasts.Add(f);
-                    }
-
-                });
-
-                Triangulator angulator = new Triangulator();
-
-                List<Vertex> vertexes = forecasts.ConvertAll(x => (Vertex)x);
-
-                List<Triad> triangles = angulator.Triangulation(vertexes, true);
-
-                for (int i = 0; i < triangles.Count; i++)
-                {
-                    Triad t = triangles[i];
-
-                    Point p1 = new Point((int)forecasts[t.a].x, (int)forecasts[t.a].y);
-                    Point p2 = new Point((int)forecasts[t.b].x, (int)forecasts[t.b].y);
-                    Point p3 = new Point((int)forecasts[t.c].x, (int)forecasts[t.c].y);
-
-                    Point[] arP = new Point[] { p1, p2, p3 };
-
-                    int xMin = Math.Min(p1.X, Math.Min(p2.X, p3.X));
-                    int xMax = Math.Max(p1.X, Math.Max(p2.X, p3.X));
-                    int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
-                    int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
-
-                    for (int x = xMin; x < xMax; x++)
-                    {
-                        for (int y = yMin; y < yMax; y++)
-                        {
-                            Point newPoint = new Point(x, y);
-
-                            if (PointInTriangle(newPoint, p1, p2, p3))
-                                forBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
-                        }
-                    }
-                }
-
-                forBitmap.Save(bitmapPath, ImageFormat.Bmp);
-
-                return forBitmap;
+                throw new Exception("Bitmapa srážek pro požadovaný čas nebyla nalezena!");
             }
 
         }
@@ -298,11 +145,11 @@ namespace AgregaceDatLib
             foreach (var f in dI.GetFiles("*.bmp"))
             {
 
-                string onlyDateName = f.Name.Substring(9, 13);
+                string onlyDateName = f.Name.Split('.')[0];
 
                 string[] timeParts = onlyDateName.Split("-");
 
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
+                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
 
                 if (dateTime < DateTime.Now) //smazání starých bitmap
                 {
@@ -507,8 +354,11 @@ namespace AgregaceDatLib
 
                 DateTime forTime = GetValidTime(forecasts[0].Time);
 
-                string bitmapName = "XMLBitmap" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
-                string bitmapPath = GetPathToDataDirectory(bitmapName);
+                string precBmpName = "prec-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string precBmpFullName = GetPathToDataDirectory(precBmpName);
+
+                string tempBmpName = "temp-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string tempBmpFullName = GetPathToDataDirectory(tempBmpName);
 
                 Triangulator angulator = new Triangulator();
 
@@ -516,7 +366,8 @@ namespace AgregaceDatLib
 
                 List<Triad> triangles = angulator.Triangulation(vertexes, true);
 
-                Bitmap newBitmap = new Bitmap(bW, bH);
+                Bitmap precBmp = new Bitmap(bW, bH);
+                Bitmap tempBmp = new Bitmap(bW, bH);
 
                 for (int i = 0; i < triangles.Count; i++)
                 {
@@ -541,12 +392,19 @@ namespace AgregaceDatLib
                             Point newPoint = new Point(x, y);
 
                             if (PointInTriangle(newPoint, p1, p2, p3))
-                                newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].GetPrecipitationColor(), forecasts[t.b].GetPrecipitationColor(), forecasts[t.c].GetPrecipitationColor()));
+                            {
+                                //nastavení pixelu pro srážky
+                                precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, ColorValueHandler.GetPrecipitationColor(forecasts[t.a].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.b].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.c].Precipitation)));
+
+                                //nastavení pixelu pro teplotu
+                                tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, ColorValueHandler.GetTemperatureColor(forecasts[t.a].Temperature), ColorValueHandler.GetTemperatureColor(forecasts[t.b].Temperature), ColorValueHandler.GetTemperatureColor(forecasts[t.c].Temperature)));
+                            }
                         }
                     }
                 }
 
-                newBitmap.Save(bitmapPath, ImageFormat.Bmp);
+                precBmp.Save(precBmpFullName, ImageFormat.Bmp);
+                tempBmp.Save(tempBmpFullName, ImageFormat.Bmp);
 
             });
 
@@ -572,7 +430,19 @@ namespace AgregaceDatLib
 
         public Bitmap GetTemperatureBitmap(DateTime forTime)
         {
-            throw new NotImplementedException();
+            DateTime updatedTime = GetValidTime(forTime);
+
+            string bitmapName = "temp-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+            if (File.Exists(bitmapPath))
+            {
+                return new Bitmap(bitmapPath);
+            }
+            else
+            {
+                throw new Exception("Bitmapa teploty pro daný čas nebyla nalezena!");
+            }
         }
     }
 }
