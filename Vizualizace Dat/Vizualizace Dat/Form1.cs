@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -24,7 +25,6 @@ namespace Vizualizace_Dat
         private double latD = 0;
         private GMapOverlay markers = new GMapOverlay("markers");
         private List<GMapMarker> listMarkers = new List<GMapMarker>();
-        private GMapOverlay polygons;
         private List<PointLatLng> routeP = new List<PointLatLng>();
         private GMapOverlay routes;
         private DateTime selectedTime;
@@ -36,6 +36,9 @@ namespace Vizualizace_Dat
         private List<GraphElement> graphCols = new List<GraphElement>();
         private ForecType forecTypeTemp = new ForecType("temp");
         private ForecType forecTypePrec = new ForecType("prec");
+        private GMapOverlay bitmapOverlay = new GMapOverlay("bitmapMarker");
+        private GMarkerGoogle bitmapMarker;
+        private bool isBitmapShown = false;
 
         public Form1()
         {
@@ -65,7 +68,9 @@ namespace Vizualizace_Dat
         private void clearAllPoints(object sender, EventArgs e)
         {
             clearMarkers();
-            gMap.Overlays.Remove(polygons);
+            isBitmapShown = false;
+            bitmapOverlay.Markers.Remove(bitmapMarker);
+            gMap.Overlays.Remove(bitmapOverlay);
             gMap.Overlays.Remove(routes);
 
             routeP.Clear();
@@ -89,12 +94,12 @@ namespace Vizualizace_Dat
         {
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
-
-            Bitmap bFor;
+            
+            Bitmap serverBitmap;
 
             try
             {
-                bFor = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
+                serverBitmap = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
             }
             catch
             {
@@ -103,74 +108,39 @@ namespace Vizualizace_Dat
                 return 1;
             }
 
-            //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\XMLBitmap2021-01-22-00.bmp");
-            //Bitmap bFor = new Bitmap(@"C:\Users\Honza_PC\Desktop\download.png");
+            bitmapOverlay.Markers.Remove(bitmapMarker);
+            gMap.Overlays.Remove(bitmapOverlay);
 
-            dataBitmap = bFor;
+            int xDif = (int)(gMap.FromLatLngToLocal(bounds[1]).X - gMap.FromLatLngToLocal(bounds[0]).X);
+            int yDif = (int)(gMap.FromLatLngToLocal(bounds[1]).Y - gMap.FromLatLngToLocal(bounds[0]).Y);
 
-            int bW = bFor.Width;
-            int bH = bFor.Height;
-            double pixelLon = (bounds[1].Lng - bounds[0].Lng) / bW;
-            double pixelLat = (bounds[0].Lat - bounds[1].Lat) / bH;
+            Bitmap transparentBitmap = new Bitmap(serverBitmap.Width, serverBitmap.Height);
 
-            gMap.Overlays.Remove(polygons);
-            polygons = new GMapOverlay("polygons");
-
-            double bX = bounds[0].Lng;
-            for (int x = 0; x < bW; x++)
+            for (int xP = 0; xP < serverBitmap.Width; xP++)
             {
-                double bY = bounds[0].Lat;
-
-                for (int y = 0; y < bH; y++)
+                for (int yP = 0; yP < serverBitmap.Height; yP++)
                 {
+                    Color oldP = serverBitmap.GetPixel(xP, yP);
 
-                    Color c = bFor.GetPixel(x, y);
-
-                    if (c.R == 0 && c.G == 0 && c.B == 0)
-                    {
-                        bY -= pixelLat;
+                    if ((oldP.R == 0 && oldP.G == 0 && oldP.B == 0) || (oldP.R == 255 && oldP.G == 255 && oldP.B == 255))
                         continue;
-                    }
 
-                    double oldBY = bY;
-                    bool samePixelFound = false;
-
-                    while (y < bH && c == bFor.GetPixel(x, y))
-                    {
-                        bY -= pixelLat;
-                        y++;
-                        samePixelFound = true;
-                    }
-
-
-                    List<PointLatLng> points = new List<PointLatLng>();
-                    points.Add(new PointLatLng(oldBY, bX));
-                    points.Add(new PointLatLng(bY - pixelLat, bX));
-                    points.Add(new PointLatLng(bY - pixelLat, bX + pixelLon));
-                    points.Add(new PointLatLng(oldBY, bX + pixelLon));
-
-                    var polygon = new GMapPolygon(points, "pixel")
-                    {
-                        Stroke = new Pen(Color.Transparent, 0),
-                        Fill = new SolidBrush(c)
-                    };
-
-                    polygons.Polygons.Add(polygon);
-
-                    if (!samePixelFound)
-                    {
-                        bY -= pixelLat;
-                    }
-
+                    transparentBitmap.SetPixel(xP, yP, Color.FromArgb(100, oldP.R, oldP.G, oldP.B));
                 }
-
-                bX += pixelLon;
-
             }
 
-            gMap.Overlays.Add(polygons);
+            dataBitmap = transparentBitmap;
+
+            Bitmap resizedBitmap = new Bitmap(transparentBitmap, new Size(xDif, yDif));
+
+            bitmapMarker = new GMarkerGoogle(new PointLatLng(bounds[1].Lat, (bounds[0].Lng + bounds[1].Lng) / 2), resizedBitmap) { IsHitTestVisible = false };
+            bitmapOverlay.Markers.Add(bitmapMarker);
+
+            gMap.Overlays.Add(bitmapOverlay);
 
             zoomReload();
+
+            isBitmapShown = true;
 
             return 0;
         }
@@ -210,7 +180,18 @@ namespace Vizualizace_Dat
 
             for (int i = 0; i < 10; i++)
             {
-                double val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, GetForecastType());
+                double val;
+
+                try
+                {
+                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, GetForecastType());
+                }
+                catch
+                {
+                    MessageBox.Show("Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
 
                 if (i == 0)
                     precVal = val.ToString();
@@ -509,7 +490,9 @@ namespace Vizualizace_Dat
         private void přemazatMapuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clearMarkers();
-            gMap.Overlays.Remove(polygons);
+            isBitmapShown = false;
+            bitmapOverlay.Markers.Remove(bitmapMarker);
+            gMap.Overlays.Remove(bitmapOverlay);
             gMap.Overlays.Remove(routes);
 
             routeP.Clear();
@@ -613,5 +596,34 @@ namespace Vizualizace_Dat
 
         }
 
+        private void gMap_OnMapZoomChanged()
+        {
+            Debug.WriteLine("ZOOM");
+
+            if(isBitmapShown)
+            {
+                bitmapOverlay.Markers.Remove(bitmapMarker);
+                gMap.Overlays.Remove(bitmapOverlay);
+
+                try
+                {
+                    int xDif = (int)(gMap.FromLatLngToLocal(bounds[1]).X - gMap.FromLatLngToLocal(bounds[0]).X);
+                    int yDif = (int)(gMap.FromLatLngToLocal(bounds[1]).Y - gMap.FromLatLngToLocal(bounds[0]).Y);
+
+                    Bitmap resizedBitmap = new Bitmap(dataBitmap, new Size(xDif, yDif));
+
+                    bitmapMarker = new GMarkerGoogle(new PointLatLng(bounds[1].Lat, (bounds[0].Lng + bounds[1].Lng) / 2), resizedBitmap) { IsHitTestVisible = false };
+                    bitmapOverlay.Markers.Add(bitmapMarker);
+
+                    gMap.Overlays.Add(bitmapOverlay);
+                }
+                catch
+                {
+                    isBitmapShown = false;
+                }
+
+                //zoomReload();
+            }
+        }
     }
 }
