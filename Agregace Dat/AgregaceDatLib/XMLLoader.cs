@@ -385,19 +385,22 @@ namespace AgregaceDatLib
                     int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
                     int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
 
-                    for (int x = xMin; x < xMax; x++)
+                    lock(lockObj)
                     {
-                        for (int y = yMin; y < yMax; y++)
+                        for (int x = xMin; x < xMax; x++)
                         {
-                            Point newPoint = new Point(x, y);
-
-                            if (PointInTriangle(newPoint, p1, p2, p3))
+                            for (int y = yMin; y < yMax; y++)
                             {
-                                //nastavení pixelu pro srážky
-                                precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, ColorValueHandler.GetPrecipitationColor(forecasts[t.a].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.b].Precipitation), ColorValueHandler.GetPrecipitationColor(forecasts[t.c].Precipitation)));
+                                Point newPoint = new Point(x, y);
 
-                                //nastavení pixelu pro teplotu
-                                tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, ColorValueHandler.GetTemperatureColor(forecasts[t.a].Temperature), ColorValueHandler.GetTemperatureColor(forecasts[t.b].Temperature), ColorValueHandler.GetTemperatureColor(forecasts[t.c].Temperature)));
+                                if (PointInTriangle(newPoint, p1, p2, p3))
+                                {
+                                    //nastavení pixelu pro srážky
+                                    precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation, forecasts[t.b].Precipitation, forecasts[t.c].Precipitation, "prec"));
+
+                                    //nastavení pixelu pro teplotu
+                                    tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Temperature, forecasts[t.b].Temperature, forecasts[t.c].Temperature, "temp"));
+                                }
                             }
                         }
                     }
