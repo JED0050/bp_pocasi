@@ -11,7 +11,7 @@ namespace Vizualizace_Dat
 {
     class ForecType
     {
-        private Bitmap scaleBitmap;
+        private Color[] scaleArray;
         public delegate double getValDel(Color c);
 
         public ForecType(string type)
@@ -43,10 +43,14 @@ namespace Vizualizace_Dat
 
             string workingDirectory = Environment.CurrentDirectory;
             string dataFolder = Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\";
+            Bitmap scaleBitmap = new Bitmap(dataFolder + scaleName);
 
-            scaleBitmap = new Bitmap(dataFolder + scaleName);
+            scaleArray = new Color[scaleBitmap.Width];
 
-
+            for (int i = 0; i < scaleBitmap.Width; i++)
+            {
+                scaleArray[i] = scaleBitmap.GetPixel(i, 0);
+            }
         }
 
         public string Type { get; }
@@ -67,10 +71,10 @@ namespace Vizualizace_Dat
             double stepValue = 0.1;
             double minValue = 0.1;
 
-            for (int i = 0; i < scaleBitmap.Width; i++)
+            for (int i = 0; i < scaleArray.Length; i++)
             {
 
-                if (pixelAlpha == scaleBitmap.GetPixel(i, 0))
+                if (pixelAlpha == scaleArray[i])
                 {
                     return minValue + stepValue * i;
                 }
@@ -88,10 +92,10 @@ namespace Vizualizace_Dat
             int stepValue = 1;
             int minValue = -30;
 
-            for (int i = 0; i < scaleBitmap.Width; i++)
+            for (int i = 0; i < scaleArray.Length; i++)
             {
 
-                if (pixelAlpha == scaleBitmap.GetPixel(i, 0))
+                if (pixelAlpha == scaleArray[i])
                 {
                     return minValue + stepValue * i;
                 }

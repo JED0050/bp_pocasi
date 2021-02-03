@@ -12,10 +12,23 @@ namespace AgregaceDatLib
 
         private static string scalePrecName = "škála_0.1_30.png";
         private static Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
+        private static Color[] scalePrecArray = GetColorArray(scalePrecImage);
 
         private static string scaleTempName = "škála_-30_30.png";
         private static Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
+        private static Color[] scaleTempArray = GetColorArray(scaleTempImage);
 
+        private static Color[] GetColorArray(Bitmap scaleBitmap)
+        {
+            Color[] colorArray = new Color[scaleBitmap.Width];
+
+            for(int i = 0; i < scaleBitmap.Width; i++)
+            {
+                colorArray[i] = scaleBitmap.GetPixel(i, 0);
+            }
+
+            return colorArray;
+        }
 
 
         //škála pro srážky
@@ -30,10 +43,10 @@ namespace AgregaceDatLib
             double stepValue = 0.1;
             double minValue = 0.1;
 
-            for (int i = 0; i < scalePrecImage.Width; i++)
+            for (int i = 0; i < scalePrecArray.Length; i++)
             {
 
-                if (pixelAlpha == scalePrecImage.GetPixel(i, 0))
+                if (pixelAlpha == scalePrecArray[i])
                 {
                     return minValue + stepValue * i;
                 }
@@ -62,7 +75,7 @@ namespace AgregaceDatLib
 
             //Debug.WriteLine("p: " + prec + " " + colorIndex);
 
-            return scalePrecImage.GetPixel(colorIndex, 0);
+            return scalePrecArray[colorIndex];
 
         }
 
@@ -76,10 +89,10 @@ namespace AgregaceDatLib
             int stepValue = 1;
             int minValue = -30;
 
-            for(int i = 0; i < scaleTempImage.Width; i++)
+            for(int i = 0; i < scaleTempArray.Length; i++)
             {
 
-                if(pixelAlpha == scaleTempImage.GetPixel(i,0))
+                if(pixelAlpha == scaleTempArray[i])
                 {
                     return minValue + stepValue * i;
                 }
@@ -104,7 +117,7 @@ namespace AgregaceDatLib
 
             //Debug.WriteLine("t: " + temp + " " + colorIndex);
 
-            return scaleTempImage.GetPixel(colorIndex, 0);
+            return scaleTempArray[colorIndex];
 
         }
 

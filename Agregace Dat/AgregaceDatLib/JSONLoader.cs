@@ -518,17 +518,14 @@ namespace AgregaceDatLib
                         int yMin = Math.Min(p1.Y, Math.Min(p2.Y, p3.Y));
                         int yMax = Math.Max(p1.Y, Math.Max(p2.Y, p3.Y));
 
-                        lock(lockObj)
+                        for (int x = xMin; x < xMax; x++)
                         {
-                            for (int x = xMin; x < xMax; x++)
+                            for (int y = yMin; y < yMax; y++)
                             {
-                                for (int y = yMin; y < yMax; y++)
-                                {
-                                    Point newPoint = new Point(x, y);
+                                Point newPoint = new Point(x, y);
 
-                                    if (PointInTriangle(newPoint, p1, p2, p3))
-                                        newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation, forecasts[t.b].Precipitation, forecasts[t.c].Precipitation, "prec"));
-                                }
+                                if (PointInTriangle(newPoint, p1, p2, p3))
+                                    newBitmap.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation, forecasts[t.b].Precipitation, forecasts[t.c].Precipitation, "prec"));
                             }
                         }
                     }

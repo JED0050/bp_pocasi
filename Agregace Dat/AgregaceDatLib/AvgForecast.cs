@@ -79,23 +79,45 @@ namespace AgregaceDatLib
             {
                 throw new Exception("");
             }
-
-            for (int y = 0; y < avgBitmap.Height; y++)
+            else if (loaderBitmaps.Count == 1)
             {
-                for(int x = 0; x < avgBitmap.Width; x++)
-                {
-                    double precSum = 0;
-
-                    foreach(Bitmap b in loaderBitmaps)
-                    {
-                        precSum += ColorValueHandler.GetPrecipitationValue(b.GetPixel(x,y));
-                    }
-
-                    avgBitmap.SetPixel(x, y, ColorValueHandler.GetPrecipitationColor(precSum / loaderBitmaps.Count));
-                }
+                return loaderBitmaps[0];
             }
+            else
+            {
+                for (int y = 0; y < avgBitmap.Height; y++)
+                {
+                    for (int x = 0; x < avgBitmap.Width; x++)
+                    {
+                        double tempValSum = 0;
 
-            return avgBitmap;
+                        foreach (Bitmap b in loaderBitmaps)
+                        {
+                            if (type == "prec")
+                            {
+                                tempValSum += ColorValueHandler.GetPrecipitationValue(b.GetPixel(x, y));
+                            }
+                            else if (type == "temp")
+                            {
+                                tempValSum += ColorValueHandler.GetTemperatureValue(b.GetPixel(x, y));
+                            }
+                        }
+
+                        if (type == "prec")
+                        {
+                            avgBitmap.SetPixel(x, y, ColorValueHandler.GetPrecipitationColor(tempValSum / loaderBitmaps.Count));
+                        }
+                        else if (type == "temp")
+                        {
+                            avgBitmap.SetPixel(x, y, ColorValueHandler.GetTemperatureColor(tempValSum / loaderBitmaps.Count));
+                        }
+
+                    }
+                }
+
+                return avgBitmap;
+            }
+            
         }
 
         public Bitmap GetAvgForecBitmap(DateTime time, string type, PointLonLat topLeft, PointLonLat botRight)   //vyříznutí části mapy
