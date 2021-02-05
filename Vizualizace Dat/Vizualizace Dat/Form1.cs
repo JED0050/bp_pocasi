@@ -39,6 +39,7 @@ namespace Vizualizace_Dat
         private GMapOverlay bitmapOverlay = new GMapOverlay("bitmapMarker");
         private GMarkerGoogle bitmapMarker;
         private bool isBitmapShown = false;
+        private int bitmapAlpha = ApkConfig.BitmapAlpha;
 
         public Form1()
         {
@@ -125,7 +126,7 @@ namespace Vizualizace_Dat
                     if ((oldP.R == 0 && oldP.G == 0 && oldP.B == 0) || (oldP.R == 255 && oldP.G == 255 && oldP.B == 255))
                         continue;
 
-                    transparentBitmap.SetPixel(xP, yP, Color.FromArgb(100, oldP.R, oldP.G, oldP.B));
+                    transparentBitmap.SetPixel(xP, yP, Color.FromArgb(bitmapAlpha, oldP.R, oldP.G, oldP.B));
                 }
             }
 
@@ -546,11 +547,6 @@ namespace Vizualizace_Dat
 
         }
 
-        private void nastavitVlastníAdresuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            vlastníAdresaToolStripMenuItem.Text = ApkConfig.ServerAddress;
-        }
-
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
 
@@ -598,7 +594,6 @@ namespace Vizualizace_Dat
 
         private void gMap_OnMapZoomChanged()
         {
-            Debug.WriteLine("ZOOM");
 
             if(isBitmapShown)
             {
@@ -624,6 +619,62 @@ namespace Vizualizace_Dat
 
                 //zoomReload();
             }
+        }
+
+        private void minimálníToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.BitmapAlpha = 255;
+            bitmapAlpha = 255;
+        }
+
+        private void maximálníToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.BitmapAlpha = 0;
+            bitmapAlpha = 0;
+        }
+
+        private void menuOwnTransparent_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                bitmapAlpha = int.Parse(menuOwnTransparent.Text);
+
+                ApkConfig.BitmapAlpha = bitmapAlpha;
+
+                if (isBitmapShown)
+                {
+                    for(int x = 0; x < dataBitmap.Width; x++)
+                    {
+                        for(int y = 0; y < dataBitmap.Height; y++)
+                        {
+                            Color oldPixel = dataBitmap.GetPixel(x, y);
+
+                            if ((oldPixel.R == 0 && oldPixel.G == 0 && oldPixel.B == 0) || (oldPixel.R == 255 && oldPixel.G == 255 && oldPixel.B == 255))
+                                continue;
+
+                            Color newPixel = Color.FromArgb(bitmapAlpha, oldPixel.R , oldPixel.G, oldPixel.B);
+
+                            dataBitmap.SetPixel(x, y, newPixel);
+                        }
+                    }
+
+                    gMap_OnMapZoomChanged();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void vlastníToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            menuOwnTransparent.Text = ApkConfig.BitmapAlpha.ToString();
+        }
+
+        private void nastavitVlastníAdresuToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            vlastníAdresaToolStripMenuItem.Text = ApkConfig.ServerAddress;
         }
     }
 }

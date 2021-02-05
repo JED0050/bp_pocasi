@@ -39,6 +39,11 @@
             this.vlastníAdresaToolStripMenuItem = new System.Windows.Forms.ToolStripTextBox();
             this.nastavitVýchozíAdresuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.datovéZdrojeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.průhlednostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vlastníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOwnTransparent = new System.Windows.Forms.ToolStripTextBox();
+            this.minimálníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maximálníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,7 +134,8 @@
             // 
             this.nastaveníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.adresaServeruToolStripMenuItem,
-            this.datovéZdrojeToolStripMenuItem});
+            this.datovéZdrojeToolStripMenuItem,
+            this.průhlednostToolStripMenuItem});
             this.nastaveníToolStripMenuItem.Name = "nastaveníToolStripMenuItem";
             this.nastaveníToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.nastaveníToolStripMenuItem.Text = "Nastavení";
@@ -140,7 +146,7 @@
             this.nastavitVlastníAdresuToolStripMenuItem,
             this.nastavitVýchozíAdresuToolStripMenuItem});
             this.adresaServeruToolStripMenuItem.Name = "adresaServeruToolStripMenuItem";
-            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.adresaServeruToolStripMenuItem.Text = "Adresa serveru";
             // 
             // nastavitVlastníAdresuToolStripMenuItem
@@ -150,7 +156,7 @@
             this.nastavitVlastníAdresuToolStripMenuItem.Name = "nastavitVlastníAdresuToolStripMenuItem";
             this.nastavitVlastníAdresuToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.nastavitVlastníAdresuToolStripMenuItem.Text = "Nastavit vlastní adresu";
-            this.nastavitVlastníAdresuToolStripMenuItem.Click += new System.EventHandler(this.nastavitVlastníAdresuToolStripMenuItem_Click);
+            this.nastavitVlastníAdresuToolStripMenuItem.MouseEnter += new System.EventHandler(this.nastavitVlastníAdresuToolStripMenuItem_MouseEnter);
             // 
             // vlastníAdresaToolStripMenuItem
             // 
@@ -169,9 +175,49 @@
             // datovéZdrojeToolStripMenuItem
             // 
             this.datovéZdrojeToolStripMenuItem.Name = "datovéZdrojeToolStripMenuItem";
-            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.datovéZdrojeToolStripMenuItem.Text = "Datové zdroje";
             this.datovéZdrojeToolStripMenuItem.Click += new System.EventHandler(this.datovéZdrojeToolStripMenuItem_Click);
+            // 
+            // průhlednostToolStripMenuItem
+            // 
+            this.průhlednostToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vlastníToolStripMenuItem,
+            this.minimálníToolStripMenuItem,
+            this.maximálníToolStripMenuItem});
+            this.průhlednostToolStripMenuItem.Name = "průhlednostToolStripMenuItem";
+            this.průhlednostToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.průhlednostToolStripMenuItem.Text = "Průhlednost počasí";
+            // 
+            // vlastníToolStripMenuItem
+            // 
+            this.vlastníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOwnTransparent});
+            this.vlastníToolStripMenuItem.Name = "vlastníToolStripMenuItem";
+            this.vlastníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vlastníToolStripMenuItem.Text = "Vlastní";
+            this.vlastníToolStripMenuItem.MouseEnter += new System.EventHandler(this.vlastníToolStripMenuItem_MouseEnter);
+            // 
+            // menuOwnTransparent
+            // 
+            this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.menuOwnTransparent.Name = "menuOwnTransparent";
+            this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
+            this.menuOwnTransparent.TextChanged += new System.EventHandler(this.menuOwnTransparent_TextChanged);
+            // 
+            // minimálníToolStripMenuItem
+            // 
+            this.minimálníToolStripMenuItem.Name = "minimálníToolStripMenuItem";
+            this.minimálníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minimálníToolStripMenuItem.Text = "Minimální";
+            this.minimálníToolStripMenuItem.Click += new System.EventHandler(this.minimálníToolStripMenuItem_Click);
+            // 
+            // maximálníToolStripMenuItem
+            // 
+            this.maximálníToolStripMenuItem.Name = "maximálníToolStripMenuItem";
+            this.maximálníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maximálníToolStripMenuItem.Text = "Maximální";
+            this.maximálníToolStripMenuItem.Click += new System.EventHandler(this.maximálníToolStripMenuItem_Click);
             // 
             // akceToolStripMenuItem
             // 
@@ -277,6 +323,11 @@
         private System.Windows.Forms.Button bAnim;
         private System.Windows.Forms.RadioButton rBPrec;
         private System.Windows.Forms.RadioButton rBTemp;
+        private System.Windows.Forms.ToolStripMenuItem průhlednostToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vlastníToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem minimálníToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox menuOwnTransparent;
+        private System.Windows.Forms.ToolStripMenuItem maximálníToolStripMenuItem;
     }
 }
 
