@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -11,9 +12,12 @@ namespace AgregaceDatLib
 {
     public class BitmapDataLoader2 : DataLoader
     {
+        private static List<Color> scaleTempArray;
+        private static List<Color> scalePrecArray;
 
         public BitmapDataLoader2()
         {
+
             if (!Directory.Exists(GetPathToDataDirectory("")))
             {
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
@@ -30,6 +34,59 @@ namespace AgregaceDatLib
                     Directory.CreateDirectory(loaderDir);
                 }
             }
+
+            if(scaleTempArray == null)
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"medard-online\scales\";
+
+                string scaleTempName = "temp_scale.png";
+                Bitmap scaleTempImage = new Bitmap(loaderDir + scaleTempName);
+
+                scaleTempArray = new List<Color>();
+
+                scaleTempArray.Add(scaleTempImage.GetPixel(0, 0));
+
+                for (int i = 1; i < scaleTempImage.Width; i++)
+                {
+                    Color actPixel = scaleTempImage.GetPixel(i, 0);
+
+                    if(actPixel != scaleTempArray[scaleTempArray.Count - 1])   //vložení pouze odlišných pixelů (škála z webu má více stejných pixelů pod sebou)
+                    {
+                        scaleTempArray.Add(actPixel);
+                        //Debug.WriteLine(actPixel);
+                    }
+                }
+
+                //Debug.WriteLine(scaleTempArray.Count);
+            }
+
+            if(scalePrecArray == null)
+            {
+                string dataDir = Environment.CurrentDirectory + @"\Data\";
+                string loaderDir = dataDir + @"medard-online\scales\";
+
+                string scalePrecName = "prec_scale.png";
+                Bitmap scalePrecImage = new Bitmap(loaderDir + scalePrecName);
+
+                scalePrecArray = new List<Color>();
+
+                scalePrecArray.Add(scalePrecImage.GetPixel(0, 0));
+
+                for (int i = 1; i < scalePrecImage.Width; i++)
+                {
+                    Color actPixel = scalePrecImage.GetPixel(i, 0);
+
+                    if (actPixel != scalePrecArray[scalePrecArray.Count - 1])   //vložení pouze odlišných pixelů (škála z webu má více stejných pixelů pod sebou)
+                    {
+                        scalePrecArray.Add(actPixel);
+                        //Debug.WriteLine(actPixel);
+                    }
+                }
+
+                Debug.WriteLine(scalePrecArray.Count);
+            }
+
         }
 
         public Bitmap GetBigForecastBitmap(DateTime forTime, string type)
@@ -219,20 +276,32 @@ namespace AgregaceDatLib
 
             //přebarvení kvůli použití různých škál
 
+            
             for (int w = 0; w < allDataPrecipBitmap.Width; w++)
             {
                 for(int h = 0; h < allDataPrecipBitmap.Height; h++)
                 {
-                    double prec = GetPrecFromColor(allDataPrecipBitmap.GetPixel(w,h));
+                    Color pixel = allDataPrecipBitmap.GetPixel(w, h);
 
-                    allDataPrecipBitmap.SetPixel(w,h, ColorValueHandler.GetPrecipitationColor(prec));
+                    if(!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
+                    {
+                        double prec = GetPrecFromColor(pixel);
+                        allDataPrecipBitmap.SetPixel(w, h, ColorValueHandler.GetPrecipitationColor(prec));
+                    }
 
+                    pixel = allDataTempBitmap.GetPixel(w, h);
 
-                    double temp = ColorValueHandler.GetTemperatureValue(allDataTempBitmap.GetPixel(w, h));
+                    if (!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
+                    {
+                        double temp = GetTempFromColor(pixel);
+                        allDataTempBitmap.SetPixel(w, h, ColorValueHandler.GetTemperatureColor(temp));
 
-                    allDataTempBitmap.SetPixel(w, h, ColorValueHandler.GetTemperatureColor(temp));
+                        //Debug.WriteLine(temp);
+                    }
+
                 }
             }
+            
 
             int sBW = allDataPrecipBitmap.Width / 10;
             int sBH = allDataPrecipBitmap.Height / 8;
@@ -339,179 +408,68 @@ namespace AgregaceDatLib
 
         private double GetPrecFromColor(Color pixel)
         {
-            Color colorWithoutAlfa = Color.FromArgb(0, pixel.R, pixel.G, pixel.B);
-            int colorValue = colorWithoutAlfa.ToArgb();
+            //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            double precipitation = 0;
+            double stepValue = 0.33;
+            double minValue = 0.1;
 
-            if (colorValue < 255)
-                precipitation = 0;
-            else
+            int dif = 255 * 3;
+            int index = 0;
+
+            for (int i = 0; i < scalePrecArray.Count; i++)
             {
 
-                if (colorValue == 255)
-                    precipitation = 0.1;
-                else if (colorValue <= Color.FromArgb(0, 0, 56, 231).ToArgb())
+                int actDif = Math.Abs(pixel.R - scalePrecArray[i].R) + Math.Abs(pixel.G - scalePrecArray[i].G) + Math.Abs(pixel.B - scalePrecArray[i].B);
+
+                if (actDif < dif)
                 {
-                    precipitation = 0.4;
-                }
-                else if (colorValue <= Color.FromArgb(0, 0, 100, 211).ToArgb())
-                {
-                    precipitation = 1;
-                }
-                else if (colorValue <= Color.FromArgb(0, 0, 184, 158).ToArgb())
-                {
-                    precipitation = 2.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 20, 230, 0).ToArgb())
-                {
-                    precipitation = 5.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 167, 230, 0).ToArgb())
-                {
-                    precipitation = 8.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 235, 185, 0).ToArgb())
-                {
-                    precipitation = 11.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 240, 131, 0).ToArgb())
-                {
-                    precipitation = 14.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 248, 66, 0).ToArgb())
-                {
-                    precipitation = 17.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 253, 19, 0).ToArgb())
-                {
-                    precipitation = 20.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 255, 0, 41).ToArgb())
-                {
-                    precipitation = 23.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 255, 0, 113).ToArgb())
-                {
-                    precipitation = 26.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 255, 0, 177).ToArgb())
-                {
-                    precipitation = 29.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 255, 0, 227).ToArgb())
-                {
-                    precipitation = 32.5;
-                }
-                else if (colorValue <= Color.FromArgb(0, 255, 73, 255).ToArgb())
-                {
-                    precipitation = 35.5;
+                    dif = actDif;
+                    index = i;
+
+                    if (actDif == 0)
+                    {
+                        //Debug.WriteLine("BINGO");
+                        break;
+                    }
                 }
 
-                //Console.WriteLine($"prec: {precipitation} cV: {colorValue} col: {pixel}");
+
             }
-
-            //Console.WriteLine($"prec: {precipitation} cV: {colorValue} col: {pixel}");
-
-            return precipitation;
+            
+            return minValue + index * stepValue;
         }
 
         private double GetTempFromColor(Color pixel)
         {
-            double temperature = 0;
+            //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            Color colorWithoutAlfa = Color.FromArgb(0, pixel.R, pixel.G, pixel.B);
-            int colorValue = colorWithoutAlfa.ToArgb();
+            double stepValue = 0.2;
+            int minValue = -28;
 
+            int dif = 255 * 3;
+            int index = 0;
 
-            /*
-            
-            index - R G B - teplota
-            0 - 169 0 221 - -25
-            1 - 90 0 228 - -20
-            2 - 31 0 231 - -15
-            3 - 0 43 236 - -10
-            4 - 0 142 237 - -5
-            5 - 0 241 237 - 0
-            6 - 0 242 169 - 3
-            7 - 0 236 115 - 5
-            8 - 0 214 35 - 8
-            9 - 12 214 0 - 10
-            10 - 88 239 0 - 13
-            11 - 145 248 231 - 15
-            12 - 225 250 0 - 18
-            13 - 251 225 0 - 20
-            14 - 252 109 0 - 25
-            15 - 252 110 0 - 30+
-            */
+            for (int i = 0; i < scaleTempArray.Count; i++)
+            {
+
+                int actDif = Math.Abs(pixel.R - scaleTempArray[i].R) + Math.Abs(pixel.G - scaleTempArray[i].G) + Math.Abs(pixel.B - scaleTempArray[i].B);
+
+                if(actDif < dif)
+                {
+                    dif = actDif;
+                    index = i;
+
+                    if(actDif == 0)
+                    {
+                        //Debug.WriteLine("BINGO");
+                        break;
+                    }
+                }
 
 
-            if (colorValue <= Color.FromArgb(0, 169, 0, 221).ToArgb() && colorValue > Color.FromArgb(0, 90, 0, 228).ToArgb() && pixel.G == 0)
-            {
-                temperature = -25;
-            }
-            else if (colorValue <= Color.FromArgb(0, 90, 0, 228).ToArgb() && colorValue > Color.FromArgb(0, 31, 0, 231).ToArgb() && pixel.G == 0)
-            {
-                temperature = -20;
-            }
-            else if (colorValue <= Color.FromArgb(0, 31, 0, 231).ToArgb() && colorValue > Color.FromArgb(0, 0, 43, 236).ToArgb() && pixel.G == 0)
-            {
-                temperature = -15;
-            }
-            else if (colorValue >= Color.FromArgb(0, 0, 43, 236).ToArgb() && colorValue < Color.FromArgb(0, 0, 142, 237).ToArgb() && pixel.R == 0 && pixel.G < 199)
-            {
-                temperature = -10;
-            }
-            else if (colorValue >= Color.FromArgb(0, 0, 142, 237).ToArgb() && colorValue < Color.FromArgb(0, 0, 241, 237).ToArgb() && pixel.R == 0 && pixel.G < 199)
-            {
-                temperature = -5;
-            }
-            else if (colorValue >= Color.FromArgb(0, 0, 241, 237).ToArgb() && colorValue < Color.FromArgb(0, 0, 242, 169).ToArgb())
-            {
-                temperature = 0;
-            }
-            else if (colorValue <= Color.FromArgb(0, 0, 242, 169).ToArgb() && colorValue > Color.FromArgb(0, 0, 236, 115).ToArgb())
-            {
-                temperature = 3;
-            }
-            else if (colorValue <= Color.FromArgb(0, 0, 236, 115).ToArgb() && colorValue > Color.FromArgb(0, 0, 214, 35).ToArgb())
-            {
-                temperature = 5;
-            }
-            else if (colorValue >= Color.FromArgb(0, 0, 214, 35).ToArgb() && colorValue < Color.FromArgb(0, 12, 214, 0).ToArgb())
-            {
-                temperature = 8;
-            }
-            else if (colorValue >= Color.FromArgb(0, 12, 214, 0).ToArgb() && colorValue < Color.FromArgb(0, 88, 239, 0).ToArgb())
-            {
-                temperature = 10;
-            }
-            else if (colorValue >= Color.FromArgb(0, 88, 239, 0).ToArgb() && colorValue < Color.FromArgb(0, 145, 248, 231).ToArgb())
-            {
-                temperature = 13;
-            }
-            else if (colorValue >= Color.FromArgb(0, 145, 248, 231).ToArgb() && colorValue < Color.FromArgb(0, 225, 250, 0).ToArgb())
-            {
-                temperature = 15;
-            }
-            else if (colorValue >= Color.FromArgb(0, 225, 250, 0).ToArgb() && colorValue < Color.FromArgb(0, 251, 225, 0).ToArgb())
-            {
-                temperature = 18;
-            }
-            else if (colorValue >= Color.FromArgb(0, 251, 225, 0).ToArgb() && colorValue < Color.FromArgb(0, 252, 109, 0).ToArgb())
-            {
-                temperature = 20;
-            }
-            else if (colorValue >= Color.FromArgb(0, 252, 109, 0).ToArgb() && colorValue < Color.FromArgb(0, 252, 110, 0).ToArgb())
-            {
-                temperature = 25;
-            }
-            else if (colorValue >= Color.FromArgb(0, 252, 110, 0).ToArgb())
-            {
-                temperature = 30;
             }
 
-            return temperature;
+            return minValue + index * stepValue;
         }
         public Bitmap GetTemperatureBitmap(DateTime forTime)
         {

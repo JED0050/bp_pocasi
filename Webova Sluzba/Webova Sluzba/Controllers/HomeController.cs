@@ -28,9 +28,9 @@ namespace Webova_Sluzba.Controllers
             BitmapDataLoader2 bL2 = new BitmapDataLoader2();
 
             //aF.Add(bL);
-            aF.Add(xL);
+            //aF.Add(xL);
             //aF.Add(jL);
-            //aF.Add(bL2);
+            aF.Add(bL2);
 
             aF.SaveForecastBitmaps();
 
