@@ -29,13 +29,14 @@ namespace Vizualizace_Dat
         private GMapOverlay routes;
         private DateTime selectedTime;
         private List<PointLatLng> bounds;
-        private Bitmap dataBitmap = new Bitmap(728,528);
+        private Bitmap dataBitmap = new Bitmap(728, 528);
         private string loaders = ApkConfig.Loaders;
         private FormWindowState lastWindowState = FormWindowState.Normal;
         private Size appSize = new Size(800, 600);
         private List<GraphElement> graphCols = new List<GraphElement>();
         private ForecType forecTypeTemp = new ForecType("temp");
         private ForecType forecTypePrec = new ForecType("prec");
+        private ForecType forecType = new ForecType("prec");
         private GMapOverlay bitmapOverlay = new GMapOverlay("bitmapMarker");
         private GMarkerGoogle bitmapMarker;
         private bool isBitmapShown = false;
@@ -59,6 +60,28 @@ namespace Vizualizace_Dat
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
+
+            string defaultLoaders = loaders;
+
+            if(defaultLoaders.Contains("b1"))
+            {
+                checkBox1.Checked = true;
+            }
+
+            if (defaultLoaders.Contains("b2"))
+            {
+                checkBox2.Checked = true;
+            }
+
+            if (defaultLoaders.Contains("x"))
+            {
+                checkBox3.Checked = true;
+            }
+
+            if (defaultLoaders.Contains("j"))
+            {
+                checkBox4.Checked = true;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -95,17 +118,17 @@ namespace Vizualizace_Dat
         {
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
-            
+
             Bitmap serverBitmap;
 
             try
             {
-                serverBitmap = BitmapHandler.GetBitmapFromServer(GetForecastType().Type, selectedTime, loaders, bounds);
+                serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, loaders, bounds);
             }
             catch
             {
                 MessageBox.Show("Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+
                 return 1;
             }
 
@@ -175,7 +198,7 @@ namespace Vizualizace_Dat
 
             PointLatLng point = new PointLatLng(latD, lonD);
 
-            string precVal = "";    
+            string precVal = "";
 
             graphCols = new List<GraphElement>();
 
@@ -185,7 +208,7 @@ namespace Vizualizace_Dat
 
                 try
                 {
-                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, GetForecastType());
+                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, forecType);
                 }
                 catch
                 {
@@ -203,7 +226,7 @@ namespace Vizualizace_Dat
             DrawGraph();
 
             listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
-            listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}";
+            listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
 
             gMap.Overlays.Add(markers);
             markers.Markers.Add(listMarkers[0]);
@@ -221,12 +244,14 @@ namespace Vizualizace_Dat
             selectedTime = DateTime.Now.AddMinutes(trackBar1.Value);
 
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
-            
+
+            ValidateDataLoaders();
+
         }
 
         private void DrawGraph()
         {
-            
+
             if (graphCols.Count == 0)
             {
                 GraphClear();
@@ -254,8 +279,8 @@ namespace Vizualizace_Dat
             g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)botLineH - 5);
             g.DrawLine(p, startSpaceX, (float)botLineH - 5, (float)botLineW - 5, (float)botLineH - 5);
 
-            double max = GetForecastType().GraphMaxValue;
-            double min = GetForecastType().GraphMinValue;
+            double max = forecType.GraphMaxValue;
+            double min = forecType.GraphMinValue;
 
             double recW = (double)(botLineW - startSpaceX - endSpaxeX - (graphCols.Count - 1) * recGap) / (double)(graphCols.Count);
             double recFullH = botLineH - startSpaceY - endSpaceY;
@@ -304,10 +329,10 @@ namespace Vizualizace_Dat
                 Rectangle r;
 
                 r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
-                
+
                 g.FillRectangle(brush, r);
 
-                g.DrawString(graphCols[i].Value.ToString(), valueFont, valueBrush, x + (int)(recW/2) - 5, startSpaceY - 10);
+                g.DrawString(graphCols[i].Value.ToString(), valueFont, valueBrush, x + (int)(recW / 2) - 5, startSpaceY - 10);
 
                 Point[] point = new Point[] { new Point(x + 7, botLineH) };
 
@@ -325,7 +350,7 @@ namespace Vizualizace_Dat
                 firstDate = firstDate.AddHours(1);
             }
 
-            g.DrawString(GetForecastType().Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
+            g.DrawString(forecType.Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
             g.DrawString("[datetime]", valueFont, valueBrush, botLineW - 30, botLineH);
 
             g.DrawString(max.ToString(), valueFont, valueBrush, 1, startSpaceY - 10);
@@ -419,12 +444,12 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointStart = routePoints[i];
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, loaders, bounds, GetForecastType());
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, loaders, bounds, forecType);
 
                             graphCols.Add(new GraphElement(precVal, beginTime, 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
-                            listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd. MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}";
+                            listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd. MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
 
                             gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[0]);
@@ -435,13 +460,13 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointEnd, loaders, bounds, GetForecastType());
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointEnd, loaders, bounds, forecType);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
 
                             gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
@@ -454,13 +479,13 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointInner, loaders, bounds, GetForecastType());
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointInner, loaders, bounds, forecType);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{GetForecastType().CzForecType}: {precVal} {GetForecastType().Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
 
                             markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
                         }
@@ -506,13 +531,6 @@ namespace Vizualizace_Dat
             ApkConfig.ServerAddress = "https://localhost:44336/";
         }
 
-        private void datovéZdrojeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormChooseDataLoaders loadersForm = new FormChooseDataLoaders();
-            loadersForm.ShowDialog();
-            loaders = FormChooseDataLoaders.loaders;
-        }
-
         private void vlastníAdresaToolStripMenuItem_TextChanged(object sender, EventArgs e)
         {
             ApkConfig.ServerAddress = vlastníAdresaToolStripMenuItem.Text;
@@ -540,7 +558,7 @@ namespace Vizualizace_Dat
 
                 selectedTime = selectedTime.AddHours(1);
 
-                if(i != 0)
+                if (i != 0)
                     trackBar1.Value += 60;
 
             }
@@ -560,8 +578,8 @@ namespace Vizualizace_Dat
         }
 
         private void Form1_Resize(object sender, EventArgs e)
-        {           
-            
+        {
+
             if (WindowState != lastWindowState)
             {
                 lastWindowState = WindowState;
@@ -576,26 +594,13 @@ namespace Vizualizace_Dat
                     DrawGraph();
                 }
             }
-            
-        }
-
-        private ForecType GetForecastType()
-        {
-            if(rBPrec.Checked)
-            {
-                return forecTypePrec;
-            }
-            else
-            {
-                return forecTypeTemp;
-            }    
 
         }
 
         private void gMap_OnMapZoomChanged()
         {
 
-            if(isBitmapShown)
+            if (isBitmapShown)
             {
                 bitmapOverlay.Markers.Remove(bitmapMarker);
                 gMap.Overlays.Remove(bitmapOverlay);
@@ -625,46 +630,14 @@ namespace Vizualizace_Dat
         {
             ApkConfig.BitmapAlpha = 255;
             bitmapAlpha = 255;
+            gMap_OnMapZoomChanged();
         }
 
         private void maximálníToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.BitmapAlpha = 0;
             bitmapAlpha = 0;
-        }
-
-        private void menuOwnTransparent_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                bitmapAlpha = int.Parse(menuOwnTransparent.Text);
-
-                ApkConfig.BitmapAlpha = bitmapAlpha;
-
-                if (isBitmapShown)
-                {
-                    for(int x = 0; x < dataBitmap.Width; x++)
-                    {
-                        for(int y = 0; y < dataBitmap.Height; y++)
-                        {
-                            Color oldPixel = dataBitmap.GetPixel(x, y);
-
-                            if ((oldPixel.R == 0 && oldPixel.G == 0 && oldPixel.B == 0) || (oldPixel.R == 255 && oldPixel.G == 255 && oldPixel.B == 255))
-                                continue;
-
-                            Color newPixel = Color.FromArgb(bitmapAlpha, oldPixel.R , oldPixel.G, oldPixel.B);
-
-                            dataBitmap.SetPixel(x, y, newPixel);
-                        }
-                    }
-
-                    gMap_OnMapZoomChanged();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            gMap_OnMapZoomChanged();
         }
 
         private void vlastníToolStripMenuItem_MouseEnter(object sender, EventArgs e)
@@ -675,6 +648,142 @@ namespace Vizualizace_Dat
         private void nastavitVlastníAdresuToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             vlastníAdresaToolStripMenuItem.Text = ApkConfig.ServerAddress;
+        }
+
+        private void checkBoxLoaders_CheckedChanged(object sender, EventArgs e)
+        {
+
+            loaders = "";
+            string jsonLoaders = "";
+
+            if (checkBox1.Checked)
+            {
+
+                jsonLoaders += "b1";
+
+                if (checkBox1.Enabled)
+                {
+                    loaders += "b1";
+                }
+            }
+
+            if (checkBox2.Checked)
+            {
+
+                jsonLoaders += "b2";
+
+                if (checkBox2.Enabled)
+                {
+                    loaders += "b2";
+                }
+            }
+
+            if (checkBox3.Checked)
+            {
+
+                jsonLoaders += "x";
+
+                if (checkBox3.Enabled)
+                {
+                    loaders += "x";
+                }
+            }
+
+            if (checkBox4.Checked)
+            {
+
+                jsonLoaders += "j";
+
+                if (checkBox4.Enabled)
+                {
+                    loaders += "j";
+                }
+            }
+
+            ApkConfig.Loaders = jsonLoaders;
+        }
+
+        private void menuOwnTransparent_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                bitmapAlpha = int.Parse(menuOwnTransparent.Text);
+
+                if (bitmapAlpha < 0)
+                    bitmapAlpha = 0;
+                else if (bitmapAlpha > 255)
+                    bitmapAlpha = 255;
+
+                menuOwnTransparent.Text = bitmapAlpha.ToString();
+
+                ApkConfig.BitmapAlpha = bitmapAlpha;
+
+                if (isBitmapShown)
+                {
+                    for (int x = 0; x < dataBitmap.Width; x++)
+                    {
+                        for (int y = 0; y < dataBitmap.Height; y++)
+                        {
+                            Color oldPixel = dataBitmap.GetPixel(x, y);
+
+                            if ((oldPixel.R == 0 && oldPixel.G == 0 && oldPixel.B == 0) || (oldPixel.R == 255 && oldPixel.G == 255 && oldPixel.B == 255))
+                                continue;
+
+                            Color newPixel = Color.FromArgb(bitmapAlpha, oldPixel.R, oldPixel.G, oldPixel.B);
+
+                            dataBitmap.SetPixel(x, y, newPixel);
+                        }
+                    }
+
+                    gMap_OnMapZoomChanged();
+                }
+            }
+            catch
+            {
+                menuOwnTransparent.Text = bitmapAlpha.ToString();
+
+                //MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void rBTemp_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if(rBPrec.Checked)
+            {
+                forecType = forecTypePrec;
+            }
+            else
+            {
+                forecType = forecTypeTemp;
+            }
+
+            ValidateDataLoaders();
+        }
+
+        private void ValidateDataLoaders()
+        {
+            if (selectedTime > DateTime.Now.AddHours(6))
+            {
+                checkBox1.Enabled = false;
+            }
+            else if(rBTemp.Checked)
+            {
+                checkBox1.Enabled = false;
+            }
+            else
+            {
+                checkBox1.Enabled = true;
+            }
+
+            if (selectedTime > DateTime.Now.AddDays(4))
+            {
+                checkBox2.Enabled = false;
+            }
+            else
+            {
+                checkBox2.Enabled = true;
+            }
         }
     }
 }

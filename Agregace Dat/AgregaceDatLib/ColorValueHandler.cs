@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -8,26 +9,63 @@ namespace AgregaceDatLib
 {
     public class ColorValueHandler
     {
-        private static string workingDirectory = Environment.CurrentDirectory + @"\Data\";
+        private static Color[] scalePrecArray;
+        private static Dictionary<Color, double> scalePrecDic;
 
-        private static string scalePrecName = "škála_0.1_30.png";
-        private static Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
-        private static Color[] scalePrecArray = GetColorArray(scalePrecImage);
+        private static Color[] scaleTempArray;
+        private static Dictionary<Color, double> scaleTempDic;
 
-        private static string scaleTempName = "škála_-30_30.png";
-        private static Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
-        private static Color[] scaleTempArray = GetColorArray(scaleTempImage);
-
-        private static Color[] GetColorArray(Bitmap scaleBitmap)
+        static ColorValueHandler()
         {
-            Color[] colorArray = new Color[scaleBitmap.Width];
+            string workingDirectory = Environment.CurrentDirectory + @"\Data\";
 
-            for(int i = 0; i < scaleBitmap.Width; i++)
+
+            string scalePrecName = "škála_0.1_30.png";
+            Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
+
+            scalePrecArray = new Color[scalePrecImage.Width];
+            scalePrecDic = new Dictionary<Color, double>();
+
+            double minVal = 0.1;
+            double step = 0.1;
+
+            for (int i = 0; i < scalePrecImage.Width; i++)
             {
-                colorArray[i] = scaleBitmap.GetPixel(i, 0);
+                Color pixel = scalePrecImage.GetPixel(i, 0);
+                double value = minVal + i * step;
+
+                if (!scalePrecDic.ContainsKey(pixel))
+                {
+                    scalePrecDic.Add(pixel, value);
+                }
+
+                scalePrecArray[i] = pixel;
             }
 
-            return colorArray;
+
+            string scaleTempName = "škála_-30_30.png";
+            Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
+
+            scaleTempArray = new Color[scaleTempImage.Width];
+            scaleTempDic = new Dictionary<Color, double>();
+
+            minVal = -30;
+            step = 1;
+
+            for (int i = 0; i < scaleTempImage.Width; i++)
+            {
+                Color pixel = scaleTempImage.GetPixel(i, 0);
+                double value = minVal + i * step;
+
+                if (!scaleTempDic.ContainsKey(pixel))
+                {
+                    scaleTempDic.Add(pixel, value);
+                    //Debug.WriteLine(value);
+                }
+
+                scaleTempArray[i] = pixel;
+            }
+
         }
 
 
@@ -40,20 +78,14 @@ namespace AgregaceDatLib
 
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            double stepValue = 0.1;
-            double minValue = 0.1;
-
-            for (int i = 0; i < scalePrecArray.Length; i++)
+            if(scalePrecDic.ContainsKey(pixelAlpha))
             {
-
-                if (pixelAlpha == scalePrecArray[i])
-                {
-                    return minValue + stepValue * i;
-                }
-
+                return scalePrecDic[pixelAlpha];
             }
-
-            return 0;
+            else
+            {
+                return 0;
+            }
         }
 
         public static Color GetPrecipitationColor(double prec)
@@ -84,22 +116,20 @@ namespace AgregaceDatLib
 
         public static double GetTemperatureValue(Color pixel)
         {
+
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            int stepValue = 1;
-            int minValue = -30;
+            //int stepValue = 1;
+            //int minValue = -30;
 
-            for(int i = 0; i < scaleTempArray.Length; i++)
+            if (scaleTempDic.ContainsKey(pixelAlpha))
             {
-
-                if(pixelAlpha == scaleTempArray[i])
-                {
-                    return minValue + stepValue * i;
-                }
-
+                return scaleTempDic[pixelAlpha];
             }
-
-            return 0;
+            else
+            {
+                return 0;
+            }
         }
 
         public static Color GetTemperatureColor(double temp)

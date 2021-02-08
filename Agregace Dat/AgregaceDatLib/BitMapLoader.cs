@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -48,6 +49,18 @@ namespace AgregaceDatLib
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
+            forTime = forTime.AddMinutes(- forTime.Minute % 10);
+
+            Debug.WriteLine(forTime);
+
+            if (forTime > DateTime.Now.AddHours(6))
+            {
+                throw new Exception("zvolený čas je příliš vysoký, služba poskytuje pouze předpovědi aktuální čas");
+            }
+            else if(forTime < DateTime.Now.AddHours(-6))
+            {
+                throw new Exception("zvolený čas je příliš nízký, služba poskytuje pouze předpovědi aktuální čas");
+            }
 
             string bitmapName = "RadarBitmap" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
@@ -60,49 +73,31 @@ namespace AgregaceDatLib
             {
                 Bitmap radarBitmap;
 
-                for (int i = forTime.Hour; i > 0; i--)
+                int c = 0;
+
+                while(true)
                 {
 
-                    for(int j = forTime.Minute; j >= 0; j--)
+                    try
                     {
-                        try
-                        {
-                            radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + j.ToString().PadLeft(2, '0') + ".0.png");
-                            ClearBitmap(radarBitmap);
+                        radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.ToString("yyyyMMdd.HHmm") + ".0.png");
 
-                            radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
-
-                            return radarBitmap;
-                        }
-                        catch { }
+                        break;
                     }
-                    
-                }
-
-                forTime.AddDays(-1);
-
-                for (int i = 24; i > 0; i--)
-                {
-                    for (int j = 59; j >= 0; j--)
+                    catch
                     {
-                        try
-                        {
-                            radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + "." + i.ToString().PadLeft(2, '0') + j.ToString().PadLeft(2, '0') + ".0.png");
-                            ClearBitmap(radarBitmap);
+                        forTime = forTime.AddMinutes(-10);
+                        c++;
+                    }
 
-                            radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
-
-                            return radarBitmap;
-                        }
-                        catch { }
+                    if(c > 108)
+                    {
+                        throw new Exception("nebyla nalezena bitmapa z daty pro zvolený čas");
                     }
                 }
 
-                radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.Year + forTime.ToString("MM") + forTime.ToString("dd") + ".0000.0.png");
                 ClearBitmap(radarBitmap);
-
                 radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
-
                 return radarBitmap;
             }
 
@@ -161,21 +156,11 @@ namespace AgregaceDatLib
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-
-                string onlyDateName = f.Name.Substring(11, 13);
-
-                string[] timeParts = onlyDateName.Split("-");
-
-                DateTime dateTime = new DateTime(int.Parse(timeParts[0]), int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), 0, 0);
-
-                if (dateTime < now) //smazání starých bitmap
-                {
-                    f.Delete();
-                }
+                f.Delete(); //smazání starých bitmap
             }
 
             GetPrecipitationBitmap(now);
-            GetPrecipitationBitmap(now.AddHours(1));
+            //GetPrecipitationBitmap(now.AddHours(1));
         }
 
         private double GetPrecipitationFromPixel(Color pixel)

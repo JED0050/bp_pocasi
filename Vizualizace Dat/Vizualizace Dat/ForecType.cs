@@ -11,12 +11,14 @@ namespace Vizualizace_Dat
 {
     class ForecType
     {
-        private Color[] scaleArray;
+        private Dictionary<Color, double> scaleDic = new Dictionary<Color, double>();
         public delegate double getValDel(Color c);
 
         public ForecType(string type)
         {
             string scaleName = "";
+            double minVal = 0;
+            double step = 0;
 
             if (type == "prec")
             {
@@ -28,6 +30,9 @@ namespace Vizualizace_Dat
                 GraphMinValue = 0;
 
                 scaleName = "škála_0.1_30.png";
+
+                minVal = 0.1;
+                step = 0.1;
             }
             else if(type == "temp")
             {
@@ -39,17 +44,24 @@ namespace Vizualizace_Dat
                 GraphMinValue = -30;
 
                 scaleName = "škála_-30_30.png";
+
+                minVal = -30;
+                step = 1;
             }
 
             string workingDirectory = Environment.CurrentDirectory;
             string dataFolder = Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\";
             Bitmap scaleBitmap = new Bitmap(dataFolder + scaleName);
 
-            scaleArray = new Color[scaleBitmap.Width];
-
             for (int i = 0; i < scaleBitmap.Width; i++)
             {
-                scaleArray[i] = scaleBitmap.GetPixel(i, 0);
+                Color pixel = scaleBitmap.GetPixel(i, 0);
+                double value = minVal + i * step;
+
+                if (!scaleDic.ContainsKey(pixel))
+                {
+                    scaleDic.Add(pixel, value);
+                }
             }
         }
 
@@ -68,20 +80,14 @@ namespace Vizualizace_Dat
 
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            double stepValue = 0.1;
-            double minValue = 0.1;
-
-            for (int i = 0; i < scaleArray.Length; i++)
+            if (scaleDic.ContainsKey(pixelAlpha))
             {
-
-                if (pixelAlpha == scaleArray[i])
-                {
-                    return minValue + stepValue * i;
-                }
-
+                return scaleDic[pixelAlpha];
             }
-
-            return 0;
+            else
+            {
+                return 0;
+            }
         }
 
 
@@ -89,20 +95,14 @@ namespace Vizualizace_Dat
         {
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            int stepValue = 1;
-            int minValue = -30;
-
-            for (int i = 0; i < scaleArray.Length; i++)
+            if (scaleDic.ContainsKey(pixelAlpha))
             {
-
-                if (pixelAlpha == scaleArray[i])
-                {
-                    return minValue + stepValue * i;
-                }
-
+                return scaleDic[pixelAlpha];
             }
-
-            return 0;
+            else
+            {
+                return 0;
+            }
         }
 
     }

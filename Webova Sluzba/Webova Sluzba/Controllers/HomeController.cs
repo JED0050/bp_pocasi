@@ -27,8 +27,8 @@ namespace Webova_Sluzba.Controllers
             JSONDataLoader jL = new JSONDataLoader();
             BitmapDataLoader2 bL2 = new BitmapDataLoader2();
 
-            //aF.Add(bL);
-            //aF.Add(xL);
+            aF.Add(bL);
+            aF.Add(xL);
             //aF.Add(jL);
             aF.Add(bL2);
 

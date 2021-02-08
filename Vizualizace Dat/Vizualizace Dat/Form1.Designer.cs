@@ -38,7 +38,6 @@
             this.nastavitVlastníAdresuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vlastníAdresaToolStripMenuItem = new System.Windows.Forms.ToolStripTextBox();
             this.nastavitVýchozíAdresuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.datovéZdrojeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.průhlednostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vlastníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOwnTransparent = new System.Windows.Forms.ToolStripTextBox();
@@ -50,6 +49,11 @@
             this.bAnim = new System.Windows.Forms.Button();
             this.rBPrec = new System.Windows.Forms.RadioButton();
             this.rBTemp = new System.Windows.Forms.RadioButton();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -134,7 +138,6 @@
             // 
             this.nastaveníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.adresaServeruToolStripMenuItem,
-            this.datovéZdrojeToolStripMenuItem,
             this.průhlednostToolStripMenuItem});
             this.nastaveníToolStripMenuItem.Name = "nastaveníToolStripMenuItem";
             this.nastaveníToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
@@ -146,7 +149,7 @@
             this.nastavitVlastníAdresuToolStripMenuItem,
             this.nastavitVýchozíAdresuToolStripMenuItem});
             this.adresaServeruToolStripMenuItem.Name = "adresaServeruToolStripMenuItem";
-            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adresaServeruToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.adresaServeruToolStripMenuItem.Text = "Adresa serveru";
             // 
             // nastavitVlastníAdresuToolStripMenuItem
@@ -172,13 +175,6 @@
             this.nastavitVýchozíAdresuToolStripMenuItem.Text = "Nastavit výchozí adresu";
             this.nastavitVýchozíAdresuToolStripMenuItem.Click += new System.EventHandler(this.nastavitVýchozíAdresuToolStripMenuItem_Click);
             // 
-            // datovéZdrojeToolStripMenuItem
-            // 
-            this.datovéZdrojeToolStripMenuItem.Name = "datovéZdrojeToolStripMenuItem";
-            this.datovéZdrojeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.datovéZdrojeToolStripMenuItem.Text = "Datové zdroje";
-            this.datovéZdrojeToolStripMenuItem.Click += new System.EventHandler(this.datovéZdrojeToolStripMenuItem_Click);
-            // 
             // průhlednostToolStripMenuItem
             // 
             this.průhlednostToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -186,7 +182,7 @@
             this.minimálníToolStripMenuItem,
             this.maximálníToolStripMenuItem});
             this.průhlednostToolStripMenuItem.Name = "průhlednostToolStripMenuItem";
-            this.průhlednostToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.průhlednostToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.průhlednostToolStripMenuItem.Text = "Průhlednost počasí";
             // 
             // vlastníToolStripMenuItem
@@ -194,7 +190,7 @@
             this.vlastníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOwnTransparent});
             this.vlastníToolStripMenuItem.Name = "vlastníToolStripMenuItem";
-            this.vlastníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vlastníToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.vlastníToolStripMenuItem.Text = "Vlastní";
             this.vlastníToolStripMenuItem.MouseEnter += new System.EventHandler(this.vlastníToolStripMenuItem_MouseEnter);
             // 
@@ -203,19 +199,19 @@
             this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuOwnTransparent.Name = "menuOwnTransparent";
             this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
-            this.menuOwnTransparent.TextChanged += new System.EventHandler(this.menuOwnTransparent_TextChanged);
+            this.menuOwnTransparent.MouseLeave += new System.EventHandler(this.menuOwnTransparent_MouseLeave);
             // 
             // minimálníToolStripMenuItem
             // 
             this.minimálníToolStripMenuItem.Name = "minimálníToolStripMenuItem";
-            this.minimálníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minimálníToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.minimálníToolStripMenuItem.Text = "Minimální";
             this.minimálníToolStripMenuItem.Click += new System.EventHandler(this.minimálníToolStripMenuItem_Click);
             // 
             // maximálníToolStripMenuItem
             // 
             this.maximálníToolStripMenuItem.Name = "maximálníToolStripMenuItem";
-            this.maximálníToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maximálníToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.maximálníToolStripMenuItem.Text = "Maximální";
             this.maximálníToolStripMenuItem.Click += new System.EventHandler(this.maximálníToolStripMenuItem_Click);
             // 
@@ -266,6 +262,7 @@
             this.rBPrec.TabStop = true;
             this.rBPrec.Text = "Srážky [mm]";
             this.rBPrec.UseVisualStyleBackColor = false;
+            this.rBPrec.CheckedChanged += new System.EventHandler(this.rBTemp_CheckedChanged);
             // 
             // rBTemp
             // 
@@ -277,6 +274,63 @@
             this.rBTemp.TabIndex = 26;
             this.rBTemp.Text = "Teplota [°C]";
             this.rBTemp.UseVisualStyleBackColor = false;
+            this.rBTemp.CheckedChanged += new System.EventHandler(this.rBTemp_CheckedChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox1.Location = new System.Drawing.Point(994, 35);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox1.Size = new System.Drawing.Size(117, 17);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.Text = "radar.bourky (BMP)";
+            this.checkBox1.UseVisualStyleBackColor = false;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox2.Location = new System.Drawing.Point(1017, 58);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox2.Size = new System.Drawing.Size(94, 17);
+            this.checkBox2.TabIndex = 28;
+            this.checkBox2.Text = "Medard (BMP)";
+            this.checkBox2.UseVisualStyleBackColor = false;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox3.Location = new System.Drawing.Point(1029, 81);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox3.Size = new System.Drawing.Size(82, 17);
+            this.checkBox3.TabIndex = 29;
+            this.checkBox3.Text = "Yr.no (XML)";
+            this.checkBox3.UseVisualStyleBackColor = false;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox4.Location = new System.Drawing.Point(964, 104);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox4.Size = new System.Drawing.Size(147, 17);
+            this.checkBox4.TabIndex = 30;
+            this.checkBox4.Text = "Openweathermap (JSON)";
+            this.checkBox4.UseVisualStyleBackColor = false;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
             // 
             // Form1
             // 
@@ -284,6 +338,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 706);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.rBTemp);
             this.Controls.Add(this.rBPrec);
             this.Controls.Add(this.bAnim);
@@ -319,7 +377,6 @@
         private System.Windows.Forms.ToolStripMenuItem nastavitVlastníAdresuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nastavitVýchozíAdresuToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox vlastníAdresaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem datovéZdrojeToolStripMenuItem;
         private System.Windows.Forms.Button bAnim;
         private System.Windows.Forms.RadioButton rBPrec;
         private System.Windows.Forms.RadioButton rBTemp;
@@ -328,6 +385,11 @@
         private System.Windows.Forms.ToolStripMenuItem minimálníToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox menuOwnTransparent;
         private System.Windows.Forms.ToolStripMenuItem maximálníToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
 
