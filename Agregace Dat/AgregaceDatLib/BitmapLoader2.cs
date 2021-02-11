@@ -132,10 +132,10 @@ namespace AgregaceDatLib
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight  = new PointLonLat(20.21, 47.09);
 
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime));
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime), "prec");
         }
 
-        public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap)
+        public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap, string type)
         {
 
             //56.13636792495879 -21.123962402343754 - levý horní bod
@@ -143,7 +143,7 @@ namespace AgregaceDatLib
             //33.25246979589199 29.696044921875 - pravý dolní bod
             //59.68195494710389 9.96940612792969 - střed horní bod
 
-            Bitmap bigBitmap = ResizeBitmap(fullBitmap, 980, 600);
+            Bitmap bigBitmap = ResizeBitmap(fullBitmap, 980, 600, type);
 
             Point p1 = new Point();
             Point p2 = new Point();
@@ -214,7 +214,7 @@ namespace AgregaceDatLib
                 }
             }
 
-            return ResizeBitmap(smallBitmap, 728, 528);
+            return ResizeBitmap(smallBitmap, 728, 528, type);
         }
 
         public void SaveNewDeleteOldBmps()  //4 dny +-
@@ -382,28 +382,30 @@ namespace AgregaceDatLib
             return workingDirectory + @"\Data\medard-online\" + fileName;
         }
 
-        private Bitmap ResizeBitmap(Bitmap b, float w, float h)
+        private Bitmap ResizeBitmap(Bitmap b, float w, float h, string type)
         {
-            float width = w;
-            float height = h;
-            var brush = new SolidBrush(Color.Transparent);
+            Bitmap newBitmap = new Bitmap(b, (int)w, (int)h);
 
-            float scale = Math.Min(width / b.Width, height / b.Height);
+            
+            for(int x = 0; x < newBitmap.Width; x++)
+            {
+                for(int y = 0; y < newBitmap.Height; y++)
+                {
 
-            var bmp = new Bitmap((int)width, (int)height);
-            var graph = Graphics.FromImage(bmp);
+                    Color pixel = newBitmap.GetPixel(x, y);
+                    
+                    //Debug.WriteLine(GetPrecFromColor(pixel));
 
-            graph.InterpolationMode = InterpolationMode.High;
-            graph.CompositingQuality = CompositingQuality.HighQuality;
-            graph.SmoothingMode = SmoothingMode.AntiAlias;
+                    if (!ColorValueHandler.IsColorKnown(pixel, type))
+                    {
+                        newBitmap.SetPixel(x, y, ColorValueHandler.GetClosestCol(pixel, type));
+                    }
 
-            var scaleWidth = (int)(b.Width * scale);
-            var scaleHeight = (int)(b.Height * scale);
+                }
 
-            graph.FillRectangle(brush, new RectangleF(0, 0, width, height));
-            graph.DrawImage(b, ((int)width - scaleWidth) / 2, ((int)height - scaleHeight) / 2, scaleWidth, scaleHeight);
+            }
 
-            return bmp;
+            return newBitmap;
         }
 
         private double GetPrecFromColor(Color pixel)
@@ -476,7 +478,7 @@ namespace AgregaceDatLib
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime));
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime), "temp");
         }
     }
 }

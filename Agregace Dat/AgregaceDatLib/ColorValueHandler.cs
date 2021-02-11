@@ -84,7 +84,17 @@ namespace AgregaceDatLib
             }
             else
             {
-                return 0;
+                Color c = GetClosestCol(pixelAlpha, "prec");
+
+                if(c == Color.Black)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return scalePrecDic[c];
+                }
+
             }
         }
 
@@ -128,7 +138,16 @@ namespace AgregaceDatLib
             }
             else
             {
-                return 0;
+                Color c = GetClosestCol(pixelAlpha, "temp");
+
+                if (c == Color.Black)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return scaleTempDic[c];
+                }
             }
         }
 
@@ -149,6 +168,64 @@ namespace AgregaceDatLib
 
             return scaleTempArray[colorIndex];
 
+        }
+
+        public static Color GetClosestCol(Color pixel, string type)
+        {
+            Color c = Color.Black;
+            int dif = Math.Abs(pixel.R - c.R) + Math.Abs(pixel.G - c.G) + Math.Abs(pixel.B - c.B);
+
+            Color[] colorsArray;
+
+            if (type == "prec")
+            {
+                colorsArray = scalePrecArray;
+            }
+            else
+            {
+                colorsArray = scaleTempArray;
+            }
+
+            for (int i = 0; i < colorsArray.Length; i++)
+            {
+
+                Color p = colorsArray[i];
+
+                int actDif = Math.Abs(pixel.R - p.R) + Math.Abs(pixel.G - p.G) + Math.Abs(pixel.B - p.B);
+
+                if (actDif < dif)
+                {
+                    dif = actDif;
+                    c = p;
+
+                    if(dif == 0)
+                    {
+                        break;
+                    }
+                }
+
+            }
+
+            return c;
+        }
+
+        public static bool IsColorKnown(Color pixel, string type)
+        {
+            if(pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+            {
+                return true;
+            }
+            else
+            {
+                if(type == "prec")
+                {
+                    return scalePrecDic.ContainsKey(pixel);
+                }
+                else
+                {
+                    return scaleTempDic.ContainsKey(pixel);
+                }
+            }
         }
 
     }

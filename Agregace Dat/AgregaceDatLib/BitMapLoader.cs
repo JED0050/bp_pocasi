@@ -120,7 +120,7 @@ namespace AgregaceDatLib
                 {
                     if(x >= 0 && x <= 345 && y >= 510 && y <= bitmap.Height)
                     {
-                        bitmap.SetPixel(x, y, Color.Transparent);
+                        bitmap.SetPixel(x, y, Color.Black);
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace AgregaceDatLib
 
                         if (c == Color.Empty || c == Color.FromArgb(255, 0, 0, 0) || c == Color.FromArgb(255, 196, 196, 196) || c == Color.FromArgb(255, 255, 255, 255))
                         {
-                            bitmap.SetPixel(x, y, Color.Transparent);
+                            bitmap.SetPixel(x, y, Color.Black);
                         }
                         else
                         {
@@ -136,7 +136,7 @@ namespace AgregaceDatLib
 
                             if(precVal == 0)
                             {
-                                bitmap.SetPixel(x, y, Color.Transparent);
+                                bitmap.SetPixel(x, y, Color.Black);
                             }
                             else
                             {
