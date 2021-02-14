@@ -1,0 +1,90 @@
+\documentclass[czech,bachelor,dept460,male,csharp,cpdeclaration]{diploma}
+
+\usepackage[autostyle=true,czech=quotes]{csquotes} % korektni sazba uvozovek, podpora pro balik biblatex
+\usepackage[backend=biber, style=iso-numeric, alldates=iso]{biblatex} % bibliografie
+\usepackage{dcolumn} % sloupce tabulky s ciselnymi hodnotami
+\usepackage{subfig} % makra pro "podobrazky" a "podtabulky"
+
+\ThesisAuthor{Jan Jelička}
+
+\CzechThesisTitle{Webová služba pro sběr a vizualizaci předpovědí počasí}
+
+\EnglishThesisTitle{Web service for collecting and visualizing weather forecasts}
+
+\SubmissionDate{30. prosince 2020}
+
+\Thanks{Rád bych na tomto místě poděkoval vedoucímu bakalářské práce panu Ing. Janu Janouškovi, za pravidelné konzultace a poskytnutí mnoha rad a nápadů pro řežení samotné práce.}
+
+% Zadame cestu a jmeno souboru ci nekolika souboru s digitalizovanou podobou zadani prace.
+% Pokud toto makro zapoznamkujeme sazi se stranka s upozornenim.
+\ThesisAssignmentImagePath{Figures/Assignment}
+
+% Zadame soubor s digitalizovanou podobou prohlaseni autora zaverecne prace.
+% Pokud toto makro zapoznamkujeme sazi se cisty text prohlaseni.
+\AuthorDeclarationImageFile{Figures/AuthorDeclaration.jpg}
+
+
+% Zadame soubor s digitalizovanou podobou souhlasu spolupracujici prav. nebo fyz. osoby.
+% Pokud toto makro zapoznamkujeme sazi se cisty text souhlasu.
+\CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
+
+\CzechAbstract{Cílem bakalářské práce bylo vytvořit aplikaci, která bude schopna shromažďovat data o počasí z různých datových zdrojů v různých formátech (text XML, text JSON, bitmap). Agregovaná data jsou následně poskytována pomocí webové služby v jednom formátu (bitmap). Webová služba poskytuje data pro určité území v danném čase. Posledním bodem je vizualizační aplikace, která poskytuje uživateli možnost vykreslení počasí pro určité území v čase a také zobrazuje předpověď pro zadanou trasu.}
+
+\CzechKeywords{XML; JSON; bitmap; počasí}
+
+\EnglishAbstract{The aim of the bachelor thesis was to create an application that will be able to collect weather data from various data sources in various formats (XML text, JSON text, bitmap). The aggregated data is then provided using a web service in one format (bitmap). The web service provides data for a specific territory at a given time. The last point is a visualization application that provides the user with the ability to plot the weather for a certain area over time and also displays the forecast for the specified route.}
+
+\EnglishKeywords{XML; JSON; bitmap; forecast}
+
+\AddAcronym{XML}{Extensible Markup Language}
+\AddAcronym{JSON}{JavaScript Object Notation}
+\AddAcronym{BMP}{Bitmap}
+\AddAcronym{HTML}{Hyper Text Markup Language}
+
+% Zacatek dokumentu
+\begin{document}
+	
+	\MakeTitlePages
+	
+	\section{Úvod}	
+	
+	Informace o počasí jsou v dnešní době distribuována mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde sproztředkovávatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s šesti hodinovými rozestupy. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou minutu, stačí nám předpověď jednou za pár hodin.
+	
+	Cílem této práce je tedy sjednotit různé datové zdroje do jednotného formátu a vytvořit předpověď počasí dle průměru těchto dat. Mimo to že každá služba může mít data ve svém formátu, je potřeba i sjednotit časy a především pozice pro které se data zjišťují. 
+	
+	\section{Datové zdroje}
+	
+	V práci potřebujeme použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML. Druhým zvoleným zdrojem jsou JSON předpovědi od společnosti OpenWeather. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru a pro tento účel byl vybrán český projekt Medard.
+	
+	\subsection{XML}
+	\subsubsection{yr.no}
+	
+	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na týden dopředu a rozpetí mezi jednotlivými předpověďmi je 6 hodin. Veškeré informace jsou v podobě XML dokumentu.
+	
+	\subsubsection{ukázka}
+	\subsection{JSON}
+	\subsubsection{OpenWeather}
+	
+	Dalším datovým zdrojem v podobě textu je OpenWeather. Tato služba poskytuje data ve formátu JSON na týden dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
+	
+	\subsubsection{ukázka}
+	\subsection{Bitmap}
+	\subsubsection{Medard}
+	
+	Medard je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získlávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
+	
+	\subsubsection{Radar.bourky}
+	
+	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný, protože poskytuje data pouze v aktuálním čase a pokrávý jen českou republiku. Z toho důvodu se tento zdroj dá využít pouze pro zjištění aktuálního počasí v ČR.
+	
+	\subsubsection{ukázka}
+	
+	\section{Agregace dat}
+	\subsection{Triangulace}
+	\subsection{Interpolace}
+	\subsection{Škála}
+	\section{Distribuce dat}
+	
+	\section{Vizualizace dat}
+	
+\end{document}
