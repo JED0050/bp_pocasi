@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  3 FEB 2021 13:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  15 FEB 2021 18:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**edit.tex
-(./edit.tex
+**jed0050_dokument.tex
+(./jed0050_dokument.tex
 LaTeX2e <2020-10-01> patch level 2
 L3 programming layer <2020-12-07> xparse <2020-03-03> (./diploma.cls
 Document Class: diploma 2020/10/22 4.32a diploma LaTeX document class
@@ -461,7 +461,7 @@ File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/pdfx/8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
-** pdfx: No file edit.xmpdata . Metadata will be incomplete!
+** pdfx: No file jed0050_dokument.xmpdata . Metadata will be incomplete!
 <<sRGB.icc>> (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/pdfx/8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
@@ -865,8 +865,9 @@ LaTeX Font Info:    Trying to load font information for T1+lmr on input line 45
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) (./edit.aux)
-\openout1 = `edit.aux'.
+)
+(./jed0050_dokument.aux)
+\openout1 = `jed0050_dokument.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
 LaTeX Font Info:    ... okay on input line 45.
@@ -965,9 +966,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 45.
 LaTeX Info: Redefining \pageref on input line 45.
 LaTeX Info: Redefining \nameref on input line 45.
- (./edit.out) (./edit.out)
+ (./jed0050_dokument.out) (./jed0050_dokument.out)
 \@outlinefile=\write5
-\openout5 = `edit.out'.
+\openout5 = `jed0050_dokument.out'.
 
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -1010,12 +1011,12 @@ File: english.lbx 2020/08/23 v3.15a biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout4 = `edit.bcf'.
+\openout4 = `jed0050_dokument.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'edit.bbl' not found.
+Package biblatex Info: ... file 'jed0050_dokument.bbl' not found.
 
-No file edit.bbl.
+No file jed0050_dokument.bbl.
 Package biblatex Info: Reference section=0 on input line 45.
 Package biblatex Info: Reference segment=0 on input line 45.
 [1
@@ -1161,7 +1162,7 @@ Package pdftex.def Info: Figures/CoopPersonDeclaration.jpg  used on input line
 
 ] [6
 
-] (./edit.toc
+] (./jed0050_dokument.toc
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
 5.
 
@@ -1194,7 +1195,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 15.
 )
 \tf@toc=\write6
-\openout6 = `edit.toc'.
+\openout6 = `jed0050_dokument.toc'.
 
  [7
 
@@ -1208,8 +1209,10 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ]
 [10
 
-] [11] (./edit.aux)
-Package rerunfilecheck Info: File `edit.out' has not changed.
+] [11] [12] [13
+
+] (./jed0050_dokument.aux)
+Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
 (rerunfilecheck)             Checksum: B15024D3AC0621DAB691A2BA9950D7E8;1308.
 
 
@@ -1217,29 +1220,29 @@ LaTeX Warning: There were undefined references.
 
 
 Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                edit
+(biblatex)                jed0050_dokument
 (biblatex)                and rerun LaTeX afterwards.
 
-Package logreq Info: Writing requests to 'edit.run.xml'.
-\openout1 = `edit.run.xml'.
+Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
+\openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25051 strings out of 479382
- 406013 string characters out of 5867828
- 1129492 words of memory out of 5000000
+ 25053 strings out of 479382
+ 406279 string characters out of 5867828
+ 1129552 words of memory out of 5000000
  41756 multiletter control sequences out of 15000+600000
  439512 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,5n,100p,881b,2368s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,5n,100p,913b,2368s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><d:/Skola-SW/texlive
 /2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><d:/Skola-SW/texlive/2020/tex
 mf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fo
 nts/type1/public/lm/lmr12.pfb>
-Output written on edit.pdf (11 pages, 1191777 bytes).
+Output written on jed0050_dokument.pdf (13 pages, 1196475 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 30 named destinations out of 1000 (max. 500000)
+ 162 PDF objects out of 1000 (max. 8388607)
+ 32 named destinations out of 1000 (max. 500000)
  124 words of extra memory for PDF output out of 10000 (max. 10000000)
 
