@@ -776,7 +776,7 @@ namespace Vizualizace_Dat
                 checkBox1.Enabled = true;
             }
 
-            if (selectedTime > DateTime.Now.AddDays(4))
+            if (selectedTime > DateTime.Now.AddDays(3))
             {
                 checkBox2.Enabled = false;
             }

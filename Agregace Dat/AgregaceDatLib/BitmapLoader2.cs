@@ -384,26 +384,13 @@ namespace AgregaceDatLib
 
         private Bitmap ResizeBitmap(Bitmap b, float w, float h, string type)
         {
-            Bitmap newBitmap = new Bitmap(b, (int)w, (int)h);
+            Bitmap newBitmap = new Bitmap((int)w, (int)h);
 
-            
-            for(int x = 0; x < newBitmap.Width; x++)
-            {
-                for(int y = 0; y < newBitmap.Height; y++)
-                {
+            Graphics g = Graphics.FromImage(newBitmap);
 
-                    Color pixel = newBitmap.GetPixel(x, y);
-                    
-                    //Debug.WriteLine(GetPrecFromColor(pixel));
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-                    if (!ColorValueHandler.IsColorKnown(pixel, type))
-                    {
-                        newBitmap.SetPixel(x, y, ColorValueHandler.GetClosestCol(pixel, type));
-                    }
-
-                }
-
-            }
+            g.DrawImage(b, 0, 0, (int)w, (int)h);
 
             return newBitmap;
         }

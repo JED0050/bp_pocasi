@@ -81,6 +81,16 @@
 	
 	\section{Agregace dat}
 	
+	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, tímto formátem byly zvoleny bitmapy obsahující data o jednom typu počasí, data jsou reprezentována pomocí barev a pokrávají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec jsme potřebovali pokrýt celou bitmapu pokud známe hodnotu počasí pro určíté body, což nám vyřešila triangulace v kombinaci s interpolací.
+	
+	\subsection{Škála}
+	
+	Vzhledem k tomu že veškerá data o počasí jsou uložena do bitmap, ve který jsou data reprezentována barvou pixelů vzniká potřeba převádění barvy na číselnou hodnotu a naopak. Práce proto obsahuje metody, které pro určitou barvu vrátí desetinné číslo a pro určité číslo zase barvu.
+	
+	Nejprve tyto metody obsahovaly desítky podmínek které staticky kontrolovaly zda se jedná o konkrétní barvu, později zda barva patří do určitého rozmezí pro R, G, B složky. Tento přístup ale není vhodný, protože při potřebě změnit barvy pro určitá desetinná čísla vznikala nutnost přepsat hodnoty barev pro všechny metody ve veškerých podmínkách.
+	
+	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být i pouze 1 pixel. Výhoudou škál je, že změna barev reprezentujících hodnoty případně změna rozsahu uchovávanách hodnot se vyměnit pouze pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
+	
 	\subsection{Triangulace}
 	
 	Při vytváření bitmap dochází k určování hodnot počasí (teplota, srážky atp.) pro konkrétní zeměpisné souřadnice, které jsou následně převedeny na pixely bitmapy. Zjišťovat hodnotu pro každý jednotlivý pixel by bylo velice časově náročné, a protože můžeme předpokládat že v okolí pixelu budou obdobné hodnoty jako na pixelu samotné stačí nám určit hodnoty pouze pro určité množství pixelů rozložených správně po bitmapě. Následně je potřeba tyto pixely nějakým způsobem propojit, zde nám problém řeší využité triangulace.
@@ -93,13 +103,24 @@
 	
 	Pro výpočet interpolace postačí jednoduchý vzorec, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovaná bod určí jakou hodnotu sám zjišťovaný bod má.
 	
-	\subsection{Škála}
+	\vfill
 	
-	Vzhledem k tomu že veškerá data o počasí jsou uložena do bitmap, ve který jsou data reprezentována barvou pixelů vzniká potřeba převádění barvy na číselnou hodnotu a naopak. Práce proto obsahuje metody, které pro určitou barvu vrátí desetinné číslo a pro určité číslo zase barvu.
+	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojuhelníku $V_1$, $V_2$, $V_3$. 
 	
-	Nejprve tyto metody obsahovaly desítky podmínek které staticky kontrolovaly zda se jedná o konkrétní barvu, později zda barva patří do určitého rozmezí pro R, G, B složky. Tento přístup ale není vhodný, protože při potřebě změnit barvy pro určitá desetinná čísla vznikala nutnost přepsat hodnoty barev pro všechny metody ve veškerých podmínkách.
+	\[Distance_{v1} =\sqrt{(X_{v1}-P_x)^2+(Y_{v1}-P_y)^2}\]
+	\[Distance_{v2} =\sqrt{(X_{v2}-P_x)^2+(Y_{v2}-P_y)^2}\]
+	\[Distance_{v3} =\sqrt{(X_{v3}-P_x)^2+(Y_{v3}-P_y)^2}\]
 	
-	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být i pouze 1 pixel. Výhoudou škál je, že změna barev reprezentujících hodnoty případně změna rozsahu uchovávanách hodnot se vyměnit pouze pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
+	Následně se určí váha každého vrcholu $W$, neboli inverní hodnota jeho vzdálenosti od zjišťovaného bodu.
+	
+	\[W_{v1} =\frac{1}{Distance_{v1}}\]
+	\[W_{v2} =\frac{1}{Distance_{v2}}\]
+	\[W_{v3} =\frac{1}{Distance_{v3}}\]
+	
+	Ve finálníčásti výpočtu se určí hodnota našeho zjišťovaného bodu $Value_p$, která je úměrná podílu součtu součíná váh a hodnot jednotlivých vrcholů trojuhelníku se seoučtem jendotlivých váh.
+	
+	\[Value_p = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}} \]
+	
 	
 	\section{Distribuce dat}
 	

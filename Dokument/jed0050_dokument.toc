@@ -34,11 +34,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}Agregace dat}{11}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Triangulace}{11}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.1}Škála}{11}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Interpolace}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Triangulace}{11}{subsection.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Škála}{11}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Interpolace}{12}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4}Distribuce dat}{13}{section.4}%
 \defcounter {refsection}{0}\relax 

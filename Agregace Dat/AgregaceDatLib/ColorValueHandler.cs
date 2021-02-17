@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace AgregaceDatLib
@@ -115,10 +116,9 @@ namespace AgregaceDatLib
 
             int colorIndex = (int)Math.Round(prec * 10) - (int)(minVal * 10);
 
-            //Debug.WriteLine("p: " + prec + " " + colorIndex);
+            //return scalePrecArray[colorIndex];
 
-            return scalePrecArray[colorIndex];
-
+            return scalePrecDic.Keys.ElementAt(colorIndex);
         }
 
 
@@ -164,10 +164,9 @@ namespace AgregaceDatLib
 
             int colorIndex = (int)Math.Round(temp) + (-(int)minVal);
 
-            //Debug.WriteLine("t: " + temp + " " + colorIndex);
+            //return scaleTempArray[colorIndex];
 
-            return scaleTempArray[colorIndex];
-
+            return scaleTempDic.Keys.ElementAt(colorIndex);
         }
 
         public static Color GetClosestCol(Color pixel, string type)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  15 FEB 2021 18:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  17 FEB 2021 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1212,9 +1212,14 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [11] [12] [13
 
 ] (./jed0050_dokument.aux)
-Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: B15024D3AC0621DAB691A2BA9950D7E8;1308.
 
+Package rerunfilecheck Warning: File `jed0050_dokument.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `jed0050_dokument.out':
+(rerunfilecheck)             Before: B15024D3AC0621DAB691A2BA9950D7E8;1308
+(rerunfilecheck)             After:  3AB1CE946FD093F954B53EEF58EEB657;1308.
 
 LaTeX Warning: There were undefined references.
 
@@ -1235,14 +1240,22 @@ Here is how much of TeX's memory you used:
  439512 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  96i,5n,100p,913b,2368s stack positions out of 5000i,500n,10000p,200000b,80000s
-{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<d:/Skola-S
-W/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><d:/Skola-SW/texlive
-/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><d:/Skola-SW/texlive/2020/tex
-mf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fo
-nts/type1/public/lm/lmr12.pfb>
-Output written on jed0050_dokument.pdf (13 pages, 1196475 bytes).
+{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Sko
+la-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/tex
+live/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{d:/Skola-SW/texlive/2020/tex
+mf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{d:/Skola-SW/texlive/2020/texmf-dist/f
+onts/enc/dvips/lm/lm-ec.enc}<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/pu
+blic/lm/lmbx10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/l
+mbx12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmex10.pfb
+><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skol
+a-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texli
+ve/2020/texmf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/te
+xmf-dist/fonts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/f
+onts/type1/public/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/
+public/lm/lmsy10.pfb>
+Output written on jed0050_dokument.pdf (13 pages, 1244587 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
+ 194 PDF objects out of 1000 (max. 8388607)
  32 named destinations out of 1000 (max. 500000)
  124 words of extra memory for PDF output out of 10000 (max. 10000000)
 
