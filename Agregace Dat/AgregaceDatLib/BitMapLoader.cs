@@ -233,5 +233,10 @@ namespace AgregaceDatLib
         {
             throw new NotImplementedException();    //služba poskytuje pouze srážky na aktuální čas
         }
+
+        public Forecast GetForecast(DateTime forTime, PointLonLat point)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

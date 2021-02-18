@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using DelaunayTriangulator;
 
 namespace AgregaceDatLib
 {
     public class Forecast : Vertex
     {
-
-        public string City { get; set; }
-        public string Country { get; set; }
         public string Latitude { get; set; }        //zeměpisná šířka "y"
         public string Longitude { get; set; }       //zeměpisná délka "x"
         public DateTime Time { get; set; }
         public double Temperature { get; set; }     //teplota celsius
         public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
+        public double Humidity { get; set; }        //vlhkost
+        public double Pressure { get; set; }        //tlak
 
         public double DLatitude
         {
@@ -29,14 +30,6 @@ namespace AgregaceDatLib
             {
                 return Double.Parse(Longitude.Replace('.', ','));
             }
-        }
-
-
-        public override string ToString()
-        {
-            string output = "Country: " + Country + " City: " + City + " Time: " + Time + " Temperature: " + Temperature + " Precipitation: " + Precipitation;
-
-            return output;
         }
 
         public void SetXY(int bW, int bH)

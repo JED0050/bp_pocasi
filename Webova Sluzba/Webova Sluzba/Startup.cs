@@ -55,9 +55,15 @@ namespace Webova_Sluzba
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                "Precipitation",                                      
+                "BitmapForecast",                                      
                 "forec",                        
-                new { controller = "Home", action = "Forecast" } 
+                new { controller = "Home", action = "BitmapForecast" } 
+                );
+
+                routes.MapRoute(
+                "XMLForecast",
+                "xml",
+                new { controller = "Home", action = "XMLForecast" }
                 );
 
                 routes.MapRoute(

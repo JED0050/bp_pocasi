@@ -444,5 +444,78 @@ namespace AgregaceDatLib
                 throw new Exception("Bitmapa teploty pro daný čas nebyla nalezena!");
             }
         }
+
+        public Forecast GetForecast(DateTime forTime, PointLonLat location)
+        {
+            string webContent = "";
+            string url = @"https://api.met.no/weatherapi/locationforecast/1.9/?lat=" + location.Lat.ToString().Replace(",", ".") + ";lon=" + location.Lon.ToString().Replace(",", ".");
+
+            using (var client = new WebClient())
+            {
+                webContent = client.DownloadString(url);
+            }
+
+            if (webContent == "")
+                throw new Exception("Datový zdroj nevrátil platná data.");
+
+
+            Forecast forecast = new Forecast();
+
+            if (forTime.Minute > 30)
+            {
+                forTime = forTime.AddMinutes(30);
+            }
+
+            forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
+
+
+            TextReader tr = new StringReader(webContent);
+
+            XDocument xmlDoc = XDocument.Load(tr);
+
+            int counter = 0;
+
+            foreach (var timeSlot in xmlDoc.Descendants("time"))
+            {
+
+                DateTime timeSlotTime = DateTime.Parse(timeSlot.Attribute("to").Value);
+
+                foreach (var loc in xmlDoc.Descendants("location"))
+                {
+
+                    if (counter % 3 == 0 && timeSlotTime == forTime)
+                    {
+                        forecast.Temperature = Double.Parse(loc.Element("temperature").Attribute("value").Value.Replace('.', ','));
+                        forecast.Humidity = Double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
+                        forecast.Pressure = Double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
+                    }
+                    else if(counter % 3 == 1 && timeSlotTime == forTime)
+                    {
+                        try
+                        {
+                            forecast.Precipitation = Double.Parse(loc.Element("precipitation").Attribute("value").Value.Replace('.', ','));
+                        }
+                        catch
+                        {
+                            forecast.Precipitation = 0;
+                        }
+
+                        forecast.Longitude = location.Lon.ToString();
+                        forecast.Latitude = location.Lat.ToString();
+                        forecast.Time = forTime;
+
+                        return forecast;
+                    }
+                    else
+                    {
+                        timeSlotTime.AddHours(1);
+                    }
+
+                    counter++;
+                }
+            }
+
+            throw new Exception("V datech datového zdroje se nenachází předpověď pro požadovaný čas.");
+        }
     }
 }

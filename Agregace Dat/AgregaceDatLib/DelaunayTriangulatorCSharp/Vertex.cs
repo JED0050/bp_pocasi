@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 
 /*
   copyright s-hull.org 2011
@@ -12,6 +14,9 @@ namespace DelaunayTriangulator
 {
     public class Vertex
     {
+
+        [XmlIgnore]
+        [NonSerialized]
         public float x, y;
 
         protected Vertex() { }

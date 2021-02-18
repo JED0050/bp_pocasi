@@ -561,5 +561,10 @@ namespace AgregaceDatLib
                 throw new Exception("Bitmapa teploty pro daný čas nebyla nalezena!");
             }
         }
+
+        public Forecast GetForecast(DateTime forTime, PointLonLat point)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

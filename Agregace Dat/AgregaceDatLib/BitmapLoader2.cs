@@ -455,7 +455,6 @@ namespace AgregaceDatLib
                     }
                 }
 
-
             }
 
             return minValue + index * stepValue;
@@ -466,6 +465,11 @@ namespace AgregaceDatLib
             PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
             return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime), "temp");
+        }
+
+        public Forecast GetForecast(DateTime forTime, PointLonLat point)
+        {
+            throw new NotImplementedException();
         }
     }
 }

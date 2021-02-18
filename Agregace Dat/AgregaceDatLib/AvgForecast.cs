@@ -196,5 +196,35 @@ namespace AgregaceDatLib
             return smallBitmap;
         }
 
+        public Forecast GetForecastFromTimeAndPoint(DateTime time, PointLonLat point)
+        {
+            List<Forecast> forecasts = new List<Forecast>();
+
+            foreach (DataLoader dL in dLs)
+            {
+                try
+                {
+                    forecasts.Add(dL.GetForecast(time, point));
+
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            if(forecasts.Count == 0)
+            {
+                throw new Exception("Nebylo určeno žádné počasí z datových zdrojů");
+            }
+            else if(forecasts.Count == 1)
+            {
+                return forecasts[0];
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

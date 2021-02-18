@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Webova_Sluzba.Models;
 using AgregaceDatLib;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Webova_Sluzba.Controllers
 {
@@ -56,21 +58,21 @@ namespace Webova_Sluzba.Controllers
             return View();
         }
 
-        public IActionResult Forecast(string type, string time, string loaders, string p1, string p2)
+        public IActionResult BitmapForecast(string type, string time, string loaders, string p1, string p2)
         {
 
             //https://localhost:44336/forec?type=prec&time=2020-10-28T16:44:10&loaders=bx
 
-            if (type == null || time == null)
+            if (type == null)
             {
-                throw new Exception("Vstupní parametry type a time musí být vyplněny!");
+                throw new Exception("Vstupní parametry type musí být vyplněn!");
             }
             else
             {
 
                 DateTime dateTime;
 
-                if(time == "0")
+                if(time == "0" || time == null)
                 {
                     dateTime = DateTime.Now;
                 }
@@ -87,52 +89,7 @@ namespace Webova_Sluzba.Controllers
                     }
                 }
 
-                AvgForecast aF = new AvgForecast();
-
-                if (loaders == null)
-                {
-                    BitmapDataLoader bL = new BitmapDataLoader();
-                    XMLDataLoader xL = new XMLDataLoader();
-                    JSONDataLoader jL = new JSONDataLoader();
-                    BitmapDataLoader2 bL2 = new BitmapDataLoader2();
-
-                    aF.Add(bL);
-                    aF.Add(xL);
-                    aF.Add(jL);
-                    aF.Add(bL2);
-                }
-                else
-                {
-                    if(loaders.ToLower().Contains("b1"))
-                    {
-                        BitmapDataLoader bL = new BitmapDataLoader();
-                        aF.Add(bL);
-                    }
-
-                    if (loaders.ToLower().Contains("b2"))
-                    {
-                        BitmapDataLoader2 bL2 = new BitmapDataLoader2();
-                        aF.Add(bL2);
-                    }
-
-                    if (loaders.ToLower().Contains('x'))
-                    {
-                        XMLDataLoader xL = new XMLDataLoader();
-                        aF.Add(xL);
-                    }
-
-                    if (loaders.ToLower().Contains('j'))
-                    {
-                        JSONDataLoader jL = new JSONDataLoader();
-                        aF.Add(jL);
-                    }
-
-                    if(aF.GetNumberOfLoaders() == 0)
-                    {
-                        throw new Exception("Nebyl přiřazen žádný z datových zrdrojů!");
-                    }
-
-                }
+                AvgForecast aF = SetLoadersForAvgForecast(loaders);
 
                 type = type.ToLower();
 
@@ -167,6 +124,23 @@ namespace Webova_Sluzba.Controllers
             throw new Exception("Požadovaná bitmapa nenalezena!");
         }
 
+        public IActionResult XMLForecast(string time, string loaders, string lon, string lat)
+        {
+            Forecast f = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Forecast));
+
+            string xmlString = "";
+
+            using (StringWriter textWriter = new StringWriter())
+            {
+                serializer.Serialize(textWriter, f);
+                xmlString = textWriter.ToString();
+            }
+
+            return this.Content(xmlString, "text/xml");
+        }
+
         private static byte[] BitmapToBytes(Bitmap img)
         {
             using (MemoryStream stream = new MemoryStream())
@@ -174,6 +148,67 @@ namespace Webova_Sluzba.Controllers
                 img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 return stream.ToArray();
             }
+        }
+
+        private AvgForecast SetLoadersForAvgForecast(string loaders)
+        {
+            AvgForecast aF = new AvgForecast();
+
+            if (loaders == null)
+            {
+                BitmapDataLoader bL = new BitmapDataLoader();
+                XMLDataLoader xL = new XMLDataLoader();
+                JSONDataLoader jL = new JSONDataLoader();
+                BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+
+                aF.Add(bL);
+                aF.Add(xL);
+                aF.Add(jL);
+                aF.Add(bL2);
+            }
+            else
+            {
+                if (loaders.ToLower().Contains("b1"))
+                {
+                    BitmapDataLoader bL = new BitmapDataLoader();
+                    aF.Add(bL);
+                }
+
+                if (loaders.ToLower().Contains("b2"))
+                {
+                    BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+                    aF.Add(bL2);
+                }
+
+                if (loaders.ToLower().Contains('x'))
+                {
+                    XMLDataLoader xL = new XMLDataLoader();
+                    aF.Add(xL);
+                }
+
+                if (loaders.ToLower().Contains('j'))
+                {
+                    JSONDataLoader jL = new JSONDataLoader();
+                    aF.Add(jL);
+                }
+
+                if (aF.GetNumberOfLoaders() == 0)
+                {
+                    throw new Exception("Nebyl přiřazen žádný z datových zrdrojů!");
+                }
+
+            }
+
+            return aF;
+        }
+
+        private Forecast GetForecastFromTimeAndPoint(string time, string loaders, string lon, string lat)
+        {
+            PointLonLat point = new PointLonLat(double.Parse(lon), double.Parse(lat));
+
+            AvgForecast aF = SetLoadersForAvgForecast(loaders);
+
+            return aF.GetForecastFromTimeAndPoint(DateTime.Parse(time), point);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

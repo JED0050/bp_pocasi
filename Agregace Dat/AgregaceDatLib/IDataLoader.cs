@@ -37,5 +37,6 @@ namespace AgregaceDatLib
         Bitmap GetTemperatureBitmap(DateTime forTime);
         void SaveNewDeleteOldBmps();
 
+        Forecast GetForecast(DateTime forTime, PointLonLat point);
     }
 }
