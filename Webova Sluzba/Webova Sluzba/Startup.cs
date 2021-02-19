@@ -67,6 +67,12 @@ namespace Webova_Sluzba
                 );
 
                 routes.MapRoute(
+                "JSONForecast",
+                "json",
+                new { controller = "Home", action = "JSONForecast" }
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

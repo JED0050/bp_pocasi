@@ -213,17 +213,41 @@ namespace AgregaceDatLib
                 }
             }
 
-            if(forecasts.Count == 0)
+            int numOfValidForecasts = forecasts.Count;
+
+            if (numOfValidForecasts == 0)
             {
                 throw new Exception("Nebylo určeno žádné počasí z datových zdrojů");
             }
-            else if(forecasts.Count == 1)
+            else if(numOfValidForecasts == 1)
             {
                 return forecasts[0];
             }
             else
             {
-                throw new NotImplementedException();
+                Forecast avgForecast = forecasts[0];
+
+                for(int i = 1; i < numOfValidForecasts; i++)
+                {
+                    avgForecast.Temperature += forecasts[i].Temperature;
+                    avgForecast.Precipitation += forecasts[i].Precipitation;
+                    avgForecast.Humidity += forecasts[i].Humidity;
+                    avgForecast.Pressure += forecasts[i].Pressure;
+
+                    if(forecasts[i].Time < avgForecast.Time)
+                    {
+                        avgForecast.Time = forecasts[i].Time;
+                    }
+
+                    avgForecast.AddDataSource(forecasts[i].DataSources[0]);
+                }
+
+                avgForecast.Temperature /= numOfValidForecasts;
+                avgForecast.Precipitation /= numOfValidForecasts;
+                avgForecast.Humidity /= numOfValidForecasts;
+                avgForecast.Pressure /= numOfValidForecasts;
+
+                return avgForecast;
             }
         }
     }

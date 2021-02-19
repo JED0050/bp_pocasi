@@ -562,9 +562,66 @@ namespace AgregaceDatLib
             }
         }
 
-        public Forecast GetForecast(DateTime forTime, PointLonLat point)
+        public Forecast GetForecast(DateTime forTime, PointLonLat location)
         {
-            throw new NotImplementedException();
+            string webContent = "";
+            string url = @"https://api.openweathermap.org/data/2.5/forecast?lat=" + location.Lat + "&lon=" + location.Lon + "&appid=ea63080a4f8e99972630d2671e3ef805";
+
+            using (var client = new WebClient())
+            {
+                webContent = client.DownloadString(url);
+            }
+
+            if (webContent == "")
+                throw new Exception("Datový zdroj nevrátil platná data.");
+
+
+            Forecast forecast = new Forecast();
+
+            if (forTime.Minute > 30)
+            {
+                forTime = forTime.AddMinutes(30);
+            }
+
+            forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
+
+
+            dynamic jsonForecast = JObject.Parse(webContent);
+
+            JArray jsonForecastArray = (JArray)jsonForecast["list"];
+
+            foreach (var el in jsonForecastArray)
+            {
+                dynamic jsonElement = JObject.Parse(el.ToString());
+
+                DateTime elementDateTime = DateTime.Parse(jsonElement.dt_txt.ToString());
+
+                if (elementDateTime >= forTime && elementDateTime <= forTime.AddHours(6))
+                {
+                    forecast.Temperature = Math.Round(Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15, 2);
+                    forecast.Humidity = Double.Parse(jsonElement.main.humidity.ToString().Replace('.', ','));
+                    forecast.Pressure = Double.Parse(jsonElement.main.pressure.ToString().Replace('.', ','));
+
+                    try
+                    {
+                        forecast.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));
+                    }
+                    catch
+                    {
+                        forecast.Precipitation = 0;
+                    }
+
+                    forecast.Longitude = location.Lon.ToString();
+                    forecast.Latitude = location.Lat.ToString();
+                    forecast.Time = elementDateTime;
+                    forecast.AddDataSource("OpenWeatherMap");
+
+                    return forecast;
+                }
+                
+            }
+
+            throw new Exception("V datech datového zdroje se nenachází předpověď pro požadovaný čas.");
         }
     }
 }

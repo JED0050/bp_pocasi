@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -8,13 +9,28 @@ namespace AgregaceDatLib
 {
     public class Forecast : Vertex
     {
+        [XmlIgnore]
+        [NonSerialized]
+        private List<string> dataSources = new List<string>();
+
+        public List<string> DataSources
+        {
+            get
+            {
+                return dataSources;
+            }
+        }
+
         public string Latitude { get; set; }        //zeměpisná šířka "y"
         public string Longitude { get; set; }       //zeměpisná délka "x"
+
         public DateTime Time { get; set; }
+
         public double Temperature { get; set; }     //teplota celsius
         public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
         public double Humidity { get; set; }        //vlhkost
         public double Pressure { get; set; }        //tlak
+
 
         public double DLatitude
         {
@@ -75,5 +91,9 @@ namespace AgregaceDatLib
             this.y = y;
         }
 
+        public void AddDataSource(string source)
+        {
+            dataSources.Add(source);
+        }
     }
 }

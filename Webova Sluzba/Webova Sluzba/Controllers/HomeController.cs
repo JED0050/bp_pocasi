@@ -10,6 +10,7 @@ using Webova_Sluzba.Models;
 using AgregaceDatLib;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Webova_Sluzba.Controllers
 {
@@ -126,7 +127,7 @@ namespace Webova_Sluzba.Controllers
 
         public IActionResult XMLForecast(string time, string loaders, string lon, string lat)
         {
-            Forecast f = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+            Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
 
             XmlSerializer serializer = new XmlSerializer(typeof(Forecast));
 
@@ -134,11 +135,20 @@ namespace Webova_Sluzba.Controllers
 
             using (StringWriter textWriter = new StringWriter())
             {
-                serializer.Serialize(textWriter, f);
+                serializer.Serialize(textWriter, forecast);
                 xmlString = textWriter.ToString();
             }
 
             return this.Content(xmlString, "text/xml");
+        }
+
+        public IActionResult JSONForecast(string time, string loaders, string lon, string lat)
+        {
+            Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+
+            string jsonString = JsonConvert.SerializeObject(forecast);
+
+            return this.Content(jsonString, "text/json");
         }
 
         private static byte[] BitmapToBytes(Bitmap img)
@@ -204,7 +214,7 @@ namespace Webova_Sluzba.Controllers
 
         private Forecast GetForecastFromTimeAndPoint(string time, string loaders, string lon, string lat)
         {
-            PointLonLat point = new PointLonLat(double.Parse(lon), double.Parse(lat));
+            PointLonLat point = new PointLonLat(double.Parse(lon.Replace(".", ",")), double.Parse(lat.Replace(".", ",")));
 
             AvgForecast aF = SetLoadersForAvgForecast(loaders);
 
