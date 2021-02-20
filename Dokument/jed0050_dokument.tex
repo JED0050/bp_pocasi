@@ -97,13 +97,28 @@
 	
 	V práci se využívá S-hull Algoritmus pro triangulaci. Konkrétně Phil Atkinova implementace pro C\#. Algoritmus nám množinu bodů, v našem případě pixelů, rozdělí na trojuhelníky. Respektive nám pro každý vrchol řekne s kterými vrcholi je spojen hranou, čímž nám vznikne síť trojuhelníků pokrývající většinu bitmapy.
 	
+	%\vfill
+	
+	S-hull algoritmus slouží pro vytvoření Delaunayovi triangulace z množiny 2D bodů s časovou složitostí $O(n  log(n))$. Algoritmus využívá radiálního šíření, které se postupně vytváří z radiálně seřezené množiny 2D bodů, a je zakončen převracením trojuhelníků čímž se získá Delaunayova trinaguzlace. Tento algoritmus ve srovnásí s Q-hull algoritmem dosahuje přibližně polovičního času při vytváření triangulace pro náhodně generované množiny 2D bodů. S-hull je pro množinu unikátních 2D bodů $x_i$ implementován následovně:
+	\begin{enumerate}
+		\item Vybere počáteční bod $x_0$ z množiny bodů $x_i$.
+		\item Seřadí body dle vzdálenosti od tohoto bodu $|x_i - x_0|^2$.
+		\item Nalezne bod $x_j$, který je k bodu $x_0$ nejblíž.
+		\item Nalezne bod $x_k$, který vytvoří nejmenší kružnici opsanou s body $x_0$ a $x_j$ současně i zaznamená střed kružnice opsané $C$.
+		\item Seřadí body $x_0$, $x_j$, $x_k$ pro získání pravorukého systému, tohle je počateční prvek pro convex hull.
+		\item Přetřídí zbývající body na základě vzdálenosi bodů od středu kružnice opsané $|x_i - C|^2$ pro získání bodů $s_i$.
+		\item Postupně se přidávají body $s_i$ do rostoucího 2D convex hull který je závislý na trojuhelníku vytvořeném z bodů $x_0$, $x_j$, $x_k$. Následné jsou přidány zkosené hrany pro 2D-hull, které jsou bodu viditelné z nově vytvořených trojuhelníků.
+		\item Vzájemně se nepřekrývající triangulace pro množinu bodů je nyní vytvořena. Tato metoda je velice rychlá mezi způsoby vytváření 2D triangulace.
+		\item Sousední páry trojuhelníků této triangulace musí být \uv{převráceny} aby došlo k vytvoření Delaunayovi triangulace z počáteční nepřekrývající se triangulace.
+	\end{enumerate}
+	
 	\subsection{Interpolace}
 	
 	Bitmapa je pokryta sítí trojuhelníků kde známe hodnotu každého vrcholu. Nyní vzniká potřeba každý trojuhelní vyplnit barvamy, které reprezentují hodnotu pixelů uvnitř trojuhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
 	
 	Pro výpočet interpolace postačí jednoduchý vzorec, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovaná bod určí jakou hodnotu sám zjišťovaný bod má.
 	
-	\vfill
+	%\vfill
 	
 	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojuhelníku $V_1$, $V_2$, $V_3$. 
 	

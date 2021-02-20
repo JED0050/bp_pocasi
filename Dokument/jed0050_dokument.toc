@@ -40,6 +40,6 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.3}Interpolace}{12}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Distribuce dat}{13}{section.4}%
+\contentsline {section}{\numberline {4}Distribuce dat}{14}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Vizualizace dat}{13}{section.5}%
+\contentsline {section}{\numberline {5}Vizualizace dat}{14}{section.5}%
