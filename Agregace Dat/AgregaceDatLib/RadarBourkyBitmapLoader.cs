@@ -7,9 +7,9 @@ using System.Net;
 
 namespace AgregaceDatLib
 {
-    public class BitmapDataLoader : DataLoader
+    public class RadarBourkyDataLoader : DataLoader
     {
-        public BitmapDataLoader()
+        public RadarBourkyDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory("")))
             {

@@ -8,10 +8,22 @@
 <h3>@ViewData["Message"]</h3>
 
 <div>
-    API: https://localhost:44336/forec?type={prec}&time={2020-10-28T16:44:10}&loaders={bj}
+    API: https://localhost:44336/bmp?type={typ}&time={čas}&loaders={datové_zdroje}
 </div>
 <div>
-    <a href="https://localhost:44336/forec?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=b1x">Příklad: https://localhost:44336/forec?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=b1x</a>
+    <a href="https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=yrno">Příklad: https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&loaders=yrno</a>
+</div>
+<div>
+    API: https://localhost:44336/xml?time={čas}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
+</div>
+<div>
+    <a href="https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno">Příklad: https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno</a>
+</div>
+<div>
+    API: https://localhost:44336/json?time={čas}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
+</div>
+<div>
+    <a href="https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm">Příklad: https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm</a>
 </div>
 
 <div>

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  20 FEB 2021 21:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  23 FEB 2021 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1056,7 +1056,7 @@ Package biblatex Info: Reference segment=0 on input line 45.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/Assignment1.jpg, id=60, 597.6729pt x 845.0772pt>
+<Figures/Assignment1.jpg, id=64, 597.6729pt x 845.0772pt>
 File: Figures/Assignment1.jpg Graphic file (type jpg)
 <use Figures/Assignment1.jpg>
 Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 47.
@@ -1099,7 +1099,7 @@ Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 47.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/AuthorDeclaration.jpg, id=65, 614.295pt x 845.559pt>
+<Figures/AuthorDeclaration.jpg, id=69, 614.295pt x 845.559pt>
 File: Figures/AuthorDeclaration.jpg Graphic file (type jpg)
 <use Figures/AuthorDeclaration.jpg>
 Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 47.
@@ -1144,7 +1144,7 @@ Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 47.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/CoopPersonDeclaration.jpg, id=70, 614.295pt x 845.559pt>
+<Figures/CoopPersonDeclaration.jpg, id=74, 614.295pt x 845.559pt>
 File: Figures/CoopPersonDeclaration.jpg Graphic file (type jpg)
 <use Figures/CoopPersonDeclaration.jpg>
 Package pdftex.def Info: Figures/CoopPersonDeclaration.jpg  used on input line 
@@ -1209,11 +1209,40 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ]
 [10
 
-] [11] [12] [13] [14
+] [11] [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 150--153
+
+ []
+
+
+Overfull \hbox (12.65704pt too wide) in paragraph at lines 150--153
+\T1/lmr/m/n/10.95 adresaserveru/bmp?type={typ}&time={£as}&loaders={datové zdroj
+e}&p1={bod1}&p2={bod2} 
+ []
+
+
+Overfull \hbox (31.55014pt too wide) in paragraph at lines 155--164
+ [] 
+ []
+
+[14
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+68.
+ (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Overfull \hbox (85.68617pt too wide) in paragraph at lines 178--179
+[]\T1/lmr/m/n/10.95 adresaserveru/bmp?type=prec&p1=49.621559;17.1507294&p2=49.5
+211889;17.4213141&loaders=mdrd 
+ []
+
+[15] [16] [17
 
 ] (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: 3AB1CE946FD093F954B53EEF58EEB657;1308.
+(rerunfilecheck)             Checksum: DA788D4F48E774938F7DC081DFD6B02E;1381.
 
 
 LaTeX Warning: There were undefined references.
@@ -1228,29 +1257,30 @@ Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25063 strings out of 479382
- 406340 string characters out of 5867828
- 1130552 words of memory out of 5000000
- 41756 multiletter control sequences out of 15000+600000
- 439512 words of font info for 47 fonts, out of 8000000 for 9000
+ 25104 strings out of 479382
+ 407305 string characters out of 5867828
+ 1130555 words of memory out of 5000000
+ 41786 multiletter control sequences out of 15000+600000
+ 439877 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,6n,100p,913b,2368s stack positions out of 5000i,500n,10000p,200000b,80000s
-{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Sko
-la-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Skola-SW/tex
-live/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{d:/Skola-SW/texlive/2020/tex
-mf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{d:/Skola-SW/texlive/2020/texmf-dist/f
-onts/enc/dvips/lm/lm-ec.enc}<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/pu
-blic/lm/lmbx10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/l
-mbx12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmex10.pfb
-><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skol
-a-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texli
-ve/2020/texmf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/te
-xmf-dist/fonts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/f
-onts/type1/public/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/
-public/lm/lmsy10.pfb>
-Output written on jed0050_dokument.pdf (14 pages, 1251587 bytes).
+ 96i,9n,100p,1112b,2368s stack positions out of 5000i,500n,10000p,200000b,80000s
+{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Skola-
+SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texliv
+e/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Skola-SW/texlive/2020/te
+xmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{d:/Skola-SW/texlive/2020/texmf-dist/font
+s/enc/dvips/lm/lm-mathit.enc}{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvi
+ps/lm/lm-ec.enc}<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx
+10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><d
+:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmex10.pfb><d:/Skola-S
+W/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skola-SW/texlive
+/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texlive/2020/texm
+f-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fon
+ts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
+ublic/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
+sy10.pfb>
+Output written on jed0050_dokument.pdf (17 pages, 1263589 bytes).
 PDF statistics:
- 210 PDF objects out of 1000 (max. 8388607)
- 42 named destinations out of 1000 (max. 500000)
- 124 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 236 PDF objects out of 1000 (max. 8388607)
+ 49 named destinations out of 1000 (max. 500000)
+ 132 words of extra memory for PDF output out of 10000 (max. 10000000)
 

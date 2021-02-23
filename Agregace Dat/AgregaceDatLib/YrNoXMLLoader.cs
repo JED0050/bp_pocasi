@@ -12,13 +12,13 @@ using DelaunayTriangulator;
 namespace AgregaceDatLib
 {
 
-    public class XMLDataLoader : BitmapCustomDraw, DataLoader
+    public class YrNoDataLoader : BitmapCustomDraw, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
         private PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
-        public XMLDataLoader()
+        public YrNoDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory("")))
             {

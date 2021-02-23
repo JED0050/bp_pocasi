@@ -25,10 +25,10 @@ namespace Webova_Sluzba.Controllers
         {
             AvgForecast aF = new AvgForecast();
 
-            BitmapDataLoader bL = new BitmapDataLoader();
-            XMLDataLoader xL = new XMLDataLoader();
-            JSONDataLoader jL = new JSONDataLoader();
-            BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+            RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+            YrNoDataLoader xL = new YrNoDataLoader();
+            OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+            MedardDataLoader bL2 = new MedardDataLoader();
 
             aF.Add(bL);
             aF.Add(xL);
@@ -62,7 +62,7 @@ namespace Webova_Sluzba.Controllers
         public IActionResult BitmapForecast(string type, string time, string loaders, string p1, string p2)
         {
 
-            //https://localhost:44336/forec?type=prec&time=2020-10-28T16:44:10&loaders=bx
+            //https://localhost:44336/bmp?type=prec&time=2021-05-26T18:30:00&loaders=owm,yrno&p1=49.621559;17.1507294&p2=49.5211889;17.4213141
 
             if (type == null)
             {
@@ -104,8 +104,8 @@ namespace Webova_Sluzba.Controllers
                     }
                     else
                     {
-                        string[] p1LatLon = p1.Replace(".",",").Split("a");
-                        string[] p2LatLon = p2.Replace(".", ",").Split("a");
+                        string[] p1LatLon = p1.Replace(".",",").Split(";");
+                        string[] p2LatLon = p2.Replace(".", ",").Split(";");
 
                         PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1]), double.Parse(p1LatLon[0]));
                         PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1]), double.Parse(p2LatLon[0]));
@@ -166,10 +166,10 @@ namespace Webova_Sluzba.Controllers
 
             if (loaders == null)
             {
-                BitmapDataLoader bL = new BitmapDataLoader();
-                XMLDataLoader xL = new XMLDataLoader();
-                JSONDataLoader jL = new JSONDataLoader();
-                BitmapDataLoader2 bL2 = new BitmapDataLoader2();
+                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+                YrNoDataLoader xL = new YrNoDataLoader();
+                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+                MedardDataLoader bL2 = new MedardDataLoader();
 
                 aF.Add(bL);
                 aF.Add(xL);
@@ -178,28 +178,33 @@ namespace Webova_Sluzba.Controllers
             }
             else
             {
-                if (loaders.ToLower().Contains("b1"))
-                {
-                    BitmapDataLoader bL = new BitmapDataLoader();
-                    aF.Add(bL);
-                }
+                string[] arLoaders = loaders.ToLower().Split(",");
 
-                if (loaders.ToLower().Contains("b2"))
+                foreach(string loader in arLoaders)
                 {
-                    BitmapDataLoader2 bL2 = new BitmapDataLoader2();
-                    aF.Add(bL2);
-                }
+                    if (loader == "rb")
+                    {
+                        RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+                        aF.Add(bL);
+                    }
 
-                if (loaders.ToLower().Contains('x'))
-                {
-                    XMLDataLoader xL = new XMLDataLoader();
-                    aF.Add(xL);
-                }
+                    if (loader == "mdrd")
+                    {
+                        MedardDataLoader bL2 = new MedardDataLoader();
+                        aF.Add(bL2);
+                    }
 
-                if (loaders.ToLower().Contains('j'))
-                {
-                    JSONDataLoader jL = new JSONDataLoader();
-                    aF.Add(jL);
+                    if (loader == "yrno")
+                    {
+                        YrNoDataLoader xL = new YrNoDataLoader();
+                        aF.Add(xL);
+                    }
+
+                    if (loader == "owm")
+                    {
+                        OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+                        aF.Add(jL);
+                    }
                 }
 
                 if (aF.GetNumberOfLoaders() == 0)

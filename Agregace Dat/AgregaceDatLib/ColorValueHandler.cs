@@ -10,10 +10,7 @@ namespace AgregaceDatLib
 {
     public class ColorValueHandler
     {
-        private static Color[] scalePrecArray;
         private static Dictionary<Color, double> scalePrecDic;
-
-        private static Color[] scaleTempArray;
         private static Dictionary<Color, double> scaleTempDic;
 
         static ColorValueHandler()
@@ -24,7 +21,6 @@ namespace AgregaceDatLib
             string scalePrecName = "škála_0.1_30.png";
             Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
 
-            scalePrecArray = new Color[scalePrecImage.Width];
             scalePrecDic = new Dictionary<Color, double>();
 
             double minVal = 0.1;
@@ -40,14 +36,12 @@ namespace AgregaceDatLib
                     scalePrecDic.Add(pixel, value);
                 }
 
-                scalePrecArray[i] = pixel;
             }
 
 
             string scaleTempName = "škála_-30_30.png";
             Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
 
-            scaleTempArray = new Color[scaleTempImage.Width];
             scaleTempDic = new Dictionary<Color, double>();
 
             minVal = -30;
@@ -64,7 +58,6 @@ namespace AgregaceDatLib
                     //Debug.WriteLine(value);
                 }
 
-                scaleTempArray[i] = pixel;
             }
 
         }
@@ -116,7 +109,10 @@ namespace AgregaceDatLib
 
             int colorIndex = (int)Math.Round(prec * 10) - (int)(minVal * 10);
 
-            //return scalePrecArray[colorIndex];
+            if (colorIndex > scalePrecDic.Keys.Count - 1)
+                colorIndex = scalePrecDic.Keys.Count - 1;
+            else if (colorIndex < 0)
+                colorIndex = 0;
 
             return scalePrecDic.Keys.ElementAt(colorIndex);
         }
@@ -164,7 +160,10 @@ namespace AgregaceDatLib
 
             int colorIndex = (int)Math.Round(temp) + (-(int)minVal);
 
-            //return scaleTempArray[colorIndex];
+            if (colorIndex > scaleTempDic.Keys.Count - 1)
+                colorIndex = scaleTempDic.Keys.Count - 1;
+            else if (colorIndex < 0)
+                colorIndex = 0;
 
             return scaleTempDic.Keys.ElementAt(colorIndex);
         }
@@ -178,11 +177,11 @@ namespace AgregaceDatLib
 
             if (type == "prec")
             {
-                colorsArray = scalePrecArray;
+                colorsArray = scalePrecDic.Keys.ToArray();
             }
             else
             {
-                colorsArray = scaleTempArray;
+                colorsArray = scaleTempDic.Keys.ToArray();
             }
 
             for (int i = 0; i < colorsArray.Length; i++)

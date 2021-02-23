@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -193,7 +194,17 @@ namespace AgregaceDatLib
                 }
             }
 
-            return smallBitmap;
+            //return smallBitmap;
+
+            Bitmap newBitmap = new Bitmap(728, 528);
+
+            Graphics g = Graphics.FromImage(newBitmap);
+
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+            g.DrawImage(smallBitmap, 0, 0, 728, 528);
+
+            return newBitmap;
         }
 
         public Forecast GetForecastFromTimeAndPoint(DateTime time, PointLonLat point)

@@ -61,26 +61,29 @@ namespace Vizualizace_Dat
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            string defaultLoaders = loaders;
+            string[] defaultLoaders = loaders.Split(',');
 
-            if(defaultLoaders.Contains("b1"))
+            foreach (string loader in defaultLoaders)
             {
-                checkBox1.Checked = true;
-            }
+                if (loader == "rb")
+                {
+                    checkBox1.Checked = true;
+                }
 
-            if (defaultLoaders.Contains("b2"))
-            {
-                checkBox2.Checked = true;
-            }
+                if (loader ==  "mdrd")
+                {
+                    checkBox2.Checked = true;
+                }
 
-            if (defaultLoaders.Contains("x"))
-            {
-                checkBox3.Checked = true;
-            }
+                if (loader == "yrno")
+                {
+                    checkBox3.Checked = true;
+                }
 
-            if (defaultLoaders.Contains("j"))
-            {
-                checkBox4.Checked = true;
+                if (loader == "owm")
+                {
+                    checkBox4.Checked = true;
+                }
             }
         }
 
@@ -659,45 +662,55 @@ namespace Vizualizace_Dat
             if (checkBox1.Checked)
             {
 
-                jsonLoaders += "b1";
+                jsonLoaders += ",rb";
 
                 if (checkBox1.Enabled)
                 {
-                    loaders += "b1";
+                    loaders += ",rb";
                 }
             }
 
             if (checkBox2.Checked)
             {
 
-                jsonLoaders += "b2";
+                jsonLoaders += ",mdrd";
 
                 if (checkBox2.Enabled)
                 {
-                    loaders += "b2";
+                    loaders += ",mdrd";
                 }
             }
 
             if (checkBox3.Checked)
             {
 
-                jsonLoaders += "x";
+                jsonLoaders += ",yrno";
 
                 if (checkBox3.Enabled)
                 {
-                    loaders += "x";
+                    loaders += ",yrno";
                 }
             }
 
             if (checkBox4.Checked)
             {
 
-                jsonLoaders += "j";
+                jsonLoaders += ",owm";
 
                 if (checkBox4.Enabled)
                 {
-                    loaders += "j";
+                    loaders += ",owm";
                 }
+            }
+
+            if(jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
+            {
+                jsonLoaders = jsonLoaders.Remove(0, 1);
+            }
+
+            if (loaders.Length > 0 && loaders[0] == ',')
+            {
+                loaders = loaders.Remove(0, 1);
             }
 
             ApkConfig.Loaders = jsonLoaders;

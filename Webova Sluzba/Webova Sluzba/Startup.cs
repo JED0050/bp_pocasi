@@ -56,7 +56,7 @@ namespace Webova_Sluzba
             {
                 routes.MapRoute(
                 "BitmapForecast",                                      
-                "forec",                        
+                "bmp",                        
                 new { controller = "Home", action = "BitmapForecast" } 
                 );
 

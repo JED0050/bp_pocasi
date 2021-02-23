@@ -10,12 +10,12 @@ using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class BitmapDataLoader2 : DataLoader
+    public class MedardDataLoader : DataLoader
     {
         private static List<Color> scaleTempArray;
         private static List<Color> scalePrecArray;
 
-        public BitmapDataLoader2()
+        public MedardDataLoader()
         {
 
             if (!Directory.Exists(GetPathToDataDirectory("")))

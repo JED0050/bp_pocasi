@@ -14,7 +14,7 @@ using System.Collections.Concurrent;
 
 namespace AgregaceDatLib
 {
-    public class JSONDataLoader : BitmapCustomDraw, DataLoader
+    public class OpenWeatherMapDataLoader : BitmapCustomDraw, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
@@ -22,7 +22,7 @@ namespace AgregaceDatLib
         
         private int bitmapW = 728;
         private int bitmapH = 528;
-        public JSONDataLoader()
+        public OpenWeatherMapDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory(@"json_cache\")))
             {

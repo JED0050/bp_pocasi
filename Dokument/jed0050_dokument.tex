@@ -114,11 +114,11 @@
 	
 	\subsection{Interpolace}
 	
-	Bitmapa je pokryta sítí trojuhelníků kde známe hodnotu každého vrcholu. Nyní vzniká potřeba každý trojuhelní vyplnit barvamy, které reprezentují hodnotu pixelů uvnitř trojuhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
+	Bitmapa je pokryta sítí trojuhelníků kde známe hodnotu každého vrcholu. Nyní vzniká potřeba každý trojuhelník vyplnit barvamy, které reprezentují hodnotu pixelů uvnitř trojuhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
 	
-	Pro výpočet interpolace postačí jednoduchý vzorec, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovaná bod určí jakou hodnotu sám zjišťovaný bod má.
+	Pro výpočet interpolace postačí jednoduchý vzorec, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovanáý bod určí jakou hodnotu sám zjišťovaný bod má.
 	
-	%\vfill
+	%\vspace{10mm}
 	
 	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojuhelníku $V_1$, $V_2$, $V_3$. 
 	
@@ -138,6 +138,62 @@
 	
 	
 	\section{Distribuce dat}
+	
+	Shromážděné a zprůměrované předpovědi počasí je potřeba nějakým způsobem dodávat klientovi. Tuto úlohu nám splní webová služba, která pro různé dotazy ve formě url API vrací agregovaná data o počasí v požadovaných formátech. Služba se implementovala jako MVC aplikace pro C\# a využívá pro svou práci knihovnu pro agregaci dat z předešlé sekce.
+	
+	\subsection{API}
+	
+	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrácí požadovanou předpověď. Webová služba vrací data ve třech formátech xml, json a bitmapa.
+	
+	\subsubsection{Bitmap předpověď}
+	
+	Tato předpověď se získává požadavkem bmp a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určenapro Českou republiku. Při určování této předpovědi je zapotřebí rovněž i čas pro který se má předpověď určitě $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas požadavku předpovědi. Následně je potře zadat typ předpovědi $type$, který má bitmapa reprezentovat tyto typy jsou 2 typ prec reprezentuje srážky v mm a typ temp teplotu ve stupních Celsia. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné současně.
+	\\\\
+	adresaserveru/bmp?type=\{typ\}\&time=\{čas\}\&loaders=\{datové zdroje\}\&p1=\{bod1\}\&p2=\{bod2\}
+	
+	\begin{center}
+		\begin{tabular}{c c p{13cm}}
+			Název & Povinnost & Význam \\
+			\midrule
+			type & ANO & Typ předpovědi, určuje druh vykreslených informací. Typ $prec$ reprezentuje srážky v milimetech a typ $temp$ teplotu ve stupních Celsia.\\ 
+   			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  provede se předpověď pro aktuální čas.\\ 
+   			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
+   			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny středníkem. Pro oddělení celé a desetinné části souřadnice se můžou požít tečka i čárka. Pokud bod $p1$ nebo $p1$ není zadán, bitmapa se vykreslí pro Českou republiku.\\
+   			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny středníkem. Pro oddělení celé a desetinné části souřadnice se můžou požít tečka i čárka. Pokud bod $p1$ nebo $p1$ není zadán, bitmapa se vykreslí pro Českou republiku.
+		\end{tabular}
+	\end{center}
+	
+	Příklady požadavků:
+	\begin{itemize}
+		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývající celou ČR a využívá veškeré datové zdroje.
+		\begin{itemize}
+			\item adresaserveru/bmp?type=temp
+		\end{itemize}
+		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývající celou ČR a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
+		\begin{itemize}
+			\item adresaserveru/bmp?type=prec\&time=2021-05-26T18:30:00\&loaders=owm,yrno
+		\end{itemize}
+		\item Požadujeme bitmapu s daty o srážkách pro aktuální čas, která pokrývající město Olomouc a využívá datový zdroj od služby Medard-Online.
+		\begin{itemize}
+			\item adresaserveru/bmp?type=prec\&p1=49.621559;17.1507294\&p2=49.5211889;17.4213141\&loaders=mdrd
+		\end{itemize}
+	\end{itemize}
+
+	\subsubsection{XML a JSON předpověď}
+	
+	\subsubsection{Zkratky loaderů}
+	
+	\begin{center}
+		\begin{tabular}{c c}
+			Celý název datového zdroje & Zkratka pro API\\
+			\midrule
+			Radar.bourky & rb \\
+			Medard-online & mdrd \\
+			OpenWeatherMap & owm \\
+			Yr.No & yrno \\
+			
+		\end{tabular}
+	\end{center}
 	
 	\section{Vizualizace dat}
 	
