@@ -232,6 +232,9 @@ namespace AgregaceDatLib
             }
             else if(numOfValidForecasts == 1)
             {
+                forecasts[0].Longitude = forecasts[0].Longitude.Replace(',', '.');
+                forecasts[0].Latitude = forecasts[0].Latitude.Replace(',', '.');
+
                 return forecasts[0];
             }
             else
@@ -257,6 +260,9 @@ namespace AgregaceDatLib
                 avgForecast.Precipitation /= numOfValidForecasts;
                 avgForecast.Humidity /= numOfValidForecasts;
                 avgForecast.Pressure /= numOfValidForecasts;
+
+                avgForecast.Longitude = avgForecast.Longitude.Replace(',', '.');
+                avgForecast.Latitude = avgForecast.Latitude.Replace(',', '.');    
 
                 return avgForecast;
             }

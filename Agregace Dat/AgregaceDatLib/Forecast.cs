@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using DelaunayTriangulator;
+using Newtonsoft.Json;
 
 namespace AgregaceDatLib
 {
@@ -21,8 +22,10 @@ namespace AgregaceDatLib
             }
         }
 
-        public string Latitude { get; set; }        //zeměpisná šířka "y"
-        public string Longitude { get; set; }       //zeměpisná délka "x"
+        public string Latitude { get; set; }                     //zeměpisná šířka "y"
+               
+        public string Longitude { get; set; }                  //zeměpisná délka "x"
+       
 
         public DateTime Time { get; set; }
 
@@ -31,7 +34,8 @@ namespace AgregaceDatLib
         public double Humidity { get; set; }        //vlhkost
         public double Pressure { get; set; }        //tlak
 
-
+        [XmlIgnore]
+        [JsonIgnore]
         public double DLatitude
         {
             get
@@ -40,6 +44,8 @@ namespace AgregaceDatLib
             }
         }
 
+        [XmlIgnore]
+        [JsonIgnore]
         public double DLongitude
         {
             get
