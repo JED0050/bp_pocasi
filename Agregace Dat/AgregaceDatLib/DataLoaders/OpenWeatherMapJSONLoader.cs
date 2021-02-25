@@ -19,6 +19,8 @@ namespace AgregaceDatLib
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
         private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+
+        public string LOADER_NAME = "OpenWeatherMap";
         
         private int bitmapW = 728;
         private int bitmapH = 528;
@@ -50,18 +52,9 @@ namespace AgregaceDatLib
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)
         {
-            DateTime updatedTime = new DateTime(forTime.AddMinutes(30).Year, forTime.AddMinutes(30).Month, forTime.AddMinutes(30).Day, forTime.AddMinutes(30).Hour, 0, 0);
+            DateTime updatedTime = GetValidTime(forTime);
 
-            if (updatedTime.Hour % 3 < 2)
-            {
-                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
-            }
-            else
-            {
-                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
-            }
-
-            string bitmapName = "prec-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = $"{ForecastTypes.PRECIPITATION}-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
 
@@ -489,7 +482,7 @@ namespace AgregaceDatLib
 
             Parallel.ForEach(allForecasts, forecasts => {
 
-                string bitmapName = "prec-" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string bitmapName = $"{ForecastTypes.TEMPERATURE}-" + forecasts[0].Time.ToString("yyyy-MM-dd-HH") + ".bmp";
                 string bitmapPath = GetPathToDataDirectory(bitmapName);
 
                 Bitmap newBitmap = new Bitmap(bitmapW, bitmapH);
@@ -538,18 +531,9 @@ namespace AgregaceDatLib
 
         public Bitmap GetTemperatureBitmap(DateTime forTime)
         {
-            DateTime updatedTime = new DateTime(forTime.AddMinutes(30).Year, forTime.AddMinutes(30).Month, forTime.AddMinutes(30).Day, forTime.AddMinutes(30).Hour, 0, 0);
+            DateTime updatedTime = GetValidTime(forTime);
 
-            if (updatedTime.Hour % 3 < 2)
-            {
-                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
-            }
-            else
-            {
-                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
-            }
-
-            string bitmapName = "temp-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = $"{ForecastTypes.TEMPERATURE}-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if (File.Exists(bitmapPath))
@@ -562,66 +546,40 @@ namespace AgregaceDatLib
             }
         }
 
-        public Forecast GetForecast(DateTime forTime, PointLonLat location)
+        private DateTime GetValidTime(DateTime forTime)
         {
-            string webContent = "";
-            string url = @"https://api.openweathermap.org/data/2.5/forecast?lat=" + location.Lat + "&lon=" + location.Lon + "&appid=ea63080a4f8e99972630d2671e3ef805";
+            DateTime updatedTime = forTime.AddMinutes(30);
 
-            using (var client = new WebClient())
+            if (updatedTime.Hour % 3 < 2)
             {
-                webContent = client.DownloadString(url);
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
             }
 
-            if (webContent == "")
-                throw new Exception("Datový zdroj nevrátil platná data.");
+            return updatedTime;
+        }
 
+        public Forecast GetForecast(DateTime forTime, PointLonLat location)
+        {
+            forTime = GetValidTime(forTime);
 
             Forecast forecast = new Forecast();
 
-            if (forTime.Minute > 30)
-            {
-                forTime = forTime.AddMinutes(30);
-            }
+            forecast.Longitude = location.Lon.ToString();
+            forecast.Latitude = location.Lat.ToString();
+            forecast.Time = forTime;
+            forecast.AddDataSource(LOADER_NAME);
 
-            forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
+            forecast.Precipitation = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmap(GetTemperatureBitmap(forTime), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
 
+            //forecast.Humidity = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.HUMIDITY);
+            //forecast.Pressure = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.PRESSURE);
 
-            dynamic jsonForecast = JObject.Parse(webContent);
-
-            JArray jsonForecastArray = (JArray)jsonForecast["list"];
-
-            foreach (var el in jsonForecastArray)
-            {
-                dynamic jsonElement = JObject.Parse(el.ToString());
-
-                DateTime elementDateTime = DateTime.Parse(jsonElement.dt_txt.ToString());
-
-                if (elementDateTime >= forTime && elementDateTime <= forTime.AddHours(6))
-                {
-                    forecast.Temperature = Math.Round(Double.Parse(jsonElement.main.temp.ToString().Replace('.', ',')) - 273.15, 2);
-                    forecast.Humidity = Double.Parse(jsonElement.main.humidity.ToString().Replace('.', ','));
-                    forecast.Pressure = Double.Parse(jsonElement.main.pressure.ToString().Replace('.', ','));
-
-                    try
-                    {
-                        forecast.Precipitation = Double.Parse(jsonElement.rain.GetValue("3h").ToString().Replace('.', ','));
-                    }
-                    catch
-                    {
-                        forecast.Precipitation = 0;
-                    }
-
-                    forecast.Longitude = location.Lon.ToString();
-                    forecast.Latitude = location.Lat.ToString();
-                    forecast.Time = elementDateTime;
-                    forecast.AddDataSource("OpenWeatherMap");
-
-                    return forecast;
-                }
-                
-            }
-
-            throw new Exception("V datech datového zdroje se nenachází předpověď pro požadovaný čas.");
+            return forecast;
         }
     }
 }

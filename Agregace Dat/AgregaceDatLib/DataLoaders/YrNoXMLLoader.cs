@@ -18,6 +18,8 @@ namespace AgregaceDatLib
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
         private PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
+        public string LOADER_NAME = "Yr.No";
+
         public YrNoDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory("")))
@@ -354,10 +356,10 @@ namespace AgregaceDatLib
 
                 DateTime forTime = GetValidTime(forecasts[0].Time);
 
-                string precBmpName = "prec-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string precBmpName = $"{ForecastTypes.PRECIPITATION}-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
                 string precBmpFullName = GetPathToDataDirectory(precBmpName);
 
-                string tempBmpName = "temp-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+                string tempBmpName = $"{ForecastTypes.TEMPERATURE}-" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
                 string tempBmpFullName = GetPathToDataDirectory(tempBmpName);
 
                 Triangulator angulator = new Triangulator();
@@ -432,7 +434,7 @@ namespace AgregaceDatLib
         {
             DateTime updatedTime = GetValidTime(forTime);
 
-            string bitmapName = "temp-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = $"{ForecastTypes.TEMPERATURE}-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if (File.Exists(bitmapPath))
@@ -447,76 +449,22 @@ namespace AgregaceDatLib
 
         public Forecast GetForecast(DateTime forTime, PointLonLat location)
         {
-            string webContent = "";
-            string url = @"https://api.met.no/weatherapi/locationforecast/1.9/?lat=" + location.Lat.ToString().Replace(",", ".") + ";lon=" + location.Lon.ToString().Replace(",", ".");
-
-            using (var client = new WebClient())
-            {
-                webContent = client.DownloadString(url);
-            }
-
-            if (webContent == "")
-                throw new Exception("Datový zdroj nevrátil platná data.");
-
+            forTime = GetValidTime(forTime);
 
             Forecast forecast = new Forecast();
 
-            if (forTime.Minute > 30)
-            {
-                forTime = forTime.AddMinutes(30);
-            }
+            forecast.Longitude = location.Lon.ToString();
+            forecast.Latitude = location.Lat.ToString();
+            forecast.Time = forTime;
+            forecast.AddDataSource(LOADER_NAME);
 
-            forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
+            forecast.Precipitation = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmap(GetTemperatureBitmap(forTime), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
 
+            //forecast.Humidity = double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
+            //forecast.Pressure = double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
 
-            TextReader tr = new StringReader(webContent);
-
-            XDocument xmlDoc = XDocument.Load(tr);
-
-            int counter = 0;
-
-            foreach (var timeSlot in xmlDoc.Descendants("time"))
-            {
-
-                DateTime timeSlotTime = DateTime.Parse(timeSlot.Attribute("to").Value);
-
-                foreach (var loc in xmlDoc.Descendants("location"))
-                {
-
-                    if (counter % 3 == 0 && timeSlotTime == forTime)
-                    {
-                        forecast.Temperature = Double.Parse(loc.Element("temperature").Attribute("value").Value.Replace('.', ','));
-                        forecast.Humidity = Double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
-                        forecast.Pressure = Double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
-                    }
-                    else if(counter % 3 == 1 && timeSlotTime == forTime)
-                    {
-                        try
-                        {
-                            forecast.Precipitation = Double.Parse(loc.Element("precipitation").Attribute("value").Value.Replace('.', ','));
-                        }
-                        catch
-                        {
-                            forecast.Precipitation = 0;
-                        }
-
-                        forecast.Longitude = location.Lon.ToString();
-                        forecast.Latitude = location.Lat.ToString();
-                        forecast.Time = forTime;
-                        forecast.AddDataSource("Yr.No");
-
-                        return forecast;
-                    }
-                    else
-                    {
-                        timeSlotTime.AddHours(1);
-                    }
-
-                    counter++;
-                }
-            }
-
-            throw new Exception("V datech datového zdroje se nenachází předpověď pro požadovaný čas.");
+            return forecast;
         }
     }
 }

@@ -29,10 +29,14 @@ namespace AgregaceDatLib
     //http://www.medard-online.cz/apipreview?run=201108_18&forecast=precip&layer=eu
     //http://www.medard-online.cz/apiforecast?run=210124_06&forecast=precip&layer=eu&step=78    //1 - 78
 
-
+    //XML
+    //http://api.weatherunlocked.com/api/forecast/50.10,20.28?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca
+    //key1 - 904d54d78eec41c2c55ed93cbaf7c7ca
+    //key1 - 79ef9432
+    //key2 - 71ef299d81c23d71cd36fcb8ee8691ba
+    //id2 - c0e28ff1
     public interface DataLoader
     {
-
         Bitmap GetPrecipitationBitmap(DateTime forTime);
         Bitmap GetTemperatureBitmap(DateTime forTime);
         void SaveNewDeleteOldBmps();

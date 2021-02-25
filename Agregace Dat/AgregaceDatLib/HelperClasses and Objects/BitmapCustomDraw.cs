@@ -7,7 +7,6 @@ namespace AgregaceDatLib
 {
     public class BitmapCustomDraw
     {
-
         private float sign(Point p1, Point p2, Point p3)
         {
             return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
@@ -52,12 +51,45 @@ namespace AgregaceDatLib
 
             double avgVal = (w1 * val1 + w2 * val2 + w3 * val3) / (w1 + w2 + w3);
 
-            if(type == "prec")
-                return ColorValueHandler.GetPrecipitationColor(avgVal);
-            else //type == "temp"
-                return ColorValueHandler.GetTemperatureColor(avgVal);
+            return ColorValueHandler.GetColorForValueAndType(avgVal, type);
         }
         
+        protected double GetValueFromBitmap(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target, string type)
+        {
+            double lonDif = Math.Abs(p1.Lon - p2.Lon);
+            double latDif = Math.Abs(p1.Lat - p2.Lat);
+
+            double PixelLon = lonDif / bmp.Width;
+            double PixelLat = latDif / bmp.Height;
+
+            double bY = p1.Lat;
+            double bX = p1.Lon;
+
+            double locLon = target.Lon;
+            double locLat = target.Lat;
+
+            int x;
+            for (x = 0; x < bmp.Width - 1; x++)
+            {
+                if (bX >= locLon && locLon <= bX + PixelLon)
+                    break;
+
+                bX += PixelLon;
+            }
+
+            int y;
+            for (y = 0; y < bmp.Height - 1; y++)
+            {
+                if (bY - PixelLat <= locLat && locLat <= bY)
+                    break;
+
+                bY -= PixelLat;
+            }
+
+            Color pixel = bmp.GetPixel(x, y);
+
+            return ColorValueHandler.GetValueForColorAndType(pixel, type);
+        }
 
     }
 

@@ -135,7 +135,7 @@ namespace Vizualizace_Dat
             }
             else
             {
-                pointUrl = "&p1=" + bounds[0].Lat + ";" + bounds[0].Lng + "&p2=" + bounds[1].Lat + ";" + bounds[1].Lng;
+                pointUrl = "&p1=" + bounds[0].Lat.ToString().Replace(",",".") + "," + bounds[0].Lng.ToString().Replace(",", ".") + "&p2=" + bounds[1].Lat.ToString().Replace(",", ".") + "," + bounds[1].Lng.ToString().Replace(",", ".");
             }
 
             string precUrl = $"bmp?type={type}&time={time}&loaders={loaders}" + pointUrl;

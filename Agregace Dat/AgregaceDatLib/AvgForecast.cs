@@ -60,11 +60,11 @@ namespace AgregaceDatLib
             {
                 try
                 {
-                    if(type == "prec")
+                    if(type == ForecastTypes.PRECIPITATION)
                     {
                         loaderBitmaps.Add(dL.GetPrecipitationBitmap(time));
                     }
-                    else if(type == "temp")
+                    else if(type == ForecastTypes.TEMPERATURE)
                     {
                         loaderBitmaps.Add(dL.GetTemperatureBitmap(time));
                     }
@@ -94,21 +94,21 @@ namespace AgregaceDatLib
 
                         foreach (Bitmap b in loaderBitmaps)
                         {
-                            if (type == "prec")
+                            if (type == ForecastTypes.PRECIPITATION)
                             {
                                 tempValSum += ColorValueHandler.GetPrecipitationValue(b.GetPixel(x, y));
                             }
-                            else if (type == "temp")
+                            else if (type == ForecastTypes.TEMPERATURE)
                             {
                                 tempValSum += ColorValueHandler.GetTemperatureValue(b.GetPixel(x, y));
                             }
                         }
 
-                        if (type == "prec")
+                        if (type == ForecastTypes.PRECIPITATION)
                         {
                             avgBitmap.SetPixel(x, y, ColorValueHandler.GetPrecipitationColor(tempValSum / loaderBitmaps.Count));
                         }
-                        else if (type == "temp")
+                        else if (type == ForecastTypes.TEMPERATURE)
                         {
                             avgBitmap.SetPixel(x, y, ColorValueHandler.GetTemperatureColor(tempValSum / loaderBitmaps.Count));
                         }

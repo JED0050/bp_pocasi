@@ -11,6 +11,7 @@ using AgregaceDatLib;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Webova_Sluzba.Controllers
 {
@@ -94,7 +95,7 @@ namespace Webova_Sluzba.Controllers
 
                 type = type.ToLower();
 
-                if (type == "prec" || type ==  "temp")
+                if (ForecastTypes.IsTypeKnown(type))
                 {
                     Bitmap precBitmap;
 
@@ -104,14 +105,13 @@ namespace Webova_Sluzba.Controllers
                     }
                     else
                     {
-                        string[] p1LatLon = p1.Replace(".",",").Split(";");
-                        string[] p2LatLon = p2.Replace(".", ",").Split(";");
+                        string[] p1LatLon = p1.Split(",");
+                        string[] p2LatLon = p2.Split(",");
 
-                        PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1]), double.Parse(p1LatLon[0]));
-                        PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1]), double.Parse(p2LatLon[0]));
+                        PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1], CultureInfo.InvariantCulture), double.Parse(p1LatLon[0], CultureInfo.InvariantCulture));
+                        PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1], CultureInfo.InvariantCulture), double.Parse(p2LatLon[0], CultureInfo.InvariantCulture));
 
                         precBitmap = aF.GetAvgForecBitmap(dateTime, type, point1, point2);
-
                     }
 
                     var bitmapBytes = BitmapToBytes(precBitmap);
@@ -219,7 +219,7 @@ namespace Webova_Sluzba.Controllers
 
         private Forecast GetForecastFromTimeAndPoint(string time, string loaders, string lon, string lat)
         {
-            PointLonLat point = new PointLonLat(double.Parse(lon.Replace(".", ",")), double.Parse(lat.Replace(".", ",")));
+            PointLonLat point = new PointLonLat(double.Parse(lon, CultureInfo.InvariantCulture), double.Parse(lat, CultureInfo.InvariantCulture));
 
             AvgForecast aF = SetLoadersForAvgForecast(loaders);
 

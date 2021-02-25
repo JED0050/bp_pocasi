@@ -78,7 +78,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                Color c = GetClosestCol(pixelAlpha, "prec");
+                Color c = GetClosestCol(pixelAlpha, ForecastTypes.PRECIPITATION);
 
                 if(c == Color.Black)
                 {
@@ -134,7 +134,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                Color c = GetClosestCol(pixelAlpha, "temp");
+                Color c = GetClosestCol(pixelAlpha, ForecastTypes.TEMPERATURE);
 
                 if (c == Color.Black)
                 {
@@ -209,13 +209,13 @@ namespace AgregaceDatLib
 
         public static bool IsColorKnown(Color pixel, string type)
         {
-            if(pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+            if(pixel.R == 0 && pixel.G == 0 && (pixel.B == 0 || pixel.B == 1))
             {
                 return true;
             }
-            else
+            else if(ForecastTypes.IsTypeKnown(type))
             {
-                if(type == "prec")
+                if(type == ForecastTypes.PRECIPITATION)
                 {
                     return scalePrecDic.ContainsKey(pixel);
                 }
@@ -224,7 +224,34 @@ namespace AgregaceDatLib
                     return scaleTempDic.ContainsKey(pixel);
                 }
             }
+            else
+            {
+                return false;
+            }
         }
 
+        public static double GetValueForColorAndType(Color col, string type)
+        {
+            if(type == ForecastTypes.PRECIPITATION)
+            {
+                return GetPrecipitationValue(col);
+            }
+            else
+            {
+                return GetTemperatureValue(col);
+            }
+        }
+
+        public static Color GetColorForValueAndType(double val, string type)
+        {
+            if (type == ForecastTypes.PRECIPITATION)
+            {
+                return GetPrecipitationColor(val);
+            }
+            else
+            {
+                return GetTemperatureColor(val);
+            }
+        }
     }
 }

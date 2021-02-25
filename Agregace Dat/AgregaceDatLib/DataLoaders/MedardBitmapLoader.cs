@@ -119,12 +119,12 @@ namespace AgregaceDatLib
 
         public Bitmap GetBigPrecipitationBitmap(DateTime forTime)   //všechny data srážek evropa
         {
-            return GetBigForecastBitmap(forTime, "prec");
+            return GetBigForecastBitmap(forTime, ForecastTypes.PRECIPITATION);
         }
 
         public Bitmap GetBigTemperatureBitmap(DateTime forTime)   //všechny data srážek evropa
         {
-            return GetBigForecastBitmap(forTime, "temp");
+            return GetBigForecastBitmap(forTime, ForecastTypes.TEMPERATURE);
         }
 
         public Bitmap GetPrecipitationBitmap(DateTime forTime)  //celá ČR
@@ -132,7 +132,7 @@ namespace AgregaceDatLib
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight  = new PointLonLat(20.21, 47.09);
 
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime), "prec");
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime), ForecastTypes.PRECIPITATION);
         }
 
         public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap, string type)
@@ -338,8 +338,8 @@ namespace AgregaceDatLib
                         tmpX++;
                     }
 
-                    newPrecBmp.Save(GetPathToDataDirectory("prec-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
-                    newTempBmp.Save(GetPathToDataDirectory("temp-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                    newPrecBmp.Save(GetPathToDataDirectory($"{ForecastTypes.PRECIPITATION}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                    newTempBmp.Save(GetPathToDataDirectory($"{ForecastTypes.TEMPERATURE}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
 
                 }
 
@@ -464,7 +464,7 @@ namespace AgregaceDatLib
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime), "temp");
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime), ForecastTypes.TEMPERATURE);
         }
 
         public Forecast GetForecast(DateTime forTime, PointLonLat point)
