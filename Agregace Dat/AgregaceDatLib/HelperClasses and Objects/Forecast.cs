@@ -101,5 +101,9 @@ namespace AgregaceDatLib
         {
             dataSources.Add(source);
         }
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public double GenericValue { get; set; }
     }
 }

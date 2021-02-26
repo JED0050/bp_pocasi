@@ -26,6 +26,7 @@ namespace Webova_Sluzba.Controllers
         {
             AvgForecast aF = new AvgForecast();
 
+            /*
             RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
             YrNoDataLoader xL = new YrNoDataLoader();
             OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
@@ -35,6 +36,11 @@ namespace Webova_Sluzba.Controllers
             aF.Add(xL);
             //aF.Add(jL);
             aF.Add(bL2);
+            */
+
+            WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
+
+            aF.Add(weunL);
 
             aF.SaveForecastBitmaps();
 
@@ -170,11 +176,13 @@ namespace Webova_Sluzba.Controllers
                 YrNoDataLoader xL = new YrNoDataLoader();
                 OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
                 MedardDataLoader bL2 = new MedardDataLoader();
+                WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
 
                 aF.Add(bL);
                 aF.Add(xL);
                 aF.Add(jL);
                 aF.Add(bL2);
+                aF.Add(wL);
             }
             else
             {
@@ -204,6 +212,12 @@ namespace Webova_Sluzba.Controllers
                     {
                         OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
                         aF.Add(jL);
+                    }
+
+                    if (loader == "weun")
+                    {
+                        WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
+                        aF.Add(wL);
                     }
                 }
 

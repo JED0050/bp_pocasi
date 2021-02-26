@@ -188,7 +188,7 @@ namespace AgregaceDatLib
                         return;
                     }
 
-                    List<Forecast> onePointForecasts = GetAllForecastsFronJSON(now, JSONText);
+                    List<Forecast> onePointForecasts = GetAllForecastsFromJSON(now, JSONText);
 
                     lock(lockObj)
                     {
@@ -368,7 +368,7 @@ namespace AgregaceDatLib
 
         }
 
-        private List<Forecast> GetAllForecastsFronJSON(DateTime now, string JSONtext)
+        private List<Forecast> GetAllForecastsFromJSON(DateTime now, string JSONtext)
         {
             List<Forecast> forecasts = new List<Forecast>();
 

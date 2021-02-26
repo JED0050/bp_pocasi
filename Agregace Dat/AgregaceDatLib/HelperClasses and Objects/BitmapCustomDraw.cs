@@ -91,6 +91,11 @@ namespace AgregaceDatLib
             return ColorValueHandler.GetValueForColorAndType(pixel, type);
         }
 
+        protected string GetBitmapName(string type, DateTime time)
+        {
+            return type + "-" + time.ToString("yyyy-MM-dd-HH") + ".bmp";
+        }
+
     }
 
 }
