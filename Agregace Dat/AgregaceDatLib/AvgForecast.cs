@@ -60,15 +60,7 @@ namespace AgregaceDatLib
             {
                 try
                 {
-                    if(type == ForecastTypes.PRECIPITATION)
-                    {
-                        loaderBitmaps.Add(dL.GetPrecipitationBitmap(time));
-                    }
-                    else if(type == ForecastTypes.TEMPERATURE)
-                    {
-                        loaderBitmaps.Add(dL.GetTemperatureBitmap(time));
-                    }
-
+                    loaderBitmaps.Add(dL.GetForecastBitmap(time, type));
                 }
                 catch
                 {
@@ -90,29 +82,14 @@ namespace AgregaceDatLib
                 {
                     for (int x = 0; x < avgBitmap.Width; x++)
                     {
-                        double tempValSum = 0;
+                        double valSum = 0;
 
                         foreach (Bitmap b in loaderBitmaps)
                         {
-                            if (type == ForecastTypes.PRECIPITATION)
-                            {
-                                tempValSum += ColorValueHandler.GetPrecipitationValue(b.GetPixel(x, y));
-                            }
-                            else if (type == ForecastTypes.TEMPERATURE)
-                            {
-                                tempValSum += ColorValueHandler.GetTemperatureValue(b.GetPixel(x, y));
-                            }
+                            valSum += ColorValueHandler.GetValueForColorAndType(b.GetPixel(x, y), type);
                         }
 
-                        if (type == ForecastTypes.PRECIPITATION)
-                        {
-                            avgBitmap.SetPixel(x, y, ColorValueHandler.GetPrecipitationColor(tempValSum / loaderBitmaps.Count));
-                        }
-                        else if (type == ForecastTypes.TEMPERATURE)
-                        {
-                            avgBitmap.SetPixel(x, y, ColorValueHandler.GetTemperatureColor(tempValSum / loaderBitmaps.Count));
-                        }
-
+                        avgBitmap.SetPixel(x, y, ColorValueHandler.GetColorForValueAndType(valSum / loaderBitmaps.Count, type));
                     }
                 }
 
@@ -215,7 +192,7 @@ namespace AgregaceDatLib
             {
                 try
                 {
-                    forecasts.Add(dL.GetForecast(time, point));
+                    forecasts.Add(dL.GetForecastPoint(time, point));
 
                 }
                 catch
@@ -239,16 +216,45 @@ namespace AgregaceDatLib
             }
             else
             {
-                Forecast avgForecast = forecasts[0];
+                Forecast avgForecast = new Forecast();
+                avgForecast.Time = forecasts[0].Time;
+                avgForecast.Longitude = forecasts[0].Longitude;
+                avgForecast.Latitude = forecasts[0].Latitude;
 
-                for(int i = 1; i < numOfValidForecasts; i++)
+                int tempC = 0;
+                int precC = 0;
+                int presC = 0;
+                int humiC = 0;
+
+                for (int i = 0; i < numOfValidForecasts; i++)
                 {
-                    avgForecast.Temperature += forecasts[i].Temperature;
-                    avgForecast.Precipitation += forecasts[i].Precipitation;
-                    avgForecast.Humidity += forecasts[i].Humidity;
-                    avgForecast.Pressure += forecasts[i].Pressure;
+                    if(forecasts[i].Temperature.HasValue)
+                    {
+                        avgForecast.Temperature += forecasts[i].Temperature;
+                        tempC++;
+                    }
 
-                    if(forecasts[i].Time < avgForecast.Time)
+                    if (forecasts[i].Precipitation.HasValue)
+                    {
+                        avgForecast.Precipitation += forecasts[i].Precipitation;
+                        precC++;
+                    }
+
+                    if (forecasts[i].Pressure.HasValue)
+                    {
+                        avgForecast.Pressure += forecasts[i].Pressure;
+                        presC++;
+                    }
+
+                    if (forecasts[i].Humidity.HasValue)
+                    {
+                        avgForecast.Humidity += forecasts[i].Humidity;
+                        humiC++;
+                    }
+
+
+
+                    if (forecasts[i].Time < avgForecast.Time)
                     {
                         avgForecast.Time = forecasts[i].Time;
                     }
@@ -256,10 +262,41 @@ namespace AgregaceDatLib
                     avgForecast.AddDataSource(forecasts[i].DataSources[0]);
                 }
 
-                avgForecast.Temperature /= numOfValidForecasts;
-                avgForecast.Precipitation /= numOfValidForecasts;
-                avgForecast.Humidity /= numOfValidForecasts;
-                avgForecast.Pressure /= numOfValidForecasts;
+                if(tempC == 0)
+                {
+                    avgForecast.Temperature = null;
+                }
+                else if(tempC > 1)
+                {
+                    avgForecast.Temperature = Math.Round(avgForecast.Temperature.Value / tempC, 4);
+                }
+
+                if (precC == 0)
+                {
+                    avgForecast.Precipitation = null;
+                }
+                else if(precC > 1)
+                {
+                    avgForecast.Precipitation = Math.Round(avgForecast.Precipitation.Value / precC, 4);
+                }
+
+                if (humiC == 0)
+                {
+                    avgForecast.Humidity = null;
+                }
+                else if (humiC > 1)
+                {
+                    avgForecast.Humidity = Math.Round(avgForecast.Humidity.Value / humiC, 4);
+                }
+
+                if (presC == 0)
+                {
+                    avgForecast.Pressure = null;
+                }
+                else if (presC > 1)
+                {
+                    avgForecast.Pressure = Math.Round(avgForecast.Pressure.Value / presC, 4);
+                }
 
                 avgForecast.Longitude = avgForecast.Longitude.Replace(',', '.');
                 avgForecast.Latitude = avgForecast.Latitude.Replace(',', '.');    

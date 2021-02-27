@@ -37,10 +37,8 @@ namespace AgregaceDatLib
     //id2 - c0e28ff1
     public interface DataLoader
     {
-        Bitmap GetPrecipitationBitmap(DateTime forTime);
-        Bitmap GetTemperatureBitmap(DateTime forTime);
+        Bitmap GetForecastBitmap(DateTime forTime, string type);
+        Forecast GetForecastPoint(DateTime forTime, PointLonLat point);
         void SaveNewDeleteOldBmps();
-
-        Forecast GetForecast(DateTime forTime, PointLonLat point);
     }
 }

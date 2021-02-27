@@ -40,11 +40,11 @@ namespace AgregaceDatLib
             }
         }
 
-        public Bitmap GetPrecipitationBitmap(DateTime forTime)
+        public Bitmap GetForecastBitmap(DateTime forTime, string type)
         {
             DateTime updatedTime = GetValidTime(forTime);
 
-            string bitmapName = "prec-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
+            string bitmapName = GetBitmapName(type, updatedTime);
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             if (File.Exists(bitmapPath))
@@ -53,7 +53,7 @@ namespace AgregaceDatLib
             }
             else
             {
-                throw new Exception("Bitmapa srážek pro požadovaný čas nebyla nalezena!");
+                throw new Exception("Bitmapa počasí pro požadovaný čas nebyla nalezena!");
             }
 
         }
@@ -146,12 +146,7 @@ namespace AgregaceDatLib
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-
-                string onlyDateName = f.Name.Split('.')[0];
-
-                string[] timeParts = onlyDateName.Split("-");
-
-                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
+                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
                 if (dateTime < DateTime.Now) //smazání starých bitmap
                 {
@@ -227,7 +222,6 @@ namespace AgregaceDatLib
                             f.Precipitation = Double.Parse(time.Element("precipitation").Attribute("value").Value.Replace('.', ','));
 
                             forecasts.Add(f);
-
 
                         }
                     }
@@ -396,10 +390,10 @@ namespace AgregaceDatLib
                             if (PointInTriangle(newPoint, p1, p2, p3))
                             {
                                 //nastavení pixelu pro srážky
-                                precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation, forecasts[t.b].Precipitation, forecasts[t.c].Precipitation, "prec"));
+                                precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation.Value, forecasts[t.b].Precipitation.Value, forecasts[t.c].Precipitation.Value, ForecastTypes.PRECIPITATION));
 
                                 //nastavení pixelu pro teplotu
-                                tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Temperature, forecasts[t.b].Temperature, forecasts[t.c].Temperature, "temp"));
+                                tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Temperature.Value, forecasts[t.b].Temperature.Value, forecasts[t.c].Temperature.Value, ForecastTypes.TEMPERATURE));
                             }
                         }
                     }
@@ -430,24 +424,7 @@ namespace AgregaceDatLib
             return updatedTime;
         }
 
-        public Bitmap GetTemperatureBitmap(DateTime forTime)
-        {
-            DateTime updatedTime = GetValidTime(forTime);
-
-            string bitmapName = $"{ForecastTypes.TEMPERATURE}-" + updatedTime.ToString("yyyy-MM-dd-HH") + ".bmp";
-            string bitmapPath = GetPathToDataDirectory(bitmapName);
-
-            if (File.Exists(bitmapPath))
-            {
-                return new Bitmap(bitmapPath);
-            }
-            else
-            {
-                throw new Exception("Bitmapa teploty pro daný čas nebyla nalezena!");
-            }
-        }
-
-        public Forecast GetForecast(DateTime forTime, PointLonLat location)
+        public Forecast GetForecastPoint(DateTime forTime, PointLonLat location)
         {
             forTime = GetValidTime(forTime);
 
@@ -458,11 +435,11 @@ namespace AgregaceDatLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            forecast.Precipitation = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
-            forecast.Temperature = GetValueFromBitmap(GetTemperatureBitmap(forTime), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
+            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
 
-            //forecast.Humidity = double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
-            //forecast.Pressure = double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
+            forecast.Humidity = null;
+            forecast.Pressure = null;
 
             return forecast;
         }

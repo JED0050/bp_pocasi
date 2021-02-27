@@ -67,7 +67,7 @@ namespace AgregaceDatLib
 
         public static double GetPrecipitationValue(Color pixel)
         {
-            if ((pixel.R == 0 && pixel.G == 0 && pixel.B == 0) || (pixel.R == 255 && pixel.G == 255 && pixel.B == 255))
+            if ((pixel.R == 0 && pixel.G == 0 && (pixel.B == 0 || pixel.B == 1) || (pixel.R == 255 && pixel.G == 255 && pixel.B == 255)))
                 return 0;
 
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);

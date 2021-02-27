@@ -10,8 +10,14 @@ using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class MedardDataLoader : DataLoader
+    public class MedardDataLoader : BitmapCustomDraw, DataLoader
     {
+        //bounds
+        private PointLonLat topLeft = new PointLonLat(-21.123962402343754, 56.13636792495879);
+        private PointLonLat botRight = new PointLonLat(29.696044921875, 33.25246979589199);
+
+        public string LOADER_NAME = "Medard-Online";
+
         private static List<Color> scaleTempArray;
         private static List<Color> scalePrecArray;
 
@@ -117,22 +123,9 @@ namespace AgregaceDatLib
             throw new Exception("Bitmapa pro požadovaný čas nebyla nalezena");
         }
 
-        public Bitmap GetBigPrecipitationBitmap(DateTime forTime)   //všechny data srážek evropa
+        public Bitmap GetBigBitmap(DateTime forTime, string type)   //všechny data srážek evropa
         {
-            return GetBigForecastBitmap(forTime, ForecastTypes.PRECIPITATION);
-        }
-
-        public Bitmap GetBigTemperatureBitmap(DateTime forTime)   //všechny data srážek evropa
-        {
-            return GetBigForecastBitmap(forTime, ForecastTypes.TEMPERATURE);
-        }
-
-        public Bitmap GetPrecipitationBitmap(DateTime forTime)  //celá ČR
-        {
-            PointLonLat topLeft = new PointLonLat(10.88, 51.88);
-            PointLonLat botRight  = new PointLonLat(20.21, 47.09);
-
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigPrecipitationBitmap(forTime), ForecastTypes.PRECIPITATION);
+            return GetBigForecastBitmap(forTime, type);
         }
 
         public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap, string type)
@@ -459,17 +452,31 @@ namespace AgregaceDatLib
 
             return minValue + index * stepValue;
         }
-        public Bitmap GetTemperatureBitmap(DateTime forTime)
+
+        public Forecast GetForecastPoint(DateTime forTime, PointLonLat location)
+        {
+            Forecast forecast = new Forecast();
+
+            forecast.Longitude = location.Lon.ToString();
+            forecast.Latitude = location.Lat.ToString();
+            forecast.Time = forTime;
+            forecast.AddDataSource(LOADER_NAME);
+
+            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
+
+            //forecast.Humidity = double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
+            //forecast.Pressure = double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
+
+            return forecast;
+        }
+
+        public Bitmap GetForecastBitmap(DateTime forTime, string type)
         {
             PointLonLat topLeft = new PointLonLat(10.88, 51.88);
             PointLonLat botRight = new PointLonLat(20.21, 47.09);
 
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigTemperatureBitmap(forTime), ForecastTypes.TEMPERATURE);
-        }
-
-        public Forecast GetForecast(DateTime forTime, PointLonLat point)
-        {
-            throw new NotImplementedException();
+            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigBitmap(forTime, type), type);
         }
     }
 }

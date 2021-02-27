@@ -29,10 +29,10 @@ namespace AgregaceDatLib
 
         public DateTime Time { get; set; }
 
-        public double Temperature { get; set; }     //teplota celsius
-        public double Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
-        public double Humidity { get; set; }        //vlhkost
-        public double Pressure { get; set; }        //tlak
+        public double ?Temperature { get; set; }     //teplota celsius
+        public double ?Precipitation { get; set; }   //srážky = slabá (0,1 – 2,5), mírná	(2,6 – 8), silná (8 – 40), velmi silná (> 40)
+        public double ?Humidity { get; set; }        //vlhkost
+        public double ?Pressure { get; set; }        //tlak
 
         [XmlIgnore]
         [JsonIgnore]
@@ -52,6 +52,14 @@ namespace AgregaceDatLib
             {
                 return Double.Parse(Longitude.Replace('.', ','));
             }
+        }
+
+        public Forecast()
+        {
+            Temperature = 0;
+            Precipitation = 0;
+            Humidity = 0;
+            Pressure = 0;
         }
 
         public void SetXY(int bW, int bH)

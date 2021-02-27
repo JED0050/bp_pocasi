@@ -54,7 +54,7 @@ namespace AgregaceDatLib
             return ColorValueHandler.GetColorForValueAndType(avgVal, type);
         }
         
-        protected double GetValueFromBitmap(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target, string type)
+        protected double GetValueFromBitmapTypeAndPoints(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target, string type)
         {
             double lonDif = Math.Abs(p1.Lon - p2.Lon);
             double latDif = Math.Abs(p1.Lat - p2.Lat);
@@ -91,9 +91,67 @@ namespace AgregaceDatLib
             return ColorValueHandler.GetValueForColorAndType(pixel, type);
         }
 
+        protected Point GetPointFromBoundsAndTarget(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target)
+        {
+            Point point = new Point();
+
+            double lonDif = Math.Abs(p1.Lon - p2.Lon);
+            double latDif = Math.Abs(p1.Lat - p2.Lat);
+
+            double PixelLon = lonDif / bmp.Width;
+            double PixelLat = latDif / bmp.Height;
+
+            double bY = p1.Lat;
+            double bX = p1.Lon;
+
+            double locLon = target.Lon;
+            double locLat = target.Lat;
+
+            int x;
+            for (x = 0; x < bmp.Width - 1; x++)
+            {
+                if (bX >= locLon && locLon <= bX + PixelLon)
+                    break;
+
+                bX += PixelLon;
+            }
+
+            int y;
+            for (y = 0; y < bmp.Height - 1; y++)
+            {
+                if (bY - PixelLat <= locLat && locLat <= bY)
+                    break;
+
+                bY -= PixelLat;
+            }
+
+            point.X = x;
+            point.Y = y;
+
+            return point;
+        }
+
+        protected double GetValueFromBitmapAndPoint(Bitmap bmp, Point target, string type)
+        {
+            Color pixel = bmp.GetPixel(target.X, target.Y);
+
+            return ColorValueHandler.GetValueForColorAndType(pixel, type);
+        }
+
         protected string GetBitmapName(string type, DateTime time)
         {
             return type + "-" + time.ToString("yyyy-MM-dd-HH") + ".bmp";
+        }
+
+        protected DateTime GetDateTimeFromBitmapName(string name)
+        {
+            string onlyDateName = name.Split('.')[0];
+
+            string[] timeParts = onlyDateName.Split("-");
+
+            DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
+
+            return dateTime;
         }
 
     }

@@ -26,21 +26,19 @@ namespace Webova_Sluzba.Controllers
         {
             AvgForecast aF = new AvgForecast();
 
-            /*
+            
             RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
             YrNoDataLoader xL = new YrNoDataLoader();
             OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
             MedardDataLoader bL2 = new MedardDataLoader();
-
-            aF.Add(bL);
-            aF.Add(xL);
-            //aF.Add(jL);
-            aF.Add(bL2);
-            */
-
             WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
 
-            aF.Add(weunL);
+            //aF.Add(bL);
+
+            //aF.Add(xL);
+            aF.Add(jL);
+            //aF.Add(bL2);
+            //aF.Add(weunL);
 
             aF.SaveForecastBitmaps();
 

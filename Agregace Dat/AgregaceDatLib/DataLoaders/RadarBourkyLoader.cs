@@ -7,8 +7,14 @@ using System.Net;
 
 namespace AgregaceDatLib
 {
-    public class RadarBourkyDataLoader : DataLoader
+    public class RadarBourkyDataLoader : BitmapCustomDraw, DataLoader
     {
+        //bounds
+        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+
+        public string LOADER_NAME = "RadarBourky";
+
         public RadarBourkyDataLoader()
         {
             if (!Directory.Exists(GetPathToDataDirectory("")))
@@ -47,11 +53,12 @@ namespace AgregaceDatLib
 
         }
 
-        public Bitmap GetPrecipitationBitmap(DateTime forTime)
+        public Bitmap GetForecastBitmap(DateTime forTime, string type)
         {
-            forTime = forTime.AddMinutes(- forTime.Minute % 10);
+            if (type != ForecastTypes.PRECIPITATION)
+                throw new Exception("Datový zdroj poskytuje pouze data o srážkách!");
 
-            Debug.WriteLine(forTime);
+            forTime = forTime.AddMinutes(- forTime.Minute % 10);
 
             if (forTime > DateTime.Now.AddHours(6))
             {
@@ -62,45 +69,42 @@ namespace AgregaceDatLib
                 throw new Exception("zvolený čas je příliš nízký, služba poskytuje pouze předpovědi aktuální čas");
             }
 
-            string bitmapName = "RadarBitmap" + forTime.ToString("yyyy-MM-dd-HH") + ".bmp";
-            string bitmapPath = GetPathToDataDirectory(bitmapName);
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
 
-            if (File.Exists(bitmapPath))
+            FileInfo[] fileInfos = dI.GetFiles("*.bmp");
+
+            string bitmapPath = "";
+
+            TimeSpan minTS = forTime - DateTime.Now.AddHours(-8);
+
+            for (int i = 0; i < fileInfos.Length; i++)
+            {
+                DateTime dT = GetDateTimeFromBitmapName(fileInfos[i].Name);
+                TimeSpan actTS = dT - forTime;
+
+                if (i == 0)
+                {
+                    minTS = actTS;
+                    bitmapPath = fileInfos[i].FullName;
+                }
+                else
+                {
+                    if (Math.Abs(actTS.TotalMinutes) < Math.Abs(minTS.TotalMinutes))
+                    {
+                        minTS = actTS;
+                        bitmapPath = fileInfos[i].FullName;
+                    }
+                }
+            }
+
+            if(Math.Abs(minTS.TotalHours) < 7)
             {
                 return new Bitmap(bitmapPath);
             }
             else
             {
-                Bitmap radarBitmap;
-
-                int c = 0;
-
-                while(true)
-                {
-
-                    try
-                    {
-                        radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.ToString("yyyyMMdd.HHmm") + ".0.png");
-
-                        break;
-                    }
-                    catch
-                    {
-                        forTime = forTime.AddMinutes(-10);
-                        c++;
-                    }
-
-                    if(c > 108)
-                    {
-                        throw new Exception("nebyla nalezena bitmapa z daty pro zvolený čas");
-                    }
-                }
-
-                ClearBitmap(radarBitmap);
-                radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
-                return radarBitmap;
+                throw new Exception("Požadovaná bitmapa srážek nebyla nalezena");
             }
-
         }
 
         private string GetPathToDataDirectory(string fileName)
@@ -149,18 +153,58 @@ namespace AgregaceDatLib
             }
         }
 
+        private void CreateBitmap(DateTime forTime)
+        {
+            forTime = forTime.AddMinutes(-forTime.Minute % 10);
+
+            Bitmap radarBitmap;
+
+            int c = 0;
+
+            while (true)
+            {
+
+                try
+                {
+                    radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.ToString("yyyyMMdd.HHmm") + ".0.png");
+
+                    break;
+                }
+                catch
+                {
+                    forTime = forTime.AddMinutes(-10);
+                    c++;
+                }
+
+                if (c > 108)
+                {
+                    throw new Exception("nebyla nalezena bitmapa z daty pro zvolený čas");
+                }
+            }
+
+            string bitmapName = GetBitmapName(ForecastTypes.PRECIPITATION, forTime);
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+            ClearBitmap(radarBitmap);
+            radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
+            radarBitmap.Dispose();
+        }
+
         public void SaveNewDeleteOldBmps() //1 hodina +- (nepoužitelnéprakticky krom aktuálního počasí)
         {
-            DateTime now = DateTime.Now;
-
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
             foreach (var f in dI.GetFiles("*.bmp"))
             {
-                f.Delete(); //smazání starých bitmap
+
+                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
+
+                if (dateTime < DateTime.Now.AddHours(-7)) //smazání starých bitmap
+                {
+                    f.Delete();
+                }
             }
 
-            GetPrecipitationBitmap(now);
-            //GetPrecipitationBitmap(now.AddHours(1));
+            CreateBitmap(DateTime.Now);
         }
 
         private double GetPrecipitationFromPixel(Color pixel)
@@ -229,14 +273,22 @@ namespace AgregaceDatLib
             return (min <= val) && (val <= max);
         }
 
-        public Bitmap GetTemperatureBitmap(DateTime forTime)
+        public Forecast GetForecastPoint(DateTime forTime, PointLonLat location)
         {
-            throw new NotImplementedException();    //služba poskytuje pouze srážky na aktuální čas
-        }
+            Forecast forecast = new Forecast();
 
-        public Forecast GetForecast(DateTime forTime, PointLonLat point)
-        {
-            throw new NotImplementedException();
+            forecast.Longitude = location.Lon.ToString();
+            forecast.Latitude = location.Lat.ToString();
+            forecast.Time = forTime;
+            forecast.AddDataSource(LOADER_NAME);
+
+            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+
+            forecast.Humidity = null;
+            forecast.Pressure = null;
+            forecast.Temperature = null;
+
+            return forecast;
         }
     }
 }
