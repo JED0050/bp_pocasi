@@ -34,9 +34,11 @@ namespace Vizualizace_Dat
         private FormWindowState lastWindowState = FormWindowState.Normal;
         private Size appSize = new Size(800, 600);
         private List<GraphElement> graphCols = new List<GraphElement>();
-        private ForecType forecTypeTemp = new ForecType("temp");
-        private ForecType forecTypePrec = new ForecType("prec");
-        private ForecType forecType = new ForecType("prec");
+        private ForecType forecTypeTemp = new ForecType(ForecastTypes.TEMPERATURE);
+        private ForecType forecTypePrec = new ForecType(ForecastTypes.PRECIPITATION);
+        private ForecType forecTypeHumi = new ForecType(ForecastTypes.HUMIDITY);
+        private ForecType forecTypePres = new ForecType(ForecastTypes.PRESSURE);
+        private ForecType forecType = new ForecType(ForecastTypes.PRECIPITATION);
         private GMapOverlay bitmapOverlay = new GMapOverlay("bitmapMarker");
         private GMarkerGoogle bitmapMarker;
         private bool isBitmapShown = false;
@@ -83,6 +85,11 @@ namespace Vizualizace_Dat
                 if (loader == "owm")
                 {
                     checkBox4.Checked = true;
+                }
+
+                if (loader == "weun")
+                {
+                    checkBox5.Checked = true;
                 }
             }
         }
@@ -703,7 +710,18 @@ namespace Vizualizace_Dat
                 }
             }
 
-            if(jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
+            if (checkBox5.Checked)
+            {
+
+                jsonLoaders += ",weun";
+
+                if (checkBox4.Enabled)
+                {
+                    loaders += ",weun";
+                }
+            }
+
+            if (jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
             {
                 jsonLoaders = jsonLoaders.Remove(0, 1);
             }
@@ -766,9 +784,17 @@ namespace Vizualizace_Dat
             {
                 forecType = forecTypePrec;
             }
-            else
+            else if(rBTemp.Checked)
             {
                 forecType = forecTypeTemp;
+            }
+            else if (rBPres.Checked)
+            {
+                forecType = forecTypePres;
+            }
+            else
+            {
+                forecType = forecTypeHumi;
             }
 
             ValidateDataLoaders();
@@ -776,11 +802,12 @@ namespace Vizualizace_Dat
 
         private void ValidateDataLoaders()
         {
+            //rb
             if (selectedTime > DateTime.Now.AddHours(6))
             {
                 checkBox1.Enabled = false;
             }
-            else if(rBTemp.Checked)
+            else if(rBTemp.Checked || rBPres.Checked || rBHumi.Checked)
             {
                 checkBox1.Enabled = false;
             }
@@ -789,7 +816,12 @@ namespace Vizualizace_Dat
                 checkBox1.Enabled = true;
             }
 
+            //mdrd
             if (selectedTime > DateTime.Now.AddDays(3))
+            {
+                checkBox2.Enabled = false;
+            }
+            else if(rBPres.Checked || rBHumi.Checked)
             {
                 checkBox2.Enabled = false;
             }

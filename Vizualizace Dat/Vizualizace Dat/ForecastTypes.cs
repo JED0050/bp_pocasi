@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AgregaceDatLib
+namespace Vizualizace_Dat
 {
     public class ForecastTypes
     {

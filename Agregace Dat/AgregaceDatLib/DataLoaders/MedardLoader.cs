@@ -465,8 +465,8 @@ namespace AgregaceDatLib
             forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
 
-            //forecast.Humidity = double.Parse(loc.Element("humidity").Attribute("value").Value.Replace('.', ','));
-            //forecast.Pressure = double.Parse(loc.Element("pressure").Attribute("value").Value.Replace('.', ','));
+            forecast.Humidity = null;
+            forecast.Pressure = null;
 
             return forecast;
         }

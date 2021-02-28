@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="ApkConfig.cs" />
     <Compile Include="BitmapHandler.cs" />
+    <Compile Include="ForecastTypes.cs" />
     <Compile Include="ForecType.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

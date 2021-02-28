@@ -54,6 +54,9 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.rBPres = new System.Windows.Forms.RadioButton();
+            this.rBHumi = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -281,12 +284,12 @@
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBox1.Location = new System.Drawing.Point(994, 35);
+            this.checkBox1.Location = new System.Drawing.Point(1020, 35);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox1.Size = new System.Drawing.Size(117, 17);
+            this.checkBox1.Size = new System.Drawing.Size(91, 17);
             this.checkBox1.TabIndex = 27;
-            this.checkBox1.Text = "radar.bourky (BMP)";
+            this.checkBox1.Text = "Radar.Bourky";
             this.checkBox1.UseVisualStyleBackColor = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
             // 
@@ -295,12 +298,12 @@
             this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox2.AutoSize = true;
             this.checkBox2.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBox2.Location = new System.Drawing.Point(1017, 58);
+            this.checkBox2.Location = new System.Drawing.Point(1018, 58);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox2.Size = new System.Drawing.Size(94, 17);
+            this.checkBox2.Size = new System.Drawing.Size(93, 17);
             this.checkBox2.TabIndex = 28;
-            this.checkBox2.Text = "Medard (BMP)";
+            this.checkBox2.Text = "Medard-online";
             this.checkBox2.UseVisualStyleBackColor = false;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
             // 
@@ -309,12 +312,12 @@
             this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox3.AutoSize = true;
             this.checkBox3.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBox3.Location = new System.Drawing.Point(1029, 81);
+            this.checkBox3.Location = new System.Drawing.Point(1060, 81);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox3.Size = new System.Drawing.Size(82, 17);
+            this.checkBox3.Size = new System.Drawing.Size(51, 17);
             this.checkBox3.TabIndex = 29;
-            this.checkBox3.Text = "Yr.no (XML)";
+            this.checkBox3.Text = "Yr.no";
             this.checkBox3.UseVisualStyleBackColor = false;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
             // 
@@ -323,14 +326,52 @@
             this.checkBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox4.AutoSize = true;
             this.checkBox4.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBox4.Location = new System.Drawing.Point(964, 104);
+            this.checkBox4.Location = new System.Drawing.Point(997, 104);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBox4.Size = new System.Drawing.Size(147, 17);
+            this.checkBox4.Size = new System.Drawing.Size(114, 17);
             this.checkBox4.TabIndex = 30;
-            this.checkBox4.Text = "Openweathermap (JSON)";
+            this.checkBox4.Text = "OpenWeatherMap";
             this.checkBox4.UseVisualStyleBackColor = false;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox5.Location = new System.Drawing.Point(998, 127);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox5.Size = new System.Drawing.Size(113, 17);
+            this.checkBox5.TabIndex = 31;
+            this.checkBox5.Text = "WeatherUnlocked";
+            this.checkBox5.UseVisualStyleBackColor = false;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // rBPres
+            // 
+            this.rBPres.AutoSize = true;
+            this.rBPres.BackColor = System.Drawing.SystemColors.Control;
+            this.rBPres.Location = new System.Drawing.Point(12, 81);
+            this.rBPres.Name = "rBPres";
+            this.rBPres.Size = new System.Drawing.Size(74, 17);
+            this.rBPres.TabIndex = 32;
+            this.rBPres.Text = "Tlak [hPa]";
+            this.rBPres.UseVisualStyleBackColor = false;
+            this.rBPres.CheckedChanged += new System.EventHandler(this.rBTemp_CheckedChanged);
+            // 
+            // rBHumi
+            // 
+            this.rBHumi.AutoSize = true;
+            this.rBHumi.BackColor = System.Drawing.SystemColors.Control;
+            this.rBHumi.Location = new System.Drawing.Point(12, 104);
+            this.rBHumi.Name = "rBHumi";
+            this.rBHumi.Size = new System.Drawing.Size(77, 17);
+            this.rBHumi.TabIndex = 33;
+            this.rBHumi.Text = "Vlhkost [%]";
+            this.rBHumi.UseVisualStyleBackColor = false;
+            this.rBHumi.CheckedChanged += new System.EventHandler(this.rBTemp_CheckedChanged);
             // 
             // Form1
             // 
@@ -338,6 +379,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 706);
+            this.Controls.Add(this.rBHumi);
+            this.Controls.Add(this.rBPres);
+            this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
@@ -390,6 +434,9 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.RadioButton rBPres;
+        private System.Windows.Forms.RadioButton rBHumi;
     }
 }
 

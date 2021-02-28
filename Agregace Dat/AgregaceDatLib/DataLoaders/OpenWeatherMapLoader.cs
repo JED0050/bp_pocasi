@@ -30,22 +30,15 @@ namespace AgregaceDatLib
             {
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
                 string loaderDir = dataDir + @"Openweathermap\";
-                string cacheDir = loaderDir + @"json_cache\";
 
                 if (!Directory.Exists(dataDir))
                 {
                     Directory.CreateDirectory(dataDir);
                     Directory.CreateDirectory(loaderDir);
-                    Directory.CreateDirectory(cacheDir);
                 }
                 else if (!Directory.Exists(loaderDir))
                 {
                     Directory.CreateDirectory(loaderDir);
-                    Directory.CreateDirectory(cacheDir);
-                }
-                else if(!Directory.Exists(cacheDir))
-                {
-                    Directory.CreateDirectory(cacheDir);
                 }
             }
         }
@@ -82,17 +75,20 @@ namespace AgregaceDatLib
         {
             List<Forecast> forecasts = new List<Forecast>();
 
+            if (JSONtext == "")
+                return forecasts;
+
             dynamic jsonForecast = JObject.Parse(JSONtext);
 
             JArray jsonForecastArray = (JArray)jsonForecast["list"];
 
-            foreach (var el in jsonForecastArray)
+            foreach (var timeSlot in jsonForecastArray)
             {
                 Forecast f = new Forecast();
                 f.x = point.X;
                 f.y = point.Y;
 
-                dynamic jsonElement = JObject.Parse(el.ToString());
+                dynamic jsonElement = JObject.Parse(timeSlot.ToString());
                 DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
 
                 if (elementTime < now)
@@ -104,15 +100,18 @@ namespace AgregaceDatLib
                 f.Humidity = jsonElement.main.humidity;
                 f.Pressure = jsonElement.main.pressure;
 
-                /*
-                string x = jsonElement.weather.main;
+                dynamic jsonWeather = JObject.Parse(((JArray)timeSlot["weather"])[0].ToString());
+                string weatherState = jsonWeather.main.ToString().ToLower();
 
-                if (jsonElement.weather.main.ToString().ToLower() == "rain")
+                if(weatherState == "rain")
                 {
                     f.Precipitation = jsonElement.rain.GetValue("3h");
                 }
-                */
-
+                else
+                {
+                    f.Precipitation = 0;
+                }
+                
                 forecasts.Add(f);
             }
 
@@ -148,9 +147,8 @@ namespace AgregaceDatLib
 
             forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
-
-            //forecast.Humidity = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.HUMIDITY);
-            //forecast.Pressure = GetValueFromBitmap(GetPrecipitationBitmap(forTime), topLeft, botRight, location, ForecastTypes.PRESSURE);
+            forecast.Humidity = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), topLeft, botRight, location, ForecastTypes.HUMIDITY);
+            forecast.Pressure = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), topLeft, botRight, location, ForecastTypes.PRESSURE);
 
             return forecast;
         }
@@ -195,7 +193,7 @@ namespace AgregaceDatLib
             Stopwatch apiLimitStopwatch = new Stopwatch();
             apiLimitStopwatch.Start();
 
-            int pixelGap = 50;
+            int pixelGap = 25;
 
             List<string> apiPart = new List<string>();
             apiPart.Add("ea63080a4f8e99972630d2671e3ef805");
@@ -207,6 +205,8 @@ namespace AgregaceDatLib
 
             bool doXBreak = false;
             bool doYBreak = false;
+
+            DateTime minimalDateTime = DateTime.Now.AddHours(-3);
 
             for (int x = 0; x < bmpW + pixelGap; x += pixelGap)
             {
@@ -246,23 +246,19 @@ namespace AgregaceDatLib
                         c = 0;
                     }
 
-                    List<Forecast> forecasts;
-
                     try
                     {
                         using (WebClient client = new WebClient())
                         {
                             content = client.DownloadString(url);
                         }
-
-                        forecasts = GetAllForecastsFromJSON(DateTime.Now.AddHours(-3), content, new Point(x, y));
                     }
                     catch
                     {
                         Debug.WriteLine($"Drop na {url}");
-
-                        continue;
                     }
+
+                    List<Forecast> forecasts = GetAllForecastsFromJSON(minimalDateTime, content, new Point(x, y));
 
                     foreach (Forecast forecast in forecasts)
                     {
@@ -284,8 +280,6 @@ namespace AgregaceDatLib
                     if (apiPartIndex > apiPart.Count - 1)
                         apiPartIndex = 0;
 
-                    //Debug.WriteLine($"x: {x} y: {y} c: {c} apiPart: {apiPartIndex}");
-
                     if (doYBreak)
                     {
                         doYBreak = false;
@@ -296,19 +290,6 @@ namespace AgregaceDatLib
                 if (doXBreak)
                     break;
             }
-
-
-            DateTime lastDate = DateTime.Now;
-
-            foreach (DateTime date in dicForecasts.Keys)
-            {
-                if (date > lastDate)
-                    lastDate = date;
-            }
-
-            if (lastDate != DateTime.Now)
-                dicForecasts.Remove(lastDate);  //odstranění poslední předpovědi, je bez dat
-
 
             return dicForecasts;
         }
@@ -322,11 +303,13 @@ namespace AgregaceDatLib
 
                 Bitmap tempBmp = new Bitmap(728, 528);
                 Bitmap precBmp = new Bitmap(728, 528);
-                //Bitmap bmp = new Bitmap(728, 528);
-                //Bitmap bmp = new Bitmap(728, 528);
+                Bitmap presBmp = new Bitmap(728, 528);
+                Bitmap humiBmp = new Bitmap(728, 528);
 
                 string tempBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.TEMPERATURE, bmpTime));
                 string precBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.PRECIPITATION, bmpTime));
+                string presBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.PRESSURE, bmpTime));
+                string humiBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.HUMIDITY, bmpTime));
 
                 if (forecasts.Count >= 3)   //pokud je počet bodů < 3 tak vrátíme prázdné počasí (nelze udělat trojuhleník)
                 {
@@ -359,6 +342,8 @@ namespace AgregaceDatLib
                                 {
                                     tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Temperature.Value, forecasts[t.b].Temperature.Value, forecasts[t.c].Temperature.Value, ForecastTypes.TEMPERATURE));
                                     precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation.Value, forecasts[t.b].Precipitation.Value, forecasts[t.c].Precipitation.Value, ForecastTypes.PRECIPITATION));
+                                    presBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Pressure.Value, forecasts[t.b].Pressure.Value, forecasts[t.c].Pressure.Value, ForecastTypes.PRESSURE));
+                                    humiBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Humidity.Value, forecasts[t.b].Humidity.Value, forecasts[t.c].Humidity.Value, ForecastTypes.HUMIDITY));
                                 }
                             }
                         }
@@ -370,6 +355,12 @@ namespace AgregaceDatLib
 
                 precBmp.Save(precBmpFullName, ImageFormat.Bmp);
                 precBmp.Dispose();
+
+                presBmp.Save(presBmpFullName, ImageFormat.Bmp);
+                presBmp.Dispose();
+
+                humiBmp.Save(humiBmpFullName, ImageFormat.Bmp);
+                humiBmp.Dispose();
 
             });
         }

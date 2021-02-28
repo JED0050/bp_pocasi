@@ -151,7 +151,7 @@ namespace Vizualizace_Dat
                 }
             }
 
-            //Debug.WriteLine(type);
+            Debug.WriteLine(fullUrl);
 
             return precBitmap;
         }

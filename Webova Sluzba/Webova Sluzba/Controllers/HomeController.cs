@@ -36,9 +36,9 @@ namespace Webova_Sluzba.Controllers
             //aF.Add(bL);
 
             //aF.Add(xL);
-            aF.Add(jL);
+            //aF.Add(jL);
             //aF.Add(bL2);
-            //aF.Add(weunL);
+            aF.Add(weunL);
 
             aF.SaveForecastBitmaps();
 

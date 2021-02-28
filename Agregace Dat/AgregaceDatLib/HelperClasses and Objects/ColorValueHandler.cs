@@ -12,6 +12,8 @@ namespace AgregaceDatLib
     {
         private static Dictionary<Color, double> scalePrecDic;
         private static Dictionary<Color, double> scaleTempDic;
+        private static Dictionary<Color, double> scalePresDic;
+        private static Dictionary<Color, double> scaleHumiDic;
 
         static ColorValueHandler()
         {
@@ -39,12 +41,12 @@ namespace AgregaceDatLib
             }
 
 
-            string scaleTempName = "škála_-30_30.png";
+            string scaleTempName = "škála_-50_50.png";
             Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
 
             scaleTempDic = new Dictionary<Color, double>();
 
-            minVal = -30;
+            minVal = -50;
             step = 1;
 
             for (int i = 0; i < scaleTempImage.Width; i++)
@@ -52,12 +54,42 @@ namespace AgregaceDatLib
                 Color pixel = scaleTempImage.GetPixel(i, 0);
                 double value = minVal + i * step;
 
-                if (!scaleTempDic.ContainsKey(pixel))
-                {
-                    scaleTempDic.Add(pixel, value);
-                    //Debug.WriteLine(value);
-                }
+                scaleTempDic.Add(pixel, value);
+            }
 
+
+            string scalePresName = "škála_870_1084.png";
+            Bitmap scalePresImage = new Bitmap(workingDirectory + scalePresName);
+
+            scalePresDic = new Dictionary<Color, double>();
+
+            minVal = 870;
+            step = 1;
+
+            for (int i = 0; i < scalePresImage.Width; i++)
+            {
+                Color pixel = scalePresImage.GetPixel(i, 0);
+                double value = minVal + i * step;
+
+                scalePresDic.Add(pixel, value);
+
+            }
+
+
+            string scaleHumiName = "škála_1_100.png";
+            Bitmap scaleHumiImage = new Bitmap(workingDirectory + scaleHumiName);
+
+            scaleHumiDic = new Dictionary<Color, double>();
+
+            minVal = 1;
+            step = 1;
+
+            for (int i = 0; i < scaleHumiImage.Width; i++)
+            {
+                Color pixel = scaleHumiImage.GetPixel(i, 0);
+                double value = minVal + i * step;
+
+                scaleHumiDic.Add(pixel, value);
             }
 
         }
@@ -94,7 +126,7 @@ namespace AgregaceDatLib
 
         public static Color GetPrecipitationColor(double prec)
         {
-            //return Color.Red;
+            prec = Math.Round(prec, 1);
 
             if (prec < 0.1)
             {
@@ -117,16 +149,11 @@ namespace AgregaceDatLib
             return scalePrecDic.Keys.ElementAt(colorIndex);
         }
 
-
         //škála pro teplotu
-
         public static double GetTemperatureValue(Color pixel)
         {
 
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
-
-            //int stepValue = 1;
-            //int minValue = -30;
 
             if (scaleTempDic.ContainsKey(pixelAlpha))
             {
@@ -149,9 +176,8 @@ namespace AgregaceDatLib
 
         public static Color GetTemperatureColor(double temp)
         {
-
-            double minVal = -30;
-            double maxVal = 30;
+            double minVal = -50;
+            double maxVal = 50;
 
             if (temp < minVal)
                 temp = minVal;
@@ -168,6 +194,86 @@ namespace AgregaceDatLib
             return scaleTempDic.Keys.ElementAt(colorIndex);
         }
 
+        //škála pro tlak
+
+        public static double GetPressureValue(Color pixel)
+        {
+            if ((pixel.R == 0 && pixel.G == 0 && (pixel.B == 0 || pixel.B == 1) || (pixel.R == 255 && pixel.G == 255 && pixel.B == 255)))
+                return 870;
+
+            Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
+
+            if (scalePresDic.ContainsKey(pixelAlpha))
+            {
+                return scalePresDic[pixelAlpha];
+            }
+            else
+            {
+                Color c = GetClosestCol(pixelAlpha, ForecastTypes.PRESSURE);
+
+                return scalePresDic[c];
+            }
+        }
+
+        public static Color GetPressureColor(double pres)
+        {
+            double minVal = 870;
+            double maxVal = 1084;
+
+            if (pres < minVal)
+            {
+                pres = minVal;
+            }
+            else if (pres > maxVal)
+            {
+                pres = maxVal;
+            }
+
+            int colorIndex = (int)Math.Round(pres) - (int)(minVal);
+
+            return scalePresDic.Keys.ElementAt(colorIndex);
+        }
+
+        //škála pro vlhkost vzduchu
+
+        public static double GetHumidityValue(Color pixel)
+        {
+            if ((pixel.R == 0 && pixel.G == 0 && (pixel.B == 0 || pixel.B == 1) || (pixel.R == 255 && pixel.G == 255 && pixel.B == 255)))
+                return 1;
+
+            Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
+
+            if (scaleHumiDic.ContainsKey(pixelAlpha))
+            {
+                return scaleHumiDic[pixelAlpha];
+            }
+            else
+            {
+                Color c = GetClosestCol(pixelAlpha, ForecastTypes.HUMIDITY);
+
+                return scaleHumiDic[c];
+            }
+        }
+
+        public static Color GetHumidityColor(double humi)
+        {
+            double minVal = 1;
+            double maxVal = 100;
+
+            if (humi < minVal)
+            {
+                humi = minVal;
+            }
+            else if (humi > maxVal)
+            {
+                humi = maxVal;
+            }
+
+            int colorIndex = (int)Math.Round(humi) - (int)(minVal);
+
+            return scaleHumiDic.Keys.ElementAt(colorIndex);
+        }
+
         public static Color GetClosestCol(Color pixel, string type)
         {
             Color c = Color.Black;
@@ -175,13 +281,25 @@ namespace AgregaceDatLib
 
             Color[] colorsArray;
 
-            if (type == "prec")
+            if (type == ForecastTypes.PRECIPITATION)
             {
                 colorsArray = scalePrecDic.Keys.ToArray();
             }
-            else
+            else if (type == ForecastTypes.TEMPERATURE)
             {
                 colorsArray = scaleTempDic.Keys.ToArray();
+            }
+            else if (type == ForecastTypes.PRESSURE)
+            {
+                colorsArray = scalePresDic.Keys.ToArray();
+            }
+            else if (type == ForecastTypes.HUMIDITY)
+            {
+                colorsArray = scaleHumiDic.Keys.ToArray();
+            }
+            else
+            {
+                throw new Exception("Neznámý typ předpovědi");
             }
 
             for (int i = 0; i < colorsArray.Length; i++)
@@ -207,6 +325,7 @@ namespace AgregaceDatLib
             return c;
         }
 
+
         public static bool IsColorKnown(Color pixel, string type)
         {
             if(pixel.R == 0 && pixel.G == 0 && (pixel.B == 0 || pixel.B == 1))
@@ -219,9 +338,17 @@ namespace AgregaceDatLib
                 {
                     return scalePrecDic.ContainsKey(pixel);
                 }
-                else
+                else if (type == ForecastTypes.TEMPERATURE)
                 {
                     return scaleTempDic.ContainsKey(pixel);
+                }
+                else if (type == ForecastTypes.PRESSURE)
+                {
+                    return scalePresDic.ContainsKey(pixel);
+                }
+                else
+                {
+                    return scaleHumiDic.ContainsKey(pixel);
                 }
             }
             else
@@ -236,9 +363,17 @@ namespace AgregaceDatLib
             {
                 return GetPrecipitationValue(col);
             }
-            else
+            else if (type == ForecastTypes.TEMPERATURE)
             {
                 return GetTemperatureValue(col);
+            }
+            else if (type == ForecastTypes.PRESSURE)
+            {
+                return GetPressureValue(col);
+            }
+            else
+            {
+                return GetHumidityValue(col);
             }
         }
 
@@ -248,9 +383,17 @@ namespace AgregaceDatLib
             {
                 return GetPrecipitationColor(val);
             }
-            else
+            else if (type == ForecastTypes.TEMPERATURE)
             {
                 return GetTemperatureColor(val);
+            }
+            else if (type == ForecastTypes.PRESSURE)
+            {
+                return GetPressureColor(val);
+            }
+            else
+            {
+                return GetHumidityColor(val);
             }
         }
     }

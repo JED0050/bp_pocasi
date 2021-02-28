@@ -20,9 +20,9 @@ namespace Vizualizace_Dat
             double minVal = 0;
             double step = 0;
 
-            if (type == "prec")
+            if (type == ForecastTypes.PRECIPITATION)
             {
-                Type = "prec";
+                Type = ForecastTypes.PRECIPITATION;
                 GetForecValue = GetPrecipitationValueFromPixel;
                 Unit = "[mm]";
                 CzForecType = "srážky";
@@ -34,18 +34,46 @@ namespace Vizualizace_Dat
                 minVal = 0.1;
                 step = 0.1;
             }
-            else if(type == "temp")
+            else if(type == ForecastTypes.TEMPERATURE)
             {
-                Type = "temp";
+                Type = ForecastTypes.TEMPERATURE;
                 GetForecValue = GetTemperatureValueFromPixel;
                 Unit = "[°C]";
                 CzForecType = "teplota";
-                GraphMaxValue = 30;
-                GraphMinValue = -30;
+                GraphMaxValue = 50;
+                GraphMinValue = -50;
 
-                scaleName = "škála_-30_30.png";
+                scaleName = "škála_-50_50.png";
 
-                minVal = -30;
+                minVal = GraphMinValue;
+                step = 1;
+            }
+            else if (type == ForecastTypes.PRESSURE)
+            {
+                Type = ForecastTypes.PRESSURE;
+                GetForecValue = GetPressureValueFromPixel;
+                Unit = "[hPa]";
+                CzForecType = "tlak";
+                GraphMaxValue = 1084;
+                GraphMinValue = 870;
+
+                scaleName = "škála_870_1084.png";
+
+                minVal = GraphMinValue;
+                step = 1;
+            }
+            else if (type == ForecastTypes.HUMIDITY)
+            {
+                Type = ForecastTypes.HUMIDITY;
+                GetForecValue = GetHumidityValueFromPixel;
+                Unit = "[%]";
+                CzForecType = "vlhkost";
+                GraphMaxValue = 100;
+                GraphMinValue = 1;
+
+                scaleName = "škála_1_100.png";
+
+                minVal = GraphMinValue;
                 step = 1;
             }
 
@@ -58,13 +86,9 @@ namespace Vizualizace_Dat
                 Color pixel = scaleBitmap.GetPixel(i, 0);
                 double value = minVal + i * step;
 
-                if (!scaleDic.ContainsKey(pixel))
-                {
-                    scaleDic.Add(pixel, value);
-                }
+                scaleDic.Add(pixel, value);
             }
         }
-
         public string Type { get; }
 
         public getValDel GetForecValue { get; }
@@ -92,6 +116,34 @@ namespace Vizualizace_Dat
 
 
         public double GetTemperatureValueFromPixel(Color pixel)
+        {
+            Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
+
+            if (scaleDic.ContainsKey(pixelAlpha))
+            {
+                return scaleDic[pixelAlpha];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private double GetHumidityValueFromPixel(Color pixel)
+        {
+            Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
+
+            if (scaleDic.ContainsKey(pixelAlpha))
+            {
+                return scaleDic[pixelAlpha];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private double GetPressureValueFromPixel(Color pixel)
         {
             Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 

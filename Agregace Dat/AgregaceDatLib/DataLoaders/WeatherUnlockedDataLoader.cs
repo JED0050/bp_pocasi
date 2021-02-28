@@ -63,9 +63,8 @@ namespace AgregaceDatLib
 
             forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
-
-            forecast.Humidity = null;
-            forecast.Pressure = null;
+            forecast.Humidity = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), topLeft, botRight, location, ForecastTypes.HUMIDITY);
+            forecast.Pressure = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), topLeft, botRight, location, ForecastTypes.PRESSURE);
 
             return forecast;
         }
@@ -90,7 +89,8 @@ namespace AgregaceDatLib
         {
             List<Forecast> forecasts = new List<Forecast>();
 
-            //JSONForecast jF = JsonConvert.DeserializeObject<JSONForecast>(JSONtext);
+            if (JSONtext == "")
+                return forecasts;
 
             dynamic jsonForecast = JObject.Parse(JSONtext);
 
@@ -174,7 +174,7 @@ namespace AgregaceDatLib
             Stopwatch apiLimitStopwatch = new Stopwatch();
             apiLimitStopwatch.Start();
 
-            int pixelGap = 50;
+            int pixelGap = 25;
 
             List<string> apiPart = new List<string>();
             apiPart.Add("?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca");
@@ -184,6 +184,8 @@ namespace AgregaceDatLib
 
             bool doXBreak = false;
             bool doYBreak = false;
+
+            DateTime minimalDateTime = DateTime.Now.AddHours(-3);
 
             for (int x = 0; x < bmpW + pixelGap; x+=pixelGap)
             {
@@ -205,6 +207,7 @@ namespace AgregaceDatLib
                     string lat = (locLat - y * PixelLat).ToString().Replace(",", ".");
 
                     string url = @"http://api.weatherunlocked.com/api/forecast/" + lat + "," + lon + apiPart[apiPartIndex];
+                    
                     string content = "";
 
                     if(c >= apiMinuteLimit * apiPart.Count)
@@ -222,23 +225,19 @@ namespace AgregaceDatLib
                         c = 0;
                     }
 
-                    List<Forecast> forecasts;
-
                     try
                     {
                         using (WebClient client = new WebClient())
                         {
                             content = client.DownloadString(url);
                         }
-
-                        forecasts = GetAllForecastsFromUrl(DateTime.Now.AddHours(-3), content, new Point(x, y));
                     }
                     catch
                     {
                         Debug.WriteLine($"Drop na {url}");
-
-                        continue;
                     }
+
+                    List<Forecast> forecasts = GetAllForecastsFromUrl(minimalDateTime, content, new Point(x, y));
 
                     foreach (Forecast forecast in forecasts)
                     {
@@ -298,11 +297,13 @@ namespace AgregaceDatLib
 
                 Bitmap tempBmp = new Bitmap(728, 528);
                 Bitmap precBmp = new Bitmap(728, 528);
-                //Bitmap bmp = new Bitmap(728, 528);
-                //Bitmap bmp = new Bitmap(728, 528);
+                Bitmap presBmp = new Bitmap(728, 528);
+                Bitmap humiBmp = new Bitmap(728, 528);
 
                 string tempBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.TEMPERATURE, bmpTime));
                 string precBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.PRECIPITATION, bmpTime));
+                string presBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.PRESSURE, bmpTime));
+                string humiBmpFullName = GetPathToDataDirectory(GetBitmapName(ForecastTypes.HUMIDITY, bmpTime));
 
                 if (forecasts.Count >= 3)   //pokud je počet bodů < 3 tak vrátíme prázdné počasí (nelze udělat trojuhleník)
                 {
@@ -335,6 +336,8 @@ namespace AgregaceDatLib
                                 {
                                     tempBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Temperature.Value, forecasts[t.b].Temperature.Value, forecasts[t.c].Temperature.Value, ForecastTypes.TEMPERATURE));
                                     precBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Precipitation.Value, forecasts[t.b].Precipitation.Value, forecasts[t.c].Precipitation.Value, ForecastTypes.PRECIPITATION));
+                                    presBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Pressure.Value, forecasts[t.b].Pressure.Value, forecasts[t.c].Pressure.Value, ForecastTypes.PRESSURE));
+                                    humiBmp.SetPixel(x, y, GetCollorInTriangle(newPoint, p1, p2, p3, forecasts[t.a].Humidity.Value, forecasts[t.b].Humidity.Value, forecasts[t.c].Humidity.Value, ForecastTypes.HUMIDITY));
                                 }
                             }
                         }
@@ -346,6 +349,12 @@ namespace AgregaceDatLib
 
                 precBmp.Save(precBmpFullName, ImageFormat.Bmp);
                 precBmp.Dispose();
+
+                presBmp.Save(presBmpFullName, ImageFormat.Bmp);
+                presBmp.Dispose();
+
+                humiBmp.Save(humiBmpFullName, ImageFormat.Bmp);
+                humiBmp.Dispose();
 
             });
         }
