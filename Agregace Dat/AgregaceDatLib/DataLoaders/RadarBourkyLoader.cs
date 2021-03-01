@@ -7,7 +7,7 @@ using System.Net;
 
 namespace AgregaceDatLib
 {
-    public class RadarBourkyDataLoader : BitmapCustomDraw, DataLoader
+    public class RadarBourkyDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
@@ -204,7 +204,11 @@ namespace AgregaceDatLib
                 }
             }
 
-            CreateBitmap(DateTime.Now);
+            if (IsReadyToDownloadData(GetPathToDataDirectory, 1))
+            {
+                CreateBitmap(DateTime.Now);
+                CreateNewDateTimeFile(GetPathToDataDirectory);
+            }
         }
 
         private double GetPrecipitationFromPixel(Color pixel)

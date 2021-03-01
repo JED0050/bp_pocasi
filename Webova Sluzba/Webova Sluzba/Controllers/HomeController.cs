@@ -24,25 +24,35 @@ namespace Webova_Sluzba.Controllers
 
         public IActionResult Loader()
         {
-            AvgForecast aF = new AvgForecast();
+            try
+            {
+                //Stopwatch stopwatch = new Stopwatch();
+                //stopwatch.Start();
 
-            
-            RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-            YrNoDataLoader xL = new YrNoDataLoader();
-            OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-            MedardDataLoader bL2 = new MedardDataLoader();
-            WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
+                AvgForecast aF = new AvgForecast();
 
-            //aF.Add(bL);
+                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+                YrNoDataLoader xL = new YrNoDataLoader();
+                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+                MedardDataLoader bL2 = new MedardDataLoader();
+                WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
 
-            //aF.Add(xL);
-            //aF.Add(jL);
-            //aF.Add(bL2);
-            aF.Add(weunL);
+                aF.Add(bL);
+                //aF.Add(xL);
+                aF.Add(jL);
+                aF.Add(bL2);
+                aF.Add(weunL);
 
-            aF.SaveForecastBitmaps();
+                aF.SaveForecastBitmaps();
 
-            return RedirectToAction("Index");
+                //Debug.WriteLine(stopwatch.ElapsedMilliseconds); 565162 ms = 9.5 minut
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
         }
 
         public IActionResult About()
@@ -66,93 +76,110 @@ namespace Webova_Sluzba.Controllers
 
         public IActionResult BitmapForecast(string type, string time, string loaders, string p1, string p2)
         {
-
-            //https://localhost:44336/bmp?type=prec&time=2021-05-26T18:30:00&loaders=owm,yrno&p1=49.621559;17.1507294&p2=49.5211889;17.4213141
-
-            if (type == null)
+            try
             {
-                throw new Exception("Vstupní parametry type musí být vyplněn!");
-            }
-            else
-            {
+                //https://localhost:44336/bmp?type=prec&time=2021-05-26T18:30:00&loaders=owm,yrno&p1=49.621559;17.1507294&p2=49.5211889;17.4213141
 
-                DateTime dateTime;
-
-                if(time == "0" || time == null)
+                if (type == null)
                 {
-                    dateTime = DateTime.Now;
+                    throw new Exception("Vstupní parametry type musí být vyplněn!");
                 }
                 else
                 {
 
-                    try
+                    DateTime dateTime;
+
+                    if (time == "0" || time == null)
                     {
-                        dateTime = DateTime.Parse(time);    //ISO 8601 = yyyy-MM-ddTHH:mm:ss
-                    }
-                    catch
-                    {
-                        throw new Exception("Formát času není správně vyplněn! (yyyy-MM-ddTHH:mm:ss)");
-                    }
-                }
-
-                AvgForecast aF = SetLoadersForAvgForecast(loaders);
-
-                type = type.ToLower();
-
-                if (ForecastTypes.IsTypeKnown(type))
-                {
-                    Bitmap precBitmap;
-
-                    if (p1 == null || p2 == null)
-                    {
-                        precBitmap = aF.GetAvgForecBitmap(dateTime, type);
+                        dateTime = DateTime.Now;
                     }
                     else
                     {
-                        string[] p1LatLon = p1.Split(",");
-                        string[] p2LatLon = p2.Split(",");
-
-                        PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1], CultureInfo.InvariantCulture), double.Parse(p1LatLon[0], CultureInfo.InvariantCulture));
-                        PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1], CultureInfo.InvariantCulture), double.Parse(p2LatLon[0], CultureInfo.InvariantCulture));
-
-                        precBitmap = aF.GetAvgForecBitmap(dateTime, type, point1, point2);
+                        try
+                        {
+                            dateTime = DateTime.Parse(time);    //ISO 8601 = yyyy-MM-ddTHH:mm:ss
+                        }
+                        catch
+                        {
+                            throw new Exception("Formát času není správně vyplněn! Použíjte prosím formát ISO 8601 (yyyy-MM-ddTHH:mm:ss) nebo znak 0 pro aktuální čas.");
+                        }
                     }
 
-                    var bitmapBytes = BitmapToBytes(precBitmap);
+                    AvgForecast aF = SetLoadersForAvgForecast(loaders);
 
-                    return File(bitmapBytes, "image/jpeg");
+                    type = type.ToLower();
+
+                    if (ForecastTypes.IsTypeKnown(type))
+                    {
+                        Bitmap precBitmap;
+
+                        if (p1 == null || p2 == null)
+                        {
+                            precBitmap = aF.GetAvgForecBitmap(dateTime, type);
+                        }
+                        else
+                        {
+                            string[] p1LatLon = p1.Split(",");
+                            string[] p2LatLon = p2.Split(",");
+
+                            PointLonLat point1 = new PointLonLat(double.Parse(p1LatLon[1], CultureInfo.InvariantCulture), double.Parse(p1LatLon[0], CultureInfo.InvariantCulture));
+                            PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1], CultureInfo.InvariantCulture), double.Parse(p2LatLon[0], CultureInfo.InvariantCulture));
+
+                            precBitmap = aF.GetAvgForecBitmap(dateTime, type, point1, point2);
+                        }
+
+                        var bitmapBytes = BitmapToBytes(precBitmap);
+
+                        return File(bitmapBytes, "image/jpeg");
+                    }
                 }
 
-
+                throw new Exception("Požadovaná bitmapa nenalezena! Zkuste prosím změnit datový zdroj, čas, hranice nebo typ předpovědi.");
             }
-
-            throw new Exception("Požadovaná bitmapa nenalezena!");
+            catch(Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
         }
 
         public IActionResult XMLForecast(string time, string loaders, string lon, string lat)
         {
-            Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Forecast));
-
-            string xmlString = "";
-
-            using (StringWriter textWriter = new StringWriter())
+            try
             {
-                serializer.Serialize(textWriter, forecast);
-                xmlString = textWriter.ToString();
-            }
+                Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
 
-            return this.Content(xmlString, "text/xml");
+                XmlSerializer serializer = new XmlSerializer(typeof(Forecast));
+
+                string xmlString = "";
+
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    serializer.Serialize(textWriter, forecast);
+                    xmlString = textWriter.ToString();
+                }
+
+                return this.Content(xmlString, "text/xml");
+            }
+            catch(Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
         }
 
         public IActionResult JSONForecast(string time, string loaders, string lon, string lat)
         {
-            Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+            try
+            {
+                Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
 
-            string jsonString = JsonConvert.SerializeObject(forecast);
+                string jsonString = JsonConvert.SerializeObject(forecast);
 
-            return this.Content(jsonString, "text/json");
+                return this.Content(jsonString, "text/json");
+            }
+            catch(Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
         }
 
         private static byte[] BitmapToBytes(Bitmap img)
@@ -221,7 +248,7 @@ namespace Webova_Sluzba.Controllers
 
                 if (aF.GetNumberOfLoaders() == 0)
                 {
-                    throw new Exception("Nebyl přiřazen žádný z datových zrdrojů!");
+                    throw new Exception("Nebyl přiřazen žádný z vámi zadanách datových zrdrojů!");
                 }
 
             }

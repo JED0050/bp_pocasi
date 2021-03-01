@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgregaceDatLib
 {
-    public class AvgForecast : BitmapCustomDraw
+    public class AvgForecast : DataLoaderHandler
     {
         private List<DataLoader> dLs;
 
@@ -70,7 +70,7 @@ namespace AgregaceDatLib
 
             if(loaderBitmaps.Count == 0)
             {
-                throw new Exception("");
+                throw new Exception("Žádný ze zvolených datových zdrojů neobsahuje bitmapu se zvoleným časem a typem předpovědi! Zkuste změnit čas případně zadaný typ.");
             }
             else if (loaderBitmaps.Count == 1)
             {

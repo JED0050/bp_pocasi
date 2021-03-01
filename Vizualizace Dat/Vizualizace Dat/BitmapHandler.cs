@@ -143,15 +143,41 @@ namespace Vizualizace_Dat
 
             Bitmap precBitmap;
 
+            //Debug.WriteLine(fullUrl);
+
             using (WebClient wc = new WebClient())
             {
-                using (Stream s = wc.OpenRead(fullUrl))
+                try
                 {
-                    precBitmap = new Bitmap(s);
+                    using (Stream s = wc.OpenRead(fullUrl))
+                    {
+                        precBitmap = new Bitmap(s);
+                    }
+                }
+                catch
+                {
+                    string exceptionMessage = "";
+
+                    try
+                    {
+                        wc.Encoding = System.Text.Encoding.UTF8;
+
+                        string serverJsonException = wc.DownloadString(fullUrl);
+
+                        dynamic jsonFile = JObject.Parse(serverJsonException);
+
+                        exceptionMessage = jsonFile.message.ToString();
+                    }
+                    catch
+                    {
+                        exceptionMessage = "Na server se nepodařilo připojit, zadáváte chybnou adresu nebo je server aktuálně vypnutý.";
+                    }
+
+                    throw new Exception(exceptionMessage);
                 }
             }
 
-            Debug.WriteLine(fullUrl);
+            //Debug.WriteLine(fullUrl);
 
             return precBitmap;
         }

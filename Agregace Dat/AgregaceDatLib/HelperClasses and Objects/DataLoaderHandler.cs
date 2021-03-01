@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class BitmapCustomDraw
+    abstract public class DataLoaderHandler
     {
         private float sign(Point p1, Point p2, Point p3)
         {
@@ -154,6 +157,46 @@ namespace AgregaceDatLib
             return dateTime;
         }
 
+        protected bool IsReadyToDownloadData(Func <string, string> getPathToDataDirectory, int minimalTimeSpanDif)
+        {
+            string fullFileName = getPathToDataDirectory("loaderConfig.json");
+
+            if (!File.Exists(fullFileName))
+            {
+                return true;
+            }
+            else
+            {
+                using (StreamReader r = new StreamReader(fullFileName))
+                {
+                    string jsonString = r.ReadToEnd();
+
+                    dynamic jsonFile = JObject.Parse(jsonString);
+
+                    DateTime lastUpdateDT = jsonFile.dateTime;
+
+                    TimeSpan timeSpan = DateTime.Now - lastUpdateDT;
+
+                    if (Math.Abs(timeSpan.Hours) >= minimalTimeSpanDif)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+        }
+
+        protected void CreateNewDateTimeFile(Func<string, string> getPathToDataDirectory)
+        {
+            string fullFileName = getPathToDataDirectory("loaderConfig.json");
+
+            DataLoaderConfig dateTimeClass = new DataLoaderConfig() { dateTime = DateTime.Now };
+
+            string jsonContent = JsonConvert.SerializeObject(dateTimeClass);
+
+            File.WriteAllText(fullFileName, jsonContent);
+        }
     }
 
 }

@@ -10,7 +10,7 @@ using System.Text;
 
 namespace AgregaceDatLib
 {
-    public class MedardDataLoader : BitmapCustomDraw, DataLoader
+    public class MedardDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(-21.123962402343754, 56.13636792495879);
@@ -231,123 +231,127 @@ namespace AgregaceDatLib
                 }
             }
 
-            //vytvoření nových bitmap
-
-            Bitmap allDataPrecipBitmap = new Bitmap(1,1);
-            Bitmap allDataTempBitmap = new Bitmap(1, 1);
-
-            DateTime bitmapTime = now;
-
-            bitmapTime = bitmapTime.AddHours(- bitmapTime.Hour % 6);
-
-            for(int i = 0; i < 8; i++)
-            {           
-                string timePart = bitmapTime.ToString("yyMMdd_HH");    //201112_12
-
-                string baseUrl = @"http://www.medard-online.cz/apipreview?run=";
-                string precipUrl = baseUrl + timePart + @"&forecast=precip&layer=eu";
-                string tempUrl = baseUrl + timePart + @"&forecast=temp&layer=eu";
-
-                try
-                {
-                    allDataPrecipBitmap = GetBitmap(precipUrl);
-                    allDataTempBitmap = GetBitmap(tempUrl);
-                    break;
-                }
-                catch
-                {
-
-                }
-
-                bitmapTime = bitmapTime.AddHours(-6);
-            }
-
-            if (allDataPrecipBitmap.Width == 1 || allDataPrecipBitmap.Height == 1 || allDataTempBitmap.Width == 1 || allDataTempBitmap.Height == 1)
+            if (IsReadyToDownloadData(GetPathToDataDirectory, 24))
             {
-                throw new Exception("Nebyla nalezena žádná bitmapa s daty o počasí");
-            }
+                //vytvoření nových bitmap
 
-            //přebarvení kvůli použití různých škál
+                Bitmap allDataPrecipBitmap = new Bitmap(1, 1);
+                Bitmap allDataTempBitmap = new Bitmap(1, 1);
 
-            
-            for (int w = 0; w < allDataPrecipBitmap.Width; w++)
-            {
-                for(int h = 0; h < allDataPrecipBitmap.Height; h++)
+                DateTime bitmapTime = now;
+
+                bitmapTime = bitmapTime.AddHours(-bitmapTime.Hour % 6);
+
+                for (int i = 0; i < 8; i++)
                 {
-                    Color pixel = allDataPrecipBitmap.GetPixel(w, h);
+                    string timePart = bitmapTime.ToString("yyMMdd_HH");    //201112_12
 
-                    if(!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
+                    string baseUrl = @"http://www.medard-online.cz/apipreview?run=";
+                    string precipUrl = baseUrl + timePart + @"&forecast=precip&layer=eu";
+                    string tempUrl = baseUrl + timePart + @"&forecast=temp&layer=eu";
+
+                    try
                     {
-                        double prec = GetPrecFromColor(pixel);
-                        allDataPrecipBitmap.SetPixel(w, h, ColorValueHandler.GetPrecipitationColor(prec));
+                        allDataPrecipBitmap = GetBitmap(precipUrl);
+                        allDataTempBitmap = GetBitmap(tempUrl);
+                        break;
+                    }
+                    catch
+                    {
+
                     }
 
-                    pixel = allDataTempBitmap.GetPixel(w, h);
-
-                    if (!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
-                    {
-                        double temp = GetTempFromColor(pixel);
-                        allDataTempBitmap.SetPixel(w, h, ColorValueHandler.GetTemperatureColor(temp));
-
-                        //Debug.WriteLine(temp);
-                    }
-
+                    bitmapTime = bitmapTime.AddHours(-6);
                 }
-            }
-            
 
-            int sBW = allDataPrecipBitmap.Width / 10;
-            int sBH = allDataPrecipBitmap.Height / 8;
-
-            int nBW = 0;
-            int nBH = 0;
-
-            for (int i = 0; i < 78; i++)
-            {
-
-                if (bitmapTime >= now)
+                if (allDataPrecipBitmap.Width == 1 || allDataPrecipBitmap.Height == 1 || allDataTempBitmap.Width == 1 || allDataTempBitmap.Height == 1)
                 {
+                    throw new Exception("Nebyla nalezena žádná bitmapa s daty o počasí");
+                }
 
-                    Bitmap newPrecBmp = new Bitmap(sBW, sBH);
-                    Bitmap newTempBmp = new Bitmap(sBW, sBH);
+                //přebarvení kvůli použití různých škál
 
-                    int tmpX = 0;
-                    for(int w = nBW; w < nBW + sBW; w++)
+
+                for (int w = 0; w < allDataPrecipBitmap.Width; w++)
+                {
+                    for (int h = 0; h < allDataPrecipBitmap.Height; h++)
                     {
+                        Color pixel = allDataPrecipBitmap.GetPixel(w, h);
 
-                        int tmpY = 0;
-
-                        for (int h = nBH; h < nBH + sBH; h++)
+                        if (!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
                         {
-                            Color c = allDataPrecipBitmap.GetPixel(w, h);
-                            newPrecBmp.SetPixel(tmpX, tmpY, c);
-
-                            c = allDataTempBitmap.GetPixel(w, h);
-                            newTempBmp.SetPixel(tmpX, tmpY, c);
-
-                            tmpY++;
+                            double prec = GetPrecFromColor(pixel);
+                            allDataPrecipBitmap.SetPixel(w, h, ColorValueHandler.GetPrecipitationColor(prec));
                         }
 
-                        tmpX++;
+                        pixel = allDataTempBitmap.GetPixel(w, h);
+
+                        if (!(pixel.R == 0 && pixel.G == 0 && pixel.B == 0))
+                        {
+                            double temp = GetTempFromColor(pixel);
+                            allDataTempBitmap.SetPixel(w, h, ColorValueHandler.GetTemperatureColor(temp));
+
+                            //Debug.WriteLine(temp);
+                        }
+
+                    }
+                }
+
+
+                int sBW = allDataPrecipBitmap.Width / 10;
+                int sBH = allDataPrecipBitmap.Height / 8;
+
+                int nBW = 0;
+                int nBH = 0;
+
+                for (int i = 0; i < 78; i++)
+                {
+
+                    if (bitmapTime >= now)
+                    {
+
+                        Bitmap newPrecBmp = new Bitmap(sBW, sBH);
+                        Bitmap newTempBmp = new Bitmap(sBW, sBH);
+
+                        int tmpX = 0;
+                        for (int w = nBW; w < nBW + sBW; w++)
+                        {
+
+                            int tmpY = 0;
+
+                            for (int h = nBH; h < nBH + sBH; h++)
+                            {
+                                Color c = allDataPrecipBitmap.GetPixel(w, h);
+                                newPrecBmp.SetPixel(tmpX, tmpY, c);
+
+                                c = allDataTempBitmap.GetPixel(w, h);
+                                newTempBmp.SetPixel(tmpX, tmpY, c);
+
+                                tmpY++;
+                            }
+
+                            tmpX++;
+                        }
+
+                        newPrecBmp.Save(GetPathToDataDirectory($"{ForecastTypes.PRECIPITATION}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                        newTempBmp.Save(GetPathToDataDirectory($"{ForecastTypes.TEMPERATURE}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+
                     }
 
-                    newPrecBmp.Save(GetPathToDataDirectory($"{ForecastTypes.PRECIPITATION}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
-                    newTempBmp.Save(GetPathToDataDirectory($"{ForecastTypes.TEMPERATURE}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
+                    bitmapTime = bitmapTime.AddHours(1);
 
+                    nBW += sBW;
+
+                    if (nBW >= allDataPrecipBitmap.Width)
+                    {
+                        nBW = 0;
+                        nBH += sBH;
+                    }
                 }
 
-                bitmapTime = bitmapTime.AddHours(1);
-
-                nBW += sBW;
-
-                if(nBW >= allDataPrecipBitmap.Width)
-                {
-                    nBW = 0;
-                    nBH += sBH;
-                }
+                CreateNewDateTimeFile(GetPathToDataDirectory);
             }
-
-            
+ 
         }
 
         public Bitmap GetBitmap(string url)

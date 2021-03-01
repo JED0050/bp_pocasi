@@ -14,7 +14,7 @@ using System.Collections.Concurrent;
 
 namespace AgregaceDatLib
 {
-    public class OpenWeatherMapDataLoader : BitmapCustomDraw, DataLoader
+    public class OpenWeatherMapDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
@@ -67,8 +67,11 @@ namespace AgregaceDatLib
 
             }
 
-            CreateFullBmps();
-
+            if(IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            {
+                CreateFullBmps();
+                CreateNewDateTimeFile(GetPathToDataDirectory);
+            }
         }
 
         private List<Forecast> GetAllForecastsFromJSON(DateTime now, string JSONtext, Point point)
@@ -364,5 +367,6 @@ namespace AgregaceDatLib
 
             });
         }
+
     }
 }

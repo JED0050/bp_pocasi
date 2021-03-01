@@ -135,9 +135,9 @@ namespace Vizualizace_Dat
             {
                 serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, loaders, bounds);
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return 1;
             }
@@ -220,9 +220,9 @@ namespace Vizualizace_Dat
                 {
                     val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, forecType);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    MessageBox.Show("Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     return;
                 }

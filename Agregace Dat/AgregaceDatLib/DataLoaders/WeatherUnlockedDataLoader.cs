@@ -15,7 +15,7 @@ using System.Xml.Linq;
 
 namespace AgregaceDatLib
 {
-    public class WeatherUnlockedDataLoader : BitmapCustomDraw, DataLoader
+    public class WeatherUnlockedDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
@@ -82,7 +82,11 @@ namespace AgregaceDatLib
                 }
             }
 
-            CreateFullBmps();
+            if (IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            {
+                CreateFullBmps();
+                CreateNewDateTimeFile(GetPathToDataDirectory);
+            }
         }
 
         public List<Forecast> GetAllForecastsFromUrl(DateTime t, string JSONtext, Point pixelCoord)

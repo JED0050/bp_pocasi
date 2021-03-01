@@ -15,7 +15,7 @@ using DelaunayTriangulator;
 namespace AgregaceDatLib
 {
 
-    public class YrNoDataLoader : BitmapCustomDraw, DataLoader
+    public class YrNoDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
@@ -83,12 +83,19 @@ namespace AgregaceDatLib
                 }
             }
 
-            CreateFullBmps();
+            if (IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            {
+                CreateFullBmps();
+                CreateNewDateTimeFile(GetPathToDataDirectory);
+            }
         }
 
         public List<Forecast> GetAllForecastsFromUrl(DateTime minimalTime, string xmlText, Point point)
         {
             List<Forecast> forecasts = new List<Forecast>();
+
+            if (xmlText == "")
+                return forecasts;
 
             TextReader tr = new StringReader(xmlText);
 
