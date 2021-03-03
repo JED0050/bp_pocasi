@@ -13,10 +13,10 @@ namespace AgregaceDatLib
     public class MedardDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft = new PointLonLat(-21.123962402343754, 56.13636792495879);
-        private PointLonLat botRight = new PointLonLat(29.696044921875, 33.25246979589199);
+        private PointLonLat topLeft;// = new PointLonLat(-21.123962402343754, 56.13636792495879);
+        private PointLonLat botRight;// = new PointLonLat(29.696044921875, 33.25246979589199);
 
-        public string LOADER_NAME = "Medard-Online";
+        public string LOADER_NAME;// = "Medard-online";
 
         private static List<Color> scaleTempArray;
         private static List<Color> scalePrecArray;
@@ -41,7 +41,14 @@ namespace AgregaceDatLib
                 }
             }
 
-            if(scaleTempArray == null)
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            botRight = dataLoaderConfig.BotRightCornerLonLat;
+
+            LOADER_NAME = dataLoaderConfig.DataLoaderName;
+
+            if (scaleTempArray == null)
             {
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
                 string loaderDir = dataDir + @"medard-online\scales\";
@@ -231,7 +238,9 @@ namespace AgregaceDatLib
                 }
             }
 
-            if (IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            if (IsReadyToDownloadData(dataLoaderConfig))
             {
                 //vytvoření nových bitmap
 
@@ -349,7 +358,8 @@ namespace AgregaceDatLib
                     }
                 }
 
-                CreateNewDateTimeFile(GetPathToDataDirectory);
+                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
+                CreateNewConfigFile(dataLoaderConfig);
             }
  
         }
@@ -370,7 +380,7 @@ namespace AgregaceDatLib
 
         }
 
-        private string GetPathToDataDirectory(string fileName)
+        protected override string GetPathToDataDirectory(string fileName)
         {
             //string workingDirectory = Environment.CurrentDirectory;
             //return Directory.GetParent(workingDirectory).FullName + @"\Data\Radar.bourky\" + fileName;

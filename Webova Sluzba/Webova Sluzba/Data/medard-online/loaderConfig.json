@@ -1,1 +1,14 @@
-{"dateTime":"2021-03-01T18:08:50.277138+01:00"}
+{
+  "LastUpdateDateTime": "2021-03-02T21:28:34.2870481+01:00",
+  "TopLeftCornerLonLat": {
+    "Lon": -21.123962402343754,
+    "Lat": 56.13636792495879
+  },
+  "BotRightCornerLonLat": {
+    "Lon": 29.696044921875,
+    "Lat": 33.25246979589199
+  },
+  "MaximumDownloadsPerMinute": -1,
+  "MinimumHoursToNewDownload": 24,
+  "DataLoaderName": "Medard-online"
+}

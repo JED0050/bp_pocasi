@@ -17,10 +17,10 @@ namespace AgregaceDatLib
     public class OpenWeatherMapDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
 
-        public string LOADER_NAME = "OpenWeatherMap";
+        public string LOADER_NAME; // = "OpenWeatherMap";
         
         private int bitmapW = 728;
         private int bitmapH = 528;
@@ -41,9 +41,16 @@ namespace AgregaceDatLib
                     Directory.CreateDirectory(loaderDir);
                 }
             }
+
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            botRight = dataLoaderConfig.BotRightCornerLonLat;
+
+            LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
 
-        private string GetPathToDataDirectory(string fileName)
+        protected override string GetPathToDataDirectory(string fileName)
         {
             //string workingDirectory = Environment.CurrentDirectory;
             //return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Openweathermap\" + fileName;
@@ -67,10 +74,14 @@ namespace AgregaceDatLib
 
             }
 
-            if(IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            if (IsReadyToDownloadData(dataLoaderConfig))
             {
                 CreateFullBmps();
-                CreateNewDateTimeFile(GetPathToDataDirectory);
+
+                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
+                CreateNewConfigFile(dataLoaderConfig);
             }
         }
 
@@ -191,7 +202,7 @@ namespace AgregaceDatLib
 
             int c = 0;
 
-            int apiMinuteLimit = 60;
+            int apiMinuteLimit = dataLoaderConfig.MaximumDownloadsPerMinute;
 
             Stopwatch apiLimitStopwatch = new Stopwatch();
             apiLimitStopwatch.Start();

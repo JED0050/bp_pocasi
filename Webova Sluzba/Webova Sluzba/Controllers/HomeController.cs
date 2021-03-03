@@ -38,7 +38,7 @@ namespace Webova_Sluzba.Controllers
                 WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
 
                 aF.Add(bL);
-                //aF.Add(xL);
+                aF.Add(xL);
                 aF.Add(jL);
                 aF.Add(bL2);
                 aF.Add(weunL);

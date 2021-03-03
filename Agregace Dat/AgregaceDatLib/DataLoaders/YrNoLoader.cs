@@ -18,10 +18,10 @@ namespace AgregaceDatLib
     public class YrNoDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
 
-        public string LOADER_NAME = "Yr.No";
+        public string LOADER_NAME;// = "Yr.No";
 
         public YrNoDataLoader()
         {
@@ -41,6 +41,13 @@ namespace AgregaceDatLib
                     Directory.CreateDirectory(loaderDir);
                 }
             }
+
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            botRight = dataLoaderConfig.BotRightCornerLonLat;
+
+            LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
 
         public Bitmap GetForecastBitmap(DateTime forTime, string type)
@@ -59,9 +66,9 @@ namespace AgregaceDatLib
                 throw new Exception("Bitmapa počasí pro požadovaný čas nebyla nalezena!");
             }
 
-        } 
+        }
 
-        private string GetPathToDataDirectory(string fileName)
+        protected override string GetPathToDataDirectory(string fileName)
         {
             //string workingDirectory = Environment.CurrentDirectory;
             //return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Yr.no\" + fileName;
@@ -83,10 +90,14 @@ namespace AgregaceDatLib
                 }
             }
 
-            if (IsReadyToDownloadData(GetPathToDataDirectory, 24))
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            if (IsReadyToDownloadData(dataLoaderConfig))
             {
                 CreateFullBmps();
-                CreateNewDateTimeFile(GetPathToDataDirectory);
+
+                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
+                CreateNewConfigFile(dataLoaderConfig);
             }
         }
 
@@ -228,23 +239,27 @@ namespace AgregaceDatLib
                     string lon = (locLon + x * PixelLon).ToString().Replace(",", ".");
                     string lat = (locLat - y * PixelLat).ToString().Replace(",", ".");
 
-                    string url = @"https://api.met.no/weatherapi/locationforecast/1.9/?lat=" + lat + ";lon=" + lon;
+                    string url = @"https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=" + lat + "&lon=" + lon;
 
                     string content = "";
 
                     try
                     {
-                        Thread.Sleep(175);
+                        Thread.Sleep(150);
 
                         using (WebClient client = new WebClient())
                         {
+                            client.Headers.Add("User-Agent: Other");
+
                             content = client.DownloadString(url);
                         }
+
+                        //Debug.WriteLine("DONEE");
                     }
-                    catch//(Exception e)
+                    catch(Exception e)
                     {
-                        //Debug.WriteLine($"Drop na {url}");
-                        //Debug.WriteLine(e.Message);
+                        Debug.WriteLine($"Drop na {url}");
+                        Debug.WriteLine(e.Message);
 
                         //continue;
                     }

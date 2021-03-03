@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgregaceDatLib
 {
-    public class AvgForecast : DataLoaderHandler
+    public class AvgForecast
     {
         private List<DataLoader> dLs;
 

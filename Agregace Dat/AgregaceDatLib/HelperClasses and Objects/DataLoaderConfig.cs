@@ -6,6 +6,11 @@ namespace AgregaceDatLib
 {
     public class DataLoaderConfig
     {
-        public DateTime dateTime { get; set; }
+        public DateTime LastUpdateDateTime { get; set; }
+        public PointLonLat TopLeftCornerLonLat { get; set; }
+        public PointLonLat BotRightCornerLonLat { get; set; }
+        public int MaximumDownloadsPerMinute { get; set; }
+        public int MinimumHoursToNewDownload { get; set; }
+        public string DataLoaderName { get; set; }
     }
 }

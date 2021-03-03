@@ -10,10 +10,10 @@ namespace AgregaceDatLib
     public class RadarBourkyDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
+        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
 
-        public string LOADER_NAME = "RadarBourky";
+        public string LOADER_NAME;// = "RadarBourky";
 
         public RadarBourkyDataLoader()
         {
@@ -33,6 +33,13 @@ namespace AgregaceDatLib
                     Directory.CreateDirectory(loaderDir);
                 }
             }
+
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            botRight = dataLoaderConfig.BotRightCornerLonLat;
+
+            LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
         public Bitmap GetBitmap(string url)
         {
@@ -107,7 +114,7 @@ namespace AgregaceDatLib
             }
         }
 
-        private string GetPathToDataDirectory(string fileName)
+        protected override string GetPathToDataDirectory(string fileName)
         {
             //string workingDirectory = Environment.CurrentDirectory;
             //return Directory.GetParent(workingDirectory).FullName + @"\Data\Radar.bourky\" + fileName;
@@ -204,10 +211,14 @@ namespace AgregaceDatLib
                 }
             }
 
-            if (IsReadyToDownloadData(GetPathToDataDirectory, 1))
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            if (IsReadyToDownloadData(dataLoaderConfig))
             {
                 CreateBitmap(DateTime.Now);
-                CreateNewDateTimeFile(GetPathToDataDirectory);
+
+                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
+                CreateNewConfigFile(dataLoaderConfig);
             }
         }
 

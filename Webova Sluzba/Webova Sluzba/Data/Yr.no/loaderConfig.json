@@ -1,5 +1,5 @@
 {
-  "LastUpdateDateTime": "2021-03-02T21:28:34.2870481+01:00",
+  "LastUpdateDateTime": "2021-03-01T21:28:34.2870481+01:00",
   "TopLeftCornerLonLat": {
     "Lon": 10.88,
     "Lat": 51.88
@@ -8,7 +8,7 @@
     "Lon": 20.21,
     "Lat": 47.09
   },
-  "MaximumDownloadsPerMinute": 75,
+  "MaximumDownloadsPerMinute": -1,
   "MinimumHoursToNewDownload": 24,
-  "DataLoaderName": "WeatherUnlocked"
+  "DataLoaderName": "Yr.no"
 }

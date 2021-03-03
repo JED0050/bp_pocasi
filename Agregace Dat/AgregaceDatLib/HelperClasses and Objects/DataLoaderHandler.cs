@@ -10,6 +10,8 @@ namespace AgregaceDatLib
 {
     abstract public class DataLoaderHandler
     {
+        protected DataLoaderConfig dataLoaderConfig;
+
         private float sign(Point p1, Point p2, Point p3)
         {
             return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
@@ -157,46 +159,44 @@ namespace AgregaceDatLib
             return dateTime;
         }
 
-        protected bool IsReadyToDownloadData(Func <string, string> getPathToDataDirectory, int minimalTimeSpanDif)
+        protected bool IsReadyToDownloadData(DataLoaderConfig configFile)
         {
-            string fullFileName = getPathToDataDirectory("loaderConfig.json");
+            DateTime lastUpdateDT = configFile.LastUpdateDateTime;
 
-            if (!File.Exists(fullFileName))
+            TimeSpan timeSpan = DateTime.Now - lastUpdateDT;
+
+            if (Math.Abs(timeSpan.TotalHours) >= configFile.MinimumHoursToNewDownload)
             {
                 return true;
             }
-            else
-            {
-                using (StreamReader r = new StreamReader(fullFileName))
-                {
-                    string jsonString = r.ReadToEnd();
 
-                    dynamic jsonFile = JObject.Parse(jsonString);
-
-                    DateTime lastUpdateDT = jsonFile.dateTime;
-
-                    TimeSpan timeSpan = DateTime.Now - lastUpdateDT;
-
-                    if (Math.Abs(timeSpan.Hours) >= minimalTimeSpanDif)
-                    {
-                        return true;
-                    }
-
-                    return false;
-                }
-            }
+            return false;
         }
 
-        protected void CreateNewDateTimeFile(Func<string, string> getPathToDataDirectory)
+        protected void CreateNewConfigFile(DataLoaderConfig configFile)
         {
-            string fullFileName = getPathToDataDirectory("loaderConfig.json");
+            string fullFileName = GetPathToDataDirectory("loaderConfig.json");
 
-            DataLoaderConfig dateTimeClass = new DataLoaderConfig() { dateTime = DateTime.Now };
-
-            string jsonContent = JsonConvert.SerializeObject(dateTimeClass);
+            string jsonContent = JsonConvert.SerializeObject(configFile);
 
             File.WriteAllText(fullFileName, jsonContent);
         }
+
+        protected DataLoaderConfig GetDataLoaderConfigFile()
+        {
+            string fullFileName = GetPathToDataDirectory("loaderConfig.json");
+
+            using (StreamReader r = new StreamReader(fullFileName))
+            {
+                string jsonString = r.ReadToEnd();
+
+                DataLoaderConfig configFile = JsonConvert.DeserializeObject<DataLoaderConfig>(jsonString);
+
+                return configFile;
+            }
+        }
+
+        protected abstract string GetPathToDataDirectory(string fileName);
     }
 
 }
