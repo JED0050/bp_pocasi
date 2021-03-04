@@ -1,14 +1,1 @@
-{
-  "LastUpdateDateTime": "2021-03-02T21:28:34.2870481+01:00",
-  "TopLeftCornerLonLat": {
-    "Lon": 10.88,
-    "Lat": 51.88
-  },
-  "BotRightCornerLonLat": {
-    "Lon": 20.21,
-    "Lat": 47.09
-  },
-  "MaximumDownloadsPerMinute": 60,
-  "MinimumHoursToNewDownload": 24,
-  "DataLoaderName": "OpenWeatherMap"
-}
+{"LastUpdateDateTime":"2021-03-04T18:09:28.875473+01:00","TopLeftCornerLonLat":{"Lon":10.88,"Lat":51.88},"BotRightCornerLonLat":{"Lon":20.21,"Lat":47.09},"MaximumDownloadsPerMinute":60,"MinimumHoursToNewDownload":24,"DataLoaderName":"OpenWeatherMap"}

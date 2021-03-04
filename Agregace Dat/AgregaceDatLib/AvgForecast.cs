@@ -23,6 +23,68 @@ namespace AgregaceDatLib
             dLs = defDLs;
         }
 
+        public AvgForecast(string loaders)
+        {
+            dLs = new List<DataLoader>();
+
+            if (loaders == null || loaders.Length == 0)
+            {
+                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+                YrNoDataLoader xL = new YrNoDataLoader();
+                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+                MedardDataLoader bL2 = new MedardDataLoader();
+                WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
+
+                dLs.Add(bL);
+                dLs.Add(xL);
+                dLs.Add(jL);
+                dLs.Add(bL2);
+                dLs.Add(wL);
+            }
+            else
+            {
+                string[] arLoaders = loaders.ToLower().Split(",");
+
+                foreach (string loader in arLoaders)
+                {
+                    if (loader == "rb")
+                    {
+                        RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
+                        dLs.Add(bL);
+                    }
+
+                    if (loader == "mdrd")
+                    {
+                        MedardDataLoader bL2 = new MedardDataLoader();
+                        dLs.Add(bL2);
+                    }
+
+                    if (loader == "yrno")
+                    {
+                        YrNoDataLoader xL = new YrNoDataLoader();
+                        dLs.Add(xL);
+                    }
+
+                    if (loader == "owm")
+                    {
+                        OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
+                        dLs.Add(jL);
+                    }
+
+                    if (loader == "weun")
+                    {
+                        WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
+                        dLs.Add(wL);
+                    }
+                }
+
+                if (dLs.Count == 0)
+                {
+                    throw new Exception("Nebyl přiřazen žádný z vámi zadanách datových zrdrojů!");
+                }
+            }
+        }
+
         public void Add(DataLoader newDl)
         {
             dLs.Add(newDl);

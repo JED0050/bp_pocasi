@@ -43,6 +43,7 @@ namespace Vizualizace_Dat
         private GMarkerGoogle bitmapMarker;
         private bool isBitmapShown = false;
         private int bitmapAlpha = ApkConfig.BitmapAlpha;
+        private bool areDataSendByUser = false;
 
         public Form1()
         {
@@ -92,6 +93,10 @@ namespace Vizualizace_Dat
                     checkBox5.Checked = true;
                 }
             }
+
+            areDataSendByUser = true;
+
+            drawBitmapFromServer();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -126,7 +131,6 @@ namespace Vizualizace_Dat
 
         private int drawBitmapFromServer()
         {
-
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
             Bitmap serverBitmap;
@@ -662,76 +666,79 @@ namespace Vizualizace_Dat
 
         private void checkBoxLoaders_CheckedChanged(object sender, EventArgs e)
         {
-
-            loaders = "";
-            string jsonLoaders = "";
-
-            if (checkBox1.Checked)
+            if(areDataSendByUser)
             {
+                loaders = "";
+                string jsonLoaders = "";
 
-                jsonLoaders += ",rb";
-
-                if (checkBox1.Enabled)
+                if (checkBox1.Checked)
                 {
-                    loaders += ",rb";
+
+                    jsonLoaders += ",rb";
+
+                    if (checkBox1.Enabled)
+                    {
+                        loaders += ",rb";
+                    }
                 }
-            }
 
-            if (checkBox2.Checked)
-            {
-
-                jsonLoaders += ",mdrd";
-
-                if (checkBox2.Enabled)
+                if (checkBox2.Checked)
                 {
-                    loaders += ",mdrd";
+
+                    jsonLoaders += ",mdrd";
+
+                    if (checkBox2.Enabled)
+                    {
+                        loaders += ",mdrd";
+                    }
                 }
-            }
 
-            if (checkBox3.Checked)
-            {
-
-                jsonLoaders += ",yrno";
-
-                if (checkBox3.Enabled)
+                if (checkBox3.Checked)
                 {
-                    loaders += ",yrno";
+
+                    jsonLoaders += ",yrno";
+
+                    if (checkBox3.Enabled)
+                    {
+                        loaders += ",yrno";
+                    }
                 }
-            }
 
-            if (checkBox4.Checked)
-            {
-
-                jsonLoaders += ",owm";
-
-                if (checkBox4.Enabled)
+                if (checkBox4.Checked)
                 {
-                    loaders += ",owm";
+
+                    jsonLoaders += ",owm";
+
+                    if (checkBox4.Enabled)
+                    {
+                        loaders += ",owm";
+                    }
                 }
-            }
 
-            if (checkBox5.Checked)
-            {
-
-                jsonLoaders += ",weun";
-
-                if (checkBox4.Enabled)
+                if (checkBox5.Checked)
                 {
-                    loaders += ",weun";
+
+                    jsonLoaders += ",weun";
+
+                    if (checkBox4.Enabled)
+                    {
+                        loaders += ",weun";
+                    }
                 }
-            }
 
-            if (jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
-            {
-                jsonLoaders = jsonLoaders.Remove(0, 1);
-            }
+                if (jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
+                {
+                    jsonLoaders = jsonLoaders.Remove(0, 1);
+                }
 
-            if (loaders.Length > 0 && loaders[0] == ',')
-            {
-                loaders = loaders.Remove(0, 1);
-            }
+                if (loaders.Length > 0 && loaders[0] == ',')
+                {
+                    loaders = loaders.Remove(0, 1);
+                }
 
-            ApkConfig.Loaders = jsonLoaders;
+                ApkConfig.Loaders = jsonLoaders;
+                drawBitmapFromServer();
+            }
         }
 
         private void menuOwnTransparent_MouseLeave(object sender, EventArgs e)
@@ -775,6 +782,8 @@ namespace Vizualizace_Dat
 
                 //MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            //drawBitmapFromServer(dataBitmap);
         }
 
         private void rBTemp_CheckedChanged(object sender, EventArgs e)
@@ -797,7 +806,13 @@ namespace Vizualizace_Dat
                 forecType = forecTypeHumi;
             }
 
-            ValidateDataLoaders();
+            RadioButton rB = (RadioButton)sender;
+
+            if(rB.Checked)
+            {
+                ValidateDataLoaders();
+                drawBitmapFromServer();
+            }
         }
 
         private void ValidateDataLoaders()

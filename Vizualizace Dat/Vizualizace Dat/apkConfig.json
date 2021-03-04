@@ -1,1 +1,1 @@
-{"Loaders":"owm","ServerAddress":"https://localhost:44336/","BitmapAlpha":255}
+{"Loaders":"owm,weun","ServerAddress":"https://localhost:44336/","BitmapAlpha":255}

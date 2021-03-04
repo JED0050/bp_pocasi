@@ -26,8 +26,8 @@ namespace Webova_Sluzba.Controllers
         {
             try
             {
-                //Stopwatch stopwatch = new Stopwatch();
-                //stopwatch.Start();
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
 
                 AvgForecast aF = new AvgForecast();
 
@@ -45,7 +45,7 @@ namespace Webova_Sluzba.Controllers
 
                 aF.SaveForecastBitmaps();
 
-                //Debug.WriteLine(stopwatch.ElapsedMilliseconds); 565162 ms = 9.5 minut
+                Debug.WriteLine(stopwatch.ElapsedMilliseconds); //565162 ms = 9.5 minut bez YrNo
 
                 return RedirectToAction("Index");
             }
@@ -105,7 +105,7 @@ namespace Webova_Sluzba.Controllers
                         }
                     }
 
-                    AvgForecast aF = SetLoadersForAvgForecast(loaders);
+                    AvgForecast aF = new AvgForecast(loaders);
 
                     type = type.ToLower();
 
@@ -190,77 +190,11 @@ namespace Webova_Sluzba.Controllers
                 return stream.ToArray();
             }
         }
-
-        private AvgForecast SetLoadersForAvgForecast(string loaders)
-        {
-            AvgForecast aF = new AvgForecast();
-
-            if (loaders == null)
-            {
-                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-                YrNoDataLoader xL = new YrNoDataLoader();
-                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-                MedardDataLoader bL2 = new MedardDataLoader();
-                WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
-
-                aF.Add(bL);
-                aF.Add(xL);
-                aF.Add(jL);
-                aF.Add(bL2);
-                aF.Add(wL);
-            }
-            else
-            {
-                string[] arLoaders = loaders.ToLower().Split(",");
-
-                foreach(string loader in arLoaders)
-                {
-                    if (loader == "rb")
-                    {
-                        RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-                        aF.Add(bL);
-                    }
-
-                    if (loader == "mdrd")
-                    {
-                        MedardDataLoader bL2 = new MedardDataLoader();
-                        aF.Add(bL2);
-                    }
-
-                    if (loader == "yrno")
-                    {
-                        YrNoDataLoader xL = new YrNoDataLoader();
-                        aF.Add(xL);
-                    }
-
-                    if (loader == "owm")
-                    {
-                        OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-                        aF.Add(jL);
-                    }
-
-                    if (loader == "weun")
-                    {
-                        WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
-                        aF.Add(wL);
-                    }
-                }
-
-                if (aF.GetNumberOfLoaders() == 0)
-                {
-                    throw new Exception("Nebyl přiřazen žádný z vámi zadanách datových zrdrojů!");
-                }
-
-            }
-
-            return aF;
-        }
-
         private Forecast GetForecastFromTimeAndPoint(string time, string loaders, string lon, string lat)
         {
             PointLonLat point = new PointLonLat(double.Parse(lon, CultureInfo.InvariantCulture), double.Parse(lat, CultureInfo.InvariantCulture));
 
-            AvgForecast aF = SetLoadersForAvgForecast(loaders);
+            AvgForecast aF = new AvgForecast(loaders);
 
             return aF.GetForecastFromTimeAndPoint(DateTime.Parse(time), point);
         }
