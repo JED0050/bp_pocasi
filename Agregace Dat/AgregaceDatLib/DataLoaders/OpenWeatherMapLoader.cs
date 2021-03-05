@@ -159,10 +159,12 @@ namespace AgregaceDatLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
-            forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
-            forecast.Humidity = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), topLeft, botRight, location, ForecastTypes.HUMIDITY);
-            forecast.Pressure = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), topLeft, botRight, location, ForecastTypes.PRESSURE);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), defaultTopLeftBound, defaultBotRightBound, location);
+
+            forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);
+            forecast.Humidity = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), targetPoint, ForecastTypes.HUMIDITY);
+            forecast.Pressure = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), targetPoint, ForecastTypes.PRESSURE);
 
             return forecast;
         }

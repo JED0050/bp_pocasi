@@ -97,45 +97,31 @@ namespace AgregaceDatLib
                     }
                 }
 
-                Debug.WriteLine(scalePrecArray.Count);
+                //Debug.WriteLine(scalePrecArray.Count);
             }
 
         }
 
-        public Bitmap GetBigForecastBitmap(DateTime forTime, string type)
+        public Bitmap GetForecastBitmap(DateTime forTime, string type)
         {
             forTime = forTime.AddMinutes(30);
             forTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
 
             DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
-            foreach (var f in dI.GetFiles("*.bmp"))
+            foreach (var f in dI.GetFiles($"{type}-*.bmp"))
             {
-                if (f.Name.StartsWith(type + "-"))
+                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
+
+                if (dateTime == forTime)
                 {
-
-                    string onlyDateName = f.Name.Split('.')[0];
-
-                    string[] timeParts = onlyDateName.Split("-");
-
-                    DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
-
-                    if (dateTime == forTime)
-                    {
-                        return new Bitmap(f.FullName);
-                    }
-
+                    return new Bitmap(f.FullName);
                 }
             }
 
             throw new Exception("Bitmapa pro požadovaný čas nebyla nalezena");
         }
 
-        public Bitmap GetBigBitmap(DateTime forTime, string type)   //všechny data srážek evropa
-        {
-            return GetBigForecastBitmap(forTime, type);
-        }
-
-        public Bitmap GetPartOfBigBimtap(DateTime forTime, PointLonLat topLeft, PointLonLat botRight, Bitmap fullBitmap, string type)
+        public Bitmap GetPartOfBigBimtap(Bitmap fullBitmap)
         {
 
             //56.13636792495879 -21.123962402343754 - levý horní bod
@@ -143,24 +129,24 @@ namespace AgregaceDatLib
             //33.25246979589199 29.696044921875 - pravý dolní bod
             //59.68195494710389 9.96940612792969 - střed horní bod
 
-            Bitmap bigBitmap = ResizeBitmap(fullBitmap, 980, 600, type);
+            Bitmap bigBitmap = ResizeBitmap(fullBitmap, 980, 600);
 
             Point p1 = new Point();
             Point p2 = new Point();
 
-            double lonDif = 41.11633300781251 - (-21.123962402343754);
-            double latDif = 59.68195494710389 - 33.25246979589199;
+            double lonDif = botRight.Lon - topLeft.Lon;
+            double latDif = topLeft.Lat - botRight.Lat;
 
             double PixelLon = lonDif / bigBitmap.Width;
             double PixelLat = latDif / bigBitmap.Height;
 
-            double bY = 59.68195494710389;
-            double bX = -21.123962402343754;
+            double bY = topLeft.Lat;
+            double bX = topLeft.Lon;
 
             int x;
             for (x = 0; x < bigBitmap.Width; x++)
             {
-                if (bX >= topLeft.Lon && topLeft.Lon <= bX + topLeft.Lon)
+                if (bX >= defaultTopLeftBound.Lon && defaultTopLeftBound.Lon <= bX + defaultTopLeftBound.Lon)
                     break;
 
                 bX += PixelLon;
@@ -171,7 +157,7 @@ namespace AgregaceDatLib
             int y;
             for (y = 0; y < bigBitmap.Height; y++)
             {
-                if (bY - PixelLat <= topLeft.Lat && topLeft.Lat <= bY)
+                if (bY - PixelLat <= defaultTopLeftBound.Lat && defaultTopLeftBound.Lat <= bY)
                     break;
 
                 bY -= PixelLat;
@@ -179,12 +165,12 @@ namespace AgregaceDatLib
 
             p1.Y = y;
 
-            bY = 59.68195494710389;
-            bX = -21.123962402343754;
+            //bY = 59.68195494710389;
+            //bX = -21.123962402343754;
 
-            for (x = 0; x < bigBitmap.Width; x++)
+            for (; x < bigBitmap.Width; x++)
             {
-                if (bX >= botRight.Lon && botRight.Lon <= bX + botRight.Lon)
+                if (bX >= defaultBotRightBound.Lon && defaultBotRightBound.Lon <= bX + defaultBotRightBound.Lon)
                     break;
 
                 bX += PixelLon;
@@ -192,9 +178,9 @@ namespace AgregaceDatLib
 
             p2.X = x;
 
-            for (y = 0; y < bigBitmap.Height; y++)
+            for (; y < bigBitmap.Height; y++)
             {
-                if (bY - PixelLat <= botRight.Lat && botRight.Lat <= bY)
+                if (bY - PixelLat <= defaultBotRightBound.Lat && defaultBotRightBound.Lat <= bY)
                     break;
 
                 bY -= PixelLat;
@@ -214,7 +200,7 @@ namespace AgregaceDatLib
                 }
             }
 
-            return ResizeBitmap(smallBitmap, 728, 528, type);
+            return ResizeBitmap(smallBitmap, 728, 528);
         }
 
         public void SaveNewDeleteOldBmps()  //4 dny +-
@@ -226,13 +212,9 @@ namespace AgregaceDatLib
             foreach (var f in dI.GetFiles("*.bmp"))
             {
 
-                string onlyDateName = f.Name.Split('.')[0];
+                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                string[] timeParts = onlyDateName.Split("-");
-
-                DateTime dateTime = new DateTime(int.Parse(timeParts[1]), int.Parse(timeParts[2]), int.Parse(timeParts[3]), int.Parse(timeParts[4]), 0, 0);
-
-                if (dateTime < now) //smazání starých bitmap
+                if (dateTime < now.AddHours(-2)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -342,6 +324,9 @@ namespace AgregaceDatLib
                             tmpX++;
                         }
 
+                        newPrecBmp = GetPartOfBigBimtap(newPrecBmp);
+                        newTempBmp = GetPartOfBigBimtap(newTempBmp);
+
                         newPrecBmp.Save(GetPathToDataDirectory($"{ForecastTypes.PRECIPITATION}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
                         newTempBmp.Save(GetPathToDataDirectory($"{ForecastTypes.TEMPERATURE}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
 
@@ -389,7 +374,7 @@ namespace AgregaceDatLib
             return workingDirectory + @"\Data\medard-online\" + fileName;
         }
 
-        private Bitmap ResizeBitmap(Bitmap b, float w, float h, string type)
+        private Bitmap ResizeBitmap(Bitmap b, float w, float h)
         {
             Bitmap newBitmap = new Bitmap((int)w, (int)h);
 
@@ -424,7 +409,6 @@ namespace AgregaceDatLib
 
                     if (actDif == 0)
                     {
-                        //Debug.WriteLine("BINGO");
                         break;
                     }
                 }
@@ -476,21 +460,15 @@ namespace AgregaceDatLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
-            forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetBigBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728,528), defaultTopLeftBound, defaultBotRightBound, location);
+
+            forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);
 
             forecast.Humidity = null;
             forecast.Pressure = null;
 
             return forecast;
-        }
-
-        public Bitmap GetForecastBitmap(DateTime forTime, string type)
-        {
-            PointLonLat topLeft = new PointLonLat(10.88, 51.88);
-            PointLonLat botRight = new PointLonLat(20.21, 47.09);
-
-            return GetPartOfBigBimtap(forTime, topLeft, botRight, GetBigBitmap(forTime, type), type);
         }
     }
 }

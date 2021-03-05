@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
@@ -10,7 +11,7 @@ namespace AgregaceDatLib
     public class RadarBourkyDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
+        private PointLonLat topLeft;// = new PointLonLat(10.06, 51.88);
         private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
 
         public string LOADER_NAME;// = "RadarBourky";
@@ -185,7 +186,7 @@ namespace AgregaceDatLib
 
                 if (c > 108)
                 {
-                    throw new Exception("nebyla nalezena bitmapa z daty pro zvolený čas");
+                    throw new Exception("Nebyla nalezena bitmapa z daty pro zvolený čas.");
                 }
             }
 
@@ -193,8 +194,78 @@ namespace AgregaceDatLib
             string bitmapPath = GetPathToDataDirectory(bitmapName);
 
             ClearBitmap(radarBitmap);
-            radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
+
+            int xS = -1;
+            int yS = -1;
+
+            int xC = 0;
+            int yC = 0;
+
+            double lonDif = defaultBotRightBound.Lon - defaultTopLeftBound.Lon;
+            double latDif = defaultTopLeftBound.Lat - defaultBotRightBound.Lat;
+
+            double PixelLon = lonDif / 728;
+            double PixelLat = latDif / 528;
+
+            double bY = defaultTopLeftBound.Lat;
+            double bX = defaultTopLeftBound.Lon;
+
+            for (int x = 0; x < 728; x++)
+            {
+                if (bX >= botRight.Lon)
+                    break;
+
+                if (bX >= topLeft.Lon)
+                {
+                    xC++;
+
+                    if (xS == -1)
+                        xS = x;
+                }
+
+                bX += PixelLon;
+            }
+
+            for (int y = 0; y < 528; y++)
+            {
+                if (bY <= botRight.Lat)
+                    break;
+
+                if (bY <= topLeft.Lat)
+                {
+                    yC++;
+
+                    if (yS == -1)
+                        yS = y;
+                }
+
+                bY -= PixelLat;
+            }
+
+            Bitmap newBmp = new Bitmap(728, 528);
+
+            Bitmap resizedBmp = new Bitmap(xC, yC);
+            using (Graphics g = Graphics.FromImage(resizedBmp))
+            {
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.DrawImage(radarBitmap, 0, 0, xC, yC);
+            };
+
+            for (int x = 0; x < xC; x++)
+            {
+                for (int y = 0; y < yC; y++)
+                {
+                    newBmp.SetPixel(x + xS, y + yS, resizedBmp.GetPixel(x, y));
+                }
+            }
+
+            newBmp.Save(bitmapPath, ImageFormat.Bmp);
+            newBmp.Dispose();
+
+            //radarBitmap.Save(bitmapPath, ImageFormat.Bmp);
             radarBitmap.Dispose();
+
+            resizedBmp.Dispose();
         }
 
         public void SaveNewDeleteOldBmps() //1 hodina +- (nepoužitelnéprakticky krom aktuálního počasí)

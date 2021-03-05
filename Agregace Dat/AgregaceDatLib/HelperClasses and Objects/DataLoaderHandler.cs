@@ -12,6 +12,9 @@ namespace AgregaceDatLib
     {
         protected DataLoaderConfig dataLoaderConfig;
 
+        protected PointLonLat defaultTopLeftBound = new PointLonLat(4.1303633, 55.1995133);
+        protected PointLonLat defaultBotRightBound = new PointLonLat(37.9033283, 41.6999200);
+
         private float sign(Point p1, Point p2, Point p3)
         {
             return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
@@ -96,15 +99,15 @@ namespace AgregaceDatLib
             return ColorValueHandler.GetValueForColorAndType(pixel, type);
         }
 
-        protected Point GetPointFromBoundsAndTarget(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target)
+        protected Point GetPointFromBoundsAndTarget(Size bmpSize, PointLonLat p1, PointLonLat p2, PointLonLat target)
         {
             Point point = new Point();
 
             double lonDif = Math.Abs(p1.Lon - p2.Lon);
             double latDif = Math.Abs(p1.Lat - p2.Lat);
 
-            double PixelLon = lonDif / bmp.Width;
-            double PixelLat = latDif / bmp.Height;
+            double PixelLon = lonDif / bmpSize.Width;
+            double PixelLat = latDif / bmpSize.Height;
 
             double bY = p1.Lat;
             double bX = p1.Lon;
@@ -113,7 +116,7 @@ namespace AgregaceDatLib
             double locLat = target.Lat;
 
             int x;
-            for (x = 0; x < bmp.Width - 1; x++)
+            for (x = 0; x < bmpSize.Width - 1; x++)
             {
                 if (bX >= locLon && locLon <= bX + PixelLon)
                     break;
@@ -122,7 +125,7 @@ namespace AgregaceDatLib
             }
 
             int y;
-            for (y = 0; y < bmp.Height - 1; y++)
+            for (y = 0; y < bmpSize.Height - 1; y++)
             {
                 if (bY - PixelLat <= locLat && locLat <= bY)
                     break;

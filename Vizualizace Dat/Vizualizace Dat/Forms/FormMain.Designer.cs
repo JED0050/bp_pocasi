@@ -1,6 +1,6 @@
 ﻿namespace Vizualizace_Dat
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Vyžaduje se proměnná návrháře.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.gMap = new GMap.NET.WindowsForms.GMapControl();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -125,6 +126,7 @@
             this.pGraph.Name = "pGraph";
             this.pGraph.Size = new System.Drawing.Size(1112, 150);
             this.pGraph.TabIndex = 22;
+            this.pGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.pGraph_Paint);
             // 
             // menuStrip1
             // 
@@ -373,7 +375,7 @@
             this.rBHumi.UseVisualStyleBackColor = false;
             this.rBHumi.CheckedChanged += new System.EventHandler(this.rBTemp_CheckedChanged);
             // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -394,8 +396,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.gMap);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FormMain";
+            this.Text = "Bude-Hezky";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form1_Resize);

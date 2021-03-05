@@ -11,6 +11,9 @@ namespace AgregaceDatLib
 {
     public class AvgForecast
     {
+        private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
+        private PointLonLat botRightBound = new PointLonLat(37.9033283, 41.6999200);
+
         private List<DataLoader> dLs;
 
         public AvgForecast()
@@ -162,19 +165,28 @@ namespace AgregaceDatLib
 
         public Bitmap GetAvgForecBitmap(DateTime time, string type, PointLonLat topLeft, PointLonLat botRight)   //vyříznutí části mapy
         {
+            if(topLeft.Lon > botRight.Lon || topLeft.Lat < botRight.Lat)
+            {
+                throw new Exception("Hranice mapy jsou zadány špatně. První bod (topLeft) se musí dle zeměpisných souřadnic nacházet vlevo nahoře od druhého budu (botRight).");
+            }
+            else if(topLeft.Lon < 4.1303633 || topLeft.Lat > 55.1995133 || botRight.Lon > 37.9033283 || botRight.Lat < 41.6999200)
+            {
+                throw new Exception("Hranice mapy jsou zadány špatně. Body topLeft a botRight se musí nacházet uvnitř plochy ohraničené body P1 (lat=55.1995133, lon=4.1303633) a P2 (lat=41.6999200, lon=37.9033283).");
+            }
+
             Bitmap bigBitmap = GetAvgForecBitmap(time,type);
 
             Point p1 = new Point();
             Point p2 = new Point();
 
-            double lonDif = 20.21 - 10.06;
-            double latDif = 51.88 - 47.09;
+            double lonDif = Math.Abs(botRightBound.Lon - topLeftBound.Lon);
+            double latDif = Math.Abs(topLeftBound.Lat - botRightBound.Lat);
 
             double PixelLon = lonDif / bigBitmap.Width;
             double PixelLat = latDif / bigBitmap.Height;
 
-            double bY = 51.88;
-            double bX = 10.06;
+            double bY = topLeftBound.Lat;
+            double bX = topLeftBound.Lon;
 
             int x;
             for (x = 0; x < bigBitmap.Width; x++)
@@ -198,10 +210,10 @@ namespace AgregaceDatLib
 
             p1.Y = y;
 
-            bY = 51.88;
-            bX = 10.06;
+            //bY = topLeftBound.Lat;
+            //bX = topLeftBound.Lon;
 
-            for (x = 0; x < bigBitmap.Width; x++)
+            for (; x < bigBitmap.Width; x++)
             {
                 if (bX >= botRight.Lon && botRight.Lon <= bX + botRight.Lon)
                     break;
@@ -211,7 +223,7 @@ namespace AgregaceDatLib
 
             p2.X = x;
 
-            for (y = 0; y < bigBitmap.Height; y++)
+            for (; y < bigBitmap.Height; y++)
             {
                 if (bY - PixelLat <= botRight.Lat && botRight.Lat <= bY)
                     break;

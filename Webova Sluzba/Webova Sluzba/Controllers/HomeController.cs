@@ -117,7 +117,7 @@ namespace Webova_Sluzba.Controllers
                         {
                             precBitmap = aF.GetAvgForecBitmap(dateTime, type);
                         }
-                        else
+                        else if(p1 != null && p2 != null)
                         {
                             string[] p1LatLon = p1.Split(",");
                             string[] p2LatLon = p2.Split(",");
@@ -126,6 +126,10 @@ namespace Webova_Sluzba.Controllers
                             PointLonLat point2 = new PointLonLat(double.Parse(p2LatLon[1], CultureInfo.InvariantCulture), double.Parse(p2LatLon[0], CultureInfo.InvariantCulture));
 
                             precBitmap = aF.GetAvgForecBitmap(dateTime, type, point1, point2);
+                        }
+                        else
+                        {
+                            throw new Exception("Zadejte prosím oba body ohraničující mapu pro vrácení vámi požadovaného výřezu, případně nezadávejte žádný bod pro získání mapy v plné velikosti.");
                         }
 
                         var bitmapBytes = BitmapToBytes(precBitmap);

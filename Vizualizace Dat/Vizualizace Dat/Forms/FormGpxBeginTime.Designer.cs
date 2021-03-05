@@ -29,6 +29,7 @@ namespace Vizualizace_Dat
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGpxBeginTime));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -68,8 +69,9 @@ namespace Vizualizace_Dat
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGpxBeginTime";
-            this.Text = "FormGpxBeginTime";
+            this.Text = "Čas";
             this.ResumeLayout(false);
             this.PerformLayout();
 

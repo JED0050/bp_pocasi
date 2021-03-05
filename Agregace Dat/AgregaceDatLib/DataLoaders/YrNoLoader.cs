@@ -63,6 +63,37 @@ namespace AgregaceDatLib
             }
             else
             {
+                DateTime closestTime = DateTime.Now.AddHours(-100);
+                TimeSpan closestTimeSpan = forTime - closestTime;
+                double minHourSpan = Math.Abs(closestTimeSpan.TotalHours);
+                string bitmapFullName = "";
+
+                DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+                foreach (var f in dI.GetFiles($"{type}-*.bmp"))
+                {
+                    DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
+
+                    TimeSpan actTimeSpan = forTime - dateTime;
+                    double actHourSpan = Math.Abs(actTimeSpan.TotalHours);
+
+                    if (actHourSpan < minHourSpan)
+                    {
+                        bitmapFullName = f.FullName;
+
+                        if(actHourSpan <= 1)
+                        {
+                            return new Bitmap(bitmapFullName);
+                        }
+
+                        minHourSpan = actHourSpan;
+                    }
+                }
+
+                if(minHourSpan <= 6)
+                {
+                    return new Bitmap(bitmapFullName);
+                }
+
                 throw new Exception("Bitmapa počasí pro požadovaný čas nebyla nalezena!");
             }
 
@@ -189,10 +220,12 @@ namespace AgregaceDatLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
-            forecast.Temperature = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), topLeft, botRight, location, ForecastTypes.TEMPERATURE);
-            forecast.Humidity = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), topLeft, botRight, location, ForecastTypes.HUMIDITY);
-            forecast.Pressure = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), topLeft, botRight, location, ForecastTypes.PRESSURE);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), defaultTopLeftBound, defaultBotRightBound, location);
+
+            forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
+            forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);
+            forecast.Humidity = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.HUMIDITY), targetPoint, ForecastTypes.HUMIDITY);
+            forecast.Pressure = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRESSURE), targetPoint, ForecastTypes.PRESSURE);
 
             return forecast;
         }
@@ -245,7 +278,7 @@ namespace AgregaceDatLib
 
                     try
                     {
-                        Thread.Sleep(150);
+                        Thread.Sleep(100);
 
                         using (WebClient client = new WebClient())
                         {

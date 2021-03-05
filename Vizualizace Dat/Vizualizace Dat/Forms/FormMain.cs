@@ -19,7 +19,7 @@ using GMap.NET.WindowsForms.Markers;
 
 namespace Vizualizace_Dat
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
         private double lonD = 0;
         private double latD = 0;
@@ -32,7 +32,7 @@ namespace Vizualizace_Dat
         private Bitmap dataBitmap = new Bitmap(728, 528);
         private string loaders = ApkConfig.Loaders;
         private FormWindowState lastWindowState = FormWindowState.Normal;
-        private Size appSize = new Size(800, 600);
+        private Size appMinSize = new Size(800, 600);
         private List<GraphElement> graphCols = new List<GraphElement>();
         private ForecType forecTypeTemp = new ForecType(ForecastTypes.TEMPERATURE);
         private ForecType forecTypePrec = new ForecType(ForecastTypes.PRECIPITATION);
@@ -45,11 +45,12 @@ namespace Vizualizace_Dat
         private int bitmapAlpha = ApkConfig.BitmapAlpha;
         private bool areDataSendByUser = false;
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
 
-            this.MinimumSize = new Size(800, 600);
+            this.MinimumSize = appMinSize;
+            this.WindowState = FormWindowState.Maximized;
 
             gMap.DragButton = MouseButtons.Left;
             gMap.MapProvider = GMapProviders.GoogleMap;
@@ -97,11 +98,12 @@ namespace Vizualizace_Dat
             areDataSendByUser = true;
 
             drawBitmapFromServer();
+
+            //pGraph.Invalidate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void clearAllPoints(object sender, EventArgs e)
@@ -129,21 +131,22 @@ namespace Vizualizace_Dat
             listMarkers.Clear();
         }
 
-        private int drawBitmapFromServer()
+        private int drawBitmapFromServer(Bitmap serverBitmap = null)
         {
-            bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
-
-            Bitmap serverBitmap;
-
-            try
+            if (serverBitmap == null)
             {
-                serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, loaders, bounds);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-                return 1;
+                try
+                {
+                    serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, loaders, bounds);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return 1;
+                }
             }
 
             bitmapOverlay.Markers.Remove(bitmapMarker);
@@ -226,9 +229,9 @@ namespace Vizualizace_Dat
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    return;
+                    continue;
                 }
 
                 if (i == 0)
@@ -237,13 +240,16 @@ namespace Vizualizace_Dat
                 graphCols.Add(new GraphElement(val, selectedTime.AddHours(i)));
             }
 
-            DrawGraph();
+            if (graphCols.Count > 0)
+            {
+                DrawGraph();
 
-            listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
-            listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
+                listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
 
-            gMap.Overlays.Add(markers);
-            markers.Markers.Add(listMarkers[0]);
+                gMap.Overlays.Add(markers);
+                markers.Markers.Add(listMarkers[0]);
+            }
 
         }
 
@@ -260,7 +266,6 @@ namespace Vizualizace_Dat
             label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             ValidateDataLoaders();
-
         }
 
         private void DrawGraph()
@@ -277,7 +282,7 @@ namespace Vizualizace_Dat
             //int panelW = pGraph.Width;
             //int panelH = pGraph.Height;
 
-            Graphics g = pGraph.CreateGraphics();
+            Graphics graphGraphics = pGraph.CreateGraphics();
 
             Pen p;
             p = new Pen(Color.Black, 2);
@@ -290,8 +295,8 @@ namespace Vizualizace_Dat
             int botLineH = 100;
             int botLineW = pGraph.Width - 40;
 
-            g.DrawLine(p, startSpaceX, 5, startSpaceX, (float)botLineH - 5);
-            g.DrawLine(p, startSpaceX, (float)botLineH - 5, (float)botLineW - 5, (float)botLineH - 5);
+            graphGraphics.DrawLine(p, startSpaceX, 5, startSpaceX, (float)botLineH - 5);
+            graphGraphics.DrawLine(p, startSpaceX, (float)botLineH - 5, (float)botLineW - 5, (float)botLineH - 5);
 
             double max = forecType.GraphMaxValue;
             double min = forecType.GraphMinValue;
@@ -324,9 +329,9 @@ namespace Vizualizace_Dat
 
                 int zeroY = (int)(y + recFullH - recH);
 
-                g.DrawLine(zeroValuePen, startSpaceX + 2, zeroY, (float)botLineW - 25, zeroY);
+                graphGraphics.DrawLine(zeroValuePen, startSpaceX + 2, zeroY, (float)botLineW - 25, zeroY);
 
-                g.DrawString("0", valueFont, zeroValueBrush, 1, zeroY - 5);
+                graphGraphics.DrawString("0", valueFont, zeroValueBrush, 1, zeroY - 5);
             }
 
             for (int i = 0; i < graphCols.Count; i++)
@@ -344,37 +349,38 @@ namespace Vizualizace_Dat
 
                 r = new Rectangle(x, (int)(y + recFullH - recH), (int)recW, (int)recH);
 
-                g.FillRectangle(brush, r);
+                graphGraphics.FillRectangle(brush, r);
 
-                g.DrawString(graphCols[i].Value.ToString(), valueFont, valueBrush, x + (int)(recW / 2) - 5, startSpaceY - 10);
+                graphGraphics.DrawString(graphCols[i].Value.ToString(), valueFont, valueBrush, x + (int)(recW / 2) - 5, startSpaceY - 10);
 
                 Point[] point = new Point[] { new Point(x + 7, botLineH) };
 
                 string dateText = graphCols[i].TimeInfo;
 
-                g.Transform.TransformPoints(point);
-                g.RotateTransform(20, MatrixOrder.Append);
-                g.TranslateTransform(point[0].X, point[0].Y, MatrixOrder.Append);
-                g.DrawString(dateText, valueFont, valueBrush, 0, 0);
+                graphGraphics.Transform.TransformPoints(point);
+                graphGraphics.RotateTransform(20, MatrixOrder.Append);
+                graphGraphics.TranslateTransform(point[0].X, point[0].Y, MatrixOrder.Append);
+                graphGraphics.DrawString(dateText, valueFont, valueBrush, 0, 0);
 
-                g.ResetTransform();
+                graphGraphics.ResetTransform();
 
                 x += (int)recW + recGap;
 
                 firstDate = firstDate.AddHours(1);
             }
 
-            g.DrawString(forecType.Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
-            g.DrawString("[datetime]", valueFont, valueBrush, botLineW - 30, botLineH);
+            graphGraphics.DrawString(forecType.Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
+            graphGraphics.DrawString("[datetime]", valueFont, valueBrush, botLineW - 30, botLineH);
 
-            g.DrawString(max.ToString(), valueFont, valueBrush, 1, startSpaceY - 10);
-            g.DrawString(min.ToString(), valueFont, valueBrush, 1, botLineH - endSpaceY - 10);
+            graphGraphics.DrawString(max.ToString(), valueFont, valueBrush, 1, startSpaceY - 10);
+            graphGraphics.DrawString(min.ToString(), valueFont, valueBrush, 1, botLineH - endSpaceY - 10);
         }
 
         private void GraphClear()
         {
-            pGraph.Refresh();
             graphCols = new List<GraphElement>();
+
+            pGraph.Invalidate();
         }
 
         private void nahrátCestuZGPXSouboruToolStripMenuItem_Click(object sender, EventArgs e)
@@ -564,17 +570,22 @@ namespace Vizualizace_Dat
 
                 if (res == 1)
                 {
+                    selectedTime = selectedTime.AddHours(-1);
+                    trackBar1.Value -= 60;
+
                     break;
                 }
 
                 label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
                 label1.Update();
 
-                selectedTime = selectedTime.AddHours(1);
-
                 if (i != 0)
-                    trackBar1.Value += 60;
+                    if (trackBar1.Value + 60 <= trackBar1.Maximum)
+                        trackBar1.Value += 60;
+                    else
+                        break;
 
+                selectedTime = selectedTime.AddHours(1);
             }
 
         }
@@ -582,9 +593,9 @@ namespace Vizualizace_Dat
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
 
-            if (this.Size != appSize)
+            if (this.Size != appMinSize)
             {
-                appSize = this.Size;
+                appMinSize = this.Size;
 
                 DrawGraph();
             }
@@ -644,14 +655,14 @@ namespace Vizualizace_Dat
         {
             ApkConfig.BitmapAlpha = 255;
             bitmapAlpha = 255;
-            gMap_OnMapZoomChanged();
+            drawBitmapFromServer(dataBitmap);
         }
 
         private void maximálníToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.BitmapAlpha = 0;
             bitmapAlpha = 0;
-            gMap_OnMapZoomChanged();
+            drawBitmapFromServer(dataBitmap);
         }
 
         private void vlastníToolStripMenuItem_MouseEnter(object sender, EventArgs e)
@@ -684,7 +695,6 @@ namespace Vizualizace_Dat
 
                 if (checkBox2.Checked)
                 {
-
                     jsonLoaders += ",mdrd";
 
                     if (checkBox2.Enabled)
@@ -738,6 +748,7 @@ namespace Vizualizace_Dat
 
                 ApkConfig.Loaders = jsonLoaders;
                 drawBitmapFromServer();
+                GraphClear();
             }
         }
 
@@ -756,25 +767,7 @@ namespace Vizualizace_Dat
 
                 ApkConfig.BitmapAlpha = bitmapAlpha;
 
-                if (isBitmapShown)
-                {
-                    for (int x = 0; x < dataBitmap.Width; x++)
-                    {
-                        for (int y = 0; y < dataBitmap.Height; y++)
-                        {
-                            Color oldPixel = dataBitmap.GetPixel(x, y);
-
-                            if ((oldPixel.R == 0 && oldPixel.G == 0 && oldPixel.B == 0) || (oldPixel.R == 255 && oldPixel.G == 255 && oldPixel.B == 255))
-                                continue;
-
-                            Color newPixel = Color.FromArgb(bitmapAlpha, oldPixel.R, oldPixel.G, oldPixel.B);
-
-                            dataBitmap.SetPixel(x, y, newPixel);
-                        }
-                    }
-
-                    gMap_OnMapZoomChanged();
-                }
+                drawBitmapFromServer(dataBitmap);
             }
             catch
             {
@@ -783,7 +776,6 @@ namespace Vizualizace_Dat
                 //MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //drawBitmapFromServer(dataBitmap);
         }
 
         private void rBTemp_CheckedChanged(object sender, EventArgs e)
@@ -812,6 +804,7 @@ namespace Vizualizace_Dat
             {
                 ValidateDataLoaders();
                 drawBitmapFromServer();
+                GraphClear();
             }
         }
 
@@ -843,6 +836,29 @@ namespace Vizualizace_Dat
             else
             {
                 checkBox2.Enabled = true;
+            }
+        }
+
+        private void pGraph_Paint(object sender, PaintEventArgs e)
+        {
+            if(graphCols.Count == 0)
+            {
+                //base.OnPaint(e);
+                using (Graphics g = e.Graphics)
+                {
+                    Font textFont = new Font("Arial", 15);
+                    SolidBrush textBrush = new SolidBrush(Color.Black);
+
+                    string textContent = "Dvojitým kliknutím do mapy zde vykreslíte graf počasí pro následujících 10 hodin.";
+
+                    Size textSize = TextRenderer.MeasureText(g, textContent, textFont);
+
+                    int xPos = (pGraph.Width / 2) - (textSize.Width / 2);
+
+                    //Debug.WriteLine($"x {xPos} w {pGraph.Width} t {size.Width}");
+
+                    g.DrawString(textContent, textFont, textBrush, xPos, 55);
+                }
             }
         }
     }
