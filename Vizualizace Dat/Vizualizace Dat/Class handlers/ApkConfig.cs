@@ -12,32 +12,30 @@ namespace Vizualizace_Dat
     {
         private static string fullPath = AppDomain.CurrentDomain.BaseDirectory;
         private static string path = Path.GetFullPath(Path.Combine(fullPath, @"..\..\apkConfig.json"));
+        private static JsonObjClass apkConfigObj;
+
+        static ApkConfig()
+        {
+
+            using (StreamReader file = File.OpenText(path))
+            {
+                apkConfigObj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
+            }
+
+        }
 
         public static string Loaders {
 
             get
             {
-                return ApkConfigObj.Loaders;
+                return apkConfigObj.Loaders;
             }
 
             set
             {
-                JsonObjClass obj;
+                apkConfigObj.Loaders = value;
 
-                
-                using (StreamReader file = File.OpenText(path))
-                {
-                    obj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
-                }
-                
-                obj.Loaders = value;
-
-                using (StreamWriter file = File.CreateText(path))
-                {
-                    string jsonData = JsonConvert.SerializeObject(obj);
-
-                    file.Write(jsonData);
-                }
+                ApkConfigObj = apkConfigObj;
 
             }
         }
@@ -46,26 +44,14 @@ namespace Vizualizace_Dat
         {
             get
             {
-                return ApkConfigObj.ServerAddress;
+                return apkConfigObj.ServerAddress;
             }
 
             set
             {
-                JsonObjClass obj;
+                apkConfigObj.ServerAddress = value;
 
-                using (StreamReader file = File.OpenText(path))
-                {
-                    obj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
-                }
-
-                obj.ServerAddress = value;
-
-                using (StreamWriter file = File.CreateText(path))
-                {
-                    string jsonData = JsonConvert.SerializeObject(obj);
-
-                    file.Write(jsonData);
-                }
+                ApkConfigObj = apkConfigObj;
 
             }
         }
@@ -74,38 +60,96 @@ namespace Vizualizace_Dat
         {
             get
             {
-                return ApkConfigObj.BitmapAlpha;
+                return apkConfigObj.BitmapAlpha;
             }
 
             set
             {
-                JsonObjClass obj;
-
-                using (StreamReader file = File.OpenText(path))
-                {
-                    obj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
-                }
 
                 if (value > 255)
                 {
-                    obj.BitmapAlpha = 255;
+                    apkConfigObj.BitmapAlpha = 255;
                 }
                 else if (value < 0)
                 {
-                    obj.BitmapAlpha = 0;
+                    apkConfigObj.BitmapAlpha = 0;
                 }
                 else
                 {
-                    obj.BitmapAlpha = value;
+                    apkConfigObj.BitmapAlpha = value;
                 }
 
-                using (StreamWriter file = File.CreateText(path))
+                ApkConfigObj = apkConfigObj;
+
+            }
+        }
+
+        public static int AnimMaxMove
+        {
+            get
+            {
+                return apkConfigObj.AnimMaxMove;
+            }
+
+            set
+            {
+                if (value > 144)
                 {
-                    string jsonData = JsonConvert.SerializeObject(obj);
-
-                    file.Write(jsonData);
+                    apkConfigObj.AnimMaxMove = 144;
+                }
+                else if (value < 0)
+                {
+                    apkConfigObj.AnimMaxMove = 0;
+                }
+                else
+                {
+                    apkConfigObj.AnimMaxMove = value;
                 }
 
+                ApkConfigObj = apkConfigObj;
+            }
+        }
+
+        public static int DblclickMaxData
+        {
+            get
+            {
+                return apkConfigObj.DblclickMaxData;
+            }
+
+            set
+            {
+
+                if (value > 40)
+                {
+                    apkConfigObj.DblclickMaxData = 40;
+                }
+                else if (value < 1)
+                {
+                    apkConfigObj.DblclickMaxData = 1;
+                }
+                else
+                {
+                    apkConfigObj.DblclickMaxData = value;
+                }
+
+                ApkConfigObj = apkConfigObj;
+
+            }
+        }
+
+        public static string ForecastType
+        {
+            get
+            {
+                return apkConfigObj.ForecastType;
+            }
+
+            set
+            {
+                apkConfigObj.ForecastType = value;
+
+                ApkConfigObj = apkConfigObj;
             }
         }
 
@@ -113,14 +157,7 @@ namespace Vizualizace_Dat
         {
             get
             {
-                JsonObjClass obj;
-
-                using (StreamReader file = File.OpenText(path))
-                {
-                    obj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
-                }
-
-                return obj;
+                return apkConfigObj;
             }
 
             set
@@ -141,12 +178,14 @@ namespace Vizualizace_Dat
 
     }
 
-    public class JsonObjClass
+    class JsonObjClass
     {
-
         public string Loaders { get; set; }
         public string ServerAddress { get; set; }
         public int BitmapAlpha { get; set; }
+        public int AnimMaxMove { get; set; }
+        public int DblclickMaxData { get; set; }
+        public string ForecastType { get; set; }
     }
 
 }

@@ -186,6 +186,35 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
+        public IActionResult ScaleImage(string type)
+        {
+            try
+            {
+                if(type != null)
+                {
+                    type = type.ToLower();
+                }
+
+                if(ForecastTypes.IsTypeKnown(type))
+                {
+                    string workingDirectory = Environment.CurrentDirectory;
+                    string fullFilePath = workingDirectory + @"\Data\" + $"scale_{type}.png";
+
+                    Bitmap scaleImage = new Bitmap(fullFilePath);
+
+                    var bitmapBytes = BitmapToBytes(scaleImage);
+                    return File(bitmapBytes, "image/jpeg");
+                }
+                else
+                {
+                    throw new Exception("Zadaný typ škály neexistuje. Zadejte prosím jednu z možností 'prec', 'temp', 'humi' nebo 'pres'.");
+                }
+            }
+            catch (Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
+        }
         private static byte[] BitmapToBytes(Bitmap img)
         {
             using (MemoryStream stream = new MemoryStream())

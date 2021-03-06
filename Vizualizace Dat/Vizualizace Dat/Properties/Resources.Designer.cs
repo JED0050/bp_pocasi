@@ -59,5 +59,65 @@ namespace Vizualizace_Dat.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap play_button_32 {
+            get {
+                object obj = ResourceManager.GetObject("play-button_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap play_button_64 {
+            get {
+                object obj = ResourceManager.GetObject("play-button_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scale_humi {
+            get {
+                object obj = ResourceManager.GetObject("scale_humi", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scale_prec {
+            get {
+                object obj = ResourceManager.GetObject("scale_prec", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scale_pres {
+            get {
+                object obj = ResourceManager.GetObject("scale_pres", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scale_temp {
+            get {
+                object obj = ResourceManager.GetObject("scale_temp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

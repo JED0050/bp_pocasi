@@ -74,6 +74,12 @@ namespace Webova_Sluzba
                 );
 
                 routes.MapRoute(
+                "ScaleImage",
+                "scale",
+                new { controller = "Home", action = "ScaleImage" }
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

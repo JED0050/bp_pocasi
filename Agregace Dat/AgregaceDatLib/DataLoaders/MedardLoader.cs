@@ -53,7 +53,7 @@ namespace AgregaceDatLib
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
                 string loaderDir = dataDir + @"medard-online\scales\";
 
-                string scaleTempName = "temp_scale.png";
+                string scaleTempName = "scale_temp.png";
                 Bitmap scaleTempImage = new Bitmap(loaderDir + scaleTempName);
 
                 scaleTempArray = new List<Color>();
@@ -79,7 +79,7 @@ namespace AgregaceDatLib
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
                 string loaderDir = dataDir + @"medard-online\scales\";
 
-                string scalePrecName = "prec_scale.png";
+                string scalePrecName = "scale_prec.png";
                 Bitmap scalePrecImage = new Bitmap(loaderDir + scalePrecName);
 
                 scalePrecArray = new List<Color>();
@@ -391,8 +391,15 @@ namespace AgregaceDatLib
         {
             //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            double stepValue = 0.33;
-            double minValue = 0.1;
+            if(pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+            {
+                return 0;
+            }
+
+            double minValue = 1.5;
+            double maxValue = 23.5;
+
+            double stepValue = (maxValue - minValue) / (scalePrecArray.Count - 1);
 
             int dif = 255 * 3;
             int index = 0;
@@ -423,8 +430,10 @@ namespace AgregaceDatLib
         {
             //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            double stepValue = 0.2;
-            int minValue = -28;
+            double minValue = -25;
+            double maxValue = 25;
+
+            double stepValue = (maxValue - minValue) / (scaleTempArray.Count - 1);
 
             int dif = 255 * 3;
             int index = 0;
@@ -441,7 +450,6 @@ namespace AgregaceDatLib
 
                     if(actDif == 0)
                     {
-                        //Debug.WriteLine("BINGO");
                         break;
                     }
                 }

@@ -140,7 +140,7 @@ namespace Vizualizace_Dat
 
             Bitmap precBitmap;
 
-            //Debug.WriteLine(fullUrl);
+            Debug.WriteLine(fullUrl);
 
             using (WebClient wc = new WebClient())
             {

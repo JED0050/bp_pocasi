@@ -1,1 +1,1 @@
-{"Loaders":"mdrd","ServerAddress":"https://localhost:44336/","BitmapAlpha":200}
+{"Loaders":"rb,yrno","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":10,"DblclickMaxData":10,"ForecastType":"prec"}

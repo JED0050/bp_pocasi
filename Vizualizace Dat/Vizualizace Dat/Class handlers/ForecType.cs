@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vizualizace_Dat.Properties;
 
 namespace Vizualizace_Dat
 {
@@ -19,6 +21,7 @@ namespace Vizualizace_Dat
             string scaleName = "";
             double minVal = 0;
             double step = 0;
+            Bitmap scaleBitmap = new Bitmap(1, 1);
 
             if (type == ForecastTypes.PRECIPITATION)
             {
@@ -29,10 +32,12 @@ namespace Vizualizace_Dat
                 GraphMaxValue = 30;
                 GraphMinValue = 0;
 
-                scaleName = "škála_0.1_30.png";
+                //scaleName = "škála_0.1_30.png";
 
                 minVal = 0.1;
                 step = 0.1;
+
+                scaleBitmap = new Bitmap(Resources.scale_prec);
             }
             else if(type == ForecastTypes.TEMPERATURE)
             {
@@ -43,10 +48,12 @@ namespace Vizualizace_Dat
                 GraphMaxValue = 50;
                 GraphMinValue = -50;
 
-                scaleName = "škála_-50_50.png";
+                //scaleName = "škála_-50_50.png";
 
                 minVal = GraphMinValue;
                 step = 1;
+
+                scaleBitmap = new Bitmap(Resources.scale_temp);
             }
             else if (type == ForecastTypes.PRESSURE)
             {
@@ -57,10 +64,12 @@ namespace Vizualizace_Dat
                 GraphMaxValue = 1084;
                 GraphMinValue = 870;
 
-                scaleName = "škála_870_1084.png";
+                //scaleName = "škála_870_1084.png";
 
                 minVal = GraphMinValue;
                 step = 1;
+
+                scaleBitmap = new Bitmap(Resources.scale_pres);
             }
             else if (type == ForecastTypes.HUMIDITY)
             {
@@ -71,15 +80,17 @@ namespace Vizualizace_Dat
                 GraphMaxValue = 100;
                 GraphMinValue = 1;
 
-                scaleName = "škála_1_100.png";
+                //scaleName = "škála_1_100.png";
 
                 minVal = GraphMinValue;
                 step = 1;
+
+                scaleBitmap = new Bitmap(Resources.scale_humi);
             }
 
-            string workingDirectory = Environment.CurrentDirectory;
-            string dataFolder = Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\";
-            Bitmap scaleBitmap = new Bitmap(dataFolder + scaleName);
+            //string workingDirectory = Environment.CurrentDirectory;
+            //string dataFolder = Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\";
+            //Bitmap scaleBitmap = new Bitmap(dataFolder + scaleName);
 
             for (int i = 0; i < scaleBitmap.Width; i++)
             {
@@ -88,14 +99,27 @@ namespace Vizualizace_Dat
 
                 scaleDic.Add(pixel, value);
             }
-        }
-        public string Type { get; }
 
+            Bitmap resizedScaleBitmap = new Bitmap(200, 20);
+            using (Graphics g = Graphics.FromImage(resizedScaleBitmap))
+            {
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.DrawImage(scaleBitmap, 0, 0, 200, 40);
+
+                resizedScaleBitmap.RotateFlip(RotateFlipType.Rotate90FlipY);
+
+                ScaleBitmap = resizedScaleBitmap;
+            }
+            
+        }
+
+        public string Type { get; }
         public getValDel GetForecValue { get; }
         public string Unit { get; }
         public string CzForecType { get; }
         public double GraphMaxValue { get; }
         public double GraphMinValue { get; }
+        public Bitmap ScaleBitmap { get; }
 
         public double GetPrecipitationValueFromPixel(Color pixel)
         {

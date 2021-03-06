@@ -30,7 +30,6 @@ namespace Vizualizace_Dat
         private DateTime selectedTime;
         private List<PointLatLng> bounds;
         private Bitmap dataBitmap = new Bitmap(728, 528);
-        private string loaders = ApkConfig.Loaders;
         private FormWindowState lastWindowState = FormWindowState.Normal;
         private Size appMinSize = new Size(800, 600);
         private List<GraphElement> graphCols = new List<GraphElement>();
@@ -42,8 +41,8 @@ namespace Vizualizace_Dat
         private GMapOverlay bitmapOverlay = new GMapOverlay("bitmapMarker");
         private GMarkerGoogle bitmapMarker;
         private bool isBitmapShown = false;
-        private int bitmapAlpha = ApkConfig.BitmapAlpha;
         private bool areDataSendByUser = false;
+        private string validLoaders = ApkConfig.Loaders;
 
         public FormMain()
         {
@@ -61,11 +60,11 @@ namespace Vizualizace_Dat
             gMap.ShowCenter = false;
 
             selectedTime = DateTime.Now;
-            label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+            lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
 
-            string[] defaultLoaders = loaders.Split(',');
+            string[] defaultLoaders = ApkConfig.Loaders.Split(',');
 
             foreach (string loader in defaultLoaders)
             {
@@ -95,11 +94,24 @@ namespace Vizualizace_Dat
                 }
             }
 
+            if (ApkConfig.ForecastType == ForecastTypes.PRECIPITATION)
+            {
+                rBPrec.Checked = true;
+            }
+            else if (ApkConfig.ForecastType == ForecastTypes.TEMPERATURE)
+            {
+                rBTemp.Checked = true;
+            }
+            else if (ApkConfig.ForecastType == ForecastTypes.PRESSURE)
+            {
+                rBPres.Checked = true;
+            }
+            else if (ApkConfig.ForecastType == ForecastTypes.HUMIDITY)
+            {
+                rBHumi.Checked = true;
+            }
+
             areDataSendByUser = true;
-
-            drawBitmapFromServer();
-
-            //pGraph.Invalidate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -139,7 +151,7 @@ namespace Vizualizace_Dat
 
                 try
                 {
-                    serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, loaders, bounds);
+                    serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, validLoaders, bounds);
                 }
                 catch (Exception ex)
                 {
@@ -166,7 +178,7 @@ namespace Vizualizace_Dat
                     if ((oldP.R == 0 && oldP.G == 0 && oldP.B == 0) || (oldP.R == 255 && oldP.G == 255 && oldP.B == 255))
                         continue;
 
-                    transparentBitmap.SetPixel(xP, yP, Color.FromArgb(bitmapAlpha, oldP.R, oldP.G, oldP.B));
+                    transparentBitmap.SetPixel(xP, yP, Color.FromArgb(ApkConfig.BitmapAlpha, oldP.R, oldP.G, oldP.B));
                 }
             }
 
@@ -216,22 +228,25 @@ namespace Vizualizace_Dat
             PointLatLng point = new PointLatLng(latD, lonD);
 
             string precVal = "";
+            string exMsg = "";
 
             graphCols = new List<GraphElement>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < ApkConfig.DblclickMaxData; i++)
             {
                 double val;
 
                 try
                 {
-                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, loaders, bounds, forecType);
+                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, validLoaders, bounds, forecType);
                 }
                 catch(Exception ex)
                 {
                     //MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    continue;
+                    exMsg = ex.Message;
+
+                    break;
                 }
 
                 if (i == 0)
@@ -250,7 +265,28 @@ namespace Vizualizace_Dat
                 gMap.Overlays.Add(markers);
                 markers.Markers.Add(listMarkers[0]);
             }
+            else
+            {
+                MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {exMsg}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
+        }
+
+        private void RedrawMark()
+        {
+            if(isBitmapShown && listMarkers.Count == 1)
+            {
+                GMapMarker oldMark = listMarkers[0];
+                string oldMarkText = listMarkers[0].ToolTipText;
+
+                clearMarkers();
+
+                listMarkers.Add(oldMark);
+                listMarkers[0].ToolTipText = oldMarkText;
+
+                gMap.Overlays.Add(markers);
+                markers.Markers.Add(listMarkers[0]);
+            }
         }
 
         private void zoomReload()
@@ -263,7 +299,7 @@ namespace Vizualizace_Dat
         {
             selectedTime = DateTime.Now.AddMinutes(trackBar1.Value);
 
-            label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+            lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             ValidateDataLoaders();
         }
@@ -316,22 +352,9 @@ namespace Vizualizace_Dat
 
             double incVal = 0;
 
-            if (min < 0)
+            if (min != 0)
             {
-                incVal = min * -1;
-
-                double perc = (incVal + 0) / (double)(max - min);
-
-                if (perc == 0)
-                    perc = 0.01;
-
-                double recH = recFullH * perc;
-
-                int zeroY = (int)(y + recFullH - recH);
-
-                graphGraphics.DrawLine(zeroValuePen, startSpaceX + 2, zeroY, (float)botLineW - 25, zeroY);
-
-                graphGraphics.DrawString("0", valueFont, zeroValueBrush, 1, zeroY - 5);
+                incVal = -min;
             }
 
             for (int i = 0; i < graphCols.Count; i++)
@@ -340,10 +363,10 @@ namespace Vizualizace_Dat
 
                 double perc = (incVal + graphCols[i].Value) / (double)(max - min);
 
-                //if (perc == 0)
-                //    perc = 0.01;
+                if (perc > 0 && perc < 0.009)
+                    perc = 0.01;
 
-                double recH = recFullH * perc;
+                double recH = Math.Round(recFullH * perc);
 
                 Rectangle r;
 
@@ -367,6 +390,22 @@ namespace Vizualizace_Dat
                 x += (int)recW + recGap;
 
                 firstDate = firstDate.AddHours(1);
+            }
+
+            if(min < 0)
+            {
+                double perc = (incVal + 0) / (double)(max - min);
+
+                if (perc == 0)
+                    perc = 0.01;
+
+                double recH = Math.Round(recFullH * perc);
+
+                int zeroY = (int)(y + recFullH - recH);
+
+                graphGraphics.DrawLine(zeroValuePen, startSpaceX + 2, zeroY, (float)botLineW - 25, zeroY);
+
+                graphGraphics.DrawString("0", valueFont, zeroValueBrush, 1, zeroY - 5);
             }
 
             graphGraphics.DrawString(forecType.Unit, valueFont, valueBrush, startSpaceX + 5, startSpaceY - 10);
@@ -464,7 +503,7 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointStart = routePoints[i];
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, loaders, bounds, forecType);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType);
 
                             graphCols.Add(new GraphElement(precVal, beginTime, 0));
 
@@ -480,7 +519,7 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointEnd, loaders, bounds, forecType);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointEnd, validLoaders, bounds, forecType);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
@@ -499,7 +538,7 @@ namespace Vizualizace_Dat
 
                             int timeMin = (int)(distanceKm / kmPerMin);
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointInner, loaders, bounds, forecType);
+                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointInner, validLoaders, bounds, forecType);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
                             graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
@@ -563,10 +602,18 @@ namespace Vizualizace_Dat
 
         private void bAnim_Click(object sender, EventArgs e)
         {
+            clearMarkers();
+            GraphClear();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i <= ApkConfig.AnimMaxMove; i++)
             {
                 int res = drawBitmapFromServer();
+
+                lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+                lDateTimeForecast.Update();
+
+                lAnimProgress.Text = $"{i}/{ApkConfig.AnimMaxMove}";
+                lAnimProgress.Update();
 
                 if (res == 1)
                 {
@@ -575,9 +622,6 @@ namespace Vizualizace_Dat
 
                     break;
                 }
-
-                label1.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
-                label1.Update();
 
                 if (i != 0)
                     if (trackBar1.Value + 60 <= trackBar1.Maximum)
@@ -588,6 +632,10 @@ namespace Vizualizace_Dat
                 selectedTime = selectedTime.AddHours(1);
             }
 
+            Thread.Sleep(250);
+
+            lAnimProgress.Text = "";
+            lAnimProgress.Update();
         }
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
@@ -641,6 +689,8 @@ namespace Vizualizace_Dat
                     bitmapOverlay.Markers.Add(bitmapMarker);
 
                     gMap.Overlays.Add(bitmapOverlay);
+
+                    RedrawMark();
                 }
                 catch
                 {
@@ -654,14 +704,12 @@ namespace Vizualizace_Dat
         private void minimálníToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.BitmapAlpha = 255;
-            bitmapAlpha = 255;
             drawBitmapFromServer(dataBitmap);
         }
 
         private void maximálníToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.BitmapAlpha = 0;
-            bitmapAlpha = 0;
             drawBitmapFromServer(dataBitmap);
         }
 
@@ -677,63 +725,33 @@ namespace Vizualizace_Dat
 
         private void checkBoxLoaders_CheckedChanged(object sender, EventArgs e)
         {
-            if(areDataSendByUser)
+            if (areDataSendByUser)
             {
-                loaders = "";
                 string jsonLoaders = "";
 
                 if (checkBox1.Checked)
                 {
-
                     jsonLoaders += ",rb";
-
-                    if (checkBox1.Enabled)
-                    {
-                        loaders += ",rb";
-                    }
                 }
 
                 if (checkBox2.Checked)
                 {
                     jsonLoaders += ",mdrd";
-
-                    if (checkBox2.Enabled)
-                    {
-                        loaders += ",mdrd";
-                    }
                 }
 
                 if (checkBox3.Checked)
                 {
-
                     jsonLoaders += ",yrno";
-
-                    if (checkBox3.Enabled)
-                    {
-                        loaders += ",yrno";
-                    }
                 }
 
                 if (checkBox4.Checked)
                 {
-
                     jsonLoaders += ",owm";
-
-                    if (checkBox4.Enabled)
-                    {
-                        loaders += ",owm";
-                    }
                 }
 
                 if (checkBox5.Checked)
                 {
-
                     jsonLoaders += ",weun";
-
-                    if (checkBox4.Enabled)
-                    {
-                        loaders += ",weun";
-                    }
                 }
 
                 if (jsonLoaders.Length > 0 && jsonLoaders[0] == ',')
@@ -741,14 +759,12 @@ namespace Vizualizace_Dat
                     jsonLoaders = jsonLoaders.Remove(0, 1);
                 }
 
-                if (loaders.Length > 0 && loaders[0] == ',')
-                {
-                    loaders = loaders.Remove(0, 1);
-                }
-
                 ApkConfig.Loaders = jsonLoaders;
+
+                ValidateDataLoaders();
                 drawBitmapFromServer();
                 GraphClear();
+                clearMarkers();
             }
         }
 
@@ -756,22 +772,20 @@ namespace Vizualizace_Dat
         {
             try
             {
-                bitmapAlpha = int.Parse(menuOwnTransparent.Text);
+                ApkConfig.BitmapAlpha = int.Parse(menuOwnTransparent.Text);
 
-                if (bitmapAlpha < 0)
-                    bitmapAlpha = 0;
-                else if (bitmapAlpha > 255)
-                    bitmapAlpha = 255;
+                if (ApkConfig.BitmapAlpha < 0)
+                    ApkConfig.BitmapAlpha = 0;
+                else if (ApkConfig.BitmapAlpha > 255)
+                    ApkConfig.BitmapAlpha = 255;
 
-                menuOwnTransparent.Text = bitmapAlpha.ToString();
-
-                ApkConfig.BitmapAlpha = bitmapAlpha;
+                menuOwnTransparent.Text = ApkConfig.BitmapAlpha.ToString();
 
                 drawBitmapFromServer(dataBitmap);
             }
             catch
             {
-                menuOwnTransparent.Text = bitmapAlpha.ToString();
+                menuOwnTransparent.Text = ApkConfig.BitmapAlpha.ToString();
 
                 //MessageBox.Show("Hodnota průhlednosti musí být celé číslo v rozmezí od 0 do 255!", "Chyba při změně průhlednosti srážek", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -793,7 +807,7 @@ namespace Vizualizace_Dat
             {
                 forecType = forecTypePres;
             }
-            else
+            else if (rBHumi.Checked)
             {
                 forecType = forecTypeHumi;
             }
@@ -803,8 +817,19 @@ namespace Vizualizace_Dat
             if(rB.Checked)
             {
                 ValidateDataLoaders();
+
                 drawBitmapFromServer();
                 GraphClear();
+
+                pBScale.Image = forecType.ScaleBitmap;
+                lScaleMin.Text = forecType.GraphMinValue.ToString();
+                lScaleMax.Text = forecType.GraphMaxValue.ToString();
+
+                if (areDataSendByUser)
+                {
+                    clearMarkers();
+                    ApkConfig.ForecastType = forecType.Type;
+                }
             }
         }
 
@@ -837,6 +862,39 @@ namespace Vizualizace_Dat
             {
                 checkBox2.Enabled = true;
             }
+
+
+            validLoaders = "";
+
+            if (checkBox1.Checked && checkBox1.Enabled)
+            {
+                validLoaders += ",rb";
+            }
+
+            if (checkBox2.Checked && checkBox2.Enabled)
+            {
+                validLoaders += ",mdrd";
+            }
+
+            if (checkBox3.Checked && checkBox3.Enabled)
+            {
+                validLoaders += ",yrno";
+            }
+
+            if (checkBox4.Checked && checkBox4.Enabled)
+            {
+                validLoaders += ",owm";
+            }
+
+            if (checkBox5.Checked && checkBox5.Enabled)
+            {
+                validLoaders += ",weun";
+            }
+
+            if (validLoaders.Length > 0 && validLoaders[0] == ',')
+            {
+                validLoaders = validLoaders.Remove(0, 1);
+            }
         }
 
         private void pGraph_Paint(object sender, PaintEventArgs e)
@@ -858,8 +916,87 @@ namespace Vizualizace_Dat
                     //Debug.WriteLine($"x {xPos} w {pGraph.Width} t {size.Width}");
 
                     g.DrawString(textContent, textFont, textBrush, xPos, 55);
+
+                    pGraph.Update();
                 }
             }
+        }
+
+
+        private void animMinMove_Click(object sender, EventArgs e)
+        {
+            ApkConfig.AnimMaxMove = 0;
+        }
+
+        private void animMaxMove_Click(object sender, EventArgs e)
+        {
+            ApkConfig.AnimMaxMove = 144;
+        }
+
+        private void animCustomMove_MouseLeave(object sender, EventArgs e)
+        {
+            int val = ApkConfig.AnimMaxMove;
+
+            try
+            {
+                val = int.Parse(animCustomMoveText.Text);
+
+                ApkConfig.AnimMaxMove = val;
+
+                val = ApkConfig.AnimMaxMove;
+            }
+            catch
+            { }
+
+            animCustomMoveText.Text = val.ToString();
+        }
+
+        private void dblclickCustomData_MouseLeave(object sender, EventArgs e)
+        {
+            int val = ApkConfig.DblclickMaxData;
+
+            try
+            {
+                val = int.Parse(dblclickCustomDataText.Text);
+
+                ApkConfig.DblclickMaxData = val;
+
+                val = ApkConfig.DblclickMaxData;
+            }
+            catch
+            { }
+
+            dblclickCustomDataText.Text = val.ToString();
+        }
+
+        private void dblclickMinData_Click(object sender, EventArgs e)
+        {
+            ApkConfig.DblclickMaxData = 1;
+        }
+
+        private void dblclickMaxData_Click(object sender, EventArgs e)
+        {
+            ApkConfig.DblclickMaxData = 40;
+        }
+
+        private void animCustomMove_MouseEnter(object sender, EventArgs e)
+        {
+            animCustomMoveText.Text = ApkConfig.AnimMaxMove.ToString();
+        }
+
+        private void dblclickCustomData_MouseEnter(object sender, EventArgs e)
+        {
+            dblclickCustomDataText.Text = ApkConfig.DblclickMaxData.ToString();
+        }
+
+        private void setDefSettings_Click(object sender, EventArgs e)
+        {
+            ApkConfig.ServerAddress = "https://localhost:44336/";
+            ApkConfig.BitmapAlpha = 150;
+            ApkConfig.AnimMaxMove = 10;
+            ApkConfig.DblclickMaxData = 10;
+
+            drawBitmapFromServer(dataBitmap);
         }
     }
 }

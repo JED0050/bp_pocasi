@@ -20,7 +20,7 @@ namespace AgregaceDatLib
             string workingDirectory = Environment.CurrentDirectory + @"\Data\";
 
 
-            string scalePrecName = "škála_0.1_30.png";
+            string scalePrecName = "scale_prec.png";
             Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
 
             scalePrecDic = new Dictionary<Color, double>();
@@ -41,7 +41,7 @@ namespace AgregaceDatLib
             }
 
 
-            string scaleTempName = "škála_-50_50.png";
+            string scaleTempName = "scale_temp.png";
             Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
 
             scaleTempDic = new Dictionary<Color, double>();
@@ -58,7 +58,7 @@ namespace AgregaceDatLib
             }
 
 
-            string scalePresName = "škála_870_1084.png";
+            string scalePresName = "scale_pres.png";
             Bitmap scalePresImage = new Bitmap(workingDirectory + scalePresName);
 
             scalePresDic = new Dictionary<Color, double>();
@@ -76,7 +76,7 @@ namespace AgregaceDatLib
             }
 
 
-            string scaleHumiName = "škála_1_100.png";
+            string scaleHumiName = "scale_humi.png";
             Bitmap scaleHumiImage = new Bitmap(workingDirectory + scaleHumiName);
 
             scaleHumiDic = new Dictionary<Color, double>();
