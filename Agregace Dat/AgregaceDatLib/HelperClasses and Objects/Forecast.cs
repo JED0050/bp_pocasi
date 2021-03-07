@@ -10,8 +10,6 @@ namespace AgregaceDatLib
 {
     public class Forecast : Vertex
     {
-        [XmlIgnore]
-        [NonSerialized]
         private List<string> dataSources = new List<string>();
 
         public List<string> DataSources
@@ -34,23 +32,18 @@ namespace AgregaceDatLib
         public double ?Humidity { get; set; }        //vlhkost
         public double ?Pressure { get; set; }        //tlak
 
-        [XmlIgnore]
-        [JsonIgnore]
         public double DLatitude
         {
             get
             {
-                return Double.Parse(Latitude.Replace('.', ','));
+                return double.Parse(Latitude.Replace('.', ','));
             }
         }
-
-        [XmlIgnore]
-        [JsonIgnore]
         public double DLongitude
         {
             get
             {
-                return Double.Parse(Longitude.Replace('.', ','));
+                return double.Parse(Longitude.Replace('.', ','));
             }
         }
 
@@ -109,9 +102,5 @@ namespace AgregaceDatLib
         {
             dataSources.Add(source);
         }
-
-        [XmlIgnore]
-        [JsonIgnore]
-        public double GenericValue { get; set; }
     }
 }

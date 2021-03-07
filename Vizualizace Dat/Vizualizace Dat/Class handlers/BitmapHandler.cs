@@ -244,11 +244,11 @@ namespace Vizualizace_Dat
             return points;
         }
 
-        public static List<PointLatLng> GetBounds(int zoom, PointLatLng center)
+        public static List<PointLatLng> GetBounds(GMapControl gMap)
         {
             List<PointLatLng> bounds = new List<PointLatLng>();
 
-            if (zoom < 7)
+            if (gMap.Zoom < 7)
             {
                 bounds.Add(new PointLatLng(defaultTopLeftBound.Lat, defaultTopLeftBound.Lon));
                 bounds.Add(new PointLatLng(defaultBotRightBound.Lat, defaultBotRightBound.Lon));
@@ -256,18 +256,11 @@ namespace Vizualizace_Dat
                 return bounds;
             }
 
-            double degreePerPixel = (156543.04 * Math.Cos(center.Lat * Math.PI / 180)) / (111325 * Math.Pow(2, zoom));
+            var topLeft = gMap.FromLocalToLatLng(0, 0);
+            var botRight = gMap.FromLocalToLatLng(gMap.Width, gMap.Height);
 
-            double mHalfWidthInDegrees = 728 * degreePerPixel / 0.9;
-            double mHalfHeightInDegrees = 528 * degreePerPixel / 1.7;
-
-            double mNorth = center.Lat + mHalfHeightInDegrees;
-            double mWest = center.Lng - mHalfWidthInDegrees;
-            double mSouth = center.Lat - mHalfHeightInDegrees;
-            double mEast = center.Lng + mHalfWidthInDegrees;
-
-            bounds.Add(new PointLatLng(mNorth, mWest));
-            bounds.Add(new PointLatLng(mSouth, mEast));
+            bounds.Add(topLeft);
+            bounds.Add(botRight);
 
             return bounds;
         }

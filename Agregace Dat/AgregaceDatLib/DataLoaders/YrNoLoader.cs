@@ -278,7 +278,7 @@ namespace AgregaceDatLib
 
                     try
                     {
-                        Thread.Sleep(100);
+                        //Thread.Sleep(100);
 
                         using (WebClient client = new WebClient())
                         {
@@ -286,8 +286,6 @@ namespace AgregaceDatLib
 
                             content = client.DownloadString(url);
                         }
-
-                        //Debug.WriteLine("DONEE");
                     }
                     catch(Exception e)
                     {

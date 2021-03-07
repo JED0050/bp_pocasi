@@ -14,11 +14,7 @@ namespace DelaunayTriangulator
 {
     public class Vertex
     {
-
-        [XmlIgnore]
-        [NonSerialized]
         public float x, y;
-
         protected Vertex() { }
 
         public Vertex(float x, float y) 

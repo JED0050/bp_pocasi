@@ -372,8 +372,8 @@ namespace AgregaceDatLib
                     avgForecast.Pressure = Math.Round(avgForecast.Pressure.Value / presC, 4);
                 }
 
-                avgForecast.Longitude = avgForecast.Longitude.Replace(',', '.');
-                avgForecast.Latitude = avgForecast.Latitude.Replace(',', '.');    
+                //avgForecast.Longitude = avgForecast.Longitude.Replace(',', '.');
+                //avgForecast.Latitude = avgForecast.Latitude.Replace(',', '.');    
 
                 return avgForecast;
             }

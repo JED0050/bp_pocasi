@@ -1,30 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Jak je venku?";
-    ViewData["Message"] = "Zadej čas a dozvíš se to!";
+    ViewData["Message"] = "Zadej požadavek a dozvíš se to!";
 }
 
 
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Message"]</h2>
 
+<h3>Bitmapa informací o určitém typu počasí pokrývající kompletní možnou oblast pro aktuální čas</h3>
+<div>
+    API: https://localhost:44336/bmp?type={typ}&loaders={datové_zdroje}
+</div>
+<div>
+    <a href="https://localhost:44336/bmp?type=temp&loaders=owm">Příklad: https://localhost:44336/bmp?type=temp&loaders=owm</a>
+</div>
+
+<h3>Bitmapa informací o určitém typu počasí, pokrývající vybranou oblast pro zvolený čas</h3>
 <div>
     API: https://localhost:44336/bmp?type={typ}&time={čas}&p1={levý_horní_roh}&p2={pravý_dolní_roh}&loaders={datové_zdroje}
 </div>
 <div>
     <a href="https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&p1=51.88,10.88&p2=47.09,20.21&loaders=yrno">Příklad: https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&p1=51.88,10.88&p2=47.09,20.21&loaders=yrno</a>
 </div>
+
+<h3>XML data o počasí pro daný bod ve zvoleném čase</h3>
 <div>
     API: https://localhost:44336/xml?time={čas}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
 </div>
 <div>
-    <a href="https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno">Příklad: https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno</a>
+    <a href="https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno,rb">Příklad: https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=yrno,rb</a>
 </div>
+
+<h3>Json data o počasí pro daný bod ve zvoleném čase</h3>
 <div>
     API: https://localhost:44336/json?time={čas}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
 </div>
 <div>
-    <a href="https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm">Příklad: https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm</a>
+    <a href="https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm,yrno">Příklad: https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&lat=49.3106535&lon=18.367983&loaders=owm,yrno</a>
 </div>
+
+<h3>XML data o počasí pro daný bod ve zvoleném čase a časech následujících</h3>
+<div>
+    API: https://localhost:44336/xml?time={čas}&numOfForecasts={počet_předpovědí}&hourDif={hodinový_rozdíl_mezi_předpověďmi}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
+</div>
+<div>
+    <a href="https://localhost:44336/xml?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&numOfForecasts=5&hourDif=3&lat=49.3106535&lon=18.367983&loaders=mdrd">Příklad: https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&numOfForecasts=5&hourDif=3&lat=49.3106535&lon=18.367983&loaders=mdrd</a>
+</div>
+
+<h3>Json data o počasí pro daný bod ve zvoleném čase a časech následujících</h3>
+<div>
+    API: https://localhost:44336/json?time={čas}&numOfForecasts={počet_předpovědí}&hourDif={hodinový_rozdíl_mezi_předpověďmi}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}
+</div>
+<div>
+    <a href="https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&numOfForecasts=5&hourDif=3&lat=49.3106535&lon=18.367983&loaders=weun">Příklad: https://localhost:44336/json?time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&numOfForecasts=5&hourDif=3&lat=49.3106535&lon=18.367983&loaders=weun</a>
+</div>
+
+<br>
 
 <div>
     <a href="@Url.Action("Loader")">Načíst nové bitmapy a odstranit staré</a>

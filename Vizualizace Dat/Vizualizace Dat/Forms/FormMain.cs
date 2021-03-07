@@ -31,7 +31,7 @@ namespace Vizualizace_Dat
         private List<PointLatLng> bounds;
         private Bitmap dataBitmap = new Bitmap(728, 528);
         private FormWindowState lastWindowState = FormWindowState.Normal;
-        private Size appMinSize = new Size(800, 600);
+        private Size appMinSize = new Size(800, 700);
         private List<GraphElement> graphCols = new List<GraphElement>();
         private ForecType forecTypeTemp = new ForecType(ForecastTypes.TEMPERATURE);
         private ForecType forecTypePrec = new ForecType(ForecastTypes.PRECIPITATION);
@@ -43,6 +43,7 @@ namespace Vizualizace_Dat
         private bool isBitmapShown = false;
         private bool areDataSendByUser = false;
         private string validLoaders = ApkConfig.Loaders;
+        private PointLatLng markPoint = new PointLatLng();
 
         public FormMain()
         {
@@ -56,13 +57,13 @@ namespace Vizualizace_Dat
             gMap.MinZoom = 2;
             gMap.MaxZoom = 15;
             gMap.Zoom = 6;
-            gMap.Position = new PointLatLng(49.89, 15.16);
+            gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
 
             selectedTime = DateTime.Now;
             lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
-            bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
+            bounds = BitmapHandler.GetBounds(gMap);
 
             string[] defaultLoaders = ApkConfig.Loaders.Split(',');
 
@@ -73,7 +74,7 @@ namespace Vizualizace_Dat
                     checkBox1.Checked = true;
                 }
 
-                if (loader ==  "mdrd")
+                if (loader == "mdrd")
                 {
                     checkBox2.Checked = true;
                 }
@@ -147,7 +148,7 @@ namespace Vizualizace_Dat
         {
             if (serverBitmap == null)
             {
-                bounds = BitmapHandler.GetBounds((int)gMap.Zoom, gMap.Position);
+                bounds = BitmapHandler.GetBounds(gMap);
 
                 try
                 {
@@ -213,6 +214,9 @@ namespace Vizualizace_Dat
             int x = BitmapHandler.GetX(lonD, dataBitmap.Width, bounds[0].Lng, bounds[1].Lng);
             int y = BitmapHandler.GetY(latD, dataBitmap.Height, bounds[0].Lat, bounds[1].Lat);
 
+            markPoint.Lat = latD;
+            markPoint.Lng = lonD;
+
             Color c = Color.Transparent;
 
             try
@@ -240,7 +244,7 @@ namespace Vizualizace_Dat
                 {
                     val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, validLoaders, bounds, forecType);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -272,6 +276,52 @@ namespace Vizualizace_Dat
 
         }
 
+        private void DrawNewGraphForSamePoint()
+        {
+            if(listMarkers.Count == 1)
+            {
+                graphCols = new List<GraphElement>();
+
+                string text = null;
+
+                for (int i = 0; i < ApkConfig.DblclickMaxData; i++)
+                {
+                    double val;
+
+                    try
+                    {
+                        val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), markPoint, validLoaders, bounds, forecType);
+                    }
+                    catch
+                    {
+                        break;
+                    }
+
+                    if (text == null)
+                        text = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {val} {forecType.Unit}";
+
+                    graphCols.Add(new GraphElement(val, selectedTime.AddHours(i)));
+                }
+                if (graphCols.Count > 0)
+                {
+                    listMarkers[0].ToolTipText = text;
+
+                    DrawGraph();
+                    RedrawMark();
+                }
+                else
+                {
+                    GraphClear();
+                    clearMarkers();
+                }
+            }
+            else
+            {
+                GraphClear();
+                clearMarkers();
+            }
+        }
+
         private void RedrawMark()
         {
             if(isBitmapShown && listMarkers.Count == 1)
@@ -291,8 +341,8 @@ namespace Vizualizace_Dat
 
         private void zoomReload()
         {
-            gMap.Zoom = gMap.Zoom + 0.001;
-            gMap.Zoom = gMap.Zoom - 0.001;
+            gMap.Zoom = gMap.Zoom + 0.01;
+            gMap.Zoom = gMap.Zoom - 0.01;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -598,6 +648,8 @@ namespace Vizualizace_Dat
         private void trackBar1_MouseCaptureChanged(object sender, EventArgs e)
         {
             drawBitmapFromServer();
+
+            DrawNewGraphForSamePoint();
         }
 
         private void bAnim_Click(object sender, EventArgs e)
@@ -763,8 +815,8 @@ namespace Vizualizace_Dat
 
                 ValidateDataLoaders();
                 drawBitmapFromServer();
-                GraphClear();
-                clearMarkers();
+
+                DrawNewGraphForSamePoint();
             }
         }
 
@@ -827,7 +879,7 @@ namespace Vizualizace_Dat
 
                 if (areDataSendByUser)
                 {
-                    clearMarkers();
+                    DrawNewGraphForSamePoint();
                     ApkConfig.ForecastType = forecType.Type;
                 }
             }
@@ -907,7 +959,7 @@ namespace Vizualizace_Dat
                     Font textFont = new Font("Arial", 15);
                     SolidBrush textBrush = new SolidBrush(Color.Black);
 
-                    string textContent = "Dvojitým kliknutím do mapy zde vykreslíte graf počasí pro následujících 10 hodin.";
+                    string textContent = $"Dvojitým kliknutím do mapy zde vykreslíte graf počasí pro následujících {ApkConfig.DblclickMaxData} hodin.\nNásledujícím kliknutím na značku dojde k jejímu zrušení.";
 
                     Size textSize = TextRenderer.MeasureText(g, textContent, textFont);
 
@@ -962,6 +1014,9 @@ namespace Vizualizace_Dat
                 ApkConfig.DblclickMaxData = val;
 
                 val = ApkConfig.DblclickMaxData;
+
+                if(graphCols.Count == 0)
+                    GraphClear();
             }
             catch
             { }
@@ -972,11 +1027,17 @@ namespace Vizualizace_Dat
         private void dblclickMinData_Click(object sender, EventArgs e)
         {
             ApkConfig.DblclickMaxData = 1;
+
+            if (graphCols.Count == 0)
+                GraphClear();
         }
 
         private void dblclickMaxData_Click(object sender, EventArgs e)
         {
             ApkConfig.DblclickMaxData = 40;
+
+            if (graphCols.Count == 0)
+                GraphClear();
         }
 
         private void animCustomMove_MouseEnter(object sender, EventArgs e)
@@ -997,6 +1058,20 @@ namespace Vizualizace_Dat
             ApkConfig.DblclickMaxData = 10;
 
             drawBitmapFromServer(dataBitmap);
+            GraphClear();
+            clearMarkers();
+        }
+
+        private void gMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            if(listMarkers.Count == 1)
+            {
+                if (item == listMarkers[0])
+                {
+                    clearMarkers();
+                    GraphClear();
+                }
+            }
         }
     }
 }

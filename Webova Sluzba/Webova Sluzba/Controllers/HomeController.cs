@@ -146,23 +146,92 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
-        public IActionResult XMLForecast(string time, string loaders, string lon, string lat)
+        public IActionResult XMLForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfForecasts)
         {
             try
             {
-                Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
-
-                XmlSerializer serializer = new XmlSerializer(typeof(Forecast));
-
-                string xmlString = "";
-
-                using (StringWriter textWriter = new StringWriter())
+                if (time == null || loaders == null || lon == null || lat == null)
                 {
-                    serializer.Serialize(textWriter, forecast);
-                    xmlString = textWriter.ToString();
+                    throw new Exception("Parametry 'time', 'loaders', 'lon' a 'lat' musí být vyplněny.");
                 }
+                else
+                {
+                    DateTime startTime;
 
-                return this.Content(xmlString, "text/xml");
+                    if (time == "0")
+                    {
+                        startTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            startTime = DateTime.Parse(time);
+                        }
+                        catch
+                        {
+                            throw new Exception("Formát času není správně vyplněn! Použíjte prosím formát ISO 8601 (yyyy-MM-ddTHH:mm:ss) nebo znak 0 pro aktuální čas.");
+                        }
+                    }
+
+                    startTime = startTime.AddMinutes(30);
+                    startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, 0, 0);
+
+                    if (hourDif == null && numOfForecasts == null)
+                    {
+                        Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+                        forecast.Time = startTime;
+
+                        ForecastXMLSerializeObject f = new ForecastXMLSerializeObject(forecast);
+
+                        XmlSerializer serializer = new XmlSerializer(typeof(ForecastXMLSerializeObject));
+
+                        string xmlString = "";
+
+                        using (StringWriter textWriter = new StringWriter())
+                        {
+                            serializer.Serialize(textWriter, f);
+                            xmlString = textWriter.ToString();
+                        }
+
+                        return this.Content(xmlString, "text/xml");
+                    }
+                    else if (hourDif != null && numOfForecasts != null)
+                    {
+
+                        List<Forecast> forecasts = new List<Forecast>();
+
+                        for (int i = 0; i < int.Parse(numOfForecasts); i++)
+                        {
+
+                            DateTime actTime = startTime.AddHours(i * int.Parse(hourDif));
+
+                            Forecast forecast = GetForecastFromTimeAndPoint(actTime, loaders, lon, lat);
+                            forecast.Time = actTime;
+
+                            forecasts.Add(forecast);
+                        }
+
+
+                        ForecastXMLSerializeObject f = new ForecastXMLSerializeObject(forecasts);
+
+                        XmlSerializer serializer = new XmlSerializer(typeof(ForecastXMLSerializeObject));
+
+                        string xmlString = "";
+
+                        using (StringWriter textWriter = new StringWriter())
+                        {
+                            serializer.Serialize(textWriter, f);
+                            xmlString = textWriter.ToString();
+                        }
+
+                        return this.Content(xmlString, "text/xml");
+                    }
+                    else
+                    {
+                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfForecasts' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
+                    }
+                }
             }
             catch(Exception e)
             {
@@ -170,15 +239,74 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
-        public IActionResult JSONForecast(string time, string loaders, string lon, string lat)
+        public IActionResult JSONForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfForecasts)
         {
             try
             {
-                Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+                if(time == null || loaders == null || lon == null || lat == null)
+                {
+                    throw new Exception("Parametry 'time', 'loaders', 'lon' a 'lat' musí být vyplněny.");
+                }
+                else
+                {
+                    DateTime startTime;
 
-                string jsonString = JsonConvert.SerializeObject(forecast);
+                    if (time == "0")
+                    {
+                        startTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            startTime = DateTime.Parse(time);
+                        }
+                        catch
+                        {
+                            throw new Exception("Formát času není správně vyplněn! Použíjte prosím formát ISO 8601 (yyyy-MM-ddTHH:mm:ss) nebo znak 0 pro aktuální čas.");
+                        }
+                    }
 
-                return this.Content(jsonString, "text/json");
+                    startTime = startTime.AddMinutes(30);
+                    startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, 0, 0);
+
+                    if (hourDif == null && numOfForecasts == null)
+                    {
+                        Forecast forecast = GetForecastFromTimeAndPoint(startTime, loaders, lon, lat);
+                        forecast.Time = startTime;
+
+                        ForecastJSONSerializeObject f = new ForecastJSONSerializeObject(forecast);
+
+                        string jsonString = JsonConvert.SerializeObject(f);
+
+                        return this.Content(jsonString, "text/json");
+                    }
+                    else if (hourDif != null && numOfForecasts != null)
+                    {
+                        List<Forecast> forecasts = new List<Forecast>();
+
+                        for (int i = 0; i < int.Parse(numOfForecasts); i++)
+                        {
+
+                            DateTime actTime = startTime.AddHours(i * int.Parse(hourDif));
+
+                            Forecast forecast = GetForecastFromTimeAndPoint(actTime, loaders, lon, lat);
+                            forecast.Time = actTime;
+
+                            forecasts.Add(forecast);
+                        }
+
+                        ForecastJSONSerializeObject f = new ForecastJSONSerializeObject(forecasts);
+
+                        string jsonString = JsonConvert.SerializeObject(f);
+
+                        return this.Content(jsonString, "text/json");
+                    }
+                    else
+                    {
+                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfForecasts' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
+                    }
+                }
             }
             catch(Exception e)
             {
@@ -230,6 +358,15 @@ namespace Webova_Sluzba.Controllers
             AvgForecast aF = new AvgForecast(loaders);
 
             return aF.GetForecastFromTimeAndPoint(DateTime.Parse(time), point);
+        }
+
+        private Forecast GetForecastFromTimeAndPoint(DateTime time, string loaders, string lon, string lat)
+        {
+            PointLonLat point = new PointLonLat(double.Parse(lon, CultureInfo.InvariantCulture), double.Parse(lat, CultureInfo.InvariantCulture));
+
+            AvgForecast aF = new AvgForecast(loaders);
+
+            return aF.GetForecastFromTimeAndPoint(time, point);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

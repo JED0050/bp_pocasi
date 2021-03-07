@@ -9,6 +9,11 @@ namespace AgregaceDatLib
         public double Lon { get; set; }
         public double Lat { get; set; }
 
+        public PointLonLat()
+        {
+
+        }
+
         public PointLonLat(double lon, double lat)
         {
             Lon = lon;

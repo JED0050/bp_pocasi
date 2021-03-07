@@ -33,6 +33,8 @@ namespace Webova_Sluzba
             try
             {
                 forecastService.SaveForecastBitmaps();
+
+                Debug.WriteLine("Pravidelná kontrola a vytváření bitmap bylo úspěně dokončenu.");
             }
             catch
             {
