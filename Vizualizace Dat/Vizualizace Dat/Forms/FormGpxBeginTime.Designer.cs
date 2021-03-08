@@ -31,7 +31,7 @@ namespace Vizualizace_Dat
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGpxBeginTime));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lText = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -42,14 +42,14 @@ namespace Vizualizace_Dat
             this.dateTimePicker1.Size = new System.Drawing.Size(169, 20);
             this.dateTimePicker1.TabIndex = 0;
             // 
-            // label1
+            // lText
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Zvol počáteční čas cesty";
+            this.lText.AutoSize = true;
+            this.lText.Location = new System.Drawing.Point(38, 18);
+            this.lText.Name = "lText";
+            this.lText.Size = new System.Drawing.Size(128, 13);
+            this.lText.TabIndex = 1;
+            this.lText.Text = "Zvol počáteční čas cesty";
             // 
             // button1
             // 
@@ -67,11 +67,12 @@ namespace Vizualizace_Dat
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(209, 121);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lText);
             this.Controls.Add(this.dateTimePicker1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGpxBeginTime";
             this.Text = "Čas";
+            this.Load += new System.EventHandler(this.FormGpxBeginTime_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -80,7 +81,7 @@ namespace Vizualizace_Dat
         #endregion
 
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lText;
         private System.Windows.Forms.Button button1;
     }
 }

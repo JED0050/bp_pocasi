@@ -16,6 +16,8 @@ namespace Vizualizace_Dat
         public FormGpxChooseTravelForm()
         {
             InitializeComponent();
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         private void button1_Click(object sender, EventArgs e)

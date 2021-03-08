@@ -1,1 +1,1 @@
-{"Loaders":"yrno","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":15,"ForecastType":"temp"}
+{"Loaders":"mdrd,owm,weun","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":24,"ForecastType":"humi"}

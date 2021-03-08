@@ -73,9 +73,20 @@
             this.pBScale = new System.Windows.Forms.PictureBox();
             this.lScaleMin = new System.Windows.Forms.Label();
             this.lScaleMax = new System.Windows.Forms.Label();
+            this.tLPTimeMarks = new System.Windows.Forms.TableLayoutPanel();
+            this.lT6 = new System.Windows.Forms.Label();
+            this.lT5 = new System.Windows.Forms.Label();
+            this.lT8 = new System.Windows.Forms.Label();
+            this.lT7 = new System.Windows.Forms.Label();
+            this.lT4 = new System.Windows.Forms.Label();
+            this.lT1 = new System.Windows.Forms.Label();
+            this.lT0 = new System.Windows.Forms.Label();
+            this.lT3 = new System.Windows.Forms.Label();
+            this.lT2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBScale)).BeginInit();
+            this.tLPTimeMarks.SuspendLayout();
             this.SuspendLayout();
             // 
             // gMap
@@ -524,12 +535,159 @@
             this.lScaleMax.TabIndex = 37;
             this.lScaleMax.Text = "30";
             // 
+            // tLPTimeMarks
+            // 
+            this.tLPTimeMarks.ColumnCount = 9;
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tLPTimeMarks.Controls.Add(this.lT0, 0, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT1, 1, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT2, 2, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT3, 3, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT4, 4, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT5, 5, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT6, 6, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT7, 7, 0);
+            this.tLPTimeMarks.Controls.Add(this.lT8, 8, 0);
+            this.tLPTimeMarks.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tLPTimeMarks.Location = new System.Drawing.Point(0, 689);
+            this.tLPTimeMarks.Name = "tLPTimeMarks";
+            this.tLPTimeMarks.RowCount = 1;
+            this.tLPTimeMarks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tLPTimeMarks.Size = new System.Drawing.Size(1125, 17);
+            this.tLPTimeMarks.TabIndex = 0;
+            // 
+            // lT6
+            // 
+            this.lT6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT6.Location = new System.Drawing.Point(0, 0);
+            this.lT6.Name = "lT6";
+            this.lT6.Size = new System.Drawing.Size(119, 17);
+            this.lT6.TabIndex = 47;
+            this.lT6.Text = "05.11. 10:30";
+            this.lT6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT5
+            // 
+            this.lT5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT5.Location = new System.Drawing.Point(0, 0);
+            this.lT5.Name = "lT5";
+            this.lT5.Size = new System.Drawing.Size(119, 17);
+            this.lT5.TabIndex = 46;
+            this.lT5.Text = "05.11. 10:30";
+            this.lT5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT8
+            // 
+            this.lT8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT8.Location = new System.Drawing.Point(1003, 0);
+            this.lT8.Name = "lT8";
+            this.lT8.Size = new System.Drawing.Size(119, 17);
+            this.lT8.TabIndex = 45;
+            this.lT8.Text = "05.11. 10:30";
+            this.lT8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT7
+            // 
+            this.lT7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT7.Location = new System.Drawing.Point(0, 0);
+            this.lT7.Name = "lT7";
+            this.lT7.Size = new System.Drawing.Size(119, 17);
+            this.lT7.TabIndex = 44;
+            this.lT7.Text = "05.11. 10:30";
+            this.lT7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT4
+            // 
+            this.lT4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT4.Location = new System.Drawing.Point(0, 0);
+            this.lT4.Name = "lT4";
+            this.lT4.Size = new System.Drawing.Size(119, 17);
+            this.lT4.TabIndex = 43;
+            this.lT4.Text = "05.11. 10:30";
+            this.lT4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT1
+            // 
+            this.lT1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT1.Location = new System.Drawing.Point(0, 0);
+            this.lT1.Name = "lT1";
+            this.lT1.Size = new System.Drawing.Size(119, 17);
+            this.lT1.TabIndex = 42;
+            this.lT1.Text = "05.11. 10:30";
+            this.lT1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT0
+            // 
+            this.lT0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT0.Location = new System.Drawing.Point(0, 0);
+            this.lT0.Name = "lT0";
+            this.lT0.Size = new System.Drawing.Size(119, 17);
+            this.lT0.TabIndex = 41;
+            this.lT0.Text = "05.11. 10:30";
+            this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT3
+            // 
+            this.lT3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT3.Location = new System.Drawing.Point(0, 0);
+            this.lT3.Name = "lT3";
+            this.lT3.Size = new System.Drawing.Size(119, 17);
+            this.lT3.TabIndex = 40;
+            this.lT3.Text = "05.11. 10:30";
+            this.lT3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lT2
+            // 
+            this.lT2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lT2.Location = new System.Drawing.Point(0, 0);
+            this.lT2.Name = "lT2";
+            this.lT2.Size = new System.Drawing.Size(119, 17);
+            this.lT2.TabIndex = 39;
+            this.lT2.Text = "05.11. 10:30";
+            this.lT2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 706);
+            this.Controls.Add(this.tLPTimeMarks);
             this.Controls.Add(this.lScaleMax);
             this.Controls.Add(this.lScaleMin);
             this.Controls.Add(this.pBScale);
@@ -559,6 +717,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBScale)).EndInit();
+            this.tLPTimeMarks.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -609,6 +768,16 @@
         private System.Windows.Forms.PictureBox pBScale;
         private System.Windows.Forms.Label lScaleMin;
         private System.Windows.Forms.Label lScaleMax;
+        private System.Windows.Forms.TableLayoutPanel tLPTimeMarks;
+        private System.Windows.Forms.Label lT6;
+        private System.Windows.Forms.Label lT5;
+        private System.Windows.Forms.Label lT8;
+        private System.Windows.Forms.Label lT7;
+        private System.Windows.Forms.Label lT4;
+        private System.Windows.Forms.Label lT1;
+        private System.Windows.Forms.Label lT0;
+        private System.Windows.Forms.Label lT3;
+        private System.Windows.Forms.Label lT2;
     }
 }
 

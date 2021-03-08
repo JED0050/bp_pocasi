@@ -14,12 +14,20 @@ namespace Vizualizace_Dat
     {
         public static DateTime BeginTime { get; set; }
 
-        public FormGpxBeginTime()
+        public FormGpxBeginTime(string labelText, string buttonText)
         {
             InitializeComponent();
 
+            lText.Text = labelText;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "dd.MM.yyyy HH:mm:ss";
+
+            if(buttonText != null && buttonText.Length > 0)
+            {
+                button1.Text = buttonText;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,6 +42,11 @@ namespace Vizualizace_Dat
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void FormGpxBeginTime_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
