@@ -1,1 +1,1 @@
-{"Loaders":"mdrd,owm,weun","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":24,"ForecastType":"humi"}
+{"Loaders":"weun","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":10,"ForecastType":"pres"}

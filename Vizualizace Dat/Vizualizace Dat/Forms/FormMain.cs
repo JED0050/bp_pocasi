@@ -6,8 +6,10 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -845,12 +847,11 @@ namespace Vizualizace_Dat
 
         private void ValidetaTrackbarTimeMarks()
         {
-            int stepVal = trackBar1.Maximum / (tLPTimeMarks.ColumnCount - 1);
+            double stepVal = trackBar1.Maximum / (tLPTimeMarks.ColumnCount - 2);
             DateTime dateTimeNow = DateTime.Now;
 
-
-            for (int i = 0; i < tLPTimeMarks.ColumnCount; i++)
-                tLPTimeMarks.Controls[i].Text = dateTimeNow.AddMinutes(i * stepVal).ToString("dd.MM. HH:mm");
+            for (int i = 1; i < tLPTimeMarks.ColumnCount -1; i++)
+                tLPTimeMarks.Controls[i].Text = dateTimeNow.AddMinutes(Math.Ceiling(stepVal / 2 + (i - 1) * stepVal)).ToString("dd.MM. HH:mm");
 
         }
 
@@ -1274,6 +1275,58 @@ namespace Vizualizace_Dat
                     GraphClear();
                 }
             }
+        }
+
+        private void aktualizovatŠkályToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string envirDir = Environment.CurrentDirectory;
+            string resourcesDir = Path.GetFullPath(Path.Combine(envirDir, @"..\..\")) + @"Resources\";
+
+            foreach (string type in ForecastTypes.GetListOfTypes())
+            {
+                string url = ApkConfig.ServerAddress + @"\scale?type=" + type;
+
+                Bitmap scale;
+
+                using (WebClient wc = new WebClient())
+                {
+                    try
+                    {
+                        using (Stream s = wc.OpenRead(url))
+                        {
+                            scale = new Bitmap(s);
+                        }
+
+                        string scaleName = resourcesDir + @"\" + $"scale_{type}.png";
+
+                        scale.Save(scaleName, ImageFormat.Png);
+                        scale.Dispose();
+
+                        if(type == ForecastTypes.TEMPERATURE)
+                        {
+                            forecTypeTemp = new ForecType(type);
+                        }
+                        else if (type == ForecastTypes.PRECIPITATION)
+                        {
+                            forecTypePrec = new ForecType(type);
+                        }
+                        else if (type == ForecastTypes.HUMIDITY)
+                        {
+                            forecTypeHumi = new ForecType(type);
+                        }
+                        else if (type == ForecastTypes.PRESSURE)
+                        {
+                            forecTypePres = new ForecType(type);
+                        }
+
+                    }
+                    catch
+                    { }
+                }
+            }
+
+            forecType = new ForecType(forecType.Type);
+            pBScale.Image = forecType.ScaleBitmap;
         }
     }
 }
