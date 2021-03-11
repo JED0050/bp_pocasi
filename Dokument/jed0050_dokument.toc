@@ -8,46 +8,70 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{Seznam použitých zkratek a symbolů}{8}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Úvod}{9}{section.1}%
+\contentsline {section}{Seznam obr\'azk\r {u}}{9}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Datové zdroje}{10}{section.2}%
+\contentsline {section}{Seznam tabulek}{10}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}XML}{10}{subsection.2.1}%
+\contentsline {section}{Seznam výpisů zdrojového kódu}{11}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1}yr.no}{10}{subsubsection.2.1.1}%
+\contentsline {section}{Seznam obr\'azk\r {u}}{12}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.2}ukázka}{10}{subsubsection.2.1.2}%
+\contentsline {section}{Seznam tabulek}{13}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}JSON}{10}{subsection.2.2}%
+\contentsline {section}{\numberline {1}Úvod}{14}{section.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.1}OpenWeather}{10}{subsubsection.2.2.1}%
+\contentsline {section}{\numberline {2}Datové zdroje}{15}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.2}ukázka}{10}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.1}XML}{15}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Bitmap}{10}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.1.1}yr.no}{15}{subsubsection.2.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.1}Medard}{10}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}ukázka}{15}{subsubsection.2.1.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.2}Radar.bourky}{11}{subsubsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.2}JSON}{17}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.3}ukázka}{11}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.2.1}OpenWeather}{17}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Agregace dat}{11}{section.3}%
+\contentsline {subsubsection}{\numberline {2.2.2}ukázka}{17}{subsubsection.2.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Škála}{11}{subsection.3.1}%
+\contentsline {subsection}{\numberline {2.3}JSON}{19}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Triangulace}{11}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.1}WeatherUnlocked}{19}{subsubsection.2.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Interpolace}{12}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.2}ukázka}{19}{subsubsection.2.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Distribuce dat}{14}{section.4}%
+\contentsline {subsection}{\numberline {2.4}Bitmap}{21}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}API}{14}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.1}Medard}{21}{subsubsection.2.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.1}Bitmap předpověď}{14}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}ukázka}{21}{subsubsection.2.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.2}XML a JSON předpověď}{16}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Radar.bourky}{21}{subsubsection.2.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.3}Zkratky loaderů}{16}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}ukázka}{22}{subsubsection.2.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Vizualizace dat}{17}{section.5}%
+\contentsline {subsection}{\numberline {2.5}Shrnutí použitých zdrojů}{22}{subsection.2.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Agregace dat}{23}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Škála}{23}{subsection.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Triangulace}{23}{subsection.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Interpolace}{24}{subsection.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Distribuce dat}{26}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}API}{26}{subsection.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {4.1.1}Bitmap předpověď}{26}{subsubsection.4.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {4.1.2}XML a JSON předpověď}{27}{subsubsection.4.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {4.1.3}Využívané škály}{27}{subsubsection.4.1.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {4.1.4}Zkratky typů počasí}{28}{subsubsection.4.1.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {4.1.5}Zkratky datových zdrojů}{28}{subsubsection.4.1.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Vizualizace dat}{29}{section.5}%

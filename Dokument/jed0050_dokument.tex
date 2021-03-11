@@ -5,6 +5,11 @@
 \usepackage{dcolumn} % sloupce tabulky s ciselnymi hodnotami
 \usepackage{subfig} % makra pro "podobrazky" a "podtabulky"
 
+\usepackage{geometry}
+\usepackage{listings}
+
+
+
 \ThesisAuthor{Jan Jelička}
 
 \CzechThesisTitle{Webová služba pro sběr a vizualizaci předpovědí počasí}
@@ -46,6 +51,10 @@
 	
 	\MakeTitlePages
 	
+	\listoffigures
+	
+	\listoftables
+	
 	\section{Úvod}	
 	
 	Informace o počasí jsou v dnešní době distribuována mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde sproztředkovávatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s šesti hodinovými rozestupy. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou minutu, stačí nám předpověď jednou za pár hodin.
@@ -54,30 +63,104 @@
 	
 	\section{Datové zdroje}
 	
-	V práci potřebujeme použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML. Druhým zvoleným zdrojem jsou JSON předpovědi od společnosti OpenWeather. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru a pro tento účel byl vybrán český projekt Medard.
+	V práci potřebujeme použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
 	
 	\subsection{XML}
 	\subsubsection{yr.no}
 	
-	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na týden dopředu a rozpetí mezi jednotlivými předpověďmi je 6 hodin. Veškeré informace jsou v podobě XML dokumentu.
+	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomací zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpetí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snažší deserializace a potřeba stáhnout objemově mnohem méně dat.
 	
 	\subsubsection{ukázka}
+	
+	Ukázka části z XML souboru obsahujícího data o počasí pro Ostravu na následujících 9 dnů.
+	
+	https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923\&lon=18.262524
+	
+	\lstset{
+		language=xml,
+		tabsize=3,
+		%frame=lines,
+		caption=Ukázka XML dat od Yr.no,
+		label=code:sample,
+		frame=shadowbox,
+		rulesepcolor=\color{gray},
+		xleftmargin=20pt,
+		framexleftmargin=15pt,
+		keywordstyle=\color{blue}\bf,
+		commentstyle=\color{OliveGreen},
+		stringstyle=\color{red},
+		numbers=left,
+		numberstyle=\tiny,
+		numbersep=5pt,
+		breaklines=true,
+		showstringspaces=false,
+		basicstyle=\footnotesize,
+		emph={temperature, precipitation, humidity, pressure},emphstyle={\color{magenta}}}
+	\lstinputlisting{Data/Yrno_ukazka.xml}
+	
 	\subsection{JSON}
 	\subsubsection{OpenWeather}
 	
-	Dalším datovým zdrojem v podobě textu je OpenWeather. Tato služba poskytuje data ve formátu JSON na týden dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
+	Dalším datovým zdrojem v podobě textu je OpenWeather. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
 	
 	\subsubsection{ukázka}
+	
+	Ukázka části z JSON souboru obsahujícího data o počasí pro Ostravu na následujících 5 dnů.
+	
+	https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=ea63080a4f8e99972630d2671e3ef805
+	
+	\lstinputlisting{Data/Owm_ukazka.json}
+	
+	\subsection{JSON}
+	\subsubsection{WeatherUnlocked}
+	
+	Druhým datovým zdrojem který poskytuje json text je WeatherUnlocked. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
+	
+	\subsubsection{ukázka}
+	
+	Ukázka části z JSON souboru obsahujícího data o počasí pro Ostravu na následujících 5 dnů.
+	
+	http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=79ef9432\&app\_key=904d54d78eec41c2c55ed93cbaf7c7ca
+	
+	\lstinputlisting{Data/Weun_ukazka.json}
+	
 	\subsection{Bitmap}
 	\subsubsection{Medard}
 	
 	Medard je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získlávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
 	
+	\subsubsection{ukázka}
+	
+	\captionof{figure}{Ukázka bitmapy od Medard-online}
+	\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
+	
 	\subsubsection{Radar.bourky}
 	
-	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný, protože poskytuje data pouze v aktuálním čase a pokrávý jen českou republiku. Z toho důvodu se tento zdroj dá využít pouze pro zjištění aktuálního počasí v ČR.
+	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný, protože poskytuje data pouze v aktuálním čase, respektive v čase pár hodin zpět a pokrávý jen českou republiku. Z toho důvodu se tento zdroj dá využít pouze pro zjištění aktuálního srážek v ČR a blízkém okolí.
 	
 	\subsubsection{ukázka}
+	
+	\captionof{figure}{Ukázka snímku z radaru od Radar.bourky}
+	\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
+	
+	\subsection{Shrnutí použitých zdrojů}
+	
+	typ = Srážky/Teplot/Tlak/Vlhkost
+	
+	\captionof{table}{Shrnutí vlastností datových zdrojů}
+	\begin{center}
+		\begin{tabular} {l r c c l c c c c}
+			
+			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & typ \\
+			\hline
+			Yr.no & XML & 9 & 1 a 6 & & svět & A/A/A/A \\ 
+			OpenWeatherMap & JSON & 5 & 3 & 60 & svět & A/A/A/A \\ 
+			WeatherUnlocked & JSON & 5 & 3 & 75 & svět & A/A/A/A \\ 
+			Medard-online & BMP & 5 & 1 &  & evropa & A/A/N/N \\ 
+			Radar.bourky & BMP & 0 & & & ČR & A/N/N/N \\ 
+			
+		\end{tabular}
+	\end{center}
 	
 	\section{Agregace dat}
 	
@@ -89,7 +172,7 @@
 	
 	Nejprve tyto metody obsahovaly desítky podmínek které staticky kontrolovaly zda se jedná o konkrétní barvu, později zda barva patří do určitého rozmezí pro R, G, B složky. Tento přístup ale není vhodný, protože při potřebě změnit barvy pro určitá desetinná čísla vznikala nutnost přepsat hodnoty barev pro všechny metody ve veškerých podmínkách.
 	
-	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být i pouze 1 pixel. Výhoudou škál je, že změna barev reprezentujících hodnoty případně změna rozsahu uchovávanách hodnot se vyměnit pouze pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
+	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být pouze 1 pixel. Výhoudou škál je, že změna barev reprezentujících hodnoty případně změna rozsahu uchovávanách hodnot se vyměnit pouze pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
 	
 	\subsection{Triangulace}
 	
@@ -143,7 +226,7 @@
 	
 	\subsection{API}
 	
-	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrácí požadovanou předpověď. Webová služba vrací data ve třech formátech xml, json a bitmapa.
+	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrácí požadovanou předpověď. Webová služba vrací data ve třech formátech xml, json a bitmapa. Nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
 	
 	\subsubsection{Bitmap předpověď}
 	
@@ -151,38 +234,76 @@
 	\\\\
 	adresaserveru/bmp?type=\{typ\}\&time=\{čas\}\&loaders=\{datové zdroje\}\&p1=\{bod1\}\&p2=\{bod2\}
 	
+	\captionof{table}{Parametry bitmap předpovědí}
 	\begin{center}
 		\begin{tabular}{c c p{13cm}}
 			Název & Povinnost & Význam \\
 			\midrule
-			type & ANO & Typ předpovědi, určuje druh vykreslených informací. Typ $prec$ reprezentuje srážky v milimetech a typ $temp$ teplotu ve stupních Celsia.\\ 
+			type & ANO & Typ předpovědi, určuje druh vykreslených informací. Například typ $prec$ reprezentuje srážky v milimetech a typ $temp$ teplotu ve stupních Celsia.\\ 
    			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  provede se předpověď pro aktuální čas.\\ 
    			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
-   			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny středníkem. Pro oddělení celé a desetinné části souřadnice se můžou požít tečka i čárka. Pokud bod $p1$ nebo $p1$ není zadán, bitmapa se vykreslí pro Českou republiku.\\
-   			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny středníkem. Pro oddělení celé a desetinné části souřadnice se můžou požít tečka i čárka. Pokud bod $p1$ nebo $p1$ není zadán, bitmapa se vykreslí pro Českou republiku.
+   			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ a $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
+   			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ a $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
 		\end{tabular}
 	\end{center}
 	
 	Příklady požadavků:
 	\begin{itemize}
-		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývající celou ČR a využívá veškeré datové zdroje.
+		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývající celou možnou plochu a využívá veškeré datové zdroje.
 		\begin{itemize}
 			\item adresaserveru/bmp?type=temp
 		\end{itemize}
-		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývající celou ČR a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
+		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývající celou možnou plochu a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
 		\begin{itemize}
 			\item adresaserveru/bmp?type=prec\&time=2021-05-26T18:30:00\&loaders=owm,yrno
 		\end{itemize}
 		\item Požadujeme bitmapu s daty o srážkách pro aktuální čas, která pokrývající město Olomouc a využívá datový zdroj od služby Medard-Online.
 		\begin{itemize}
-			\item adresaserveru/bmp?type=prec\&p1=49.621559;17.1507294\&p2=49.5211889;17.4213141\&loaders=mdrd
+			\item adresaserveru/bmp?type=prec\&p1=49.621559,17.1507294\&p2=49.5211889,17.4213141\&loaders=mdrd
 		\end{itemize}
 	\end{itemize}
 
 	\subsubsection{XML a JSON předpověď}
 	
-	\subsubsection{Zkratky loaderů}
+	Tato služba nám dovoluje získat data o počasí pro určitý bod v zadaném čase, případně lze určit data o počasí pro více časů za sebou s konstantním hodinovým rozdílem.
 	
+	\subsubsection{Využívané škály}
+	
+	Služba nám umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku typu počasí a služba nám vrátí využívanou škálu.
+	
+	Příklady požadavků:
+	\begin{itemize}
+		\item Požadujeme škálu pro teploty.
+		\begin{itemize}
+			\item adresaserveru/scale?type=temp
+		\end{itemize}
+		\item Požadujeme škálu pro srážky.
+		\begin{itemize}
+			\item adresaserveru/scale?type=prec
+		\end{itemize}
+	\end{itemize}
+	
+	\subsubsection{Zkratky typů počasí}
+	
+	Zkratky pro jednotlivé typy předpovědí které se využívají v parametru type.
+	
+	\captionof{table}{Zkratky typů předpovědí}
+	\begin{center}
+		\begin{tabular}{c c c}
+			Typ počasí & Jednotka & Zkratka pro API\\
+			\midrule
+			Srážky & mm & prec \\
+			Teplota & °C & temp \\
+			Tlak & hPa & pres \\
+			Vlhkost & \% & humi \\
+		\end{tabular}
+	\end{center}
+	
+	\subsubsection{Zkratky datových zdrojů}
+	
+	Zkratky pro jednotlivé datové zdroje které se využívají v parametru loaders. Při použití více zkratek za sebou oddělených čárkou dojde k použití více zdrojů současně.
+	
+	\captionof{table}{Zkratky datových zdrojů}
 	\begin{center}
 		\begin{tabular}{c c}
 			Celý název datového zdroje & Zkratka pro API\\
@@ -190,11 +311,13 @@
 			Radar.bourky & rb \\
 			Medard-online & mdrd \\
 			OpenWeatherMap & owm \\
-			Yr.No & yrno \\
-			
+			Yr.no & yrno \\
+			WeatherUnlocked & weun \\
 		\end{tabular}
 	\end{center}
 	
 	\section{Vizualizace dat}
+	
+	
 	
 \end{document}

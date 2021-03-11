@@ -1,0 +1,62 @@
+<meta>
+<model name="met_public_forecast" termin="2021-03-09T13:00:00Z" runended="2021-03-09T13:19:30Z" nextrun="2021-03-09T19:24:58Z" from="2021-03-09T15:00:00Z" to="2021-03-18T18:00:00Z"/>
+</meta>
+<product class="pointData">
+<time datatype="forecast" from="2021-03-09T15:00:00Z" to="2021-03-09T15:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<temperature id="TTT" unit="celsius" value="3.1"/>
+<windDirection id="dd" deg="34.9" name="NE"/>
+<windSpeed id="ff" mps="1.5" beaufort="1" name="Flau vind"/>
+<humidity unit="percent" value="28.8"/>
+<pressure id="pr" unit="hPa" value="1020.0"/>
+<cloudiness id="NN" percent="99.2"/>
+<fog id="FOG" percent="0.0"/>
+<lowClouds id="LOW" percent="0.0"/>
+<mediumClouds id="MEDIUM" percent="96.1"/>
+<highClouds id="HIGH" percent="99.2"/>
+<dewpointTemperature id="TD" unit="celsius" value="-13.3"/>
+</location>
+</time>
+<time datatype="forecast" from="2021-03-09T14:00:00Z" to="2021-03-09T15:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<precipitation unit="mm" value="0.0"/>
+<symbol id="Cloud" number="4" code="cloudy"/>
+</location>
+</time>
+<time datatype="forecast" from="2021-03-09T09:00:00Z" to="2021-03-09T15:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<precipitation unit="mm" value="0.0"/>
+<minTemperature id="TTT" unit="celsius" value="2.7"/>
+<maxTemperature id="TTT" unit="celsius" value="3.9"/>
+<symbol id="Cloud" number="4" code="cloudy"/>
+</location>
+</time>
+<time datatype="forecast" from="2021-03-09T16:00:00Z" to="2021-03-09T16:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<temperature id="TTT" unit="celsius" value="1.4"/>
+<windDirection id="dd" deg="25.0" name="NE"/>
+<windSpeed id="ff" mps="2.1" beaufort="2" name="Svak vind"/>
+<humidity unit="percent" value="33.8"/>
+<pressure id="pr" unit="hPa" value="1020.0"/>
+<cloudiness id="NN" percent="99.2"/>
+<fog id="FOG" percent="0.0"/>
+<lowClouds id="LOW" percent="3.9"/>
+<mediumClouds id="MEDIUM" percent="94.5"/>
+<highClouds id="HIGH" percent="99.2"/>
+<dewpointTemperature id="TD" unit="celsius" value="-12.9"/>
+</location>
+</time>
+<time datatype="forecast" from="2021-03-09T15:00:00Z" to="2021-03-09T16:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<precipitation unit="mm" value="0.0"/>
+<symbol id="Cloud" number="4" code="cloudy"/>
+</location>
+</time>
+<time datatype="forecast" from="2021-03-09T10:00:00Z" to="2021-03-09T16:00:00Z">
+<location altitude="225" latitude="49.82092" longitude="18.26252">
+<precipitation unit="mm" value="0.0"/>
+<minTemperature id="TTT" unit="celsius" value="1.4"/>
+<maxTemperature id="TTT" unit="celsius" value="3.9"/>
+<symbol id="Cloud" number="4" code="cloudy"/>
+</location>
+</time>
