@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DLMedardLib\DLMedardLib\DLMedardLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DLOpenWeatherMapLib\DLOpenWeatherMapLib\DLOpenWeatherMapLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DLRadarBourkyLib\DLRadarBourkyLib\DLRadarBourkyLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DLWeatherUnlockedLib\DLWeatherUnlockedLib\DLWeatherUnlockedLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DLYrNoLib\DLYrNoLib\DLYrNoLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj" />
+  </ItemGroup>
+
+</Project>

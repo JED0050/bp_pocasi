@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaceDatLib", "AgregaceDatLib\AgregaceDatLib.csproj", "{E1081988-7951-439C-8889-7A053F3BED9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDataLoaderAndHandlerLib", "..\DatoveZdrojeAHandlery\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj", "{417D93F3-B14C-4FF3-8D34-609F9A4533C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLMedardLib", "..\DatoveZdrojeAHandlery\DLMedardLib\DLMedardLib\DLMedardLib.csproj", "{3C150494-FD1C-4F99-9FF7-27E190B7ECBB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLOpenWeatherMapLib", "..\DatoveZdrojeAHandlery\DLOpenWeatherMapLib\DLOpenWeatherMapLib\DLOpenWeatherMapLib.csproj", "{A946D07F-7C17-409B-9284-8D2533EB81B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLRadarBourkyLib", "..\DatoveZdrojeAHandlery\DLRadarBourkyLib\DLRadarBourkyLib\DLRadarBourkyLib.csproj", "{A1CED09C-A3BA-4688-AA10-3510FF0D3649}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLWeatherUnlockedLib", "..\DatoveZdrojeAHandlery\DLWeatherUnlockedLib\DLWeatherUnlockedLib\DLWeatherUnlockedLib.csproj", "{A110ACDF-E73C-46C3-A5D8-BEC592010FBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLYrNoLib", "..\DatoveZdrojeAHandlery\DLYrNoLib\DLYrNoLib\DLYrNoLib.csproj", "{0622503A-2767-4EAD-AE7B-CFF9F3F4E42D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1081988-7951-439C-8889-7A053F3BED9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1081988-7951-439C-8889-7A053F3BED9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1081988-7951-439C-8889-7A053F3BED9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1081988-7951-439C-8889-7A053F3BED9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417D93F3-B14C-4FF3-8D34-609F9A4533C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417D93F3-B14C-4FF3-8D34-609F9A4533C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417D93F3-B14C-4FF3-8D34-609F9A4533C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417D93F3-B14C-4FF3-8D34-609F9A4533C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C150494-FD1C-4F99-9FF7-27E190B7ECBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C150494-FD1C-4F99-9FF7-27E190B7ECBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C150494-FD1C-4F99-9FF7-27E190B7ECBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C150494-FD1C-4F99-9FF7-27E190B7ECBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A946D07F-7C17-409B-9284-8D2533EB81B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A946D07F-7C17-409B-9284-8D2533EB81B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A946D07F-7C17-409B-9284-8D2533EB81B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A946D07F-7C17-409B-9284-8D2533EB81B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CED09C-A3BA-4688-AA10-3510FF0D3649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CED09C-A3BA-4688-AA10-3510FF0D3649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CED09C-A3BA-4688-AA10-3510FF0D3649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CED09C-A3BA-4688-AA10-3510FF0D3649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A110ACDF-E73C-46C3-A5D8-BEC592010FBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A110ACDF-E73C-46C3-A5D8-BEC592010FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A110ACDF-E73C-46C3-A5D8-BEC592010FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A110ACDF-E73C-46C3-A5D8-BEC592010FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0622503A-2767-4EAD-AE7B-CFF9F3F4E42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0622503A-2767-4EAD-AE7B-CFF9F3F4E42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0622503A-2767-4EAD-AE7B-CFF9F3F4E42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0622503A-2767-4EAD-AE7B-CFF9F3F4E42D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27C1E764-7E4B-4BA3-994C-511EEA2047C1}
+	EndGlobalSection
+EndGlobal

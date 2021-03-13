@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Webova_Sluzba.Models;
 using AgregaceDatLib;
+using IDataLoaderAndHandlerLib.HandlersAndObjects;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -29,19 +30,7 @@ namespace Webova_Sluzba.Controllers
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                AvgForecast aF = new AvgForecast();
-
-                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-                YrNoDataLoader xL = new YrNoDataLoader();
-                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-                MedardDataLoader bL2 = new MedardDataLoader();
-                WeatherUnlockedDataLoader weunL = new WeatherUnlockedDataLoader();
-
-                aF.Add(bL);
-                aF.Add(xL);
-                aF.Add(jL);
-                aF.Add(bL2);
-                aF.Add(weunL);
+                AvgForecast aF = new AvgForecast("");
 
                 aF.SaveForecastBitmaps();
 
