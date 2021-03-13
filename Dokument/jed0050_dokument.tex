@@ -46,14 +46,12 @@
 \AddAcronym{BMP}{Bitmap}
 \AddAcronym{HTML}{Hyper Text Markup Language}
 
+\addbibresource{Citace/citace.bib}
+
 % Zacatek dokumentu
 \begin{document}
 	
 	\MakeTitlePages
-	
-	\listoffigures
-	
-	\listoftables
 	
 	\section{Úvod}	
 	
@@ -66,50 +64,26 @@
 	V práci potřebujeme použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
 	
 	\subsection{XML}
-	\subsubsection{yr.no}
+	\subsubsection{Yr.no}
 	
 	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomací zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpetí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snažší deserializace a potřeba stáhnout objemově mnohem méně dat.
 	
-	\subsubsection{ukázka}
+	\subsubsection{Ukázka API}
 	
-	Ukázka části z XML souboru obsahujícího data o počasí pro Ostravu na následujících 9 dnů.
+	Ukázka odkazu který vrací XML text obsahujícíh data o počasí pro Ostravu na následujících 9 dnů.
 	
 	https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923\&lon=18.262524
-	
-	\lstset{
-		language=xml,
-		tabsize=3,
-		%frame=lines,
-		caption=Ukázka XML dat od Yr.no,
-		label=code:sample,
-		frame=shadowbox,
-		rulesepcolor=\color{gray},
-		xleftmargin=20pt,
-		framexleftmargin=15pt,
-		keywordstyle=\color{blue}\bf,
-		commentstyle=\color{OliveGreen},
-		stringstyle=\color{red},
-		numbers=left,
-		numberstyle=\tiny,
-		numbersep=5pt,
-		breaklines=true,
-		showstringspaces=false,
-		basicstyle=\footnotesize,
-		emph={temperature, precipitation, humidity, pressure},emphstyle={\color{magenta}}}
-	\lstinputlisting{Data/Yrno_ukazka.xml}
 	
 	\subsection{JSON}
 	\subsubsection{OpenWeather}
 	
 	Dalším datovým zdrojem v podobě textu je OpenWeather. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
 	
-	\subsubsection{ukázka}
+	\subsubsection{Ukázka API}
 	
-	Ukázka části z JSON souboru obsahujícího data o počasí pro Ostravu na následujících 5 dnů.
+	Ukázka odkazu který vrací JSON text obsahujícíh data o počasí pro Ostravu na následujících 5 dnů.
 	
 	https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=ea63080a4f8e99972630d2671e3ef805
-	
-	\lstinputlisting{Data/Owm_ukazka.json}
 	
 	\subsection{JSON}
 	\subsubsection{WeatherUnlocked}
@@ -118,18 +92,20 @@
 	
 	\subsubsection{ukázka}
 	
-	Ukázka části z JSON souboru obsahujícího data o počasí pro Ostravu na následujících 5 dnů.
+	Ukázka odkazu který vrací JSON text obsahujícíh data o počasí pro Ostravu na následujících 5 dnů.
 	
 	http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=79ef9432\&app\_key=904d54d78eec41c2c55ed93cbaf7c7ca
-	
-	\lstinputlisting{Data/Weun_ukazka.json}
 	
 	\subsection{Bitmap}
 	\subsubsection{Medard}
 	
 	Medard je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získlávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
 	
-	\subsubsection{ukázka}
+	\subsubsection{Ukázka API a obsahu}
+	
+	Ukázka odkazu který vrací bitmapu obsahujícíh data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
+	
+	http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13
 	
 	\captionof{figure}{Ukázka bitmapy od Medard-online}
 	\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
@@ -138,7 +114,11 @@
 	
 	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný, protože poskytuje data pouze v aktuálním čase, respektive v čase pár hodin zpět a pokrávý jen českou republiku. Z toho důvodu se tento zdroj dá využít pouze pro zjištění aktuálního srážek v ČR a blízkém okolí.
 	
-	\subsubsection{ukázka}
+	\subsubsection{Ukázka API a obsahu}
+	
+	Ukázka odkazu který vrací bitmapu obsahujícíh data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}.
+	
+	http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
 	
 	\captionof{figure}{Ukázka snímku z radaru od Radar.bourky}
 	\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
@@ -318,6 +298,9 @@
 	
 	\section{Vizualizace dat}
 	
+	\section{Závěrt}
 	
+	\printbibliography[title={Literatura}, heading=bibintoc]
+
 	
 \end{document}

@@ -12,66 +12,78 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{Seznam tabulek}{10}{Doc-Start}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{Seznam výpisů zdrojového kódu}{11}{Doc-Start}%
+\contentsline {section}{\numberline {1}Úvod}{11}{section.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{Seznam obr\'azk\r {u}}{12}{Doc-Start}%
+\contentsline {section}{\numberline {2}Datové zdroje}{12}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{Seznam tabulek}{13}{Doc-Start}%
+\contentsline {subsection}{\numberline {2.1}XML}{12}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Úvod}{14}{section.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Yr.no}{12}{subsubsection.2.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Datové zdroje}{15}{section.2}%
+\contentsline {subsubsection}{\numberline {2.1.2}Ukázka API}{12}{subsubsection.2.1.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}XML}{15}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}JSON}{12}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1}yr.no}{15}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.2.1}OpenWeather}{12}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.2}ukázka}{15}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.2.2}Ukázka API}{13}{subsubsection.2.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}JSON}{17}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}JSON}{13}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.1}OpenWeather}{17}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.3.1}WeatherUnlocked}{13}{subsubsection.2.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.2}ukázka}{17}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.3.2}ukázka}{13}{subsubsection.2.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}JSON}{19}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Bitmap}{13}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.1}WeatherUnlocked}{19}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.4.1}Medard}{13}{subsubsection.2.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.2}ukázka}{19}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.4.2}Ukázka API a obsahu}{13}{subsubsection.2.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Bitmap}{21}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.3}Radar.bourky}{14}{subsubsection.2.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.1}Medard}{21}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.4}Ukázka API a obsahu}{14}{subsubsection.2.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.2}ukázka}{21}{subsubsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.5}Shrnutí použitých zdrojů}{15}{subsection.2.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.3}Radar.bourky}{21}{subsubsection.2.4.3}%
+\contentsline {section}{\numberline {3}Agregace dat}{16}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.4.4}ukázka}{22}{subsubsection.2.4.4}%
+\contentsline {subsection}{\numberline {3.1}Škála}{16}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.5}Shrnutí použitých zdrojů}{22}{subsection.2.5}%
+\contentsline {subsection}{\numberline {3.2}Triangulace}{16}{subsection.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Agregace dat}{23}{section.3}%
+\contentsline {subsection}{\numberline {3.3}Interpolace}{17}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Škála}{23}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Distribuce dat}{19}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Triangulace}{23}{subsection.3.2}%
+\contentsline {subsection}{\numberline {4.1}API}{19}{subsection.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Interpolace}{24}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {4.1.1}Bitmap předpověď}{19}{subsubsection.4.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Distribuce dat}{26}{section.4}%
+\contentsline {subsubsection}{\numberline {4.1.2}XML a JSON předpověď}{20}{subsubsection.4.1.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}API}{26}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.3}Využívané škály}{20}{subsubsection.4.1.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.1}Bitmap předpověď}{26}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.4}Zkratky typů počasí}{21}{subsubsection.4.1.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.2}XML a JSON předpověď}{27}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.5}Zkratky datových zdrojů}{21}{subsubsection.4.1.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.3}Využívané škály}{27}{subsubsection.4.1.3}%
+\contentsline {section}{\numberline {5}Vizualizace dat}{22}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.4}Zkratky typů počasí}{28}{subsubsection.4.1.4}%
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.5}Zkratky datových zdrojů}{28}{subsubsection.4.1.5}%
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Vizualizace dat}{29}{section.5}%
+\contentsline {section}{Literatura}{22}{section.5}%
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
