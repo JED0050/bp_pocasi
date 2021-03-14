@@ -135,19 +135,19 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
-        public IActionResult XMLForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfForecasts)
+        public IActionResult XMLForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfFcs)
         {
             try
             {
-                if (time == null || loaders == null || lon == null || lat == null)
+                if (lon == null || lat == null)
                 {
-                    throw new Exception("Parametry 'time', 'loaders', 'lon' a 'lat' musí být vyplněny.");
+                    throw new Exception("Parametry 'lon' a 'lat' musí být vyplněny.");
                 }
                 else
                 {
                     DateTime startTime;
 
-                    if (time == "0")
+                    if (time == "0" || time == null)
                     {
                         startTime = DateTime.Now;
                     }
@@ -166,9 +166,9 @@ namespace Webova_Sluzba.Controllers
                     startTime = startTime.AddMinutes(30);
                     startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, 0, 0);
 
-                    if (hourDif == null && numOfForecasts == null)
+                    if (hourDif == null && numOfFcs == null)
                     {
-                        Forecast forecast = GetForecastFromTimeAndPoint(time, loaders, lon, lat);
+                        Forecast forecast = GetForecastFromTimeAndPoint(startTime, loaders, lon, lat);
                         forecast.Time = startTime;
 
                         ForecastXMLSerializeObject f = new ForecastXMLSerializeObject(forecast);
@@ -185,12 +185,12 @@ namespace Webova_Sluzba.Controllers
 
                         return this.Content(xmlString, "text/xml");
                     }
-                    else if (hourDif != null && numOfForecasts != null)
+                    else if (hourDif != null && numOfFcs != null)
                     {
 
                         List<Forecast> forecasts = new List<Forecast>();
 
-                        for (int i = 0; i < int.Parse(numOfForecasts); i++)
+                        for (int i = 0; i < int.Parse(numOfFcs); i++)
                         {
 
                             DateTime actTime = startTime.AddHours(i * int.Parse(hourDif));
@@ -218,7 +218,7 @@ namespace Webova_Sluzba.Controllers
                     }
                     else
                     {
-                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfForecasts' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
+                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfFcs' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
                     }
                 }
             }
@@ -228,19 +228,19 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
-        public IActionResult JSONForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfForecasts)
+        public IActionResult JSONForecast(string time, string loaders, string lon, string lat, string hourDif, string numOfFcs)
         {
             try
             {
-                if(time == null || loaders == null || lon == null || lat == null)
+                if(lon == null || lat == null)
                 {
-                    throw new Exception("Parametry 'time', 'loaders', 'lon' a 'lat' musí být vyplněny.");
+                    throw new Exception("Parametry 'lon' a 'lat' musí být vyplněny.");
                 }
                 else
                 {
                     DateTime startTime;
 
-                    if (time == "0")
+                    if (time == "0" || time == null)
                     {
                         startTime = DateTime.Now;
                     }
@@ -259,7 +259,7 @@ namespace Webova_Sluzba.Controllers
                     startTime = startTime.AddMinutes(30);
                     startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, 0, 0);
 
-                    if (hourDif == null && numOfForecasts == null)
+                    if (hourDif == null && numOfFcs == null)
                     {
                         Forecast forecast = GetForecastFromTimeAndPoint(startTime, loaders, lon, lat);
                         forecast.Time = startTime;
@@ -270,11 +270,11 @@ namespace Webova_Sluzba.Controllers
 
                         return this.Content(jsonString, "text/json");
                     }
-                    else if (hourDif != null && numOfForecasts != null)
+                    else if (hourDif != null && numOfFcs != null)
                     {
                         List<Forecast> forecasts = new List<Forecast>();
 
-                        for (int i = 0; i < int.Parse(numOfForecasts); i++)
+                        for (int i = 0; i < int.Parse(numOfFcs); i++)
                         {
 
                             DateTime actTime = startTime.AddHours(i * int.Parse(hourDif));
@@ -293,7 +293,7 @@ namespace Webova_Sluzba.Controllers
                     }
                     else
                     {
-                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfForecasts' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
+                        throw new Exception("Pro zjištění předpovědi na jeden den nesmí být parametry 'hourDif' a 'numOfFcs' vyplněny. Naopak pro zjištění více předpovědi musí být tyto parametry vplněny oba.");
                     }
                 }
             }

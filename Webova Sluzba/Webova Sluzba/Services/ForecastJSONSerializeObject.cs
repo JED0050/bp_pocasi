@@ -15,7 +15,7 @@ namespace Webova_Sluzba
         {
             DataSources = forecast.DataSources;
 
-            Coord = new  PointLonLat(double.Parse(forecast.Latitude, CultureInfo.InvariantCulture), double.Parse(forecast.Longitude, CultureInfo.InvariantCulture));
+            Coord = new PointLonLat(forecast.DLongitude, forecast.DLatitude);
 
             ForecastJsonObject f = new ForecastJsonObject(forecast);
 
@@ -29,9 +29,9 @@ namespace Webova_Sluzba
 
             DataSources = forecast.DataSources;
 
-            Coord = new PointLonLat(double.Parse(forecast.Latitude, CultureInfo.InvariantCulture), double.Parse(forecast.Longitude, CultureInfo.InvariantCulture));
+            Coord = new PointLonLat(forecast.DLongitude, forecast.DLatitude);
 
-            foreach(Forecast f in forecasts)
+            foreach (Forecast f in forecasts)
             {
                 ForecastJsonObject fO = new ForecastJsonObject(f);
                 Forecasts.Add(fO);

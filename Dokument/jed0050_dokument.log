@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  13 MAR 2021 20:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  14 MAR 2021 19:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1056,7 +1056,7 @@ Package biblatex Info: Reference segment=0 on input line 52.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/Assignment1.jpg, id=81, 597.6729pt x 845.0772pt>
+<Figures/Assignment1.jpg, id=89, 597.6729pt x 845.0772pt>
 File: Figures/Assignment1.jpg Graphic file (type jpg)
 <use Figures/Assignment1.jpg>
 Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 54.
@@ -1099,7 +1099,7 @@ Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 54.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/AuthorDeclaration.jpg, id=86, 614.295pt x 845.559pt>
+<Figures/AuthorDeclaration.jpg, id=94, 614.295pt x 845.559pt>
 File: Figures/AuthorDeclaration.jpg Graphic file (type jpg)
 <use Figures/AuthorDeclaration.jpg>
 Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 54.
@@ -1144,7 +1144,7 @@ Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 54.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/CoopPersonDeclaration.jpg, id=91, 614.295pt x 845.559pt>
+<Figures/CoopPersonDeclaration.jpg, id=99, 614.295pt x 845.559pt>
 File: Figures/CoopPersonDeclaration.jpg Graphic file (type jpg)
 <use Figures/CoopPersonDeclaration.jpg>
 Package pdftex.def Info: Figures/CoopPersonDeclaration.jpg  used on input line 
@@ -1251,7 +1251,7 @@ Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 110.
 See the caption package documentation for explanation.
 
-<Data/Mdrd_ukazka.png, id=165, 684.3969pt x 435.0654pt>
+<Data/Mdrd_ukazka.png, id=177, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
 Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 111.
@@ -1262,7 +1262,7 @@ Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 123.
 See the caption package documentation for explanation.
 
-<Data/Rb_ukazka.png, id=180, 796.47563pt x 577.40718pt>
+<Data/Rb_ukazka.png, id=192, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
 Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 124.
@@ -1314,40 +1314,79 @@ Overfull \hbox (85.68617pt too wide) in paragraph at lines 242--243
 211889,17.4213141&loaders=mdrd 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--251
+
+ []
+
+
+Overfull \hbox (26.25313pt too wide) in paragraph at lines 248--251
+\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&lat=zem¥pisná_²í°ka&lon=zem¥pisní
+_délka&loaders=datové_zdroje 
+ []
+
 [20]
+Overfull \hbox (410.59828pt too wide) in paragraph at lines 252--253
+[]\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&numOfFcs=po£et_p°edpov¥dí&hourD
+if=hodinový_rozdíl_mezi_p°edpov¥¤mi&lat=zem¥pisná_²í°ka&lon=zem¥pisní_délka&loa
+ders=datové_zdroje 
+ []
+
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 270.
+(caption)                particular \caption on input line 254.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 286.
-See the caption package documentation for explanation.
+Overfull \hbox (46.27176pt too wide) in paragraph at lines 256--267
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 281--282
+[]\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
+
+ []
 
 [21]
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
+[]\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
+-
+ []
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 309.
+See the caption package documentation for explanation.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 325.
+See the caption package documentation for explanation.
+
+[22] [23]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-01.
+46.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [22
+) [24
 
 ]
 (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: 2C264D75E8D0FAA26FC0790AFE31FECB;1989.
+(rerunfilecheck)             Checksum: 6D79EBF10EC8523B156AEBFE8056855F;2260.
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25406 strings out of 479382
- 413011 string characters out of 5867828
- 1131006 words of memory out of 5000000
- 42051 multiletter control sequences out of 15000+600000
+ 25413 strings out of 479382
+ 413082 string characters out of 5867828
+ 1132007 words of memory out of 5000000
+ 42053 multiletter control sequences out of 15000+600000
  444459 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,100p,1112b,4596s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,100p,1112b,4594s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Skola-SW/texlive/20
 20/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive/2020/texmf-
@@ -1363,9 +1402,9 @@ ts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
 ublic/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
 ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
 <d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (22 pages, 1897812 bytes).
+Output written on jed0050_dokument.pdf (24 pages, 1905660 bytes).
 PDF statistics:
- 322 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
- 182 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 344 PDF objects out of 1000 (max. 8388607)
+ 74 named destinations out of 1000 (max. 500000)
+ 198 words of extra memory for PDF output out of 10000 (max. 10000000)
 
