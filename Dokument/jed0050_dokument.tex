@@ -341,6 +341,74 @@
 	
 	\section{Vizualizace dat}
 	
+	Část vizualizace dat je realizována prostřednictvím desktopové aplikace Bude-hezky napsané v C\# Windows Forms. Aplikace umožňuje uživateli zobrazit informace o různých typech počasí v bodě či na trase pro zvolený čas. Data jsou distribuována webovou službou a uživatel si může zvolit které datové zdroje chce pro své předpovědi používat.
+	
+	\subsection{Obecné použití}
+	
+	Aplikace je tvořena několika vzájemně propojenými částmi mapou reprezentující plochu pro kterou chceme znát počasí, lištou času pro který nebo od kterého chceme počasí určit, radio buttony reprezentující typ předpovědi, comboboxy pro volbu datových zdrojů, grafem zobrazující počasí pro více časových intervalů, tlačítkem pro přehrání animace počasí v následujícím čase a meníčkem pro nastavení aplikace případně volby určitých akcí.
+	
+	Při používání aplikace si uživatel zvolí kalá typ počasí chce zobrazi vybráním patřičného radio buttonu a které z datových zrdojů si přeje používat zakliknutím požadovaných combo boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, typu počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
+	
+	Při určování číslených hodnot z bitmap se využívají totožné škály které webová služba používa při vytvážení samotných bitmap. Tyto škály si vizualizační aplikace dokáže stáhnout a přepsat pokud dojde k jejich změně na straně webové služby.
+	
+	\subsection{Mapa}
+	
+	Pro práci s mapou se využívá komponenta GMap.NET, která je volně dostupná pro rozšíření vlastností Windows Forms. Tato komponenta nám umožňuje vykreslit mapu po které se může uživatel pohybovat, přibližovat a oddalovat ji. Komponenta dokáže určit zeměpisné souřadnice bodu ve kterém se nachází kurzor myši, takže není problém určit souřadnice požadovaného místa a ani plochy pro kterou data určujeme protože ta je vyhrazena levým horním a pravým dolním rohem mapy. Komponenta nám dovoluje přidat značky s popisky na mapu pokud máme za potřebí vyznačit zjišťovaný bod či body na trase, pro trasu se krom bodů vykreslí i křivka reprezentující celou cestu. Do mapy máme také možnost přidat bitmapu což se využívá při nakreslení dat.
+	
+	Na samotné mapě se vždy při změnách času, typu a zdrojů vykresluje bitmapa reprezentující počasí, průhlednost této bitmapy má uživatel možnost nastavit prostřednictvím nastavení v menu.
+	
+	\subsection{Počasí v bodě}
+	
+	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný.
+	
+	Při zjišťování počasí v bodě se využívají data z bitmapy kterou si aplikace stáhla z webového serveru be chvíli co byl zvolen typ počasí, datový zdroj a čas. Z této bitmapy se určí pixel obsahující data o počasí pro požadovaný bod a pomocí škály je RGB hodnota převedena na desetinné číslo.
+	
+	\subsection{Počasí na trase}
+	
+	Mimo počasí pro jeden bod v rýzných časem máme možnost vykreslit i počasí na učité trase, tedy na více různých bodech v rozdílných časech na základě rychlosti pohybu. Trasa se zadává pomocí předem vytvořeného GPX souboru obsahujícího body reprezentující samotnou trasu. Při zobrazování trasy je potřeba zjistit jakou rychlostí se po trase postupuje pro možnost zjištění postupu času na následující bodech zvolené cesty. Tato rychlost se v aplikaci může určit dvěma způsoby. Prvním je zadání počátečního času a dopravního prostředku, každý dopravní prostředek má svou vlastní předem nastavenou rychlost a při výpočtu uplynulé vzdálenosti od počátku dokážeme určit i čas v tomto uplynulém bodě. Druhým způsobem určení času na trase je zadání času začátku cesty a času konce cesty, díky těmto dvoum informacím dokámeže určit jak dlouho trvá urazit celou cestu a tím pádem dokážeme spočítat i rychlost, když známe délku cesty.
+	
+	Při požadavku o zobrazení počasí v trase musí uživatel vybrat možnost $Akce$ z menu a v něm zakliknout $Nahrát trasu z GPX souboru$. Poté si uživatel vybere jednu z možností určení rychlosti dopravy, zadá tedy počáteční čas a dopravní prostředek případně počíteční a koncový čas. Nakonec vybere cestu k samotnému GPX souboru. Pokud během toho procesu dojde k jakékoliv chybě proces se ukončí a uživateli se vypíše co přesně neproběhlo správně.
+	
+	Po úspěšném zadání všech parametrů a zpracování souboru je na mapě nakreslena křivka reprezentující trasu. Na této křivce je zobrazeno 10 bodů oddělených rovnoměrně od sebe, každý bod obsahuje popis informací o počasí v tomto bodě. Součástí zobrazení trasy je i vykreslení grafu pod mapou, graf obsahuje 10 sloupců kde každý sloupec reprezentuje jeden z vyznačených bodů na trase. 
+	
+	Určování dat pro počasí v těchto bodech se provádí stejně jako v určování informací o počasí v bodě. Pro každý vykreslený bod na trase s rozdílným časem se stáhne nová bitmapa na které se najde pixel reprezentující danou zeměpisnou souřadnici a pro tento pixel se určí hodnota počasí převodem RGB hodnoty na desetinné číslo prostřednictvím škály.
+	
+	\subsection{Animace počasí}
+	
+	Uživatel má možnost zobrazit si animaci předpovědí pro zvolený typ počasí od zvoleného času. Při kliknutí na tlačítko pro přehrání animace dochází k vykreslení zvoleného typu bitmapy počasí, čas počasí pro animaci začíná od zvoleného času na liště, následně se v animaci vykreslují nové bitmapy pro následující čas inkremntovaná o hodinu. Počet kroků animace je určen v nastavení a při běhu animace můžeme vidět v jaké čísti se právě nacházímě a jaký je aktuální čas pro zobrazený krok.
+	
+	Při zpracování animace dochází k cyklickému stahování bitmap z webové služby. Hranice bitmapy jsou ohraničeny souřadnicemi rohů mapy a čas této předpovědi je vždy o hodinu vyšší než měla předpověď předešlá. Typ počasí ani datové zdroje se u animace neliší ty jsou pro celou animaci stejné.
+	
+	\subsection{Graf}
+	
+	graf pro bod
+	
+	graf pro trasu
+	
+	zpracování grafu, vykresluje data dle typu
+	
+	každý typ má minimum a maximum
+	
+	počet sloupsů v grafu se nastavuje
+	
+	\subsection{Nastavení}
+	
+	adresa
+	
+	průhlednost
+	
+	kroky pro jednu předpověď
+	
+	kroky pro animaci
+	
+	stažení škál
+	
+	\subsection{Chyby při zobrazování dat}
+	
+	zobrazení message z webu
+	
+	případně proč došlo k pádu při zpracování gpx souboru
+	
 	\section{Závěr}
 	
 	\printbibliography[title={Literatura}, heading=bibintoc]
