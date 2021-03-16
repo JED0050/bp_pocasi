@@ -33,18 +33,17 @@
 % Pokud toto makro zapoznamkujeme sazi se cisty text souhlasu.
 \CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
 
-\CzechAbstract{Cílem bakalářské práce bylo vytvořit aplikaci, která bude schopna shromažďovat data o počasí z různých datových zdrojů v různých formátech (text XML, text JSON, bitmap). Agregovaná data jsou následně poskytována pomocí webové služby v jednom formátu (bitmap). Webová služba poskytuje data pro určité území v danném čase. Posledním bodem je vizualizační aplikace, která poskytuje uživateli možnost vykreslení počasí pro určité území v čase a také zobrazuje předpověď pro zadanou trasu.}
+\CzechAbstract{Cílem bakalářské práce bylo vytvořit knihovnu, která bude schopna shromažďovat data o počasí z různých datových zdrojů v různých formátech (text XML, text JSON, bitmap). Agregovaná data jsou následně poskytována pomocí webové služby v jednom formátu (bitmap). Webová služba poskytuje data pro určité území v danném čase. Posledním bodem je vizualizační aplikace, která poskytuje uživateli možnost vykreslení počasí pro určité území v čase a také zobrazuje předpověď pro zadanou trasu.}
 
 \CzechKeywords{XML; JSON; bitmap; počasí}
 
-\EnglishAbstract{The aim of the bachelor thesis was to create an application that will be able to collect weather data from various data sources in various formats (XML text, JSON text, bitmap). The aggregated data is then provided using a web service in one format (bitmap). The web service provides data for a specific territory at a given time. The last point is a visualization application that provides the user with the ability to plot the weather for a certain area over time and also displays the forecast for the specified route.}
+\EnglishAbstract{The aim of the bachelor thesis was to create a library that will be able to collect weather data from various data sources in various formats (XML text, JSON text, bitmap). The aggregated data is then provided using a web service in one format (bitmap). The web service provides data for a specific territory at a given time. The last point is a visualization application that provides the user with the ability to plot the weather for a certain area over time and also displays the forecast for the specified route.}
 
 \EnglishKeywords{XML; JSON; bitmap; forecast}
 
 \AddAcronym{XML}{Extensible Markup Language}
 \AddAcronym{JSON}{JavaScript Object Notation}
 \AddAcronym{BMP}{Bitmap}
-\AddAcronym{HTML}{Hyper Text Markup Language}
 
 \addbibresource{Citace/citace.bib}
 
@@ -158,7 +157,7 @@
 	
 	Při vytváření bitmap dochází k určování hodnot počasí (teplota, srážky atp.) pro konkrétní zeměpisné souřadnice, které jsou následně převedeny na pixely bitmapy. Zjišťovat hodnotu pro každý jednotlivý pixel by bylo velice časově náročné, a protože můžeme předpokládat že v okolí pixelu budou obdobné hodnoty jako na pixelu samotné stačí nám určit hodnoty pouze pro určité množství pixelů rozložených správně po bitmapě. Následně je potřeba tyto pixely nějakým způsobem propojit, zde nám problém řeší využité triangulace.
 	
-	V práci se využívá S-hull Algoritmus pro triangulaci. Konkrétně Phil Atkinova implementace pro C\#. Algoritmus nám množinu bodů, v našem případě pixelů, rozdělí na trojuhelníky. Respektive nám pro každý vrchol řekne s kterými vrcholi je spojen hranou, čímž nám vznikne síť trojuhelníků pokrývající většinu bitmapy.
+	V práci se využívá S-hull Algoritmus pro triangulaci. Konkrétně Phil Atkinova implementace pro C\# \emph{S-hull} \cite{shull}. Algoritmus nám množinu bodů, v našem případě pixelů, rozdělí na trojuhelníky. Respektive nám pro každý vrchol řekne s kterými vrcholi je spojen hranou, čímž nám vznikne síť trojuhelníků pokrývající většinu bitmapy.
 	
 	%\vfill
 	
@@ -179,7 +178,7 @@
 	
 	Bitmapa je pokryta sítí trojuhelníků kde známe hodnotu každého vrcholu. Nyní vzniká potřeba každý trojuhelník vyplnit barvamy, které reprezentují hodnotu pixelů uvnitř trojuhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
 	
-	Pro výpočet interpolace postačí jednoduchý vzorec, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovanáý bod určí jakou hodnotu sám zjišťovaný bod má.
+	Pro výpočet interpolace postačí jednoduchý vzorec \emph{Interpolace v trojuhelníku} \cite{interp}, který na základě hodnot vrcholů trojuhelníku a vzdálenosti od nich pro zjišťovanáý bod určí jakou hodnotu sám zjišťovaný bod má.
 	
 	%\vspace{10mm}
 	
@@ -347,7 +346,9 @@
 	
 	Aplikace je tvořena několika vzájemně propojenými částmi mapou reprezentující plochu pro kterou chceme znát počasí, lištou času pro který nebo od kterého chceme počasí určit, radio buttony reprezentující typ předpovědi, comboboxy pro volbu datových zdrojů, grafem zobrazující počasí pro více časových intervalů, tlačítkem pro přehrání animace počasí v následujícím čase a meníčkem pro nastavení aplikace případně volby určitých akcí.
 	
-	Při používání aplikace si uživatel zvolí kalá typ počasí chce zobrazi vybráním patřičného radio buttonu a které z datových zrdojů si přeje používat zakliknutím požadovaných combo boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, typu počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
+	Při používání aplikace si uživatel zvolí kalá typ počasí chce zobrazi vybráním patřičného radio buttonu a které z datových zdrojů si přeje používat zakliknutím požadovaných combo boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, typu počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
+	
+	Typy počasí odpovídají veškerým typům poskytovaným webovou službou, jedná se tedy o srážkym, teplotu, tlak a vlhkost. Pro datové zdroje se rovněž používají veškeré datové zdroje které sluba poskytuje. Lišta dat a časů obsahuje veškeré data a časy od toho aktuálního po datum a čas za 6 dnů dopředu.
 	
 	Při určování číslených hodnot z bitmap se využívají totožné škály které webová služba používa při vytvážení samotných bitmap. Tyto škály si vizualizační aplikace dokáže stáhnout a přepsat pokud dojde k jejich změně na straně webové služby.
 	
@@ -381,33 +382,29 @@
 	
 	\subsection{Graf}
 	
-	graf pro bod
+	Součástí aplikace je i graf obsahující informace o předpovědích pro jednotlivé časy. Šířka grafu se dynamicky mění při změně rozměrů okna aplikace. Graf má na ose $y$ sloupce ukazující hodnotu daného typu počasí v rozmezí od minima do maxima, na ose $x$ se nachází čas předpovědi pro daný sloupce. Graf je vykreslován na panel pomocí základních metod knihovny System.Drawing, nevyužívají pro tento účel se žádné externí knihovny.
 	
-	graf pro trasu
+	Při vykreslování grafu pro bod reprezentují všechny sloupce stejné místo s rozdílným časem. Časy jsou od sebe posunuté o hodinu a počet vykreslených sloupců lze změnit v nastavení.
 	
-	zpracování grafu, vykresluje data dle typu
+	Pro tuto předpověď nám graf vykresluje počasí pro 6 rovnoměrně vzdálených míst na trase. Proto počet sloupců v tomto grafu je vždy 6. Na rozdíl od grafu pro předpověď v bodě nám tento graf na ose $x$ reprezentuje čas sloupce v aktuálním bodě a vzdálenost tohoto bodu od počátku cesty.
 	
-	každý typ má minimum a maximum
+	Zobrazený typ jednotek předpovědi na ose $y$ se mění dle zvoleného typu počasí v radio buttonech. Každý typ předpovědi zdá své jednotky a mimo to i minimální a maximální hodnotu počasí pro tuto jednotku. Hodnota předpovědi pro každý sloupec se tedy určí jako procentuální hodnota v rozmezí od minima po maximum.
 	
-	počet sloupsů v grafu se nastavuje
+	\subsection{Nastavení a akce}
 	
-	\subsection{Nastavení}
+	Součástí aplikace je i menu nacházející se v horní liště. Menu je rozděleno do části nastavení pro individuální změny aplikace a akce pro rychlé volby.
 	
-	adresa
+	V části nastavení lze nastavit adresu webové služby poskytující data o počasí. Dále se zde nachází možnost změny průhlednosti vykreslené bitmapy na samotnou mapu, lze vybrat vlastní hodnotu v rozmezí od 0 do 255 kde 0 je naprosto průhledná bitmapa a 255 bitmapa bez jakékoliv průhlednosti je zde i volba pro přímé nastavení minima či maxima bez potřeby zapisovat hodntou ručně. Následně zde lze nastavit počet vykreslených sloupců v grafu při určování počasí v bodě, rovněž zde lze nastavit počet kroků při animaci překreslování bitmap počasí. Všechny tyto hodnoty se musí nacházet v předem definivaném rozmezí od minima po maximum, při zadání neplatné hodnoty dojde k nastavení nejbližší platné. V nastavení zle i stáhnout nové škály z webové služby pro určování číselných hodnot z RGB pixelů. Při potřeba nastavení výchozích hodnot lze v nastavení zvolit i tuto variantu.
 	
-	průhlednost
+	V části menu akce je na výběr mezi vybráním cesty z GPX souboru pro vykreslení trasy a určení počasí na ni. Druhá možnost v akcích je přemazání mapy. Tato volba slouží k vymazání hodnot na mapě. Při této volbě dojde k smazání grafu, bitmapy počasí na mapě a značce označující počasí v bodě případně se odstraní trasa společně s jejími body a popisy.
 	
-	kroky pro jednu předpověď
-	
-	kroky pro animaci
-	
-	stažení škál
+	Veškeré nastavení aplikace se ukládá do konfiguračního json souboru. Při spuštění aplikace se z tohoto souboru načtou data o adrese serveru, průhlednosti bitmapy, počtu kroků při animaci, počtu předpovědí pro počasí v bodě, poslední zvolený typ počasí a napsoledy zvolené datové zdroje. Díky tomuto souboru nemusí uživatel při každém spuštění znovu nastavovat veškeré věci znovu. Při změně jakéhokoliv z těchto atributů dochází k přepsání json souboru pro urdržení neustále konzistence s plikací po ukončení aplikace a opětovném spuštění.
 	
 	\subsection{Chyby při zobrazování dat}
 	
-	zobrazení message z webu
+	Pokud dojde k chybě při získávání dat ze serveru vypíše se chybová hláška vrácená samotnou službou jako atribut message v chybovém json výstupu. K těmto chybám dochází nejčastěji při pokusu o získání počasí pro čas pro který nemá žádný ze zvolených datových zdrojů vytvořenou bitmapu. Pokud dochází k pádu z neznámého dlvodu dochází k výpisu obecné chyby a prosba o kontrolu zda je webová služba aktuálně dostupná.
 	
-	případně proč došlo k pádu při zpracování gpx souboru
+	Může se stát že dojde k chybě i při určování počasí trasy z GPX soboru. Mimo pád při neschopnosti zjištění počasí pro daný bod dochází i k chybě při zpracování samotného GPX soboru při nepodporovaném formátování. Případně dochází k chybě při zadání většího počátečního času než toho koncového. Při těchto chybách dochází k oznámení informaci uživateli proč došlo k chybě a možnost napravení chyb při novém vykreslení trasy.
 	
 	\section{Závěr}
 	

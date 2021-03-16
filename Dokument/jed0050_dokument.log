@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  15 MAR 2021 20:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  16 MAR 2021 18:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -860,7 +860,7 @@ Package: subfig 2005/06/28 ver: 1.3 subfig package
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 52
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 51
 .
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmr.fd
@@ -869,24 +869,24 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 (./jed0050_dokument.aux)
 \openout1 = `jed0050_dokument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -949,7 +949,7 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 52.
+Package hyperref Info: Link coloring ON on input line 51.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -963,9 +963,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count445
 )
-LaTeX Info: Redefining \ref on input line 52.
-LaTeX Info: Redefining \pageref on input line 52.
-LaTeX Info: Redefining \nameref on input line 52.
+LaTeX Info: Redefining \ref on input line 51.
+LaTeX Info: Redefining \pageref on input line 51.
+LaTeX Info: Redefining \nameref on input line 51.
  (./jed0050_dokument.out) (./jed0050_dokument.out)
 \@outlinefile=\write5
 \openout5 = `jed0050_dokument.out'.
@@ -1017,8 +1017,8 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'jed0050_dokument.bbl' found.
 
 (./jed0050_dokument.bbl)
-Package biblatex Info: Reference section=0 on input line 52.
-Package biblatex Info: Reference segment=0 on input line 52.
+Package biblatex Info: Reference section=0 on input line 51.
+Package biblatex Info: Reference segment=0 on input line 51.
  [1
 
 ]
@@ -1059,7 +1059,7 @@ Package biblatex Info: Reference segment=0 on input line 52.
 <Figures/Assignment1.jpg, id=121, 597.6729pt x 845.0772pt>
 File: Figures/Assignment1.jpg Graphic file (type jpg)
 <use Figures/Assignment1.jpg>
-Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 54.
+Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 53.
 (pdftex.def)             Requested size: 589.60045pt x 834.63033pt.
  [2
 
@@ -1102,7 +1102,7 @@ Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 54.
 <Figures/AuthorDeclaration.jpg, id=126, 614.295pt x 845.559pt>
 File: Figures/AuthorDeclaration.jpg Graphic file (type jpg)
 <use Figures/AuthorDeclaration.jpg>
-Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 54.
+Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 53.
 (pdftex.def)             Requested size: 589.59464pt x 834.6675pt.
  [3
 
@@ -1148,7 +1148,7 @@ Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 54.
 File: Figures/CoopPersonDeclaration.jpg Graphic file (type jpg)
 <use Figures/CoopPersonDeclaration.jpg>
 Package pdftex.def Info: Figures/CoopPersonDeclaration.jpg  used on input line 
-54.
+53.
 (pdftex.def)             Requested size: 589.59464pt x 834.6675pt.
  [4
 
@@ -1224,80 +1224,80 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [12
 
 ]
-Overfull \hbox (170.3016pt too wide) in paragraph at lines 86--87
+Overfull \hbox (170.3016pt too wide) in paragraph at lines 85--86
 []\T1/lmr/m/n/10.95 https://api.openweathermap.org/data/2.5/forecast?lat=49.820
 923&lon=18.262524&appid=ea63080a4f8e99972630d2671e3ef805 
  []
 
 
-Overfull \hbox (199.10643pt too wide) in paragraph at lines 97--98
+Overfull \hbox (199.10643pt too wide) in paragraph at lines 96--97
 []\T1/lmr/m/n/10.95 http://api.weatherunlocked.com/api/forecast/49.820923,18.26
 2524?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca 
  []
 
 
-Overfull \hbox (24.4545pt too wide) in paragraph at lines 108--109
+Overfull \hbox (24.4545pt too wide) in paragraph at lines 107--108
 []\T1/lmr/m/n/10.95 http://www.medard-online.cz/apiforecast?run=210313_06&forec
 ast=precip&layer=eu&step=13 
  []
 
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 110.
+(caption)                outside box or environment on input line 109.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 110.
+(caption)                particular \caption on input line 109.
 See the caption package documentation for explanation.
 
 <Data/Mdrd_ukazka.png, id=217, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 111.
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 110.
 (pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
 [13]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 123.
+(caption)                particular \caption on input line 122.
 See the caption package documentation for explanation.
 
 <Data/Rb_ukazka.png, id=232, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 124.
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 123.
 (pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
 [14 <./Data/Mdrd_ukazka.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 130.
+(caption)                particular \caption on input line 129.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (19.36688pt too wide) in paragraph at lines 132--143
+Overfull \hbox (19.36688pt too wide) in paragraph at lines 131--142
  [] 
  []
 
 [15 <./Data/Rb_ukazka.png>] [16
 
 ] [17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 213--216
+Underfull \hbox (badness 10000) in paragraph at lines 212--215
 
  []
 
 
-Overfull \hbox (12.65704pt too wide) in paragraph at lines 213--216
+Overfull \hbox (12.65704pt too wide) in paragraph at lines 212--215
 \T1/lmr/m/n/10.95 adresaserveru/bmp?type={typ}&time={£as}&loaders={datové zdroj
 e}&p1={bod1}&p2={bod2} 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 217.
+(caption)                particular \caption on input line 216.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (31.55014pt too wide) in paragraph at lines 219--228
+Overfull \hbox (31.55014pt too wide) in paragraph at lines 218--227
  [] 
  []
 
@@ -1305,28 +1305,28 @@ Overfull \hbox (31.55014pt too wide) in paragraph at lines 219--228
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-32.
+31.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (85.68617pt too wide) in paragraph at lines 242--243
+Overfull \hbox (85.68617pt too wide) in paragraph at lines 241--242
 []\T1/lmr/m/n/10.95 adresaserveru/bmp?type=prec&p1=49.621559,17.1507294&p2=49.5
 211889,17.4213141&loaders=mdrd 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--251
+Underfull \hbox (badness 10000) in paragraph at lines 247--250
 
  []
 
 
-Overfull \hbox (26.25313pt too wide) in paragraph at lines 248--251
+Overfull \hbox (26.25313pt too wide) in paragraph at lines 247--250
 \T1/lmr/m/n/10.95 adresaserveru/data?time=£as&lat=zem¥pisná_²í°ka&lon=zem¥pisní
 _délka&loaders=datové_zdroje 
  []
 
 [20]
-Overfull \hbox (410.59828pt too wide) in paragraph at lines 252--253
+Overfull \hbox (410.59828pt too wide) in paragraph at lines 251--252
 []\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&numOfFcs=po£et_p°edpov¥dí&hourD
 if=hodinový_rozdíl_mezi_p°edpov¥¤mi&lat=zem¥pisná_²í°ka&lon=zem¥pisní_délka&loa
 ders=datové_zdroje 
@@ -1334,63 +1334,65 @@ ders=datové_zdroje
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 254.
+(caption)                particular \caption on input line 253.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (46.27176pt too wide) in paragraph at lines 256--267
+Overfull \hbox (46.27176pt too wide) in paragraph at lines 255--266
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
+Underfull \hbox (badness 10000) in paragraph at lines 280--281
 []\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
 
  []
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 285--286
+Underfull \hbox (badness 10000) in paragraph at lines 284--285
 []\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
 -
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 309.
+(caption)                particular \caption on input line 308.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 325.
+(caption)                particular \caption on input line 324.
 See the caption package documentation for explanation.
 
 [22] [23] [24
 
 ]
 
-LaTeX Warning: Command \' invalid in math mode on input line 370.
+LaTeX Warning: Command \' invalid in math mode on input line 371.
 
-[25]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-90.
+[25] [26] [27]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
+11.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [26]
-(./jed0050_dokument.aux)
+)
+[28
+
+] (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: A03B3F1047B06C342BF9690512B3DDA9;3283.
+(rerunfilecheck)             Checksum: C13CE45E95D5B71AB72D4FB5BF6873ED;3324.
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25431 strings out of 479382
- 413336 string characters out of 5867828
- 1132010 words of memory out of 5000000
- 42061 multiletter control sequences out of 15000+600000
+ 25445 strings out of 479382
+ 413662 string characters out of 5867828
+ 1132052 words of memory out of 5000000
+ 42071 multiletter control sequences out of 15000+600000
  444459 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,100p,1112b,4596s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,100p,1112b,4629s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Skola-SW/texlive/20
 20/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive/2020/texmf-
@@ -1406,9 +1408,9 @@ ts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
 ublic/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
 ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
 <d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (26 pages, 1920787 bytes).
+Output written on jed0050_dokument.pdf (28 pages, 1930801 bytes).
 PDF statistics:
- 394 PDF objects out of 1000 (max. 8388607)
- 84 named destinations out of 1000 (max. 500000)
+ 410 PDF objects out of 1000 (max. 8388607)
+ 88 named destinations out of 1000 (max. 500000)
  262 words of extra memory for PDF output out of 10000 (max. 10000000)
 

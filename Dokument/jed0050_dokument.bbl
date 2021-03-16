@@ -58,6 +58,58 @@
       \verb http://radar.bourky.cz/data/pacz2gmaps.z%5C_max3d.20201001.1600.0.png
       \endverb
     \endentry
+    \entry{shull}{online}{}
+      \name{author}{1}{}{%
+        {{hash=bbe3d47a4f777695455bcece099958a7}{%
+           family={Dr\bibnamedelima David\bibnamedelima Sinclair},
+           familyi={D\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Phil\bibnamedelima Atkin},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{fullhash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{bibnamehash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{authorbibnamehash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{authornamehash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{authorfullhash}{bbe3d47a4f777695455bcece099958a7}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{S-hull: a fast sweep-hull routine for Delaunay triangulation}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb http://www.s-hull.org/
+      \endverb
+      \verb{url}
+      \verb http://www.s-hull.org/
+      \endverb
+    \endentry
+    \entry{interp}{online}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Interpolating in a Triangle}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://codeplea.com/triangular-interpolation
+      \endverb
+      \verb{url}
+      \verb https://codeplea.com/triangular-interpolation
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
