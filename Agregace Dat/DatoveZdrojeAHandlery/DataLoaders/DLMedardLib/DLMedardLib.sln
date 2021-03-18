@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLMedardLib", "DLMedardLib\DLMedardLib.csproj", "{74ABA20C-7C54-4A2A-A2CA-E3E6FD10A1B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDataLoaderAndHandlerLib", "..\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj", "{629F3130-EF12-4D1F-8F8E-BAA34B1DC20C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDataLoaderAndHandlerLib", "..\..\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj", "{66321DC1-D2B3-4E2B-814A-9063B7310656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{74ABA20C-7C54-4A2A-A2CA-E3E6FD10A1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74ABA20C-7C54-4A2A-A2CA-E3E6FD10A1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74ABA20C-7C54-4A2A-A2CA-E3E6FD10A1B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{629F3130-EF12-4D1F-8F8E-BAA34B1DC20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{629F3130-EF12-4D1F-8F8E-BAA34B1DC20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{629F3130-EF12-4D1F-8F8E-BAA34B1DC20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{629F3130-EF12-4D1F-8F8E-BAA34B1DC20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66321DC1-D2B3-4E2B-814A-9063B7310656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66321DC1-D2B3-4E2B-814A-9063B7310656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66321DC1-D2B3-4E2B-814A-9063B7310656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66321DC1-D2B3-4E2B-814A-9063B7310656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

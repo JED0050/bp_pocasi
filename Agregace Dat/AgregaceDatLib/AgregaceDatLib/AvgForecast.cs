@@ -8,12 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using IDataLoaderAndHandlerLib.Interface;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
-using DLMedardLib;
-using DLOpenWeatherMapLib;
-using DLRadarBourkyLib;
-using DLWeatherUnlockedLib;
-using DLYrNoLib;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Linq;
 
 namespace AgregaceDatLib
 {
@@ -21,6 +19,9 @@ namespace AgregaceDatLib
     {
         private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
         private PointLonLat botRightBound = new PointLonLat(37.9033283, 41.6999200);
+
+        private static DateTime lastLoad = DateTime.Now;
+        private static List<DataLoader> allKnownLoaders;
 
         private List<DataLoader> dLs;
 
@@ -38,19 +39,12 @@ namespace AgregaceDatLib
         {
             dLs = new List<DataLoader>();
 
+
+            allKnownLoaders = LoadAllKnownDataLoaders();
+
             if (loaders == null || loaders.Length == 0)
             {
-                RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-                YrNoDataLoader xL = new YrNoDataLoader();
-                OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-                MedardDataLoader bL2 = new MedardDataLoader();
-                WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
-
-                dLs.Add(bL);
-                dLs.Add(xL);
-                dLs.Add(jL);
-                dLs.Add(bL2);
-                dLs.Add(wL);
+                dLs = allKnownLoaders;
             }
             else
             {
@@ -58,34 +52,11 @@ namespace AgregaceDatLib
 
                 foreach (string loader in arLoaders)
                 {
-                    if (loader == "rb")
+                    foreach(DataLoader knownLoader in allKnownLoaders)
                     {
-                        RadarBourkyDataLoader bL = new RadarBourkyDataLoader();
-                        dLs.Add(bL);
-                    }
 
-                    if (loader == "mdrd")
-                    {
-                        MedardDataLoader bL2 = new MedardDataLoader();
-                        dLs.Add(bL2);
-                    }
-
-                    if (loader == "yrno")
-                    {
-                        YrNoDataLoader xL = new YrNoDataLoader();
-                        dLs.Add(xL);
-                    }
-
-                    if (loader == "owm")
-                    {
-                        OpenWeatherMapDataLoader jL = new OpenWeatherMapDataLoader();
-                        dLs.Add(jL);
-                    }
-
-                    if (loader == "weun")
-                    {
-                        WeatherUnlockedDataLoader wL = new WeatherUnlockedDataLoader();
-                        dLs.Add(wL);
+                        if (knownLoader.GetLoaderConfigFile().DataLoaderShortcut == loader)
+                            dLs.Add(knownLoader);
                     }
                 }
 
@@ -93,9 +64,61 @@ namespace AgregaceDatLib
                 {
                     throw new Exception("Nebyl přiřazen žádný z vámi zadanách datových zrdrojů!");
                 }
-            }
+
+            }    
         }
 
+        private static List<DataLoader> LoadAllKnownDataLoaders()
+        {
+            if(allKnownLoaders == null || (DateTime.Now - lastLoad).TotalMinutes >= 15)
+            {
+                allKnownLoaders = new List<DataLoader>();
+
+                string workingDirectory = Environment.CurrentDirectory;
+                string prefixPath = Directory.GetParent(workingDirectory).Parent.FullName + @"\Agregace Dat\DatoveZdrojeAHandlery\DataLoaders\";
+
+                foreach (var loaderFolder in Directory.GetDirectories(prefixPath).Select(d => Path.GetRelativePath(prefixPath, d)))
+                {
+                    string loaderLib = loaderFolder;
+
+                    try
+                    {
+                        string loaderClass = loaderLib.Remove(0, 2);
+                        loaderClass = loaderClass.Remove(loaderClass.Length - 3, 3) + "DataLoader";
+
+                        string dllPath = prefixPath + $"{loaderLib}\\{loaderLib}\\bin\\Debug\\netcoreapp2.1\\{loaderLib}.dll";
+
+                        var assembly = Assembly.LoadFile(dllPath);
+
+                        var type = assembly.GetType($"{loaderLib}.{loaderClass}");
+
+                        DataLoader dL = (DataLoader)Activator.CreateInstance(type);
+
+                        Debug.Indent();
+                        Debug.WriteLine($"Agregace dat: Datový zdroj {loaderClass} ve složce {loaderLib} úspěšně načten");
+                        Debug.Unindent();
+
+                        allKnownLoaders.Add(dL);
+                    }
+                    catch(Exception e)
+                    {
+                        Debug.Indent();
+                        Debug.WriteLine("Agregace dat: Chyba při zpracování datového zdroje ve složce " + loaderFolder);
+                        Debug.WriteLine(e.Message);
+                        Debug.Unindent();
+                    }
+                }
+
+                if (allKnownLoaders.Count > 0)
+                    lastLoad = DateTime.Now;
+
+                return allKnownLoaders;
+            }
+            else
+            {
+                return allKnownLoaders;
+            }
+        }
         public void Add(DataLoader newDl)
         {
             dLs.Add(newDl);

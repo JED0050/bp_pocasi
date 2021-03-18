@@ -10,7 +10,9 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
         public PointLonLat TopLeftCornerLonLat { get; set; }
         public PointLonLat BotRightCornerLonLat { get; set; }
         public int MaximumDownloadsPerMinute { get; set; }
-        public int MinimumHoursToNewDownload { get; set; }
+        public double MinimumHoursToNewDownload { get; set; }
+        public int MaximumHoursBack { get; set; }
         public string DataLoaderName { get; set; }
+        public string DataLoaderShortcut { get; set; }
     }
 }

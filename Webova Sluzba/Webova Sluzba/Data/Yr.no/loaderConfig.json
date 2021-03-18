@@ -1,1 +1,1 @@
-{"LastUpdateDateTime":"2021-03-14T18:09:11.248796+01:00","TopLeftCornerLonLat":{"Lon":4.1303633,"Lat":55.1995133},"BotRightCornerLonLat":{"Lon":37.9033283,"Lat":41.69992},"MaximumDownloadsPerMinute":-1,"MinimumHoursToNewDownload":24,"DataLoaderName":"Yr.no"}
+{"LastUpdateDateTime":"2021-03-18T17:02:40.0807073+01:00","TopLeftCornerLonLat":{"Lon":4.1303633,"Lat":55.1995133},"BotRightCornerLonLat":{"Lon":37.9033283,"Lat":41.69992},"MaximumDownloadsPerMinute":-1,"MinimumHoursToNewDownload":24.0,"MaximumHoursBack":6,"DataLoaderName":"Yr.no","DataLoaderShortcut":"yrno"}

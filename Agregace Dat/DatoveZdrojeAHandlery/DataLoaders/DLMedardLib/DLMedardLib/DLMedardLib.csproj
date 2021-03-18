@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj" />
+    <ProjectReference Include="..\..\..\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj" />
   </ItemGroup>
 
 </Project>

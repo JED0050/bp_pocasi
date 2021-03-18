@@ -218,7 +218,7 @@ namespace DLMedardLib
 
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < now.AddHours(-2)) //smazání starých bitmap
+                if (dateTime < now.AddHours(-6)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -373,9 +373,6 @@ namespace DLMedardLib
 
         protected override string GetPathToDataDirectory(string fileName)
         {
-            //string workingDirectory = Environment.CurrentDirectory;
-            //return Directory.GetParent(workingDirectory).FullName + @"\Data\Radar.bourky\" + fileName;
-
             string workingDirectory = Environment.CurrentDirectory;
             return workingDirectory + @"\Data\medard-online\" + fileName;
         }
@@ -483,6 +480,11 @@ namespace DLMedardLib
             forecast.Pressure = null;
 
             return forecast;
+        }
+
+        public DataLoaderConfig GetLoaderConfigFile()
+        {
+            return dataLoaderConfig;
         }
     }
 }

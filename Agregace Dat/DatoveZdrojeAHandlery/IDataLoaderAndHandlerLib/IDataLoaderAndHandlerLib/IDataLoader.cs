@@ -41,5 +41,6 @@ namespace IDataLoaderAndHandlerLib.Interface
         Bitmap GetForecastBitmap(DateTime forTime, string type);
         Forecast GetForecastPoint(DateTime forTime, PointLonLat point);
         void SaveNewDeleteOldBmps();
+        DataLoaderConfig GetLoaderConfigFile();
     }
 }

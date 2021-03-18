@@ -1,1 +1,1 @@
-{"LastUpdateDateTime":"2021-03-14T18:01:07.6961887+01:00","TopLeftCornerLonLat":{"Lon":10.06,"Lat":51.88},"BotRightCornerLonLat":{"Lon":20.21,"Lat":47.09},"MaximumDownloadsPerMinute":-1,"MinimumHoursToNewDownload":1,"DataLoaderName":"Radar.bourky"}
+{"LastUpdateDateTime":"2021-03-18T19:34:00.7453937+01:00","TopLeftCornerLonLat":{"Lon":10.06,"Lat":51.88},"BotRightCornerLonLat":{"Lon":20.21,"Lat":47.09},"MaximumDownloadsPerMinute":0,"MinimumHoursToNewDownload":0.1666,"MaximumHoursBack":6,"DataLoaderName":"Radar.bourky","DataLoaderShortcut":"rb"}

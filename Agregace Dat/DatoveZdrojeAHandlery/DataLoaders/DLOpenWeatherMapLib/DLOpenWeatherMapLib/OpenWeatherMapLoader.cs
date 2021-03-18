@@ -1,41 +1,41 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using IDataLoaderAndHandlerLib.DelaunayTriangulator;
-using IDataLoaderAndHandlerLib.HandlersAndObjects;
+using System.Threading;
+using System.Diagnostics;
+using System.Linq;
+using System.Collections.Concurrent;
 using IDataLoaderAndHandlerLib.Interface;
+using IDataLoaderAndHandlerLib.HandlersAndObjects;
+using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 
-namespace DLWeatherUnlockedLib
+namespace DLOpenWeatherMapLib
 {
-    public class WeatherUnlockedDataLoader : DataLoaderHandler, DataLoader
+    public class OpenWeatherMapDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
         private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
         private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
 
-        public string LOADER_NAME;// = "WeatherUnlocked";
-
-        public WeatherUnlockedDataLoader()
+        public string LOADER_NAME; // = "OpenWeatherMap";
+        
+        private int bitmapW = 728;
+        private int bitmapH = 528;
+        public OpenWeatherMapDataLoader()
         {
-            if (!Directory.Exists(GetPathToDataDirectory("")))
+            if (!Directory.Exists(GetPathToDataDirectory(@"json_cache\")))
             {
                 string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"WeatherUnlocked\";
+                string loaderDir = dataDir + @"Openweathermap\";
 
                 if (!Directory.Exists(dataDir))
                 {
                     Directory.CreateDirectory(dataDir);
-
                     Directory.CreateDirectory(loaderDir);
                 }
                 else if (!Directory.Exists(loaderDir))
@@ -54,9 +54,104 @@ namespace DLWeatherUnlockedLib
 
         protected override string GetPathToDataDirectory(string fileName)
         {
-            string workingDirectory = Environment.CurrentDirectory;
+            //string workingDirectory = Environment.CurrentDirectory;
+            //return Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\Data\Openweathermap\" + fileName;
 
-            return workingDirectory + @"\Data\WeatherUnlocked\" + fileName;
+            string workingDirectory = Environment.CurrentDirectory;
+            return workingDirectory + @"\Data\Openweathermap\" + fileName;
+        }
+
+        public void SaveNewDeleteOldBmps() //7dnů +-
+        {
+            Debug.WriteLine(LOADER_NAME + ": Zahájení vytváření bitmap");
+
+            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+            foreach (var f in dI.GetFiles("*.bmp"))
+            {
+
+                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
+
+                if (dateTime < DateTime.Now.AddHours(-6)) //smazání starých bitmap
+                {
+                    f.Delete();
+                }
+
+            }
+
+            dataLoaderConfig = GetDataLoaderConfigFile();
+
+            if (IsReadyToDownloadData(dataLoaderConfig))
+            {
+                CreateFullBmps();
+
+                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
+                CreateNewConfigFile(dataLoaderConfig);
+            }
+
+            Debug.WriteLine(LOADER_NAME + ": Dokončení vytváření bitmap");
+        }
+
+        private List<Forecast> GetAllForecastsFromJSON(DateTime now, string JSONtext, Point point)
+        {
+            List<Forecast> forecasts = new List<Forecast>();
+
+            if (JSONtext == "")
+                return forecasts;
+
+            dynamic jsonForecast = JObject.Parse(JSONtext);
+
+            JArray jsonForecastArray = (JArray)jsonForecast["list"];
+
+            foreach (var timeSlot in jsonForecastArray)
+            {
+                Forecast f = new Forecast();
+                f.x = point.X;
+                f.y = point.Y;
+
+                dynamic jsonElement = JObject.Parse(timeSlot.ToString());
+                DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
+
+                if (elementTime < now)
+                    continue;
+
+                f.Time = elementTime;
+
+                f.Temperature = jsonElement.main.temp - 273.15;
+                f.Humidity = jsonElement.main.humidity;
+                f.Pressure = jsonElement.main.pressure;
+
+                dynamic jsonWeather = JObject.Parse(((JArray)timeSlot["weather"])[0].ToString());
+                string weatherState = jsonWeather.main.ToString().ToLower();
+
+                if(weatherState == "rain")
+                {
+                    f.Precipitation = jsonElement.rain.GetValue("3h");
+                }
+                else
+                {
+                    f.Precipitation = 0;
+                }
+                
+                forecasts.Add(f);
+            }
+
+            return forecasts;
+        }
+
+        private DateTime GetValidTime(DateTime forTime)
+        {
+            DateTime updatedTime = forTime.AddMinutes(30);
+
+            if (updatedTime.Hour % 3 < 2)
+            {
+                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
+            }
+            else
+            {
+                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
+            }
+
+            return updatedTime;
         }
 
         public Forecast GetForecastPoint(DateTime forTime, PointLonLat location)
@@ -80,98 +175,21 @@ namespace DLWeatherUnlockedLib
             return forecast;
         }
 
-        public void SaveNewDeleteOldBmps()
+        public Bitmap GetForecastBitmap(DateTime forTime, string type)
         {
-            Debug.WriteLine(LOADER_NAME + ": Zahájení vytváření bitmap");
+            DateTime updatedTime = GetValidTime(forTime);
 
-            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
-            foreach (var f in dI.GetFiles("*.bmp"))
+            string bitmapName = GetBitmapName(type, updatedTime);
+            string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+            if (File.Exists(bitmapPath))
             {
-                DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
-
-                if (dateTime < DateTime.Now.AddHours(-2)) //smazání starých bitmap
-                {
-                    f.Delete();
-                }
-            }
-
-            dataLoaderConfig = GetDataLoaderConfigFile();
-
-            if (IsReadyToDownloadData(dataLoaderConfig))
-            {
-                CreateFullBmps();
-
-                dataLoaderConfig.LastUpdateDateTime = DateTime.Now;
-                CreateNewConfigFile(dataLoaderConfig);
-            }
-
-            Debug.WriteLine(LOADER_NAME + ": Dokončení vytváření bitmap");
-        }
-
-        public List<Forecast> GetAllForecastsFromUrl(DateTime t, string JSONtext, Point pixelCoord)
-        {
-            List<Forecast> forecasts = new List<Forecast>();
-
-            if (JSONtext == "")
-                return forecasts;
-
-            dynamic jsonForecast = JObject.Parse(JSONtext);
-
-            JArray jsonArDays = (JArray)jsonForecast["Days"];
-
-            foreach (dynamic day in jsonArDays)
-            {
-                JArray jsonArTimeSlots = (JArray)day["Timeframes"];
-
-                string dateString = day.date;
-
-                DateTime dateTime = DateTime.Parse(dateString, CultureInfo.CreateSpecificCulture("cs-CZ"));    
-
-                foreach (dynamic timeSlot in jsonArTimeSlots)
-                {
-                    int hour = timeSlot.time / 100;
-
-                    DateTime actTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, 0, 0);
-
-
-                    if(actTime >= t)
-                    {
-                        Forecast f = new Forecast();
-
-                        f.x = pixelCoord.X;
-                        f.y = pixelCoord.Y;
-
-                        f.Time = GetValidTime(actTime);
-
-                        f.Temperature = timeSlot.temp_c;
-                        f.Humidity = timeSlot.humid_pct;
-                        f.Precipitation = timeSlot.precip_mm;
-                        f.Pressure = timeSlot.slp_mb;
-
-                        forecasts.Add(f);
-                    }
-                }        
-            }
-
-            return forecasts;
-        }
-
-        private DateTime GetValidTime(DateTime forTime)
-        {
-            forTime = forTime.AddMinutes(30);
-
-            DateTime updatedTime = new DateTime(forTime.Year, forTime.Month, forTime.Day, forTime.Hour, 0, 0);
-
-            if (updatedTime.Hour % 3 < 2)
-            {
-                updatedTime = updatedTime.AddHours(-(updatedTime.Hour % 3));
+                return new Bitmap(bitmapPath);
             }
             else
             {
-                updatedTime = updatedTime.AddHours(3 - updatedTime.Hour % 3);
+                throw new Exception("Bitmapa počasí pro daný čas nebyla nalezena!");
             }
-
-            return updatedTime.AddHours(1);
         }
 
         private Dictionary<DateTime, List<Forecast>> GetWeekForecast()
@@ -200,17 +218,19 @@ namespace DLWeatherUnlockedLib
             int pixelGap = 25;
 
             List<string> apiPart = new List<string>();
-            apiPart.Add("?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca");
-            apiPart.Add("?app_id=c0e28ff1&app_key=71ef299d81c23d71cd36fcb8ee8691ba");
+            apiPart.Add("ea63080a4f8e99972630d2671e3ef805");
+            apiPart.Add("621f630a81701821a6309170b5ec310f");
+            apiPart.Add("58efa6edb4c39e14d88acd636986dec5");
+            apiPart.Add("5c6924655aea1fde4c178d274f5b6afc");
 
             int apiPartIndex = 0;
 
             bool doXBreak = false;
             bool doYBreak = false;
 
-            DateTime minimalDateTime = DateTime.Now.AddHours(-3);
+            DateTime minimalDateTime = DateTime.Now.AddHours(- dataLoaderConfig.MaximumHoursBack);
 
-            for (int x = 0; x < bmpW + pixelGap; x+=pixelGap)
+            for (int x = 0; x < bmpW + pixelGap; x += pixelGap)
             {
                 if (x >= bmpW)
                 {
@@ -218,7 +238,7 @@ namespace DLWeatherUnlockedLib
                     x = bmpW - 1;
                 }
 
-                for (int y = 0; y <= bmpH + pixelGap; y+=pixelGap)
+                for (int y = 0; y <= bmpH + pixelGap; y += pixelGap)
                 {
                     if (y >= bmpH)
                     {
@@ -226,16 +246,16 @@ namespace DLWeatherUnlockedLib
                         y = bmpH - 1;
                     }
 
-                    string lon = (locLon + x * PixelLon).ToString().Replace(",",".");
+                    string lon = (locLon + x * PixelLon).ToString().Replace(",", ".");
                     string lat = (locLat - y * PixelLat).ToString().Replace(",", ".");
 
-                    string url = @"http://api.weatherunlocked.com/api/forecast/" + lat + "," + lon + apiPart[apiPartIndex];
-                    
+                    string url = @"https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiPart[apiPartIndex];
+
                     string content = "";
 
-                    if(c >= apiMinuteLimit * apiPart.Count)
+                    if (c >= apiMinuteLimit * apiPart.Count)
                     {
-                        if(apiLimitStopwatch.ElapsedMilliseconds <= 60_000)
+                        if (apiLimitStopwatch.ElapsedMilliseconds <= 60_000)
                         {
                             Thread.Sleep(60_000 - (int)apiLimitStopwatch.ElapsedMilliseconds);
 
@@ -262,12 +282,12 @@ namespace DLWeatherUnlockedLib
                         //continue;
                     }
 
-                    List<Forecast> forecasts = GetAllForecastsFromUrl(minimalDateTime, content, new Point(x, y));
+                    List<Forecast> forecasts = GetAllForecastsFromJSON(minimalDateTime, content, new Point(x, y));
 
                     foreach (Forecast forecast in forecasts)
                     {
 
-                        if(!dicForecasts.ContainsKey(forecast.Time))
+                        if (!dicForecasts.ContainsKey(forecast.Time))
                         {
                             List<Forecast> newForecasts = new List<Forecast>();
 
@@ -284,8 +304,6 @@ namespace DLWeatherUnlockedLib
                     if (apiPartIndex > apiPart.Count - 1)
                         apiPartIndex = 0;
 
-                    //Debug.WriteLine($"x: {x} y: {y} c: {c} apiPart: {apiPartIndex}");
-
                     if (doYBreak)
                     {
                         doYBreak = false;
@@ -300,19 +318,6 @@ namespace DLWeatherUnlockedLib
                 if (doXBreak)
                     break;
             }
-
-
-            DateTime lastDate = DateTime.Now;
-
-            foreach(DateTime date in dicForecasts.Keys)
-            {
-                if (date > lastDate)
-                    lastDate = date;
-            }
-
-            if (lastDate != DateTime.Now)
-                dicForecasts.Remove(lastDate);  //odstranění poslední předpovědi, je bez dat
-
 
             return dicForecasts;
         }
@@ -388,21 +393,10 @@ namespace DLWeatherUnlockedLib
             });
         }
 
-        public Bitmap GetForecastBitmap(DateTime forTime, string type)
+        public DataLoaderConfig GetLoaderConfigFile()
         {
-            DateTime updatedTime = GetValidTime(forTime);
-
-            string bitmapName = GetBitmapName(type, updatedTime);
-            string bitmapPath = GetPathToDataDirectory(bitmapName);
-
-            if (File.Exists(bitmapPath))
-            {
-                return new Bitmap(bitmapPath);
-            }
-            else
-            {
-                throw new Exception("Bitmapa počasí pro požadovaný čas nebyla nalezena!");
-            }
+            return dataLoaderConfig;
         }
+
     }
 }

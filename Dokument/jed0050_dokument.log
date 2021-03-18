@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  16 MAR 2021 18:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  18 MAR 2021 19:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1224,15 +1224,15 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [12
 
 ]
-Overfull \hbox (170.3016pt too wide) in paragraph at lines 85--86
+Overfull \hbox (51.82938pt too wide) in paragraph at lines 85--86
 []\T1/lmr/m/n/10.95 https://api.openweathermap.org/data/2.5/forecast?lat=49.820
-923&lon=18.262524&appid=ea63080a4f8e99972630d2671e3ef805 
+923&lon=18.262524&appid=MY_KEY 
  []
 
 
-Overfull \hbox (199.10643pt too wide) in paragraph at lines 96--97
+Overfull \hbox (77.44063pt too wide) in paragraph at lines 96--97
 []\T1/lmr/m/n/10.95 http://api.weatherunlocked.com/api/forecast/49.820923,18.26
-2524?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca 
+2524?app_id=MY_ID&app_key=MY_KEY 
  []
 
 
@@ -1408,7 +1408,7 @@ ts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
 ublic/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
 ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
 <d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (28 pages, 1930801 bytes).
+Output written on jed0050_dokument.pdf (28 pages, 1930774 bytes).
 PDF statistics:
  410 PDF objects out of 1000 (max. 8388607)
  88 named destinations out of 1000 (max. 500000)

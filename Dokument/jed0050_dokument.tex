@@ -82,7 +82,7 @@
 	
 	Ukázka odkazu který vrací JSON text obsahujícíh data o počasí pro Ostravu na následujících 5 dnů.
 	
-	https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=ea63080a4f8e99972630d2671e3ef805
+	https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=MY\_KEY
 	
 	\subsection{JSON}
 	\subsubsection{WeatherUnlocked}
@@ -93,7 +93,7 @@
 	
 	Ukázka odkazu který vrací JSON text obsahujícíh data o počasí pro Ostravu na následujících 5 dnů.
 	
-	http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=79ef9432\&app\_key=904d54d78eec41c2c55ed93cbaf7c7ca
+	http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=MY\_ID\&app\_key=MY\_KEY
 	
 	\subsection{Bitmap}
 	\subsubsection{Medard}
@@ -128,7 +128,7 @@
 	
 	\captionof{table}{Shrnutí vlastností datových zdrojů}
 	\begin{center}
-		\begin{tabular} {l r c c l c c c c}
+		\begin{tabular} {l r c c c c c c c}
 			
 			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & typ \\
 			\hline
@@ -136,7 +136,7 @@
 			OpenWeatherMap & JSON & 5 & 3 & 60 & svět & A/A/A/A \\ 
 			WeatherUnlocked & JSON & 5 & 3 & 75 & svět & A/A/A/A \\ 
 			Medard-online & BMP & 5 & 1 &  & evropa & A/A/N/N \\ 
-			Radar.bourky & BMP & 0 & & & ČR & A/N/N/N \\ 
+			Radar.bourky & BMP & -3 & 0.16 (10 min)& & ČR & A/N/N/N \\ 
 			
 		\end{tabular}
 	\end{center}
