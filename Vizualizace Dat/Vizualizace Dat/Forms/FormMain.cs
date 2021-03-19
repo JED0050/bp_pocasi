@@ -46,7 +46,6 @@ namespace Vizualizace_Dat
         private string validLoaders = ApkConfig.Loaders;
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
-        private int minAnimStep = 60;
 
         public FormMain()
         {
@@ -63,14 +62,15 @@ namespace Vizualizace_Dat
             gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
 
-            cBAnimStep.SelectedItem = cBAnimStep.Items[0];
-
             ValidetaTrackbarTimeMarks();
 
-            selectedTime = DateTime.Now;
-            selectedTime = selectedTime.AddMinutes(- selectedTime.Minute % 10).AddHours(-6);
+            int hoursBack = 6;
 
-            lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
+            selectedTime = DateTime.Now;
+            selectedTime = selectedTime.AddMinutes(- selectedTime.Minute % 10).AddHours(-hoursBack);
+
+            trackBar1.Value = hoursBack * 6;
+            lDateTimeForecast.Text = selectedTime.AddHours(hoursBack).ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds(gMap);
 
@@ -102,6 +102,27 @@ namespace Vizualizace_Dat
                 {
                     checkBox5.Checked = true;
                 }
+            }
+
+            nUDAnimNumOfAnims.Value = ApkConfig.AnimMaxMove;
+
+            switch(ApkConfig.AnimStepMinutes)
+            {
+                case 10:
+                    cBAnimStep.SelectedItem = cBAnimStep.Items[0];
+                    break;
+                case 30:
+                    cBAnimStep.SelectedItem = cBAnimStep.Items[1];
+                    break;
+                case 60:
+                    cBAnimStep.SelectedItem = cBAnimStep.Items[2];
+                    break;
+                case 3*60:
+                    cBAnimStep.SelectedItem = cBAnimStep.Items[3];
+                    break;
+                case 6 * 60:
+                    cBAnimStep.SelectedItem = cBAnimStep.Items[4];
+                    break;
             }
 
             if (ApkConfig.ForecastType == ForecastTypes.PRECIPITATION)
@@ -519,9 +540,17 @@ namespace Vizualizace_Dat
             int x = startSpaceX + 5;
             int y = startSpaceY;
 
+            Color columnColor = Color.FromArgb(ApkConfig.GraphColumnColor);
+
             Font valueFont = new Font("Arial", 10);
             SolidBrush valueBrush = new SolidBrush(Color.Black);
             Pen zeroValuePen = new Pen(Color.Red, 1);
+
+            if (columnColor.ToArgb() == Color.Red.ToArgb())
+            {
+                zeroValuePen = new Pen(Color.Blue, 1);
+            }
+
             SolidBrush zeroValueBrush = new SolidBrush(Color.Red);
 
             DateTime firstDate = selectedTime;
@@ -535,7 +564,7 @@ namespace Vizualizace_Dat
 
             for (int i = 0; i < graphCols.Count; i++)
             {
-                SolidBrush brush = new SolidBrush(Color.Blue);
+                SolidBrush brush = new SolidBrush(columnColor);
 
                 double perc = (incVal + graphCols[i].Value) / (double)(max - min);
 
@@ -880,19 +909,19 @@ namespace Vizualizace_Dat
 
                 if (res == 1)
                 {
-                    selectedTime = selectedTime.AddMinutes(- minAnimStep);
-                    trackBar1.Value -= (minAnimStep / 10);
+                    selectedTime = selectedTime.AddMinutes(- ApkConfig.AnimStepMinutes);
+                    trackBar1.Value -= (ApkConfig.AnimStepMinutes / 10);
 
                     break;
                 }
 
                 if (i != 0)
-                    if (trackBar1.Value + (minAnimStep / 10) <= trackBar1.Maximum)
-                        trackBar1.Value += (minAnimStep / 10);
+                    if (trackBar1.Value + (ApkConfig.AnimStepMinutes / 10) <= trackBar1.Maximum)
+                        trackBar1.Value += (ApkConfig.AnimStepMinutes / 10);
                     else
                         break;
 
-                selectedTime = selectedTime.AddMinutes(minAnimStep);
+                selectedTime = selectedTime.AddMinutes(ApkConfig.AnimStepMinutes);
             }
 
             Thread.Sleep(250);
@@ -1185,35 +1214,6 @@ namespace Vizualizace_Dat
             }
         }
 
-
-        private void animMinMove_Click(object sender, EventArgs e)
-        {
-            ApkConfig.AnimMaxMove = 0;
-        }
-
-        private void animMaxMove_Click(object sender, EventArgs e)
-        {
-            ApkConfig.AnimMaxMove = 120;
-        }
-
-        private void animCustomMove_MouseLeave(object sender, EventArgs e)
-        {
-            int val = ApkConfig.AnimMaxMove;
-
-            try
-            {
-                val = int.Parse(animCustomMoveText.Text);
-
-                ApkConfig.AnimMaxMove = val;
-
-                val = ApkConfig.AnimMaxMove;
-            }
-            catch
-            { }
-
-            animCustomMoveText.Text = val.ToString();
-        }
-
         private void dblclickCustomData_MouseLeave(object sender, EventArgs e)
         {
             int val = ApkConfig.DblclickMaxData;
@@ -1249,11 +1249,6 @@ namespace Vizualizace_Dat
 
             if (graphCols.Count == 0)
                 GraphClear();
-        }
-
-        private void animCustomMove_MouseEnter(object sender, EventArgs e)
-        {
-            animCustomMoveText.Text = ApkConfig.AnimMaxMove.ToString();
         }
 
         private void dblclickCustomData_MouseEnter(object sender, EventArgs e)
@@ -1344,11 +1339,11 @@ namespace Vizualizace_Dat
 
             if (textParts[1] == "min")
             {
-                minAnimStep = int.Parse(textParts[0]);
+                ApkConfig.AnimStepMinutes = int.Parse(textParts[0]);
             }
             else
             {
-                minAnimStep = int.Parse(textParts[0]) * 60;
+                ApkConfig.AnimStepMinutes = int.Parse(textParts[0]) * 60;
             }
 
         }
@@ -1356,6 +1351,27 @@ namespace Vizualizace_Dat
         private void nUDAnimNumOfAnims_ValueChanged(object sender, EventArgs e)
         {
             ApkConfig.AnimMaxMove = (int)nUDAnimNumOfAnims.Value;
+        }
+
+        private void modráToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.GraphColumnColor = Color.Blue.ToArgb();
+
+            DrawGraph();
+        }
+
+        private void červenáToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.GraphColumnColor = Color.Red.ToArgb();
+
+            DrawGraph();
+        }
+
+        private void zelenáToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.GraphColumnColor = Color.Green.ToArgb();
+
+            DrawGraph();
         }
     }
 }

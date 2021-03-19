@@ -1,1 +1,1 @@
-{"Loaders":"rb","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":117,"DblclickMaxData":10,"ForecastType":"prec"}
+{"Loaders":"rb","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":30,"DblclickMaxData":10,"ForecastType":"prec","AnimStepMinutes":10,"GraphColumnColor":-16744448}

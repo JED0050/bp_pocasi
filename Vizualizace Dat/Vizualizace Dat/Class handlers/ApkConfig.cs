@@ -138,6 +138,40 @@ namespace Vizualizace_Dat
             }
         }
 
+        public static int AnimStepMinutes
+        {
+            get
+            {
+                return apkConfigObj.AnimStepMinutes;
+            }
+
+            set
+            {
+
+                apkConfigObj.AnimStepMinutes = value;
+
+                ApkConfigObj = apkConfigObj;
+
+            }
+        }
+
+        public static int GraphColumnColor
+        {
+            get
+            {
+                return apkConfigObj.GraphColumnColor;
+            }
+
+            set
+            {
+
+                apkConfigObj.GraphColumnColor = value;
+
+                ApkConfigObj = apkConfigObj;
+
+            }
+        }
+
         public static string ForecastType
         {
             get
@@ -186,6 +220,8 @@ namespace Vizualizace_Dat
         public int AnimMaxMove { get; set; }
         public int DblclickMaxData { get; set; }
         public string ForecastType { get; set; }
+        public int AnimStepMinutes { get; set; }
+        public int GraphColumnColor { get; set; }
     }
 
 }

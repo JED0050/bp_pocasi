@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
 using AgregaceDatLib;
+using DLRadarBourkyLib;
+using IDataLoaderAndHandlerLib.HandlersAndObjects;
 using IDataLoaderAndHandlerLib.Interface;
 
 namespace TestConsoleApk
@@ -15,8 +17,9 @@ namespace TestConsoleApk
         {
 
             AvgForecast a = new AvgForecast();
-            
+            a.Add(new RadarBourkyDataLoader());
 
+            a.GetAvgForecBitmap(DateTime.Now.AddHours(-5), ForecastTypes.PRECIPITATION);
         }
 
         

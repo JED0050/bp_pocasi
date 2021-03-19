@@ -77,56 +77,37 @@ namespace DLRadarBourkyLib
             {
                 throw new Exception("zvolený čas je příliš vysoký, služba poskytuje pouze předpovědi aktuální čas");
             }
-            else if(forTime < DateTime.Now.AddHours(-6))
+            else if(forTime < DateTime.Now.AddHours(-25))
             {
                 throw new Exception("zvolený čas je příliš nízký, služba poskytuje pouze předpovědi aktuální čas");
             }
 
-            DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
-
-            FileInfo[] fileInfos = dI.GetFiles("*.bmp");
-
-            string bitmapPath = "";
-
-            TimeSpan minTS = forTime - DateTime.Now.AddHours(-8);
-
-            for (int i = 0; i < fileInfos.Length; i++)
+            try
             {
-                DateTime dT = GetDateTimeFromBitmapName(fileInfos[i].Name);
-                TimeSpan actTS = dT - forTime;
-
-                if (i == 0)
-                {
-                    minTS = actTS;
-                    bitmapPath = fileInfos[i].FullName;
-                }
-                else
-                {
-                    if (Math.Abs(actTS.TotalMinutes) < Math.Abs(minTS.TotalMinutes))
-                    {
-                        minTS = actTS;
-                        bitmapPath = fileInfos[i].FullName;
-                    }
-                }
-            }
-
-            if(Math.Abs(minTS.TotalHours) <= 6)
-            {
-                Console.WriteLine(bitmapPath);
+                string bitmapName = GetBitmapName(ForecastTypes.PRECIPITATION, forTime);
+                string bitmapPath = GetPathToDataDirectory(bitmapName);
 
                 return new Bitmap(bitmapPath);
             }
-            else
+            catch
             {
-                throw new Exception("Požadovaná bitmapa srážek nebyla nalezena");
+                DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+
+                FileInfo[] fileInfos = dI.GetFiles("*.bmp");
+
+                DateTime lastBmpTime = GetDateTimeFromBitmapName(fileInfos[fileInfos.Length - 1].Name);
+
+                if(forTime > lastBmpTime && (forTime - lastBmpTime).TotalHours <= 6.1)
+                {
+                    return new Bitmap(fileInfos[fileInfos.Length - 1].FullName);
+                }
             }
+
+            throw new Exception("Požadovaná bitmapa srážek nebyla nalezena");
         }
 
         protected override string GetPathToDataDirectory(string fileName)
         {
-            //string workingDirectory = Environment.CurrentDirectory;
-            //return Directory.GetParent(workingDirectory).FullName + @"\Data\Radar.bourky\" + fileName;
-
             string workingDirectory = Environment.CurrentDirectory;
             return workingDirectory + @"\Data\Radar.bourky\" + fileName;
         }

@@ -44,11 +44,6 @@
             this.menuOwnTransparent = new System.Windows.Forms.ToolStripTextBox();
             this.minimálníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maximálníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.početKrokůVAnimaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.animCustomMove = new System.Windows.Forms.ToolStripMenuItem();
-            this.animCustomMoveText = new System.Windows.Forms.ToolStripTextBox();
-            this.animMinMove = new System.Windows.Forms.ToolStripMenuItem();
-            this.animMaxMove = new System.Windows.Forms.ToolStripMenuItem();
             this.početHodnotPřiDvojklikuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dblclickCustomData = new System.Windows.Forms.ToolStripMenuItem();
             this.dblclickCustomDataText = new System.Windows.Forms.ToolStripTextBox();
@@ -56,6 +51,7 @@
             this.dblclickMaxData = new System.Windows.Forms.ToolStripMenuItem();
             this.setDefSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.aktualizovatŠkályToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barvaSloupcůToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,8 +66,6 @@
             this.rBPres = new System.Windows.Forms.RadioButton();
             this.rBHumi = new System.Windows.Forms.RadioButton();
             this.lAnimProgress = new System.Windows.Forms.Label();
-            this.bAnim = new System.Windows.Forms.Button();
-            this.pBScale = new System.Windows.Forms.PictureBox();
             this.lScaleMin = new System.Windows.Forms.Label();
             this.lScaleMax = new System.Windows.Forms.Label();
             this.tLPTimeMarks = new System.Windows.Forms.TableLayoutPanel();
@@ -101,13 +95,18 @@
             this.nUDAnimNumOfAnims = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.pBScale = new System.Windows.Forms.PictureBox();
+            this.bAnim = new System.Windows.Forms.Button();
+            this.modráToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.červenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zelenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pBScale)).BeginInit();
             this.tLPTimeMarks.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tLPTMChar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDAnimNumOfAnims)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBScale)).BeginInit();
             this.SuspendLayout();
             // 
             // gMap
@@ -148,7 +147,7 @@
             this.lDateTimeForecast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lDateTimeForecast.AutoSize = true;
             this.lDateTimeForecast.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateTimeForecast.Location = new System.Drawing.Point(12, 641);
+            this.lDateTimeForecast.Location = new System.Drawing.Point(12, 649);
             this.lDateTimeForecast.Name = "lDateTimeForecast";
             this.lDateTimeForecast.Size = new System.Drawing.Size(128, 16);
             this.lDateTimeForecast.TabIndex = 18;
@@ -193,10 +192,10 @@
             this.nastaveníToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.adresaServeruToolStripMenuItem,
             this.průhlednostToolStripMenuItem,
-            this.početKrokůVAnimaciToolStripMenuItem,
             this.početHodnotPřiDvojklikuToolStripMenuItem,
             this.setDefSettings,
-            this.aktualizovatŠkályToolStripMenuItem});
+            this.aktualizovatŠkályToolStripMenuItem,
+            this.barvaSloupcůToolStripMenuItem});
             this.nastaveníToolStripMenuItem.Name = "nastaveníToolStripMenuItem";
             this.nastaveníToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.nastaveníToolStripMenuItem.Text = "Nastavení";
@@ -221,6 +220,7 @@
             // 
             // vlastníAdresaToolStripMenuItem
             // 
+            this.vlastníAdresaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.vlastníAdresaToolStripMenuItem.Name = "vlastníAdresaToolStripMenuItem";
             this.vlastníAdresaToolStripMenuItem.Size = new System.Drawing.Size(180, 23);
             this.vlastníAdresaToolStripMenuItem.TextChanged += new System.EventHandler(this.vlastníAdresaToolStripMenuItem_TextChanged);
@@ -253,6 +253,7 @@
             // 
             // menuOwnTransparent
             // 
+            this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuOwnTransparent.Name = "menuOwnTransparent";
             this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
             this.menuOwnTransparent.MouseLeave += new System.EventHandler(this.menuOwnTransparent_MouseLeave);
@@ -270,45 +271,6 @@
             this.maximálníToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.maximálníToolStripMenuItem.Text = "Maximální";
             this.maximálníToolStripMenuItem.Click += new System.EventHandler(this.maximálníToolStripMenuItem_Click);
-            // 
-            // početKrokůVAnimaciToolStripMenuItem
-            // 
-            this.početKrokůVAnimaciToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.animCustomMove,
-            this.animMinMove,
-            this.animMaxMove});
-            this.početKrokůVAnimaciToolStripMenuItem.Name = "početKrokůVAnimaciToolStripMenuItem";
-            this.početKrokůVAnimaciToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.početKrokůVAnimaciToolStripMenuItem.Text = "Počet kroků v animaci";
-            // 
-            // animCustomMove
-            // 
-            this.animCustomMove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.animCustomMoveText});
-            this.animCustomMove.Name = "animCustomMove";
-            this.animCustomMove.Size = new System.Drawing.Size(130, 22);
-            this.animCustomMove.Text = "Vlastní";
-            this.animCustomMove.MouseEnter += new System.EventHandler(this.animCustomMove_MouseEnter);
-            // 
-            // animCustomMoveText
-            // 
-            this.animCustomMoveText.Name = "animCustomMoveText";
-            this.animCustomMoveText.Size = new System.Drawing.Size(100, 23);
-            this.animCustomMoveText.MouseLeave += new System.EventHandler(this.animCustomMove_MouseLeave);
-            // 
-            // animMinMove
-            // 
-            this.animMinMove.Name = "animMinMove";
-            this.animMinMove.Size = new System.Drawing.Size(130, 22);
-            this.animMinMove.Text = "Minimální";
-            this.animMinMove.Click += new System.EventHandler(this.animMinMove_Click);
-            // 
-            // animMaxMove
-            // 
-            this.animMaxMove.Name = "animMaxMove";
-            this.animMaxMove.Size = new System.Drawing.Size(130, 22);
-            this.animMaxMove.Text = "Maximální";
-            this.animMaxMove.Click += new System.EventHandler(this.animMaxMove_Click);
             // 
             // početHodnotPřiDvojklikuToolStripMenuItem
             // 
@@ -331,6 +293,7 @@
             // 
             // dblclickCustomDataText
             // 
+            this.dblclickCustomDataText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dblclickCustomDataText.Name = "dblclickCustomDataText";
             this.dblclickCustomDataText.Size = new System.Drawing.Size(100, 23);
             this.dblclickCustomDataText.MouseLeave += new System.EventHandler(this.dblclickCustomData_MouseLeave);
@@ -362,6 +325,16 @@
             this.aktualizovatŠkályToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.aktualizovatŠkályToolStripMenuItem.Text = "Aktualizovat škály";
             this.aktualizovatŠkályToolStripMenuItem.Click += new System.EventHandler(this.aktualizovatŠkályToolStripMenuItem_Click);
+            // 
+            // barvaSloupcůToolStripMenuItem
+            // 
+            this.barvaSloupcůToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modráToolStripMenuItem,
+            this.červenáToolStripMenuItem,
+            this.zelenáToolStripMenuItem});
+            this.barvaSloupcůToolStripMenuItem.Name = "barvaSloupcůToolStripMenuItem";
+            this.barvaSloupcůToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.barvaSloupcůToolStripMenuItem.Text = "Barva sloupců";
             // 
             // akceToolStripMenuItem
             // 
@@ -508,35 +481,12 @@
             // 
             this.lAnimProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lAnimProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lAnimProgress.Location = new System.Drawing.Point(752, 649);
+            this.lAnimProgress.Location = new System.Drawing.Point(753, 649);
             this.lAnimProgress.Name = "lAnimProgress";
             this.lAnimProgress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lAnimProgress.Size = new System.Drawing.Size(116, 16);
             this.lAnimProgress.TabIndex = 34;
             this.lAnimProgress.Text = "  ";
-            // 
-            // bAnim
-            // 
-            this.bAnim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bAnim.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.bAnim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAnim.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.bAnim.Image = global::Vizualizace_Dat.Properties.Resources.play_button_32;
-            this.bAnim.Location = new System.Drawing.Point(1080, 630);
-            this.bAnim.Name = "bAnim";
-            this.bAnim.Size = new System.Drawing.Size(39, 38);
-            this.bAnim.TabIndex = 24;
-            this.bAnim.UseVisualStyleBackColor = false;
-            this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
-            // 
-            // pBScale
-            // 
-            this.pBScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pBScale.Location = new System.Drawing.Point(12, 269);
-            this.pBScale.Name = "pBScale";
-            this.pBScale.Size = new System.Drawing.Size(20, 200);
-            this.pBScale.TabIndex = 35;
-            this.pBScale.TabStop = false;
             // 
             // lScaleMin
             // 
@@ -574,7 +524,7 @@
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);
@@ -610,7 +560,7 @@
             this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lT0.Location = new System.Drawing.Point(18, 0);
             this.lT0.Name = "lT0";
-            this.lT0.Size = new System.Drawing.Size(115, 13);
+            this.lT0.Size = new System.Drawing.Size(111, 13);
             this.lT0.TabIndex = 41;
             this.lT0.Text = "05.11. 10:30";
             this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -621,9 +571,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT1.Location = new System.Drawing.Point(139, 0);
+            this.lT1.Location = new System.Drawing.Point(135, 0);
             this.lT1.Name = "lT1";
-            this.lT1.Size = new System.Drawing.Size(116, 13);
+            this.lT1.Size = new System.Drawing.Size(112, 13);
             this.lT1.TabIndex = 42;
             this.lT1.Text = "05.11. 10:30";
             this.lT1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -634,9 +584,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT2.Location = new System.Drawing.Point(261, 0);
+            this.lT2.Location = new System.Drawing.Point(253, 0);
             this.lT2.Name = "lT2";
-            this.lT2.Size = new System.Drawing.Size(116, 13);
+            this.lT2.Size = new System.Drawing.Size(112, 13);
             this.lT2.TabIndex = 39;
             this.lT2.Text = "05.11. 10:30";
             this.lT2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -647,9 +597,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT3.Location = new System.Drawing.Point(383, 0);
+            this.lT3.Location = new System.Drawing.Point(371, 0);
             this.lT3.Name = "lT3";
-            this.lT3.Size = new System.Drawing.Size(116, 13);
+            this.lT3.Size = new System.Drawing.Size(112, 13);
             this.lT3.TabIndex = 40;
             this.lT3.Text = "05.11. 10:30";
             this.lT3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -660,9 +610,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT4.Location = new System.Drawing.Point(505, 0);
+            this.lT4.Location = new System.Drawing.Point(489, 0);
             this.lT4.Name = "lT4";
-            this.lT4.Size = new System.Drawing.Size(116, 13);
+            this.lT4.Size = new System.Drawing.Size(112, 13);
             this.lT4.TabIndex = 43;
             this.lT4.Text = "05.11. 10:30";
             this.lT4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -673,9 +623,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT5.Location = new System.Drawing.Point(627, 0);
+            this.lT5.Location = new System.Drawing.Point(607, 0);
             this.lT5.Name = "lT5";
-            this.lT5.Size = new System.Drawing.Size(116, 13);
+            this.lT5.Size = new System.Drawing.Size(112, 13);
             this.lT5.TabIndex = 46;
             this.lT5.Text = "05.11. 10:30";
             this.lT5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -686,9 +636,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT6.Location = new System.Drawing.Point(749, 0);
+            this.lT6.Location = new System.Drawing.Point(725, 0);
             this.lT6.Name = "lT6";
-            this.lT6.Size = new System.Drawing.Size(116, 13);
+            this.lT6.Size = new System.Drawing.Size(112, 13);
             this.lT6.TabIndex = 47;
             this.lT6.Text = "05.11. 10:30";
             this.lT6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -699,9 +649,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT7.Location = new System.Drawing.Point(871, 0);
+            this.lT7.Location = new System.Drawing.Point(843, 0);
             this.lT7.Name = "lT7";
-            this.lT7.Size = new System.Drawing.Size(116, 13);
+            this.lT7.Size = new System.Drawing.Size(112, 13);
             this.lT7.TabIndex = 44;
             this.lT7.Text = "05.11. 10:30";
             this.lT7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -712,9 +662,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT8.Location = new System.Drawing.Point(993, 0);
+            this.lT8.Location = new System.Drawing.Point(961, 0);
             this.lT8.Name = "lT8";
-            this.lT8.Size = new System.Drawing.Size(116, 13);
+            this.lT8.Size = new System.Drawing.Size(112, 13);
             this.lT8.TabIndex = 45;
             this.lT8.Text = "05.11. 10:30";
             this.lT8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -722,7 +672,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1115, 0);
+            this.label2.Location = new System.Drawing.Point(1079, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 40;
@@ -943,6 +893,50 @@
             this.label4.TabIndex = 42;
             this.label4.Text = "snímků v animaci";
             // 
+            // pBScale
+            // 
+            this.pBScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pBScale.Location = new System.Drawing.Point(12, 269);
+            this.pBScale.Name = "pBScale";
+            this.pBScale.Size = new System.Drawing.Size(20, 200);
+            this.pBScale.TabIndex = 35;
+            this.pBScale.TabStop = false;
+            // 
+            // bAnim
+            // 
+            this.bAnim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bAnim.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.bAnim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bAnim.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.bAnim.Image = global::Vizualizace_Dat.Properties.Resources.play_button_32;
+            this.bAnim.Location = new System.Drawing.Point(1080, 630);
+            this.bAnim.Name = "bAnim";
+            this.bAnim.Size = new System.Drawing.Size(39, 38);
+            this.bAnim.TabIndex = 24;
+            this.bAnim.UseVisualStyleBackColor = false;
+            this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
+            // 
+            // modráToolStripMenuItem
+            // 
+            this.modráToolStripMenuItem.Name = "modráToolStripMenuItem";
+            this.modráToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modráToolStripMenuItem.Text = "Modrá";
+            this.modráToolStripMenuItem.Click += new System.EventHandler(this.modráToolStripMenuItem_Click);
+            // 
+            // červenáToolStripMenuItem
+            // 
+            this.červenáToolStripMenuItem.Name = "červenáToolStripMenuItem";
+            this.červenáToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.červenáToolStripMenuItem.Text = "Červená";
+            this.červenáToolStripMenuItem.Click += new System.EventHandler(this.červenáToolStripMenuItem_Click);
+            // 
+            // zelenáToolStripMenuItem
+            // 
+            this.zelenáToolStripMenuItem.Name = "zelenáToolStripMenuItem";
+            this.zelenáToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zelenáToolStripMenuItem.Text = "Zelená";
+            this.zelenáToolStripMenuItem.Click += new System.EventHandler(this.zelenáToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -983,12 +977,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pBScale)).EndInit();
             this.tLPTimeMarks.ResumeLayout(false);
             this.tLPTimeMarks.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tLPTMChar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nUDAnimNumOfAnims)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBScale)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1025,11 +1019,6 @@
         private System.Windows.Forms.RadioButton rBPres;
         private System.Windows.Forms.RadioButton rBHumi;
         private System.Windows.Forms.Label lAnimProgress;
-        private System.Windows.Forms.ToolStripMenuItem početKrokůVAnimaciToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem animCustomMove;
-        private System.Windows.Forms.ToolStripTextBox animCustomMoveText;
-        private System.Windows.Forms.ToolStripMenuItem animMinMove;
-        private System.Windows.Forms.ToolStripMenuItem animMaxMove;
         private System.Windows.Forms.ToolStripMenuItem početHodnotPřiDvojklikuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dblclickCustomData;
         private System.Windows.Forms.ToolStripTextBox dblclickCustomDataText;
@@ -1067,6 +1056,10 @@
         private System.Windows.Forms.NumericUpDown nUDAnimNumOfAnims;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripMenuItem barvaSloupcůToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modráToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem červenáToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zelenáToolStripMenuItem;
     }
 }
 
