@@ -93,9 +93,9 @@ namespace Vizualizace_Dat
 
             set
             {
-                if (value > 144)
+                if (value > 120)
                 {
-                    apkConfigObj.AnimMaxMove = 144;
+                    apkConfigObj.AnimMaxMove = 120;
                 }
                 else if (value < 0)
                 {

@@ -97,12 +97,17 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.cBAnimStep = new System.Windows.Forms.ComboBox();
+            this.nUDAnimNumOfAnims = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBScale)).BeginInit();
             this.tLPTimeMarks.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tLPTMChar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDAnimNumOfAnims)).BeginInit();
             this.SuspendLayout();
             // 
             // gMap
@@ -154,7 +159,7 @@
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar1.Location = new System.Drawing.Point(0, 672);
-            this.trackBar1.Maximum = 8640;
+            this.trackBar1.Maximum = 756;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(1125, 45);
             this.trackBar1.TabIndex = 19;
@@ -216,7 +221,6 @@
             // 
             // vlastníAdresaToolStripMenuItem
             // 
-            this.vlastníAdresaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.vlastníAdresaToolStripMenuItem.Name = "vlastníAdresaToolStripMenuItem";
             this.vlastníAdresaToolStripMenuItem.Size = new System.Drawing.Size(180, 23);
             this.vlastníAdresaToolStripMenuItem.TextChanged += new System.EventHandler(this.vlastníAdresaToolStripMenuItem_TextChanged);
@@ -249,7 +253,6 @@
             // 
             // menuOwnTransparent
             // 
-            this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuOwnTransparent.Name = "menuOwnTransparent";
             this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
             this.menuOwnTransparent.MouseLeave += new System.EventHandler(this.menuOwnTransparent_MouseLeave);
@@ -289,7 +292,6 @@
             // 
             // animCustomMoveText
             // 
-            this.animCustomMoveText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.animCustomMoveText.Name = "animCustomMoveText";
             this.animCustomMoveText.Size = new System.Drawing.Size(100, 23);
             this.animCustomMoveText.MouseLeave += new System.EventHandler(this.animCustomMove_MouseLeave);
@@ -329,7 +331,6 @@
             // 
             // dblclickCustomDataText
             // 
-            this.dblclickCustomDataText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dblclickCustomDataText.Name = "dblclickCustomDataText";
             this.dblclickCustomDataText.Size = new System.Drawing.Size(100, 23);
             this.dblclickCustomDataText.MouseLeave += new System.EventHandler(this.dblclickCustomData_MouseLeave);
@@ -507,7 +508,7 @@
             // 
             this.lAnimProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lAnimProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lAnimProgress.Location = new System.Drawing.Point(958, 641);
+            this.lAnimProgress.Location = new System.Drawing.Point(752, 649);
             this.lAnimProgress.Name = "lAnimProgress";
             this.lAnimProgress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lAnimProgress.Size = new System.Drawing.Size(116, 16);
@@ -573,7 +574,7 @@
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);
@@ -609,7 +610,7 @@
             this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lT0.Location = new System.Drawing.Point(18, 0);
             this.lT0.Name = "lT0";
-            this.lT0.Size = new System.Drawing.Size(116, 13);
+            this.lT0.Size = new System.Drawing.Size(115, 13);
             this.lT0.TabIndex = 41;
             this.lT0.Text = "05.11. 10:30";
             this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -620,7 +621,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT1.Location = new System.Drawing.Point(140, 0);
+            this.lT1.Location = new System.Drawing.Point(139, 0);
             this.lT1.Name = "lT1";
             this.lT1.Size = new System.Drawing.Size(116, 13);
             this.lT1.TabIndex = 42;
@@ -633,7 +634,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT2.Location = new System.Drawing.Point(262, 0);
+            this.lT2.Location = new System.Drawing.Point(261, 0);
             this.lT2.Name = "lT2";
             this.lT2.Size = new System.Drawing.Size(116, 13);
             this.lT2.TabIndex = 39;
@@ -646,7 +647,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT3.Location = new System.Drawing.Point(384, 0);
+            this.lT3.Location = new System.Drawing.Point(383, 0);
             this.lT3.Name = "lT3";
             this.lT3.Size = new System.Drawing.Size(116, 13);
             this.lT3.TabIndex = 40;
@@ -659,7 +660,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT4.Location = new System.Drawing.Point(506, 0);
+            this.lT4.Location = new System.Drawing.Point(505, 0);
             this.lT4.Name = "lT4";
             this.lT4.Size = new System.Drawing.Size(116, 13);
             this.lT4.TabIndex = 43;
@@ -672,7 +673,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT5.Location = new System.Drawing.Point(628, 0);
+            this.lT5.Location = new System.Drawing.Point(627, 0);
             this.lT5.Name = "lT5";
             this.lT5.Size = new System.Drawing.Size(116, 13);
             this.lT5.TabIndex = 46;
@@ -685,7 +686,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT6.Location = new System.Drawing.Point(750, 0);
+            this.lT6.Location = new System.Drawing.Point(749, 0);
             this.lT6.Name = "lT6";
             this.lT6.Size = new System.Drawing.Size(116, 13);
             this.lT6.TabIndex = 47;
@@ -698,7 +699,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT7.Location = new System.Drawing.Point(872, 0);
+            this.lT7.Location = new System.Drawing.Point(871, 0);
             this.lT7.Name = "lT7";
             this.lT7.Size = new System.Drawing.Size(116, 13);
             this.lT7.TabIndex = 44;
@@ -711,7 +712,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT8.Location = new System.Drawing.Point(994, 0);
+            this.lT8.Location = new System.Drawing.Point(993, 0);
             this.lT8.Name = "lT8";
             this.lT8.Size = new System.Drawing.Size(116, 13);
             this.lT8.TabIndex = 45;
@@ -721,7 +722,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1116, 0);
+            this.label2.Location = new System.Drawing.Point(1115, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 40;
@@ -876,19 +877,89 @@
             this.label12.Text = "|";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cBAnimStep
+            // 
+            this.cBAnimStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cBAnimStep.BackColor = System.Drawing.Color.White;
+            this.cBAnimStep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBAnimStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cBAnimStep.FormattingEnabled = true;
+            this.cBAnimStep.Items.AddRange(new object[] {
+            "10 min",
+            "30 min",
+            "1 h",
+            "3 h",
+            "6 h"});
+            this.cBAnimStep.Location = new System.Drawing.Point(874, 648);
+            this.cBAnimStep.Name = "cBAnimStep";
+            this.cBAnimStep.Size = new System.Drawing.Size(82, 21);
+            this.cBAnimStep.TabIndex = 39;
+            this.cBAnimStep.SelectedIndexChanged += new System.EventHandler(this.cBAnimStep_SelectedIndexChanged);
+            // 
+            // nUDAnimNumOfAnims
+            // 
+            this.nUDAnimNumOfAnims.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nUDAnimNumOfAnims.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.nUDAnimNumOfAnims.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.nUDAnimNumOfAnims.Location = new System.Drawing.Point(996, 649);
+            this.nUDAnimNumOfAnims.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.nUDAnimNumOfAnims.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nUDAnimNumOfAnims.Name = "nUDAnimNumOfAnims";
+            this.nUDAnimNumOfAnims.ReadOnly = true;
+            this.nUDAnimNumOfAnims.Size = new System.Drawing.Size(47, 20);
+            this.nUDAnimNumOfAnims.TabIndex = 40;
+            this.nUDAnimNumOfAnims.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nUDAnimNumOfAnims.ValueChanged += new System.EventHandler(this.nUDAnimNumOfAnims_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(871, 633);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.TabIndex = 41;
+            this.label3.Text = "čas mezi snímky";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(972, 633);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.TabIndex = 42;
+            this.label4.Text = "snímků v animaci";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.lAnimProgress);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.nUDAnimNumOfAnims);
+            this.Controls.Add(this.cBAnimStep);
             this.Controls.Add(this.tLPTimeMarks);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pBScale);
             this.Controls.Add(this.lScaleMax);
             this.Controls.Add(this.lScaleMin);
             this.Controls.Add(this.bAnim);
-            this.Controls.Add(this.lAnimProgress);
             this.Controls.Add(this.rBHumi);
             this.Controls.Add(this.rBPres);
             this.Controls.Add(this.checkBox5);
@@ -917,6 +988,7 @@
             this.tLPTimeMarks.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tLPTMChar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nUDAnimNumOfAnims)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -991,6 +1063,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem aktualizovatŠkályToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cBAnimStep;
+        private System.Windows.Forms.NumericUpDown nUDAnimNumOfAnims;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

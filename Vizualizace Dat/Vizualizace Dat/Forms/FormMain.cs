@@ -46,6 +46,7 @@ namespace Vizualizace_Dat
         private string validLoaders = ApkConfig.Loaders;
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
+        private int minAnimStep = 60;
 
         public FormMain()
         {
@@ -62,9 +63,13 @@ namespace Vizualizace_Dat
             gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
 
+            cBAnimStep.SelectedItem = cBAnimStep.Items[0];
+
             ValidetaTrackbarTimeMarks();
 
             selectedTime = DateTime.Now;
+            selectedTime = selectedTime.AddMinutes(- selectedTime.Minute % 10).AddHours(-6);
+
             lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds(gMap);
@@ -466,7 +471,9 @@ namespace Vizualizace_Dat
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            selectedTime = DateTime.Now.AddMinutes(trackBar1.Value);
+            selectedTime = DateTime.Now;
+            selectedTime = selectedTime.AddMinutes(-selectedTime.Minute % 10).AddHours(-6);
+            selectedTime = selectedTime.AddMinutes(trackBar1.Value * 10);
 
             lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
 
@@ -849,9 +856,10 @@ namespace Vizualizace_Dat
         {
             double stepVal = trackBar1.Maximum / (tLPTimeMarks.ColumnCount - 2);
             DateTime dateTimeNow = DateTime.Now;
+            dateTimeNow = dateTimeNow.AddMinutes(- dateTimeNow.Minute % 10).AddHours(-6);
 
             for (int i = 1; i < tLPTimeMarks.ColumnCount -1; i++)
-                tLPTimeMarks.Controls[i].Text = dateTimeNow.AddMinutes(Math.Ceiling(stepVal / 2 + (i - 1) * stepVal)).ToString("dd.MM. HH:mm");
+                tLPTimeMarks.Controls[i].Text = dateTimeNow.AddMinutes(Math.Ceiling(stepVal / 2 + (i - 1) * stepVal) * 10).ToString("dd.MM. HH:mm");
 
         }
 
@@ -872,19 +880,19 @@ namespace Vizualizace_Dat
 
                 if (res == 1)
                 {
-                    selectedTime = selectedTime.AddHours(-1);
-                    trackBar1.Value -= 60;
+                    selectedTime = selectedTime.AddMinutes(- minAnimStep);
+                    trackBar1.Value -= (minAnimStep / 10);
 
                     break;
                 }
 
                 if (i != 0)
-                    if (trackBar1.Value + 60 <= trackBar1.Maximum)
-                        trackBar1.Value += 60;
+                    if (trackBar1.Value + (minAnimStep / 10) <= trackBar1.Maximum)
+                        trackBar1.Value += (minAnimStep / 10);
                     else
                         break;
 
-                selectedTime = selectedTime.AddHours(1);
+                selectedTime = selectedTime.AddMinutes(minAnimStep);
             }
 
             Thread.Sleep(250);
@@ -1185,7 +1193,7 @@ namespace Vizualizace_Dat
 
         private void animMaxMove_Click(object sender, EventArgs e)
         {
-            ApkConfig.AnimMaxMove = 144;
+            ApkConfig.AnimMaxMove = 120;
         }
 
         private void animCustomMove_MouseLeave(object sender, EventArgs e)
@@ -1327,6 +1335,27 @@ namespace Vizualizace_Dat
 
             forecType = new ForecType(forecType.Type);
             pBScale.Image = forecType.ScaleBitmap;
+        }
+
+        private void cBAnimStep_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string[] textParts = cBAnimStep.Text.Split(' ');
+
+            if (textParts[1] == "min")
+            {
+                minAnimStep = int.Parse(textParts[0]);
+            }
+            else
+            {
+                minAnimStep = int.Parse(textParts[0]) * 60;
+            }
+
+        }
+
+        private void nUDAnimNumOfAnims_ValueChanged(object sender, EventArgs e)
+        {
+            ApkConfig.AnimMaxMove = (int)nUDAnimNumOfAnims.Value;
         }
     }
 }

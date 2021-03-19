@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AgregaceDatLib\AgregaceDatLib\AgregaceDatLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DataLoaders\DLMedardLib\DLMedardLib\DLMedardLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DataLoaders\DLOpenWeatherMapLib\DLOpenWeatherMapLib\DLOpenWeatherMapLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DataLoaders\DLRadarBourkyLib\DLRadarBourkyLib\DLRadarBourkyLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DataLoaders\DLWeatherUnlockedLib\DLWeatherUnlockedLib\DLWeatherUnlockedLib.csproj" />
+    <ProjectReference Include="..\..\DatoveZdrojeAHandlery\DataLoaders\DLYrNoLib\DLYrNoLib\DLYrNoLib.csproj" />
     <ProjectReference Include="..\..\DatoveZdrojeAHandlery\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj" />
   </ItemGroup>
 
