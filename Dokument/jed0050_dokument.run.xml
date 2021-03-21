@@ -86,7 +86,7 @@
       <file>jed0050_dokument.bcf</file>
     </requires>
     <requires type="editable">
-      <file>Citace/citace.bib</file>
+      <file>citace.bib</file>
     </requires>
   </external>
 </requests>

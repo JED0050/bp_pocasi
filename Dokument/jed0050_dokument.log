@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  18 MAR 2021 19:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  21 MAR 2021 18:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,7 +6,7 @@ entering extended mode
 (./jed0050_dokument.tex
 LaTeX2e <2020-10-01> patch level 2
 L3 programming layer <2020-12-07> xparse <2020-03-03> (./diploma.cls
-Document Class: diploma 2020/10/22 4.32a diploma LaTeX document class
+Document Class: diploma 2021/03/15 5.0 diploma LaTeX document class
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
@@ -15,43 +15,101 @@ Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
 )
-\Dipl@UniversityName=\toks17
-\Dipl@FacultyName=\toks18
-\Dipl@DepartmentName=\toks19
-\Dipl@ThesisAuthor=\toks20
-\Dipl@CzechThesisTitle=\toks21
-\Dipl@EnglishThesisTitle=\toks22
-\Dipl@SubmissionDate=\toks23
-\Dipl@ThesisAssignmentImagePath=\toks24
-\Dipl@AuthorDeclaration=\toks25
-\Dipl@AuthorDeclarationImageFile=\toks26
-\Dipl@CooperatingPersonsDeclaration=\toks27
-\Dipl@CooperatingPersonsDeclarationImageFile=\toks28
-\Dipl@Thanks=\toks29
-\Dipl@CzechAbstract=\toks30
-\Dipl@CzechKeywords=\toks31
-\Dipl@EnglishAbstract=\toks32
-\Dipl@EnglishKeywords=\toks33
-\Dipl@Acronyms=\toks34
-\Dipl@DefaultSourceCodeLanguage=\toks35
-\Dipl@BabelLanguageOptions=\toks36
-\c@Dipl@CurrentThesisType=\count177
-\c@Dipl@CurrentThesisLanguage=\count178
-\c@Dipl@ThesisAssignmentImageCounter=\count179
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/totcount/totcount.sty
+Package: totcount 2011/01/25 v1.2 package for gettingthe total value of LaTeX c
+ounters
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+))
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/assoccnt/assoccnt.sty
+Package: assoccnt 2015/09/29 v0.8-- Associate counters stepping
+
+assoccnt.sty{} -- version v0.8
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-\c@part=\count180
-\c@section=\count181
-\c@subsection=\count182
-\c@subsubsection=\count183
-\c@paragraph=\count184
-\c@subparagraph=\count185
-\c@figure=\count186
-\c@table=\count187
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count177
+)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks18
+\XKV@tempa@toks=\toks19
+)
+\XKV@depth=\count178
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xstring/xstring.sty
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xstring/xstring.tex
+\integerpart=\count179
+\decimalpart=\count180
+)
+Package: xstring 2019/02/06 v1.83 String manipulations (CT)
+)
+\c@@@assoccnt@@internalcounter=\count181
+)
+\Dipl@ThesisAuthor=\toks20
+\Dipl@ThesisSupervisor=\toks21
+\Dipl@CzechThesisTitle=\toks22
+\Dipl@EnglishThesisTitle=\toks23
+\Dipl@SubmissionYear=\toks24
+\Dipl@Acknowledgement=\toks25
+\Dipl@CzechAbstract=\toks26
+\Dipl@CzechKeywords=\toks27
+\Dipl@EnglishAbstract=\toks28
+\Dipl@EnglishKeywords=\toks29
+\Dipl@Acronyms=\toks30
+\Dipl@BabelLanguageOptions=\toks31
+\Dipl@ThesisCaption=\toks32
+\Dipl@SupervisorCaption=\toks33
+\Dipl@FacultyLogoFileName=\toks34
+\Dipl@CzechAbstractCaption=\toks35
+\Dipl@EnglishAbstractCaption=\toks36
+\c@Dipl@CurrentThesisType=\count182
+\c@Dipl@CurrentThesisLanguage=\count183
+\c@Dipl@TotalFigures=\count184
+\c@Dipl@TotalFigures@totc=\count185
+\c@Dipl@TotalTables=\count186
+\c@Dipl@TotalTables@totc=\count187
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/bk11.clo
+File: bk11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count188
+\c@chapter=\count189
+\c@section=\count190
+\c@subsection=\count191
+\c@subsubsection=\count192
+\c@paragraph=\count193
+\c@subparagraph=\count194
+\c@figure=\count195
+\c@table=\count196
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -97,19 +155,15 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks37
-)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count188
-\Gm@cntv=\count189
-\c@Gm@tempcnt=\count190
+\Gm@cnth=\count197
+\Gm@cntv=\count198
+\c@Gm@tempcnt=\count199
 \Gm@bindingoffset=\dimen139
 \Gm@wd@mp=\dimen140
 \Gm@odd@mp=\dimen141
@@ -118,7 +172,7 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layoutheight=\dimen144
 \Gm@layouthoffset=\dimen145
 \Gm@layoutvoffset=\dimen146
-\Gm@dimlist=\toks38
+\Gm@dimlist=\toks37
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
@@ -132,12 +186,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen154
 \cmidrulekern=\dimen155
 \defaultaddspace=\dimen156
-\@cmidla=\count191
-\@cmidlb=\count192
+\@cmidla=\count266
+\@cmidlb=\count267
 \@aboverulesep=\dimen157
 \@belowrulesep=\dimen158
-\@thisruleclass=\count193
-\@lastruleclass=\count194
+\@thisruleclass=\count268
+\@lastruleclass=\count269
 \@thisrulewidth=\dimen159
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
@@ -153,73 +207,44 @@ Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
-))
+)
 \Gin@req@height=\dimen160
 \Gin@req@width=\dimen161
 )
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count195
-\lst@gtempboxa=\box47
-\lst@token=\toks39
-\lst@length=\count196
-\lst@currlwidth=\dimen162
-\lst@column=\count197
-\lst@pos=\count198
-\lst@lostspace=\dimen163
-\lst@width=\dimen164
-\lst@newlines=\count199
-\lst@lineno=\count266
-\lst@maxwidth=\dimen165
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-\c@lstnumber=\count267
-\lst@skipnumbers=\count268
-\lst@framebox=\box48
-)
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2020/03/24 1.8d listings configuration
-))
-Package: listings 2020/03/24 1.8d (Carsten Heinz)
-
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTleft=\skip49
 \LTright=\skip50
 \LTpre=\skip51
 \LTpost=\skip52
-\LTchunksize=\count269
-\LTcapwidth=\dimen166
-\LT@head=\box49
-\LT@firsthead=\box50
-\LT@foot=\box51
-\LT@lastfoot=\box52
-\LT@cols=\count270
-\LT@rows=\count271
-\c@LT@tables=\count272
-\c@LT@chunks=\count273
-\LT@p@ftn=\toks40
+\LTchunksize=\count270
+\LTcapwidth=\dimen162
+\LT@head=\box47
+\LT@firsthead=\box48
+\LT@foot=\box49
+\LT@lastfoot=\box50
+\LT@cols=\count271
+\LT@rows=\count272
+\c@LT@tables=\count273
+\c@LT@chunks=\count274
+\LT@p@ftn=\toks38
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen167
-\captionmargin@=\dimen168
-\captionwidth=\dimen169
-\caption@tempdima=\dimen170
-\caption@indent=\dimen171
-\caption@parindent=\dimen172
-\caption@hangindent=\dimen173
+\captionmargin=\dimen163
+\captionmargin@=\dimen164
+\captionwidth=\dimen165
+\caption@tempdima=\dimen166
+\caption@indent=\dimen167
+\caption@parindent=\dimen168
+\caption@hangindent=\dimen169
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count274
-\c@continuedfloat=\count275
-Package caption Info: listings package is loaded.
+\c@caption@flags=\count275
+\c@continuedfloat=\count276
 Package caption Info: longtable package is loaded.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/caption/ltcaption.sty
@@ -227,19 +252,19 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
-\c@r@tfl@t=\count276
+\c@r@tfl@t=\count277
 \rotFPtop=\skip53
 \rotFPbot=\skip54
-\rot@float@box=\box53
-\rot@mess@toks=\toks41
+\rot@float@box=\box51
+\rot@mess@toks=\toks39
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/theorem.sty
 Package: theorem 2014/10/28 v2.2c Theorem extension package (FMi)
-\theorem@style=\toks42
-\theorem@bodyfont=\toks43
+\theorem@style=\toks40
+\theorem@bodyfont=\toks41
 \theorempreskipamount=\skip55
 \theorempostskipamount=\skip56
 
@@ -248,47 +273,26 @@ File: thp.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box54
+\ttl@box=\box52
 \beforetitleunit=\skip57
 \aftertitleunit=\skip58
-\ttl@plus=\dimen174
-\ttl@minus=\dimen175
-\ttl@toksa=\toks44
-\titlewidth=\dimen176
-\titlewidthlast=\dimen177
-\titlewidthfirst=\dimen178
+\ttl@plus=\dimen170
+\ttl@minus=\dimen171
+\ttl@toksa=\toks42
+\titlewidth=\dimen172
+\titlewidthlast=\dimen173
+\titlewidthfirst=\dimen174
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
-Package tocbibind Info: The document has section divisions on input line 50.
+Package tocbibind Info: The document has chapter divisions on input line 50.
 
 
-Package tocbibind Note: Using section or other style headings.
+Package tocbibind Note: Using chapter style headings, unless overridden.
 
-) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/totcount/totcount.sty
-Package: totcount 2011/01/25 v1.2 package for gettingthe total value of LaTeX c
-ounters
-)
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-)
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/pdfx/pdfx.sty
+) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/pdfx/pdfx.sty
 Package: pdfx 2019/02/27 v1.6.3 PDF/X and PDF/A support (CVR/HTH/RRM/PS)
-\pdfx@minorversion=\count277
+\pdfx@minorversion=\count278
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
@@ -309,8 +313,8 @@ File: l8u-penc.def 2017/06/23 v0.8 Custom LaTeX file, for UTF8 encoded letters
 and symbols
 LaTeX Info: Composite with undeclared \b in encoding L8U on input line 278.
 )
-\pdfxsafeforxmp@toks=\toks45
-\pdfx@tmptoks=\toks46
+\pdfxsafeforxmp@toks=\toks43
+\pdfx@tmptoks=\toks44
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
@@ -349,9 +353,9 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
-\@linkdim=\dimen179
-\Hy@linkcounter=\count278
-\Hy@pagecounter=\count279
+\@linkdim=\dimen175
+\Hy@linkcounter=\count279
+\Hy@pagecounter=\count280
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
@@ -362,7 +366,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count280
+\Hy@SavedSpaceFactor=\count281
 Package hyperref Info: Option `pdfa' set `true' on input line 4338.
 Package hyperref Info: Hyper figures OFF on input line 4464.
 Package hyperref Info: Link nesting OFF on input line 4469.
@@ -371,14 +375,14 @@ Package hyperref Info: Plain pages OFF on input line 4479.
 Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4717.
-\c@Hy@tempcnt=\count281
+\c@Hy@tempcnt=\count282
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5076.
-\XeTeXLinkMargin=\dimen180
+\XeTeXLinkMargin=\dimen176
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -387,9 +391,9 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count282
-\Field@Width=\dimen181
-\Fld@charsize=\dimen182
+\Fld@menulength=\count283
+\Field@Width=\dimen177
+\Fld@charsize=\dimen178
 Package hyperref Info: Hyper figures OFF on input line 6347.
 Package hyperref Info: Link nesting OFF on input line 6352.
 Package hyperref Info: Hyper index ON on input line 6355.
@@ -405,9 +409,9 @@ Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
 )
-\Hy@abspage=\count283
-\c@Item=\count284
-\c@Hfootnote=\count285
+\Hy@abspage=\count284
+\c@Item=\count285
+\c@Hfootnote=\count286
 )
 Package hyperref Info: Driver: hpdftex.
 
@@ -419,8 +423,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-\Fld@listcount=\count286
-\c@bookmark@seq@number=\count287
+\Fld@listcount=\count287
+\c@bookmark@seq@number=\count288
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.st
 y
@@ -486,14 +490,14 @@ Using XMP template file: pdfa.xmp
 Package: babel 2020/12/16 3.52 The Babel package
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2020/12/16 3.52 Babel common definitions
-\babel@savecnt=\count288
-\U@D=\dimen183
+\babel@savecnt=\count289
+\U@D=\dimen179
 \l@babelnohyphens=\language86
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read3
 )
-\bbl@dirlevel=\count289
+\bbl@dirlevel=\count290
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
@@ -507,40 +511,160 @@ Package babel Info: \l@newzealand = using hyphenrules for ukenglish
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-czech/czech.ldf
 Language: czech 2008/07/06 v3.1a Czech support from the babel system
 Package babel Info: Making " an active character on input line 172.
-\cs@wordlen=\count290
+\cs@wordlen=\count291
 Package babel Info: Making - an active character on input line 226.
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-czech/czech.ldf
 Language: czech 2008/07/06 v3.1a Czech support from the babel system
 ))
-\c@definition=\count291
-\c@theorem=\count292
-\c@remark=\count293
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: 
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: includefoot 
+* h-part:(L,W,R)=(71.13188pt, 472.03123pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=472.03123pt
+* \textheight=625.24327pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-1.1381pt
+* \headheight=0.0pt
+* \headsep=0.0pt
+* \topskip=11.0pt
+* \footskip=27.46295pt
+* \marginparwidth=0.0pt
+* \marginparsep=0.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: 
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 472.03123pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=472.03123pt
+* \textheight=652.70622pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-1.1381pt
+* \headheight=0.0pt
+* \headsep=0.0pt
+* \topskip=11.0pt
+* \footskip=0.0pt
+* \marginparwidth=0.0pt
+* \marginparsep=0.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: 
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: includefoot twoside 
+* h-part:(L,W,R)=(99.58464pt, 443.57848pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=443.57848pt
+* \textheight=625.24327pt
+* \oddsidemargin=27.31465pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-1.1381pt
+* \headheight=0.0pt
+* \headsep=0.0pt
+* \topskip=11.0pt
+* \footskip=27.46295pt
+* \marginparwidth=0.0pt
+* \marginparsep=0.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: 
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(99.58464pt, 443.57848pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=443.57848pt
+* \textheight=652.70622pt
+* \oddsidemargin=27.31465pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-1.1381pt
+* \headheight=0.0pt
+* \headsep=0.0pt
+* \topskip=11.0pt
+* \footskip=0.0pt
+* \marginparwidth=0.0pt
+* \marginparsep=0.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@definition=\count292
+\c@theorem=\count293
+\c@remark=\count294
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/thb.sty
 File: thb.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 )
-\c@Dipl@examplebody=\count294
-Package hyperref Info: Option `unicode' set `true' on input line 518.
-Package hyperref Info: Option `colorlinks' set `true' on input line 518.
-\c@figure@totc=\count295
-\c@table@totc=\count296
-\c@lstlisting@totc=\count297
+\c@Dipl@examplebody=\count295
+Package hyperref Info: Option `unicode' set `true' on input line 368.
+Package hyperref Info: Option `colorlinks' set `true' on input line 368.
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2019-12-06 v5.2j context-sensitive quotations (JAW)
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count298
-)
-\csq@reset=\count299
-\csq@gtype=\count300
-\csq@glevel=\count301
-\csq@qlevel=\count302
-\csq@maxlvl=\count303
-\csq@tshold=\count304
-\csq@ltx@everypar=\toks47
+\csq@reset=\count296
+\csq@gtype=\count297
+\csq@glevel=\count298
+\csq@qlevel=\count299
+\csq@maxlvl=\count300
+\csq@tshold=\count301
+\csq@ltx@everypar=\toks45
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2019-12-06 v5.2j csquotes generic definitions (JAW)
@@ -559,53 +683,53 @@ Package: biblatex 2020/08/23 v3.15a programmable bibliographies (PK/MW)
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count305
+\lrq@indent=\count302
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-\c@tabx@nest=\count306
-\c@listtotal=\count307
-\c@listcount=\count308
-\c@liststart=\count309
-\c@liststop=\count310
-\c@citecount=\count311
-\c@citetotal=\count312
-\c@multicitecount=\count313
-\c@multicitetotal=\count314
-\c@instcount=\count315
-\c@maxnames=\count316
-\c@minnames=\count317
-\c@maxitems=\count318
-\c@minitems=\count319
-\c@citecounter=\count320
-\c@maxcitecounter=\count321
-\c@savedcitecounter=\count322
-\c@uniquelist=\count323
-\c@uniquename=\count324
-\c@refsection=\count325
-\c@refsegment=\count326
-\c@maxextratitle=\count327
-\c@maxextratitleyear=\count328
-\c@maxextraname=\count329
-\c@maxextradate=\count330
-\c@maxextraalpha=\count331
-\c@abbrvpenalty=\count332
-\c@highnamepenalty=\count333
-\c@lownamepenalty=\count334
-\c@maxparens=\count335
-\c@parenlevel=\count336
-\blx@tempcnta=\count337
-\blx@tempcntb=\count338
-\blx@tempcntc=\count339
-\blx@maxsection=\count340
-\blx@maxsegment@0=\count341
-\blx@notetype=\count342
-\blx@parenlevel@text=\count343
-\blx@parenlevel@foot=\count344
-\blx@sectionciteorder@0=\count345
-\blx@entrysetcounter=\count346
-\blx@biblioinstance=\count347
+\c@tabx@nest=\count303
+\c@listtotal=\count304
+\c@listcount=\count305
+\c@liststart=\count306
+\c@liststop=\count307
+\c@citecount=\count308
+\c@citetotal=\count309
+\c@multicitecount=\count310
+\c@multicitetotal=\count311
+\c@instcount=\count312
+\c@maxnames=\count313
+\c@minnames=\count314
+\c@maxitems=\count315
+\c@minitems=\count316
+\c@citecounter=\count317
+\c@maxcitecounter=\count318
+\c@savedcitecounter=\count319
+\c@uniquelist=\count320
+\c@uniquename=\count321
+\c@refsection=\count322
+\c@refsegment=\count323
+\c@maxextratitle=\count324
+\c@maxextratitleyear=\count325
+\c@maxextraname=\count326
+\c@maxextradate=\count327
+\c@maxextraalpha=\count328
+\c@abbrvpenalty=\count329
+\c@highnamepenalty=\count330
+\c@lownamepenalty=\count331
+\c@maxparens=\count332
+\c@parenlevel=\count333
+\blx@tempcnta=\count334
+\blx@tempcntb=\count335
+\blx@tempcntc=\count336
+\blx@maxsection=\count337
+\blx@maxsegment@0=\count338
+\blx@notetype=\count339
+\blx@parenlevel@text=\count340
+\blx@parenlevel@foot=\count341
+\blx@sectionciteorder@0=\count342
+\blx@entrysetcounter=\count343
+\blx@biblioinstance=\count344
 \labelnumberwidth=\skip60
 \labelalphawidth=\skip61
 \biblabelsep=\skip62
@@ -617,9 +741,9 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \blx@bcfin=\read4
 \blx@bcfout=\write4
 \blx@langwohyphens=\language87
-\c@mincomprange=\count348
-\c@maxcomprange=\count349
-\c@mincompwidth=\count350
+\c@mincomprange=\count345
+\c@maxcomprange=\count346
+\c@mincompwidth=\count347
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
@@ -634,76 +758,76 @@ File: iso-numeric.dbx 2020/03/25 v0.4.0 ISO 690 biblatex data model extension
 )
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count351
-\c@savedafterword=\count352
-\c@annotator=\count353
-\c@savedannotator=\count354
-\c@author=\count355
-\c@savedauthor=\count356
-\c@bookauthor=\count357
-\c@savedbookauthor=\count358
-\c@commentator=\count359
-\c@savedcommentator=\count360
-\c@editor=\count361
-\c@savededitor=\count362
-\c@editora=\count363
-\c@savededitora=\count364
-\c@editorb=\count365
-\c@savededitorb=\count366
-\c@editorc=\count367
-\c@savededitorc=\count368
-\c@foreword=\count369
-\c@savedforeword=\count370
-\c@holder=\count371
-\c@savedholder=\count372
-\c@introduction=\count373
-\c@savedintroduction=\count374
-\c@namea=\count375
-\c@savednamea=\count376
-\c@nameb=\count377
-\c@savednameb=\count378
-\c@namec=\count379
-\c@savednamec=\count380
-\c@translator=\count381
-\c@savedtranslator=\count382
-\c@shortauthor=\count383
-\c@savedshortauthor=\count384
-\c@shorteditor=\count385
-\c@savedshorteditor=\count386
-\c@supervisor=\count387
-\c@savedsupervisor=\count388
-\c@labelname=\count389
-\c@savedlabelname=\count390
-\c@institution=\count391
-\c@savedinstitution=\count392
-\c@lista=\count393
-\c@savedlista=\count394
-\c@listb=\count395
-\c@savedlistb=\count396
-\c@listc=\count397
-\c@savedlistc=\count398
-\c@listd=\count399
-\c@savedlistd=\count400
-\c@liste=\count401
-\c@savedliste=\count402
-\c@listf=\count403
-\c@savedlistf=\count404
-\c@location=\count405
-\c@savedlocation=\count406
-\c@organization=\count407
-\c@savedorganization=\count408
-\c@origlocation=\count409
-\c@savedoriglocation=\count410
-\c@origpublisher=\count411
-\c@savedorigpublisher=\count412
-\c@publisher=\count413
-\c@savedpublisher=\count414
-\c@language=\count415
-\c@savedlanguage=\count416
-\c@origlanguage=\count417
-\c@savedoriglanguage=\count418
-\c@pageref=\count419
-\c@savedpageref=\count420
+\c@afterword=\count348
+\c@savedafterword=\count349
+\c@annotator=\count350
+\c@savedannotator=\count351
+\c@author=\count352
+\c@savedauthor=\count353
+\c@bookauthor=\count354
+\c@savedbookauthor=\count355
+\c@commentator=\count356
+\c@savedcommentator=\count357
+\c@editor=\count358
+\c@savededitor=\count359
+\c@editora=\count360
+\c@savededitora=\count361
+\c@editorb=\count362
+\c@savededitorb=\count363
+\c@editorc=\count364
+\c@savededitorc=\count365
+\c@foreword=\count366
+\c@savedforeword=\count367
+\c@holder=\count368
+\c@savedholder=\count369
+\c@introduction=\count370
+\c@savedintroduction=\count371
+\c@namea=\count372
+\c@savednamea=\count373
+\c@nameb=\count374
+\c@savednameb=\count375
+\c@namec=\count376
+\c@savednamec=\count377
+\c@translator=\count378
+\c@savedtranslator=\count379
+\c@shortauthor=\count380
+\c@savedshortauthor=\count381
+\c@shorteditor=\count382
+\c@savedshorteditor=\count383
+\c@supervisor=\count384
+\c@savedsupervisor=\count385
+\c@labelname=\count386
+\c@savedlabelname=\count387
+\c@institution=\count388
+\c@savedinstitution=\count389
+\c@lista=\count390
+\c@savedlista=\count391
+\c@listb=\count392
+\c@savedlistb=\count393
+\c@listc=\count394
+\c@savedlistc=\count395
+\c@listd=\count396
+\c@savedlistd=\count397
+\c@liste=\count398
+\c@savedliste=\count399
+\c@listf=\count400
+\c@savedlistf=\count401
+\c@location=\count402
+\c@savedlocation=\count403
+\c@organization=\count404
+\c@savedorganization=\count405
+\c@origlocation=\count406
+\c@savedoriglocation=\count407
+\c@origpublisher=\count408
+\c@savedorigpublisher=\count409
+\c@publisher=\count410
+\c@savedpublisher=\count411
+\c@language=\count412
+\c@savedlanguage=\count413
+\c@origlanguage=\count414
+\c@savedoriglanguage=\count415
+\c@pageref=\count416
+\c@savedpageref=\count417
 \shorthandwidth=\skip68
 \shortjournalwidth=\skip69
 \shortserieswidth=\skip70
@@ -728,8 +852,8 @@ Package: expl3 2020-12-07 L3 programming layer (loader)
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
-\l__kernel_color_stack_int=\count421
-\l__pdf_internal_box=\box55
+\l__kernel_color_stack_int=\count418
+\l__pdf_internal_box=\box53
 ))
 Package biblatex Info: expl3
 (biblatex)             2020-12-07 L3 programming layer (loader) 
@@ -749,19 +873,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
-\c@textcitecount=\count422
-\c@textcitetotal=\count423
-\c@textcitemaxnames=\count424
-\c@biburlbigbreakpenalty=\count425
-\c@biburlbreakpenalty=\count426
-\c@biburlnumpenalty=\count427
-\c@biburlucpenalty=\count428
-\c@biburllcpenalty=\count429
+\c@textcitecount=\count419
+\c@textcitetotal=\count420
+\c@textcitemaxnames=\count421
+\c@biburlbigbreakpenalty=\count422
+\c@biburlbreakpenalty=\count423
+\c@biburlnumpenalty=\count424
+\c@biburlucpenalty=\count425
+\c@biburllcpenalty=\count426
 \biburlbigskip=\muskip17
 \biburlnumskip=\muskip18
 \biburlucskip=\muskip19
 \biburllcskip=\muskip20
-\c@smartand=\count430
+\c@smartand=\count427
 )
 Package biblatex Info: Trying to load bibliography style 'iso-numeric'...
 Package biblatex Info: ... file 'iso-numeric.bbx' found.
@@ -834,33 +958,57 @@ Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/array.sty
 Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
-\col@sep=\dimen184
-\ar@mcellbox=\box56
-\extrarowheight=\dimen185
-\NC@list=\toks48
+\col@sep=\dimen180
+\ar@mcellbox=\box54
+\extrarowheight=\dimen181
+\NC@list=\toks46
 \extratabsurround=\skip82
 \backup@length=\skip83
-\ar@cellbox=\box57
+\ar@cellbox=\box55
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count431
+\c@KVtest=\count428
 \sf@farskip=\skip84
-\sf@captopadj=\dimen186
+\sf@captopadj=\dimen182
 \sf@capskip=\skip85
 \sf@nearskip=\skip86
-\c@subfigure=\count432
-\c@subfigure@save=\count433
-\c@lofdepth=\count434
-\c@subtable=\count435
-\c@subtable@save=\count436
-\c@lotdepth=\count437
+\c@subfigure=\count429
+\c@subfigure@save=\count430
+\c@lofdepth=\count431
+\c@subtable=\count432
+\c@subtable@save=\count433
+\c@lotdepth=\count434
 \sf@top=\skip87
 \sf@bottom=\skip88
 )
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count435
+\lst@gtempboxa=\box56
+\lst@token=\toks47
+\lst@length=\count436
+\lst@currlwidth=\dimen183
+\lst@column=\count437
+\lst@pos=\count438
+\lst@lostspace=\dimen184
+\lst@width=\dimen185
+\lst@newlines=\count439
+\lst@lineno=\count440
+\lst@maxwidth=\dimen186
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count441
+\lst@skipnumbers=\count442
+\lst@framebox=\box57
+)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 51
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 54
 .
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmr.fd
@@ -869,25 +1017,46 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 (./jed0050_dokument.aux)
 \openout1 = `jed0050_dokument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
 
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count443
+\scratchdimen=\dimen187
+\scratchbox=\box58
+\nofMPsegments=\count444
+\nofMParguments=\count445
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count446
+\MPscratchDim=\dimen188
+\MPnumerator=\count447
+\makeMPintoPDFobject=\count448
+\everyMPtoPDFconversion=\toks49
+) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -895,20 +1064,20 @@ LaTeX Font Info:    ... okay on input line 51.
 * paper: a4paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: includefoot 
-* h-part:(L,W,R)=(85.35826pt, 455.24411pt, 56.9055pt)
-* v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=455.24411pt
-* \textheight=644.33032pt
-* \oddsidemargin=13.08827pt
-* \evensidemargin=13.08827pt
-* \topmargin=13.08827pt
+* modes: 
+* h-part:(L,W,R)=(99.58464pt, 443.57848pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=472.03123pt
+* \textheight=625.24327pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-1.1381pt
 * \headheight=0.0pt
 * \headsep=0.0pt
 * \topskip=11.0pt
-* \footskip=30.0pt
+* \footskip=27.46295pt
 * \marginparwidth=0.0pt
 * \marginparsep=0.0pt
 * \columnsep=10.0pt
@@ -922,35 +1091,13 @@ LaTeX Font Info:    ... okay on input line 51.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count438
-\scratchdimen=\dimen187
-\scratchbox=\box58
-\nofMPsegments=\count439
-\nofMParguments=\count440
-\everyMPshowfont=\toks49
-\MPscratchCnt=\count441
-\MPscratchDim=\dimen188
-\MPnumerator=\count442
-\makeMPintoPDFobject=\count443
-\everyMPtoPDFconversion=\toks50
-) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
-\c@lstlisting=\count444
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 51.
-
+Package hyperref Info: Link coloring ON on input line 54.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
@@ -961,19 +1108,15 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count445
+\c@section@level=\count449
 )
-LaTeX Info: Redefining \ref on input line 51.
-LaTeX Info: Redefining \pageref on input line 51.
-LaTeX Info: Redefining \nameref on input line 51.
+LaTeX Info: Redefining \ref on input line 54.
+LaTeX Info: Redefining \pageref on input line 54.
+LaTeX Info: Redefining \nameref on input line 54.
  (./jed0050_dokument.out) (./jed0050_dokument.out)
 \@outlinefile=\write5
 \openout5 = `jed0050_dokument.out'.
 
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
 Package biblatex Info: Trying to load language 'czech' -> 'czech-iso'...
 Package biblatex Info: ... file 'czech-iso.lbx' found.
 
@@ -1017,316 +1160,219 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'jed0050_dokument.bbl' found.
 
 (./jed0050_dokument.bbl)
-Package biblatex Info: Reference section=0 on input line 51.
-Package biblatex Info: Reference segment=0 on input line 51.
- [1
+Package biblatex Info: Reference section=0 on input line 54.
+Package biblatex Info: Reference segment=0 on input line 54.
+\c@lstlisting=\count450
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 5
+6.
 
-]
-*geometry* verbose mode - [ newgeometry ] result:
-* driver: pdftex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* hratio: 1:1
-* vratio: 1:1
-* modes: 
-* h-part:(L,W,R)=(1.0pt, 595.50787pt, 1.0pt)
-* v-part:(T,H,B)=(1.0pt, 843.04684pt, 1.0pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=595.50787pt
-* \textheight=843.04684pt
-* \oddsidemargin=-71.26999pt
-* \evensidemargin=-71.26999pt
-* \topmargin=-71.26999pt
-* \headheight=0.0pt
-* \headsep=0.0pt
-* \topskip=11.0pt
-* \footskip=0.0pt
-* \marginparwidth=0.0pt
-* \marginparsep=0.0pt
-* \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmss.fd
+File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
 
-<Figures/Assignment1.jpg, id=121, 597.6729pt x 845.0772pt>
-File: Figures/Assignment1.jpg Graphic file (type jpg)
-<use Figures/Assignment1.jpg>
-Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 53.
-(pdftex.def)             Requested size: 589.60045pt x 834.63033pt.
- [2
-
-
- <./Figures/Assignment1.jpg>]
-*geometry* verbose mode - [ newgeometry ] result:
-* driver: pdftex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* hratio: 1:1
-* vratio: 1:1
-* modes: 
-* h-part:(L,W,R)=(1.0pt, 595.50787pt, 1.0pt)
-* v-part:(T,H,B)=(1.0pt, 843.04684pt, 1.0pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=595.50787pt
-* \textheight=843.04684pt
-* \oddsidemargin=-71.26999pt
-* \evensidemargin=-71.26999pt
-* \topmargin=-71.26999pt
-* \headheight=0.0pt
-* \headsep=0.0pt
-* \topskip=11.0pt
-* \footskip=0.0pt
-* \marginparwidth=0.0pt
-* \marginparsep=0.0pt
-* \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
-<Figures/AuthorDeclaration.jpg, id=126, 614.295pt x 845.559pt>
-File: Figures/AuthorDeclaration.jpg Graphic file (type jpg)
-<use Figures/AuthorDeclaration.jpg>
-Package pdftex.def Info: Figures/AuthorDeclaration.jpg  used on input line 53.
-(pdftex.def)             Requested size: 589.59464pt x 834.6675pt.
- [3
-
-
-
-
- <./Figures/AuthorDeclaration.jpg>]
-*geometry* verbose mode - [ newgeometry ] result:
-* driver: pdftex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* hratio: 1:1
-* vratio: 1:1
-* modes: 
-* h-part:(L,W,R)=(1.0pt, 595.50787pt, 1.0pt)
-* v-part:(T,H,B)=(1.0pt, 843.04684pt, 1.0pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=595.50787pt
-* \textheight=843.04684pt
-* \oddsidemargin=-71.26999pt
-* \evensidemargin=-71.26999pt
-* \topmargin=-71.26999pt
-* \headheight=0.0pt
-* \headsep=0.0pt
-* \topskip=11.0pt
-* \footskip=0.0pt
-* \marginparwidth=0.0pt
-* \marginparsep=0.0pt
-* \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
-<Figures/CoopPersonDeclaration.jpg, id=131, 614.295pt x 845.559pt>
-File: Figures/CoopPersonDeclaration.jpg Graphic file (type jpg)
-<use Figures/CoopPersonDeclaration.jpg>
-Package pdftex.def Info: Figures/CoopPersonDeclaration.jpg  used on input line 
-53.
-(pdftex.def)             Requested size: 589.59464pt x 834.6675pt.
- [4
-
-
-
-
- <./Figures/CoopPersonDeclaration.jpg>] [5
-
-
-
-] [6
-
-]
-(./jed0050_dokument.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-9.
-
+pdfTeX warning: pdflatex.exe (file ./Figures/FEI_CZ.pdf): PDF inclusion: found 
+PDF version <1.6>, but at most version <1.5> allowed
+<Figures/FEI_CZ.pdf, id=118, 350.70023pt x 109.21pt>
+File: Figures/FEI_CZ.pdf Graphic file (type pdf)
+<use Figures/FEI_CZ.pdf>
+Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 56.
+(pdftex.def)             Requested size: 274.11765pt x 85.35826pt.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5
+6.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-9.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5
+6.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-19.
+56.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-19.
+56.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 56.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 56.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 56.
+ [1
+
+
+
+
+
+
+
+ <./Figures/FEI_CZ.pdf>] [2
+
+
+] [3
+
+] (./jed0050_dokument.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 19.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 19.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 19.
-)
+ [4
+
+
+])
 \tf@toc=\write6
 \openout6 = `jed0050_dokument.toc'.
 
- [7
+ [5] [6
 
 
-] [8
-
-
-]
-(./jed0050_dokument.lof)
+] (./jed0050_dokument.lof)
 \tf@lof=\write7
 \openout7 = `jed0050_dokument.lof'.
 
- [9
+[7
 
 
 ] (./jed0050_dokument.lot)
 \tf@lot=\write8
 \openout8 = `jed0050_dokument.lot'.
 
- [10
+ [8
 
-
-] [11
-
-
-] [12
 
 ]
-Overfull \hbox (51.82938pt too wide) in paragraph at lines 85--86
+Kapitola 1.
+[9
+
+
+]
+Kapitola 2.
+
+Underfull \vbox (badness 3884) has occurred while \output is active []
+
+ [10
+
+]
+Overfull \hbox (35.04225pt too wide) in paragraph at lines 88--89
 []\T1/lmr/m/n/10.95 https://api.openweathermap.org/data/2.5/forecast?lat=49.820
 923&lon=18.262524&appid=MY_KEY 
  []
 
 
-Overfull \hbox (77.44063pt too wide) in paragraph at lines 96--97
+Overfull \hbox (60.6535pt too wide) in paragraph at lines 99--100
 []\T1/lmr/m/n/10.95 http://api.weatherunlocked.com/api/forecast/49.820923,18.26
 2524?app_id=MY_ID&app_key=MY_KEY 
  []
 
 
-Overfull \hbox (24.4545pt too wide) in paragraph at lines 107--108
+Underfull \vbox (badness 2351) has occurred while \output is active []
+
+ [11]
+Overfull \hbox (7.66737pt too wide) in paragraph at lines 110--111
 []\T1/lmr/m/n/10.95 http://www.medard-online.cz/apiforecast?run=210313_06&forec
 ast=precip&layer=eu&step=13 
  []
 
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 109.
+(caption)                outside box or environment on input line 112.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 109.
+(caption)                particular \caption on input line 112.
 See the caption package documentation for explanation.
 
-<Data/Mdrd_ukazka.png, id=217, 684.3969pt x 435.0654pt>
+<Data/Mdrd_ukazka.png, id=244, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 110.
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 113.
 (pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
-[13]
+
+Underfull \vbox (badness 5105) has occurred while \output is active []
+
+ [12 <./Data/Mdrd_ukazka.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 122.
+(caption)                particular \caption on input line 125.
 See the caption package documentation for explanation.
 
-<Data/Rb_ukazka.png, id=232, 796.47563pt x 577.40718pt>
+<Data/Rb_ukazka.png, id=257, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 123.
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 126.
 (pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
-[14 <./Data/Mdrd_ukazka.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 129.
+(caption)                particular \caption on input line 132.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (19.36688pt too wide) in paragraph at lines 131--142
+Overfull \hbox (4.73955pt too wide) in paragraph at lines 134--145
  [] 
  []
 
-[15 <./Data/Rb_ukazka.png>] [16
+[13 <./Data/Rb_ukazka.png>]
+Kapitola 3.
 
-] [17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 212--215
+Underfull \vbox (badness 6252) has occurred while \output is active []
 
- []
-
-
-Overfull \hbox (12.65704pt too wide) in paragraph at lines 212--215
-\T1/lmr/m/n/10.95 adresaserveru/bmp?type={typ}&time={£as}&loaders={datové zdroj
-e}&p1={bod1}&p2={bod2} 
- []
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 216.
-See the caption package documentation for explanation.
-
-
-Overfull \hbox (31.55014pt too wide) in paragraph at lines 218--227
- [] 
- []
-
-[19
+ [14
 
 ]
+[15] [16]
+Kapitola 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--218
+
+ []
+
+[17
+
+]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 219.
+See the caption package documentation for explanation.
+
+
+Overfull \hbox (14.76302pt too wide) in paragraph at lines 221--230
+ [] 
+ []
+
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-31.
- (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
+34.
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (85.68617pt too wide) in paragraph at lines 241--242
+Overfull \hbox (68.89905pt too wide) in paragraph at lines 244--245
 []\T1/lmr/m/n/10.95 adresaserveru/bmp?type=prec&p1=49.621559,17.1507294&p2=49.5
 211889,17.4213141&loaders=mdrd 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--250
+Underfull \hbox (badness 10000) in paragraph at lines 250--253
 
  []
 
 
-Overfull \hbox (26.25313pt too wide) in paragraph at lines 247--250
+Overfull \hbox (9.466pt too wide) in paragraph at lines 250--253
 \T1/lmr/m/n/10.95 adresaserveru/data?time=£as&lat=zem¥pisná_²í°ka&lon=zem¥pisní
 _délka&loaders=datové_zdroje 
  []
 
-[20]
-Overfull \hbox (410.59828pt too wide) in paragraph at lines 251--252
+[18]
+Overfull \hbox (393.81116pt too wide) in paragraph at lines 254--255
 []\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&numOfFcs=po£et_p°edpov¥dí&hourD
 if=hodinový_rozdíl_mezi_p°edpov¥¤mi&lat=zem¥pisná_²í°ka&lon=zem¥pisní_délka&loa
 ders=datové_zdroje 
@@ -1334,83 +1380,99 @@ ders=datové_zdroje
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 253.
+(caption)                particular \caption on input line 256.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (46.27176pt too wide) in paragraph at lines 255--266
+Overfull \hbox (29.48463pt too wide) in paragraph at lines 258--269
  [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 280--281
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 283--284
 []\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
 
  []
 
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 284--285
+
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
 []\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
 -
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 308.
+(caption)                particular \caption on input line 311.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 324.
+(caption)                particular \caption on input line 327.
 See the caption package documentation for explanation.
 
-[22] [23] [24
+[20] [21]
+Kapitola 5.
+
+Underfull \vbox (badness 4673) has occurred while \output is active []
+
+ [22
 
 ]
+[23]
 
-LaTeX Warning: Command \' invalid in math mode on input line 371.
+LaTeX Warning: Command \' invalid in math mode on input line 377.
 
-[25] [26] [27]
+[24]
+Underfull \vbox (badness 4872) has occurred while \output is active []
+
+ [25]
+[26]
+Kapitola 6.
+[27
+
+]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-11.
+21.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-[28
+) [28
 
-] (./jed0050_dokument.aux)
+]
+(./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: C13CE45E95D5B71AB72D4FB5BF6873ED;3324.
+(rerunfilecheck)             Checksum: C0FCC0F3F9F07248D11CEE066E3823AA;3274.
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25445 strings out of 479382
- 413662 string characters out of 5867828
- 1132052 words of memory out of 5000000
- 42071 multiletter control sequences out of 15000+600000
- 444459 words of font info for 50 fonts, out of 8000000 for 9000
+ 26023 strings out of 479382
+ 422821 string characters out of 5867828
+ 1151414 words of memory out of 5000000
+ 42618 multiletter control sequences out of 15000+600000
+ 465275 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,100p,1112b,4629s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,128p,1112b,4813s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Skola-SW/texlive/20
 20/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive/2020/texmf-
 dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Skola-SW/texlive/2020/texmf-dist/font
 s/enc/dvips/lm/lm-rm.enc}{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/l
 m/lm-mathit.enc}<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx
-10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><d
-:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmex10.pfb><d:/Skola-S
-W/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skola-SW/texlive
-/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texlive/2020/texm
-f-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fon
-ts/type1/public/lm/lmr12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
-ublic/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
-ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (28 pages, 1930774 bytes).
+10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><
+d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmex10.pfb><d:/Skola-
+SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skola-SW/texliv
+e/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texlive/2020/tex
+mf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fo
+nts/type1/public/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
+ublic/lm/lmri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/
+lmss12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss17.pf
+b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/S
+kola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/t
+exlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on jed0050_dokument.pdf (28 pages, 1676430 bytes).
 PDF statistics:
- 410 PDF objects out of 1000 (max. 8388607)
- 88 named destinations out of 1000 (max. 500000)
- 262 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 451 PDF objects out of 1000 (max. 8388607)
+ 96 named destinations out of 1000 (max. 500000)
+ 252 words of extra memory for PDF output out of 10000 (max. 10000000)
 

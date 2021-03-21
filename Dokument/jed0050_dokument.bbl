@@ -59,19 +59,24 @@
       \endverb
     \endentry
     \entry{shull}{online}{}
-      \name{author}{1}{}{%
-        {{hash=bbe3d47a4f777695455bcece099958a7}{%
-           family={Dr\bibnamedelima David\bibnamedelima Sinclair},
-           familyi={D\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim S\bibinitperiod},
-           given={Phil\bibnamedelima Atkin},
-           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      \name{author}{2}{}{%
+        {{hash=b448391fed0d4c5ed1b398d95be03578}{%
+           family={Sinclair},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=37b214c8d678259e210337aa9ea73241}{%
+           family={Atkin},
+           familyi={A\bibinitperiod},
+           given={Phil},
+           giveni={P\bibinitperiod}}}%
       }
-      \strng{namehash}{bbe3d47a4f777695455bcece099958a7}
-      \strng{fullhash}{bbe3d47a4f777695455bcece099958a7}
-      \strng{bibnamehash}{bbe3d47a4f777695455bcece099958a7}
-      \strng{authorbibnamehash}{bbe3d47a4f777695455bcece099958a7}
-      \strng{authornamehash}{bbe3d47a4f777695455bcece099958a7}
-      \strng{authorfullhash}{bbe3d47a4f777695455bcece099958a7}
+      \strng{namehash}{6fbf802ec6efe8c631ebfddc10f97cee}
+      \strng{fullhash}{6fbf802ec6efe8c631ebfddc10f97cee}
+      \strng{bibnamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
+      \strng{authorbibnamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
+      \strng{authornamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
+      \strng{authorfullhash}{6fbf802ec6efe8c631ebfddc10f97cee}
       \field{sortinit}{3}
       \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
@@ -109,6 +114,108 @@
       \verb{url}
       \verb https://codeplea.com/triangular-interpolation
       \endverb
+    \endentry
+    \entry{bSkeet}{book}{}
+      \name{author}{1}{}{%
+        {{hash=01b1383355da2f2a954d4cb264d9dc17}{%
+           family={Skeet},
+           familyi={S\bibinitperiod},
+           given={Jon},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Shelter Island, N.Y: Manning}%
+      }
+      \strng{namehash}{01b1383355da2f2a954d4cb264d9dc17}
+      \strng{fullhash}{01b1383355da2f2a954d4cb264d9dc17}
+      \strng{bibnamehash}{01b1383355da2f2a954d4cb264d9dc17}
+      \strng{authorbibnamehash}{01b1383355da2f2a954d4cb264d9dc17}
+      \strng{authornamehash}{01b1383355da2f2a954d4cb264d9dc17}
+      \strng{authorfullhash}{01b1383355da2f2a954d4cb264d9dc17}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-816-52066-6}
+      \field{langid}{english}
+      \field{langidopts}{variant=american}
+      \field{title}{C\# in Depth, Third edition}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \true{nocite}
+    \endentry
+    \entry{bMVC}{book}{}
+      \name{author}{1}{}{%
+        {{hash=3e85ff35ac9460aa6193899e6707ba4a}{%
+           family={Freeman},
+           familyi={F\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {NY: Springer Science+Business Media}%
+      }
+      \strng{namehash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \strng{fullhash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \strng{bibnamehash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \strng{authorbibnamehash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \strng{authornamehash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \strng{authorfullhash}{3e85ff35ac9460aa6193899e6707ba4a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1484231494}
+      \field{langid}{english}
+      \field{langidopts}{variant=american}
+      \field{title}{Pro ASP.NET Core MVC 2}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \true{nocite}
+    \endentry
+    \entry{bTriangulation}{book}{}
+      \name{author}{3}{}{%
+        {{hash=3afc7ec573310e081ed1c42935d47c34}{%
+           family={A.\bibnamedelimi De\bibnamedelima Loera},
+           familyi={A\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim L\bibinitperiod},
+           given={Jesús},
+           giveni={J\bibinitperiod}}}%
+        {{hash=309aa21f1615eba15c04852c3038bc70}{%
+           family={Rambau},
+           familyi={R\bibinitperiod},
+           given={Jörg},
+           giveni={J\bibinitperiod}}}%
+        {{hash=71a176c979f0a6bf7228668676f8c26a}{%
+           family={Santos},
+           familyi={S\bibinitperiod},
+           given={Francisco},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer Publishing Company, Incorporated}%
+      }
+      \strng{namehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \strng{fullhash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \strng{bibnamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \strng{authorbibnamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \strng{authornamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \strng{authorfullhash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-642-12971-1}
+      \field{langid}{english}
+      \field{title}{Triangulations, Structures for Algorithms and Applications}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \true{nocite}
     \endentry
   \enddatalist
 \endrefsection

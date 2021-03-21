@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -179,7 +180,7 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
         protected void CreateNewConfigFile(DataLoaderConfig configFile)
         {
             string fullFileName = GetPathToDataDirectory("loaderConfig.json");
-
+            //Debug.WriteLine(fullFileName + "\n" + DateTime.Now + "\n\n");
             string jsonContent = JsonConvert.SerializeObject(configFile);
 
             File.WriteAllText(fullFileName, jsonContent);

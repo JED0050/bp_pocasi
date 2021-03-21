@@ -34,9 +34,9 @@ namespace Webova_Sluzba
             {
                 forecastService.SaveForecastBitmaps();
             }
-            catch
+            catch(Exception e)
             {
-                Debug.WriteLine("Při vytváření bitmap došlo k chybě!");
+                Debug.WriteLine("Při vytváření bitmap došlo k chybě! " + e.Message);
             }
         }
 
