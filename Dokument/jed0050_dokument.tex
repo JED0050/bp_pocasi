@@ -20,7 +20,7 @@
 
 \SubmissionYear{2021}
 
-\Acknowledgement{Rád bych na tomto místě poděkoval vedoucímu bakalářské práce panu Ing. Janu Janouškovi, za pravidelné konzultace a poskytnutí mnoha rad a nápadů pro řežení samotné práce.}
+\Acknowledgement{Rád bych na tomto místě poděkoval vedoucímu bakalářské práce panu Ing. Janu Janouškovi, za pravidelné konzultace a poskytnutí mnoha užitečných rad a nápadů pro řežení samotné práce.}
 
 % Zadame cestu a jmeno souboru ci nekolika souboru s digitalizovanou podobou zadani prace.
 % Pokud toto makro zapoznamkujeme sazi se stranka s upozornenim.
@@ -57,13 +57,17 @@
 	
 	\chapter{Úvod}
 	
-	Informace o počasí jsou v dnešní době distribuována mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde sproztředkovávatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s šesti hodinovými rozestupy. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou minutu, stačí nám předpověď jednou za pár hodin.
+	Informace o počasí jsou v dnešní době distribuována mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde sproztředkovávatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru či barevné bitmapy, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s vzájemnýmy rozestupy šesti hodin. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou sekundu či minutu, stačí nám předpověď jednou za pár desítek minut případně i pár hodin.
 	
-	Cílem této práce je tedy sjednotit různé datové zdroje do jednotného formátu a vytvořit předpověď počasí dle průměru těchto dat. Mimo to že každá služba může mít data ve svém formátu, je potřeba i sjednotit časy a především pozice pro které se data zjišťují. 
+	Cílem této práce je tedy sjednotit různé datové zdroje do jednotného formátu a vytvořit předpověď počasí pro určitou plochu v čase dle průměru těchto dat. Mimo to že každá služba může mít data ve svém formátu, je potřeba i sjednotit časy a především pozice pro které se data zjišťují.
 	
+	Dalším úkolem je vytvořit službu která bude schopna tyto agregovaná data poskytovat na základě dotazů uživatele. Uživatel může žádat o poskytnutí dat pro určitou plochu v patřičném čase, čímž obdrží patřičnou bitmapu. Případně může zažádat o předpověď v jednom bodě pro jeden či více časů s různýmy rozestupy.
+	
+	Nakonec práce se musí vytvořit aplikace, která nám zobrazí agregovaná data z naší služby a otestuje veškeré potřebné dotazy. Převede hodnoty z bitmap zpět na patřičné číselné údaje, zobrazí různé typy počasí pro časy a plochu ať už pro jeden bod nebo trasu tvořenou desítkamy různách míst.
+		
 	\chapter{Datové zdroje}
 	
-	V práci potřebujeme použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
+	V práci je zapotřebí použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML textu. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru nebo zpracované bitmapy hodnot a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
 	
 	\section{XML}
 	\subsection{Yr.no}
@@ -90,7 +94,7 @@
 	\section{JSON}
 	\subsection{WeatherUnlocked}
 	
-	Druhým datovým zdrojem který poskytuje json text je WeatherUnlocked. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
+	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
 	
 	\subsection{ukázka}
 	
@@ -208,7 +212,7 @@
 	
 	\section{API}
 	
-	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrácí požadovanou předpověď. Webová služba vrací data ve třech formátech xml, json a bitmapa. Nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
+	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrácí požadovanou předpověď. Webová služba vrací data ve třech formátech XML, JSON a bitmapa. Nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
 	
 	\subsection{Bitmap předpověď}
 	
@@ -253,7 +257,7 @@
 	
 	adresaserveru/{data}?time={čas}\&numOfFcs={počet\_předpovědí}\&hourDif={hodinový\_rozdíl\_mezi\_předpověďmi}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}
 	
-	\captionof{table}{Parametry xml/json předpovědí}
+	\captionof{table}{Parametry XML/JSON předpovědí}
 	\begin{center}
 		\begin{tabular}{c c p{13cm}}
 			Název & Povinnost & Význam \\
@@ -270,15 +274,15 @@
 
 	Příklady požadavků:
 	\begin{itemize}
-		\item Požadujeme předpověď o počasí pro aktuální čas v Ostravě zpracovanou všemi datovými zdroji ve formátu xml.
+		\item Požadujeme předpověď o počasí pro aktuální čas v Ostravě zpracovanou všemi datovými zdroji ve formátu XML.
 		\begin{itemize}
 			\item adresaserveru/xml?lon=18.262524\&lat=49.820923
 	   \end{itemize}	
-		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou všemi datovými zdroji ve formátu json.
+		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou všemi datovými zdroji ve formátu JSON.
 		\begin{itemize}
 			\item adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00
 		\end{itemize}
-		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou datovými zdroji OpenWeatherMap a WeatherUnlocked ve formátu xml.
+		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou datovými zdroji OpenWeatherMap a WeatherUnlocked ve formátu XML.
 		\begin{itemize}
 			\item adresaserveru/xml?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&loaders=owm,weun
 		\end{itemize}
@@ -290,7 +294,9 @@
 	
 	\subsection{Využívané škály}
 	
-	Služba nám umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku typu počasí a služba nám vrátí využívanou škálu.
+	Při stahování bitmap obsahujících data o počasí je vhodné mít prostředek na převod barev z jednotlivách pixelů na číselné hodnoty. Právě pro tento účel slouží škály.
+	
+	Služba nám proto umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku typu počasí a služba nám vrátí využívanou škálu.
 	
 	Příklady požadavků:
 	\begin{itemize}
@@ -339,7 +345,7 @@
 	
 	\section{Chyba při zpracování dat}
 	
-	Při požadavku o dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovanách dat vráti json text obsahující jediný parametr $message$ obsahující informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
+	Při požadavku o dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovanách dat vráti text ve formátu JSON obsahující jediný parametr $message$ obsahující informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
 	
 	\chapter{Vizualizace dat}
 	
