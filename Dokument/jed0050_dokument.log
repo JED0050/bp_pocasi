@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  22 MAR 2021 19:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  23 MAR 2021 19:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1330,49 +1330,71 @@ Underfull \vbox (badness 6252) has occurred while \output is active []
  [14
 
 ]
-[15] [16]
+[15]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
+
+LaTeX Warning: Command \v invalid in math mode on input line 230.
+
+
+LaTeX Warning: Command \v invalid in math mode on input line 230.
+
+
+LaTeX Warning: Command \v invalid in math mode on input line 230.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 230.
+
+
+LaTeX Warning: Command \v invalid in math mode on input line 230.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 230.
+
+[17]
 Kapitola 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--222
+Underfull \hbox (badness 10000) in paragraph at lines 252--255
 
  []
 
-[17
+[18
 
 ]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 223.
+(caption)                particular \caption on input line 256.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (14.76302pt too wide) in paragraph at lines 225--234
+Overfull \hbox (14.76302pt too wide) in paragraph at lines 258--267
  [] 
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-38.
+71.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (68.89905pt too wide) in paragraph at lines 248--249
+Overfull \hbox (68.89905pt too wide) in paragraph at lines 281--282
 []\T1/lmr/m/n/10.95 adresaserveru/bmp?type=prec&p1=49.621559,17.1507294&p2=49.5
 211889,17.4213141&loaders=mdrd 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--257
+Underfull \hbox (badness 10000) in paragraph at lines 287--290
 
  []
 
 
-Overfull \hbox (9.466pt too wide) in paragraph at lines 254--257
+Overfull \hbox (9.466pt too wide) in paragraph at lines 287--290
 \T1/lmr/m/n/10.95 adresaserveru/data?time=£as&lat=zem¥pisná_²í°ka&lon=zem¥pisní
 _délka&loaders=datové_zdroje 
  []
 
-[18]
-Overfull \hbox (393.81116pt too wide) in paragraph at lines 258--259
+[19]
+Overfull \hbox (393.81116pt too wide) in paragraph at lines 291--292
 []\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&numOfFcs=po£et_p°edpov¥dí&hourD
 if=hodinový_rozdíl_mezi_p°edpov¥¤mi&lat=zem¥pisná_²í°ka&lon=zem¥pisní_délka&loa
 ders=datové_zdroje 
@@ -1380,74 +1402,80 @@ ders=datové_zdroje
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 260.
+(caption)                particular \caption on input line 293.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (29.48463pt too wide) in paragraph at lines 262--273
+Overfull \hbox (29.48463pt too wide) in paragraph at lines 295--306
  [] 
  []
 
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 287--288
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 []\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--292
+Underfull \hbox (badness 10000) in paragraph at lines 324--325
 []\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
 -
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 317.
+(caption)                particular \caption on input line 350.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 333.
+(caption)                particular \caption on input line 366.
 See the caption package documentation for explanation.
 
-[20] [21]
+[21] [22]
 Kapitola 5.
 
 Underfull \vbox (badness 4673) has occurred while \output is active []
 
- [22
+ [23
 
 ]
-[23]
-
-LaTeX Warning: Command \' invalid in math mode on input line 383.
-
 [24]
+
+LaTeX Warning: Command \' invalid in math mode on input line 416.
+
+[25]
 Underfull \vbox (badness 4872) has occurred while \output is active []
 
- [25]
-[26]
+ [26]
+[27]
 Kapitola 6.
-[27
+[28
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-27.
+60.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [28
+) [29
 
 ]
 (./jed0050_dokument.aux)
-Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: C0FCC0F3F9F07248D11CEE066E3823AA;3274.
+
+Package rerunfilecheck Warning: File `jed0050_dokument.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `jed0050_dokument.out':
+(rerunfilecheck)             Before: C0FCC0F3F9F07248D11CEE066E3823AA;3274
+(rerunfilecheck)             After:  718D87284F0701C221637461D9425CFD;3823.
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26023 strings out of 479382
- 422821 string characters out of 5867828
+ 26028 strings out of 479382
+ 422872 string characters out of 5867828
  1151428 words of memory out of 5000000
  42618 multiletter control sequences out of 15000+600000
  465275 words of font info for 63 fonts, out of 8000000 for 9000
@@ -1470,9 +1498,9 @@ lmss12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss17.pf
 b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/S
 kola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/t
 exlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (28 pages, 1677257 bytes).
+Output written on jed0050_dokument.pdf (29 pages, 1683683 bytes).
 PDF statistics:
- 451 PDF objects out of 1000 (max. 8388607)
- 96 named destinations out of 1000 (max. 500000)
+ 460 PDF objects out of 1000 (max. 8388607)
+ 101 named destinations out of 1000 (max. 500000)
  252 words of extra memory for PDF output out of 10000 (max. 10000000)
 

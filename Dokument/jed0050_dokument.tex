@@ -67,7 +67,7 @@
 		
 	\chapter{Datové zdroje}
 	
-	V práci je zapotřebí použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML textu. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících snímky z radaru nebo zpracované bitmapy hodnot a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
+	V práci je zapotřebí použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML textu. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících přímo snímky z radaru nebo předem zpracované bitmapy hodnot a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
 	
 	\section{XML}
 	\subsection{Yr.no}
@@ -205,6 +205,39 @@
 	
 	\[Value_p = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}} \]
 	
+	\section{Konfigurační soubor}
+	
+	- json obsahuje zkratky a časy nové v hodiních do nové generace a čas psolední generace, omezení atp
+	- vlastní složka bmp, škály, konf s
+	
+	\section{Zpracovávání dat}
+	
+	- teď jdeme po bodech
+	- tříve se braly souřadnice zjišťovaných měst
+	
+	- plochu, zvětšit, zmenšit a přímo zpracovat
+	
+	- obrázek matice barev
+	- obrázek triangulace
+	- obrázek finální bitmapy
+	
+	\section{Ukládání dat}
+	
+	Veškerá zpracovaná data je potřeba uložit aby bylo možné je posléze poskytovat a nemuseli se pravidelně při každém dotazu o data generovat znovu. Vzhledem k tomu že se ukládají data o počasí na ploše nemá smysl používat žádnou databázi protože by bylo zbytečně složité ukládat celou předpověď pro každý bod zvlšť i když by bod vedle obsahovat obdobné, ne-li úplně totožné údaje. Právě proto se zvolilo ukládání dat do bitmap které nám jednoduše pokryjí celou zpracovanou plochu.
+	
+	Výhodou bitmap je že pro jeden zvolený čas dokáží pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jedné hodnotě počasí, například o teplotě, a proto pokud požadýjeme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý typ uložit jednu samostatnou bitmapu s těmito daty.
+	
+	Jednotlivé datové zdroje ukládají své bitmapy se jménem $TYP-ČAS$ a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje typ předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Vruhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu $ROK-MĚSÍC-DEN-HODINA$. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu $ROK-MĚSÍC-DEN-MINUTA$.
+	
+	To pro jakou plochu datové zdroje zpracovávají své bitmapy je dopředu určeno a proto nemá smysl tento údaj ukládat přímo do bitmap.
+	
+	Každý z datových zdrojů ukládá do své složky zpracované bitmapy a následně při určitých dotazech tyto bitmapy vrací. 
+	
+	\section{Vracení dat}
+	
+	- bitmapa 
+	- časy
+	- pokud zpracovává co 10 min vrací nejbližších 10 min, pokud zpracovává co 6 hodin vrací njebližší čas v 6 h pásmu
 	
 	\chapter{Distribuce dat}
 	

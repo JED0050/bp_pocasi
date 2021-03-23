@@ -54,43 +54,51 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.3}Interpolace}{16}{section.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Distribuce dat}{17}{chapter.4}%
+\contentsline {section}{\numberline {3.4}Konfigurační soubor}{16}{section.3.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}API}{17}{section.4.1}%
+\contentsline {section}{\numberline {3.5}Zpracovávání dat}{17}{section.3.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.1}Bitmap předpověď}{17}{subsection.4.1.1}%
+\contentsline {section}{\numberline {3.6}Ukládání dat}{17}{section.3.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.2}XML a JSON předpověď}{19}{subsection.4.1.2}%
+\contentsline {section}{\numberline {3.7}Vracení dat}{17}{section.3.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.3}Využívané škály}{20}{subsection.4.1.3}%
+\contentsline {chapter}{\numberline {4}Distribuce dat}{18}{chapter.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.4}Zkratky typů počasí}{20}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.1}API}{18}{section.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.5}Zkratky datových zdrojů}{21}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.1}Bitmap předpověď}{18}{subsection.4.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}Chyba při zpracování dat}{21}{section.4.2}%
+\contentsline {subsection}{\numberline {4.1.2}XML a JSON předpověď}{20}{subsection.4.1.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Vizualizace dat}{22}{chapter.5}%
+\contentsline {subsection}{\numberline {4.1.3}Využívané škály}{21}{subsection.4.1.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}Obecné použití}{22}{section.5.1}%
+\contentsline {subsection}{\numberline {4.1.4}Zkratky typů počasí}{21}{subsection.4.1.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}Mapa}{23}{section.5.2}%
+\contentsline {subsection}{\numberline {4.1.5}Zkratky datových zdrojů}{22}{subsection.4.1.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}Počasí v bodě}{23}{section.5.3}%
+\contentsline {section}{\numberline {4.2}Chyba při zpracování dat}{22}{section.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}Počasí na trase}{23}{section.5.4}%
+\contentsline {chapter}{\numberline {5}Vizualizace dat}{23}{chapter.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.5}Animace počasí}{24}{section.5.5}%
+\contentsline {section}{\numberline {5.1}Obecné použití}{23}{section.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.6}Graf}{24}{section.5.6}%
+\contentsline {section}{\numberline {5.2}Mapa}{24}{section.5.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.7}Nastavení a akce}{25}{section.5.7}%
+\contentsline {section}{\numberline {5.3}Počasí v bodě}{24}{section.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.8}Chyby při zobrazování dat}{26}{section.5.8}%
+\contentsline {section}{\numberline {5.4}Počasí na trase}{24}{section.5.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Závěr}{27}{chapter.6}%
+\contentsline {section}{\numberline {5.5}Animace počasí}{25}{section.5.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Literatura}{28}{chapter*.5}%
+\contentsline {section}{\numberline {5.6}Graf}{25}{section.5.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.7}Nastavení a akce}{26}{section.5.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.8}Chyby při zobrazování dat}{27}{section.5.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Závěr}{28}{chapter.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Literatura}{29}{chapter*.5}%
 \babel@toc {czech}{}
 \babel@toc {czech}{}
 \babel@toc {czech}{}
