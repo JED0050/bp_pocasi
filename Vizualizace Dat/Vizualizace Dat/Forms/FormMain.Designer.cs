@@ -52,6 +52,9 @@
             this.setDefSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.aktualizovatŠkályToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barvaSloupcůToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modráToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.červenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zelenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,9 +100,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pBScale = new System.Windows.Forms.PictureBox();
             this.bAnim = new System.Windows.Forms.Button();
-            this.modráToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.červenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zelenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tLPTimeMarks.SuspendLayout();
@@ -336,6 +336,27 @@
             this.barvaSloupcůToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.barvaSloupcůToolStripMenuItem.Text = "Barva sloupců";
             // 
+            // modráToolStripMenuItem
+            // 
+            this.modráToolStripMenuItem.Name = "modráToolStripMenuItem";
+            this.modráToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.modráToolStripMenuItem.Text = "Modrá";
+            this.modráToolStripMenuItem.Click += new System.EventHandler(this.modráToolStripMenuItem_Click);
+            // 
+            // červenáToolStripMenuItem
+            // 
+            this.červenáToolStripMenuItem.Name = "červenáToolStripMenuItem";
+            this.červenáToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.červenáToolStripMenuItem.Text = "Červená";
+            this.červenáToolStripMenuItem.Click += new System.EventHandler(this.červenáToolStripMenuItem_Click);
+            // 
+            // zelenáToolStripMenuItem
+            // 
+            this.zelenáToolStripMenuItem.Name = "zelenáToolStripMenuItem";
+            this.zelenáToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.zelenáToolStripMenuItem.Text = "Zelená";
+            this.zelenáToolStripMenuItem.Click += new System.EventHandler(this.zelenáToolStripMenuItem_Click);
+            // 
             // akceToolStripMenuItem
             // 
             this.akceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -524,7 +545,7 @@
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);
@@ -560,7 +581,7 @@
             this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lT0.Location = new System.Drawing.Point(18, 0);
             this.lT0.Name = "lT0";
-            this.lT0.Size = new System.Drawing.Size(111, 13);
+            this.lT0.Size = new System.Drawing.Size(116, 13);
             this.lT0.TabIndex = 41;
             this.lT0.Text = "05.11. 10:30";
             this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -571,9 +592,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT1.Location = new System.Drawing.Point(135, 0);
+            this.lT1.Location = new System.Drawing.Point(140, 0);
             this.lT1.Name = "lT1";
-            this.lT1.Size = new System.Drawing.Size(112, 13);
+            this.lT1.Size = new System.Drawing.Size(116, 13);
             this.lT1.TabIndex = 42;
             this.lT1.Text = "05.11. 10:30";
             this.lT1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -584,9 +605,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT2.Location = new System.Drawing.Point(253, 0);
+            this.lT2.Location = new System.Drawing.Point(262, 0);
             this.lT2.Name = "lT2";
-            this.lT2.Size = new System.Drawing.Size(112, 13);
+            this.lT2.Size = new System.Drawing.Size(116, 13);
             this.lT2.TabIndex = 39;
             this.lT2.Text = "05.11. 10:30";
             this.lT2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -597,9 +618,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT3.Location = new System.Drawing.Point(371, 0);
+            this.lT3.Location = new System.Drawing.Point(384, 0);
             this.lT3.Name = "lT3";
-            this.lT3.Size = new System.Drawing.Size(112, 13);
+            this.lT3.Size = new System.Drawing.Size(116, 13);
             this.lT3.TabIndex = 40;
             this.lT3.Text = "05.11. 10:30";
             this.lT3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -610,9 +631,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT4.Location = new System.Drawing.Point(489, 0);
+            this.lT4.Location = new System.Drawing.Point(506, 0);
             this.lT4.Name = "lT4";
-            this.lT4.Size = new System.Drawing.Size(112, 13);
+            this.lT4.Size = new System.Drawing.Size(116, 13);
             this.lT4.TabIndex = 43;
             this.lT4.Text = "05.11. 10:30";
             this.lT4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -623,9 +644,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT5.Location = new System.Drawing.Point(607, 0);
+            this.lT5.Location = new System.Drawing.Point(628, 0);
             this.lT5.Name = "lT5";
-            this.lT5.Size = new System.Drawing.Size(112, 13);
+            this.lT5.Size = new System.Drawing.Size(116, 13);
             this.lT5.TabIndex = 46;
             this.lT5.Text = "05.11. 10:30";
             this.lT5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -636,9 +657,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT6.Location = new System.Drawing.Point(725, 0);
+            this.lT6.Location = new System.Drawing.Point(750, 0);
             this.lT6.Name = "lT6";
-            this.lT6.Size = new System.Drawing.Size(112, 13);
+            this.lT6.Size = new System.Drawing.Size(116, 13);
             this.lT6.TabIndex = 47;
             this.lT6.Text = "05.11. 10:30";
             this.lT6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -649,9 +670,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT7.Location = new System.Drawing.Point(843, 0);
+            this.lT7.Location = new System.Drawing.Point(872, 0);
             this.lT7.Name = "lT7";
-            this.lT7.Size = new System.Drawing.Size(112, 13);
+            this.lT7.Size = new System.Drawing.Size(116, 13);
             this.lT7.TabIndex = 44;
             this.lT7.Text = "05.11. 10:30";
             this.lT7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -662,9 +683,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT8.Location = new System.Drawing.Point(961, 0);
+            this.lT8.Location = new System.Drawing.Point(994, 0);
             this.lT8.Name = "lT8";
-            this.lT8.Size = new System.Drawing.Size(112, 13);
+            this.lT8.Size = new System.Drawing.Size(116, 13);
             this.lT8.TabIndex = 45;
             this.lT8.Text = "05.11. 10:30";
             this.lT8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -672,7 +693,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1079, 0);
+            this.label2.Location = new System.Drawing.Point(1116, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 40;
@@ -915,27 +936,6 @@
             this.bAnim.TabIndex = 24;
             this.bAnim.UseVisualStyleBackColor = false;
             this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
-            // 
-            // modráToolStripMenuItem
-            // 
-            this.modráToolStripMenuItem.Name = "modráToolStripMenuItem";
-            this.modráToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.modráToolStripMenuItem.Text = "Modrá";
-            this.modráToolStripMenuItem.Click += new System.EventHandler(this.modráToolStripMenuItem_Click);
-            // 
-            // červenáToolStripMenuItem
-            // 
-            this.červenáToolStripMenuItem.Name = "červenáToolStripMenuItem";
-            this.červenáToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.červenáToolStripMenuItem.Text = "Červená";
-            this.červenáToolStripMenuItem.Click += new System.EventHandler(this.červenáToolStripMenuItem_Click);
-            // 
-            // zelenáToolStripMenuItem
-            // 
-            this.zelenáToolStripMenuItem.Name = "zelenáToolStripMenuItem";
-            this.zelenáToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.zelenáToolStripMenuItem.Text = "Zelená";
-            this.zelenáToolStripMenuItem.Click += new System.EventHandler(this.zelenáToolStripMenuItem_Click);
             // 
             // FormMain
             // 

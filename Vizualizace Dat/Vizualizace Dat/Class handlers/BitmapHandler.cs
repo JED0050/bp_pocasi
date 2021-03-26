@@ -122,7 +122,7 @@ namespace Vizualizace_Dat
 
         public static Bitmap GetBitmapFromServer(string type, DateTime dateTime, string loaders, List<PointLatLng> bounds)
         {
-            string time = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            string time = dateTime.ToString("yyyy-MM-ddTHH:mm:00");
 
             string pointUrl;
 

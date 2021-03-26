@@ -16,10 +16,10 @@ namespace TestConsoleApk
         static void Main(string[] args)
         {
 
-            AvgForecast a = new AvgForecast();
-            a.Add(new RadarBourkyDataLoader());
+            AvgForecast a = new AvgForecast("");
+            //a.Add(new RadarBourkyDataLoader());
 
-            a.GetAvgForecBitmap(DateTime.Now.AddHours(-5), ForecastTypes.PRECIPITATION);
+            //a.GetAvgForecBitmap(DateTime.Now.AddHours(-5), ForecastTypes.PRECIPITATION);
         }
 
         

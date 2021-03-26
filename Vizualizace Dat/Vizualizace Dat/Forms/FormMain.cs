@@ -64,13 +64,7 @@ namespace Vizualizace_Dat
 
             ValidetaTrackbarTimeMarks();
 
-            int hoursBack = 6;
-
             selectedTime = DateTime.Now;
-            selectedTime = selectedTime.AddMinutes(- selectedTime.Minute % 10).AddHours(-hoursBack);
-
-            trackBar1.Value = hoursBack * 6;
-            lDateTimeForecast.Text = selectedTime.AddHours(hoursBack).ToString("dd. MM. yyyy - HH:mm");
 
             bounds = BitmapHandler.GetBounds(gMap);
 
@@ -143,6 +137,13 @@ namespace Vizualizace_Dat
             }
 
             areDataSendByUser = true;
+
+            int hoursBack = 6;
+
+            selectedTime = selectedTime.AddMinutes(-selectedTime.Minute % 10).AddHours(-hoursBack);
+
+            trackBar1.Value = hoursBack * 6;
+            lDateTimeForecast.Text = selectedTime.AddHours(hoursBack).ToString("dd. MM. yyyy - HH:mm");
         }
 
         private void Form1_Load(object sender, EventArgs e)

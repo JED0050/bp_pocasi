@@ -17,6 +17,9 @@ namespace AgregaceDatLib
 {
     public class AvgForecast
     {
+        private static bool inDebug = false;
+        private static bool inConsoleApk = false;
+
         private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
         private PointLonLat botRightBound = new PointLonLat(37.9033283, 41.6999200);
 
@@ -74,43 +77,95 @@ namespace AgregaceDatLib
             {
                 allKnownLoaders = new List<DataLoader>();
 
-                string workingDirectory = Environment.CurrentDirectory;
-                string prefixPath = Directory.GetParent(workingDirectory).Parent.FullName + @"\Agregace Dat\DatoveZdrojeAHandlery\DataLoaders\";
-
-                foreach (var loaderFolder in Directory.GetDirectories(prefixPath).Select(d => Path.GetRelativePath(prefixPath, d)))
+                if (inDebug)
                 {
-                    string loaderLib = loaderFolder;
+                    string workingDirectory = Environment.CurrentDirectory;
+                    string prefixPath = Directory.GetParent(workingDirectory).Parent.FullName + @"\Agregace Dat\DatoveZdrojeAHandlery\DataLoaders\";
 
-                    try
+                    //prefix console apk
+                    if(inConsoleApk)
+                        prefixPath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.FullName + @"\DatoveZdrojeAHandlery\DataLoaders\";
+
+                    foreach (var loaderFolder in Directory.GetDirectories(prefixPath).Select(d => Path.GetRelativePath(prefixPath, d)))
                     {
-                        string loaderClass = loaderLib.Remove(0, 2);
-                        loaderClass = loaderClass.Remove(loaderClass.Length - 3, 3) + "DataLoader";
+                        string loaderLib = loaderFolder;
 
-                        string dllPath = prefixPath + $"{loaderLib}\\{loaderLib}\\bin\\Debug\\netcoreapp2.1\\{loaderLib}.dll";
+                        try
+                        {
+                            string loaderClass = loaderLib.Remove(0, 2);
+                            loaderClass = loaderClass.Remove(loaderClass.Length - 3, 3) + "DataLoader";
 
-                        var assembly = Assembly.LoadFile(dllPath);
+                            string dllPath = prefixPath + $"{loaderLib}\\{loaderLib}\\bin\\Debug\\netcoreapp2.1\\{loaderLib}.dll";
 
-                        var type = assembly.GetType($"{loaderLib}.{loaderClass}");
+                            var assembly = Assembly.LoadFile(dllPath);
 
-                        DataLoader dL = (DataLoader)Activator.CreateInstance(type);
+                            var type = assembly.GetType($"{loaderLib}.{loaderClass}");
 
-                        Debug.Indent();
-                        Debug.WriteLine($"Agregace dat: Datový zdroj {loaderClass} ve složce {loaderLib} úspěšně načten");
-                        Debug.Unindent();
+                            DataLoader dL = (DataLoader)Activator.CreateInstance(type);
 
-                        allKnownLoaders.Add(dL);
+                            Debug.Indent();
+                            Debug.WriteLine($"Agregace dat: Datový zdroj {loaderClass} ve složce {loaderLib} úspěšně načten");
+                            Debug.Unindent();
+
+                            allKnownLoaders.Add(dL);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Indent();
+                            Debug.WriteLine("Agregace dat: Chyba při zpracování datového zdroje ve složce " + loaderFolder);
+                            Debug.WriteLine(e.Message);
+                            Debug.Unindent();
+                        }
                     }
-                    catch(Exception e)
-                    {
-                        Debug.Indent();
-                        Debug.WriteLine("Agregace dat: Chyba při zpracování datového zdroje ve složce " + loaderFolder);
-                        Debug.WriteLine(e.Message);
-                        Debug.Unindent();
-                    }
+
+                    if (allKnownLoaders.Count > 0)
+                        lastLoad = DateTime.Now;
                 }
+                else
+                {
+                    string workingDirectory = Environment.CurrentDirectory;
+                    string prefixPath = Directory.GetParent(workingDirectory).Parent.FullName + @"\Agregace Dat\DatoveZdrojeAHandlery\DataLoadersLibs\";
 
-                if (allKnownLoaders.Count > 0)
-                    lastLoad = DateTime.Now;
+                    //prefix console apk
+                    if (inConsoleApk)
+                        prefixPath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.FullName + @"\DatoveZdrojeAHandlery\DataLoadersLibs\";
+
+                    foreach (var dllFile in Directory.GetFiles(prefixPath).Select(d => Path.GetRelativePath(prefixPath, d)))
+                    {
+
+                        string loaderLib = dllFile.Remove(dllFile.Length - 4, 4);
+
+                        try
+                        {
+                            string loaderClass = loaderLib.Remove(0, 2);
+                            loaderClass = loaderClass.Remove(loaderClass.Length - 3, 3) + "DataLoader";
+
+                            string dllPath = prefixPath + dllFile;
+
+                            var assembly = Assembly.LoadFile(dllPath);
+
+                            var type = assembly.GetType($"{loaderLib}.{loaderClass}");
+
+                            DataLoader dL = (DataLoader)Activator.CreateInstance(type);
+
+                            Debug.Indent();
+                            Debug.WriteLine($"Agregace dat: Datový zdroj {loaderClass} úspěšně načten");
+                            Debug.Unindent();
+
+                            allKnownLoaders.Add(dL);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Indent();
+                            //Debug.WriteLine("Agregace dat: Chyba při zpracování datového zdroje ve složce " + loaderFolder);
+                            Debug.WriteLine(e.Message);
+                            Debug.Unindent();
+                        }
+                    }
+
+                    if (allKnownLoaders.Count > 0)
+                        lastLoad = DateTime.Now;
+                }
 
                 return allKnownLoaders;
             }
