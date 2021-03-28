@@ -174,7 +174,7 @@ namespace DLWeatherUnlockedLib
             return updatedTime.AddHours(1);
         }
 
-        private Dictionary<DateTime, List<Forecast>> GetWeekForecast()
+        public Dictionary<DateTime, List<Forecast>> GetWeekForecast()
         {
             Dictionary<DateTime, List<Forecast>> dicForecasts = new Dictionary<DateTime, List<Forecast>>();
 

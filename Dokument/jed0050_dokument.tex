@@ -96,7 +96,7 @@
 	
 	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisnách souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
 	
-	\subsection{ukázka}
+	\subsection{Ukázka API}
 	
 	Ukázka odkazu který vrací JSON text obsahujícíh data o počasí pro Ostravu na následujících 5 dnů.
 	
@@ -113,12 +113,18 @@
 	
 	http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13
 	
-	\captionof{figure}{Ukázka bitmapy od Medard-online}
-	\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
+	\begin{center}
+		\captionof{figure}{Bitmapy od Medard-online \cite{medard}}
+		\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
+	\end{center}
 	
 	\subsection{Radar.bourky}
 	
-	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný, protože poskytuje data pouze v aktuálním čase, respektive v čase pár hodin zpět a pokrávý jen českou republiku. Z toho důvodu se tento zdroj dá využít pouze pro zjištění aktuálního srážek v ČR a blízkém okolí.
+	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný pro určování budoucího počasí, protože poskytuje data pouze v aktuálním čase, mimo srážky neposkytuje jiné typy počasí a také pokrávý pouze Českou Republiku s blízkým okolím.
+	
+	Na druhou stranu tento zdroj uchovává informace o srážkách tři dny dozadu s časovým rozdílem pouhých 10 minut. Díky tomu se dá tento zdroj použít pro přesné zobrazení srážek v minulosti případně odhad počasí v následujících hodinách na základě velice přesného posunu hodnot na snímcích.
+	
+	Proto se zdroj využívá pouze pro určení srážek v aktuálním čase případně následujících šesti hodinách nebo pro určení srážek v minulých dnech s přesným posunem po deseti minutách.
 	
 	\subsection{Ukázka API a obsahu}
 	
@@ -126,24 +132,28 @@
 	
 	http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
 	
-	\captionof{figure}{Ukázka snímku z radaru od Radar.bourky}
-	\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
-	
+	\begin{center}
+		\captionof{figure}{Snímek z radaru od Radar.bourky \cite{chmi}}
+		\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
+	\end{center}
+
 	\section{Shrnutí použitých zdrojů}
 	
-	typ = Srážky/Teplot/Tlak/Vlhkost
-	
-	\captionof{table}{Shrnutí vlastností datových zdrojů}
 	\begin{center}
+		
+		\captionof{table}{Shrnutí vlastností datových zdrojů}
+		
 		\begin{tabular} {l r c c c c c c c}
 			
-			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & typ \\
+			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & Typ \\
 			\hline
-			Yr.no & XML & 9 & 1 a 6 & & svět & A/A/A/A \\ 
-			OpenWeatherMap & JSON & 5 & 3 & 60 & svět & A/A/A/A \\ 
-			WeatherUnlocked & JSON & 5 & 3 & 75 & svět & A/A/A/A \\ 
-			Medard-online & BMP & 5 & 1 &  & Evropa & A/A/N/N \\ 
-			Radar.bourky & BMP & & 0.16 (10 min)& & ČR & A/N/N/N \\ 
+			Yr.no & XML & 9 & 1 a 6 & & svět & s,v,t1,t2 \\ 
+			OpenWeatherMap & JSON & 5 & 3 & 60 & svět & s,v,t1,t2 \\ 
+			WeatherUnlocked & JSON & 5 & 3 & 75 & svět & s,v,t1,t2 \\ 
+			Medard-online & BMP & 5 & 1 &  & Evropa & s,t1 \\ 
+			Radar.bourky & BMP & -3 & 0.16 (10 min)& & ČR & s \\ 
+			
+			\multicolumn{7}{r}{\footnotesize *s = srážky, v = vlkhost, t1 = teplota, t2 = tlak}\\
 			
 		\end{tabular}
 	\end{center}
@@ -151,6 +161,8 @@
 	\chapter{Agregace dat}
 	
 	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, tímto formátem byly zvoleny bitmapy obsahující data o jednom typu počasí, data jsou reprezentována pomocí barev a pokrávají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec jsme potřebovali pokrýt celou bitmapu pokud známe hodnotu počasí pro určíté body, což nám vyřešila triangulace v kombinaci s interpolací.
+	
+	Každý z datových zdrojů je v agregaci dat realizován pomocí samostatné knihovny. Tato knihovna musí vždy implementovat rozhraná DataLoader a může využívat různé pomocné třídy pro správu dat o počasí jako je například triangulace nebo převod číselných hodnot na barvy a naopak. Dll soubour každé z knihoven je uložen do složky s datovými zdroji a následně je každá z knihoven datochých zdrojů dynamicky načtena a zpracována pomocí reflexe třídou spravující agregaci dat.
 	
 	\section{Škála}
 	
@@ -180,6 +192,11 @@
 		\item Vzájemně se nepřekrývající triangulace pro množinu bodů je nyní vytvořena. Tato metoda je velice rychlá mezi způsoby vytváření 2D triangulace.
 		\item Sousední páry trojuhelníků této triangulace musí být \uv{převráceny} aby došlo k vytvoření Delaunayovi triangulace z počáteční nepřekrývající se triangulace.
 	\end{enumerate}
+
+	\begin{center}
+		\captionof{figure}{S-hull pro 500 náhodně generovaných bodů v matici 300x300}
+		\includegraphics{Data/bmp_triangulace.png}
+	\end{center}
 	
 	\section{Interpolace}
 	
@@ -205,21 +222,43 @@
 	
 	\[Value_p = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}} \]
 	
-	\section{Konfigurační soubor}
+	\section{Složky zdrojů}
 	
-	- json obsahuje zkratky a časy nové v hodiních do nové generace a čas psolední generace, omezení atp
-	- vlastní složka bmp, škály, konf s
+	Každý z datových zdrojů má svou vlastní složku ze které čte a do které se ukládá informace.
+	
+	V této složce se nachází konfigurační JSON soubor obsahující informace na základě kterých si služba nastaví své parametry při vytvoření instance. Mezi tyto informace patří název datového zdroje včetně zkratky. Zeměpisné souřadnice zpracovávané plochy. Maximální dovolený počet stažení dat za minutu. Počet hodin který má služba zpracovávat zpětně, minimální potřebný hodinový rozdíl pro nové stažení dat a především poslední čas zpracování dat. Na základě posledního času zpracování bitmap a minimálního potřebného hodinového rozdílu datový zdroj určí zda dojde k vytváření nových bitmap či nikoli.
+	
+	Pokud zpracovává datový zdroj informace ve formě bitmap obsahuje tato složka i škálu daného datového zdraje. Pomocí této škály se převádí veškeré barvy na číselné hodnoty a následně za použití obecné škály služby zpět z čísla na normalizovanou barvu.
+	
+	Nejdůležitější soubory ukládané do složek jsou samotné bitmapy s daty o počasí. Bitmapy si do své složky každý zdroj ukládá při požadavku vytváření bitmap a následně je z této složky vrací při požadavku na poskytnutí dat o počasí pro daný typ a čas.
 	
 	\section{Zpracovávání dat}
 	
-	- teď jdeme po bodech
-	- tříve se braly souřadnice zjišťovaných měst
+	Při zpracování dat do bitmap záleží na tom jakým způsobem jsou data datovým zdrojem poskytována.
 	
-	- plochu, zvětšit, zmenšit a přímo zpracovat
+	Pokud jsou data poskytována ve formě bitmap potřebujeme zjistit jakou škálou jsou data v bitmapě zobrazena a rozsah zpracované plochy. Následně se musí bitmapa přeškálovat, ted jednotlivé pixely jsou převedeny na číselnou hodnotu pomocí škály služby a následně jsou čísla převedeny zpět na barvu za pomocí obecné škály pro agregaci dat využívané pro všechny zdroje na správu dat. Nakonec je potřeba správně pozicovat bitmapu, na základě zeměpisných souřadnit rohů bitmapyy se zjistí jaká plocha je zpracována. Pokud je plocha příliš velká tak jak tomu je u zdroje Medard, dochází k vyřezání požadované části a následnému roztažení na 728x528 pixelů. Naopak u zdroje Yr.no je plocha přiliš malá a tak dochází k patřičnému zmenšení bitmapy ze zdroje a napozicování do finální větší bitmapy.
 	
-	- obrázek matice barev
-	- obrázek triangulace
-	- obrázek finální bitmapy
+	Data poskytována ve formátu XML či JSON se zpracovávají jiným způsobem. Nejprve měla každá služba svůj seznam měst nacházejících se ve zpracovávané ploše pro který poskytuje informace o počasí. Pro každé z těchto měst se určilo počasí a 
+	pozice pixelu reprezentujícího dané město. Pixel se následně vykreslil na mapu a pomocí triangulace se vytvořilo síť trojuhelníků, které se ve finále vybarvily. Tento způsob nebyl vhodný protože nepokrýval celou bitmapu rovnoměrně, v určitých místech chyběly informace a naopak v jiným místech bylo příliš mnoho bodů u sebe, proto se způsob zpracování změnil.
+	
+	Aktuálně dochází k cyklickému průchodu bitmapou s posunem 25 pixelů na výšku a šířku. Každý z těchto pixelů je převeden na zeměpisné souřadnice na základě vzdálenosti od levého horního rohu přičemž dochází k určení počasí v tomto bodě. Počasí je následně uloženo do slovníku kde klíč tvoří čas dané předpovědi a hodnotou je list počasí pro stejný čas v různých bodech. Nakonec je pro každý z časů proveden průchod listem, vykreslení pixelů na své pozice, následuje vytvoření sítě torjuhelníků pomocí triangulace zakončená s vybarvením jednotlivých trojuhelníků využitím interpoalce. Pro každý čas je vytvořeno tolik bitmap kolik paramatrů počasí daná služba zpracovává. Počet jendotlivých časů je úměrný počtu všech dostupných předpovědí pro všechny body.
+	
+	Použití tringulace není při zpracovávání rovnoměrně vzdálených bodů nutné, každopádně se v práci pro zpracování dat ponechala. Datové zdroje takto mohou zpracovávat i nerovnoměrně vzdálené body a pokud by došlo ke změně implementace určení dat v daných bodech, tedy pro jednotlivé časy by se body neurčovali cyklicky ale opět pomocí seznamu různě umístěnách měst ve zpracované ploše, trinagulace by se postarala o rozdělení bodů na síť trojuhelníků s následným vybarvením pomocí interpolace.
+	
+	\begin{center}
+		\captionof{figure}{Body reprezentující teplotu na ploše}
+		\includegraphics[scale=0.5]{Data/bmp_body.png}
+	\end{center}
+	
+	\begin{center}
+		\captionof{figure}{Síť trojuhelníků pro bitmapu teploty}
+		\includegraphics[scale=0.5]{Data/bmp_sit.png}
+	\end{center}
+
+	\begin{center}
+		\captionof{figure}{Kompletní bitmapa pro teplotu}
+		\includegraphics[scale=0.5]{Data/bmp_vybarvena.png}
+	\end{center}
 	
 	\section{Ukládání dat}
 	
@@ -233,11 +272,13 @@
 	
 	Každý z datových zdrojů ukládá do své složky zpracované bitmapy a následně při určitých dotazech tyto bitmapy vrací. 
 	
-	\section{Vracení dat}
+	\section{Poskytování dat}
 	
-	- bitmapa 
-	- časy
-	- pokud zpracovává co 10 min vrací nejbližších 10 min, pokud zpracovává co 6 hodin vrací njebližší čas v 6 h pásmu
+	Datové zdroje po obdržení informací o typu počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název typu počasí se musí shodovat s prefixem názbu bitmapy $typ$. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bytmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
+	
+	Zaokrouhlený čas je následně převeden do formátu $ROK-MĚSÍC-DEN$, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání vyjímky.
+	
+	Pokud datový zdroj vytváží bitmapy nekonzistentně, například prvních pár dnů je s rozestupem 1 hodiny a zbytek s rozestupem 6 hodin tak jak to dělá například Yr.no, dochází při nenalezení bitmapy se zaokrouhleným časem k sekvenčnímu průchodu všech zpracovanách bitmap a vrácení bitmapy s nejbližším časem k požadovanému času. Tato bitmapa je vrácena pouze tehdy pokud je odchylka času maximálně 6 hodin v opačeném případě dochází opět k vyvolání vyjímky.
 	
 	\chapter{Distribuce dat}
 	
@@ -253,8 +294,10 @@
 	\\\\
 	adresaserveru/bmp?type=\{typ\}\&time=\{čas\}\&loaders=\{datové zdroje\}\&p1=\{bod1\}\&p2=\{bod2\}
 	
-	\captionof{table}{Parametry bitmap předpovědí}
 	\begin{center}
+		
+		\captionof{table}{Parametry bitmap předpovědí}
+		
 		\begin{tabular}{c c p{13cm}}
 			Název & Povinnost & Význam \\
 			\midrule
@@ -290,8 +333,10 @@
 	
 	adresaserveru/{data}?time={čas}\&numOfFcs={počet\_předpovědí}\&hourDif={hodinový\_rozdíl\_mezi\_předpověďmi}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}
 	
-	\captionof{table}{Parametry XML/JSON předpovědí}
 	\begin{center}
+		
+		\captionof{table}{Parametry XML/JSON předpovědí}
+		
 		\begin{tabular}{c c p{13cm}}
 			Název & Povinnost & Význam \\
 			\midrule
@@ -347,8 +392,10 @@
 	
 	Zkratky pro jednotlivé typy předpovědí které se využívají v parametru type.
 	
-	\captionof{table}{Zkratky typů předpovědí}
 	\begin{center}
+		
+		\captionof{table}{Zkratky typů předpovědí}
+		
 		\begin{tabular}{c c c}
 			Typ počasí & Jednotka & Zkratka pro API\\
 			\midrule
@@ -363,8 +410,10 @@
 	
 	Zkratky pro jednotlivé datové zdroje které se využívají v parametru loaders. Při použití více zkratek za sebou oddělených čárkou dojde k použití více zdrojů současně.
 	
-	\captionof{table}{Zkratky datových zdrojů}
 	\begin{center}
+		
+		\captionof{table}{Zkratky datových zdrojů}
+		
 		\begin{tabular}{c c}
 			Celý název datového zdroje & Zkratka pro API\\
 			\midrule
@@ -431,7 +480,7 @@
 	
 	Při vykreslování grafu pro bod reprezentují všechny sloupce stejné místo s rozdílným časem. Časy jsou od sebe posunuté o hodinu a počet vykreslených sloupců lze změnit v nastavení.
 	
-	Pro tuto předpověď nám graf vykresluje počasí pro 6 rovnoměrně vzdálených míst na trase. Proto počet sloupců v tomto grafu je vždy 6. Na rozdíl od grafu pro předpověď v bodě nám tento graf na ose $x$ reprezentuje čas sloupce v aktuálním bodě a vzdálenost tohoto bodu od počátku cesty.
+	Pro tuto předpověď nám graf vykresluje počasí pro 8 rovnoměrně vzdálených míst na trase. Proto počet sloupců v tomto grafu je vždy 8. Na rozdíl od grafu pro předpověď v bodě nám tento graf na ose $x$ reprezentuje čas sloupce v aktuálním bodě a vzdálenost tohoto bodu od počátku cesty.
 	
 	Zobrazený typ jednotek předpovědi na ose $y$ se mění dle zvoleného typu počasí v radio buttonech. Každý typ předpovědi zdá své jednotky a mimo to i minimální a maximální hodnotu počasí pro tuto jednotku. Hodnota předpovědi pro každý sloupec se tedy určí jako procentuální hodnota v rozmezí od minima po maximum.
 	

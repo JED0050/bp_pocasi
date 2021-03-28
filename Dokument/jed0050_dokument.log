@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  23 MAR 2021 19:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  28 MAR 2021 18:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1172,7 +1172,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 pdfTeX warning: pdflatex.exe (file ./Figures/FEI_CZ.pdf): PDF inclusion: found 
 PDF version <1.6>, but at most version <1.5> allowed
-<Figures/FEI_CZ.pdf, id=118, 350.70023pt x 109.21pt>
+<Figures/FEI_CZ.pdf, id=134, 350.70023pt x 109.21pt>
 File: Figures/FEI_CZ.pdf Graphic file (type pdf)
 <use Figures/FEI_CZ.pdf>
 Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 56.
@@ -1284,117 +1284,162 @@ ast=precip&layer=eu&step=13
  []
 
 
-Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 116.
-See the caption package documentation for explanation.
-
-
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 116.
+(caption)                particular \caption on input line 117.
 See the caption package documentation for explanation.
 
-<Data/Mdrd_ukazka.png, id=244, 684.3969pt x 435.0654pt>
+<Data/Mdrd_ukazka.png, id=278, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 117.
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 118.
 (pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
-
-Underfull \vbox (badness 5105) has occurred while \output is active []
-
- [12 <./Data/Mdrd_ukazka.png>]
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 129.
-See the caption package documentation for explanation.
-
-<Data/Rb_ukazka.png, id=257, 796.47563pt x 577.40718pt>
-File: Data/Rb_ukazka.png Graphic file (type png)
-<use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 130.
-(pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
+[12 <./Data/Mdrd_ukazka.png>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 136.
 See the caption package documentation for explanation.
 
+<Data/Rb_ukazka.png, id=292, 796.47563pt x 577.40718pt>
+File: Data/Rb_ukazka.png Graphic file (type png)
+<use Data/Rb_ukazka.png>
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 137.
+(pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
 
-Overfull \hbox (4.73955pt too wide) in paragraph at lines 138--149
- [] 
- []
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 144.
+See the caption package documentation for explanation.
 
-[13 <./Data/Rb_ukazka.png>]
+
+Underfull \vbox (badness 3323) has occurred while \output is active []
+
+ [13 <./Data/Rb_ukazka.png>] [14]
 Kapitola 3.
 
-Underfull \vbox (badness 6252) has occurred while \output is active []
+Overfull \hbox (1.73695pt too wide) in paragraph at lines 165--166
+[]\T1/lmr/m/n/10.95 Kaºdý z da-to-vých zdroj· je v agre-gaci dat re-a-li-zo-ván
+ po-mocí sa-mo-statné knihovny. Tato knihovna
+ []
 
- [14
+[15
 
-]
-[15]
+] [16]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 197.
+See the caption package documentation for explanation.
+
+<Data/bmp_triangulace.png, id=327, 225.84375pt x 225.84375pt>
+File: Data/bmp_triangulace.png Graphic file (type png)
+<use Data/bmp_triangulace.png>
+Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 198.
+(pdftex.def)             Requested size: 225.84319pt x 225.84319pt.
+[17 <./Data/bmp_triangulace.png>] [18]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 249.
+See the caption package documentation for explanation.
+
+<Data/bmp_body.png, id=342, 548.0475pt x 397.485pt>
+File: Data/bmp_body.png Graphic file (type png)
+<use Data/bmp_body.png>
+Package pdftex.def Info: Data/bmp_body.png  used on input line 250.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16]
+ [19]
 
-LaTeX Warning: Command \v invalid in math mode on input line 230.
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 254.
+See the caption package documentation for explanation.
+
+<Data/bmp_sit.png, id=348, 548.0475pt x 397.485pt>
+File: Data/bmp_sit.png Graphic file (type png)
+<use Data/bmp_sit.png>
+Package pdftex.def Info: Data/bmp_sit.png  used on input line 255.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 259.
+See the caption package documentation for explanation.
+
+<Data/bmp_vybarvena.png, id=349, 548.0475pt x 397.485pt>
+File: Data/bmp_vybarvena.png Graphic file (type png)
+<use Data/bmp_vybarvena.png>
+Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 260.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20 <./Data/bmp_body.png> <./Data/bmp_sit.png>]
+
+LaTeX Warning: Command \v invalid in math mode on input line 269.
 
 
-LaTeX Warning: Command \v invalid in math mode on input line 230.
+LaTeX Warning: Command \v invalid in math mode on input line 269.
 
 
-LaTeX Warning: Command \v invalid in math mode on input line 230.
+LaTeX Warning: Command \v invalid in math mode on input line 269.
 
 
-LaTeX Warning: Command \' invalid in math mode on input line 230.
+LaTeX Warning: Command \' invalid in math mode on input line 269.
 
 
-LaTeX Warning: Command \v invalid in math mode on input line 230.
+LaTeX Warning: Command \v invalid in math mode on input line 269.
 
 
-LaTeX Warning: Command \' invalid in math mode on input line 230.
+LaTeX Warning: Command \' invalid in math mode on input line 269.
 
-[17]
+[21 <./Data/bmp_vybarvena.png>]
+
+LaTeX Warning: Command \v invalid in math mode on input line 279.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 279.
+
+[22]
 Kapitola 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 252--255
+Underfull \hbox (badness 10000) in paragraph at lines 293--296
 
  []
 
-[18
+[23
 
 ]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 256.
+(caption)                particular \caption on input line 299.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (14.76302pt too wide) in paragraph at lines 258--267
+Overfull \hbox (14.76302pt too wide) in paragraph at lines 301--310
  [] 
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-71.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
+14.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (68.89905pt too wide) in paragraph at lines 281--282
+Overfull \hbox (68.89905pt too wide) in paragraph at lines 324--325
 []\T1/lmr/m/n/10.95 adresaserveru/bmp?type=prec&p1=49.621559,17.1507294&p2=49.5
 211889,17.4213141&loaders=mdrd 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--290
+Underfull \hbox (badness 10000) in paragraph at lines 330--333
 
  []
 
 
-Overfull \hbox (9.466pt too wide) in paragraph at lines 287--290
+Overfull \hbox (9.466pt too wide) in paragraph at lines 330--333
 \T1/lmr/m/n/10.95 adresaserveru/data?time=£as&lat=zem¥pisná_²í°ka&lon=zem¥pisní
 _délka&loaders=datové_zdroje 
  []
 
-[19]
-Overfull \hbox (393.81116pt too wide) in paragraph at lines 291--292
+[24]
+Overfull \hbox (410.81116pt too wide) in paragraph at lines 334--335
 []\T1/lmr/m/n/10.95 adresaserveru/data?time=£as&numOfFcs=po£et_p°edpov¥dí&hourD
 if=hodinový_rozdíl_mezi_p°edpov¥¤mi&lat=zem¥pisná_²í°ka&lon=zem¥pisní_délka&loa
 ders=datové_zdroje 
@@ -1402,85 +1447,81 @@ ders=datové_zdroje
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 293.
+(caption)                particular \caption on input line 338.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (29.48463pt too wide) in paragraph at lines 295--306
+Overfull \hbox (29.48463pt too wide) in paragraph at lines 340--351
  [] 
  []
 
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 320--321
-[]\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--325
-[]\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
--
- []
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 350.
-See the caption package documentation for explanation.
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 366.
-See the caption package documentation for explanation.
-
-[21] [22]
-Kapitola 5.
-
-Underfull \vbox (badness 4673) has occurred while \output is active []
-
- [23
-
-]
-[24]
-
-LaTeX Warning: Command \' invalid in math mode on input line 416.
-
 [25]
-Underfull \vbox (badness 4872) has occurred while \output is active []
+Overfull \hbox (56.06248pt too wide) in paragraph at lines 365--366
+[]\T1/lmr/m/n/10.95 adresaserveru/xml?lon=18.262524&lat=49.820923&time=2021-03-
+14T18:35:00&loaders=owm,weun 
+ []
 
- [26]
+
+Overfull \hbox (86.84549pt too wide) in paragraph at lines 369--370
+[]\T1/lmr/m/n/10.95 adresaserveru/json?lon=18.262524&lat=49.820923&time=2021-03
+-14T18:35:00&numOfFcs=5&hourDif=3 
+ []
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 397.
+See the caption package documentation for explanation.
+
+[26]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 415.
+See the caption package documentation for explanation.
+
 [27]
-Kapitola 6.
+Kapitola 5.
 [28
 
+] [29]
+
+LaTeX Warning: Command \' invalid in math mode on input line 465.
+
+[30] [31] [32]
+Kapitola 6.
+[33
+
 ]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-60.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
+09.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [29
+) [34
 
 ]
 (./jed0050_dokument.aux)
+Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
+(rerunfilecheck)             Checksum: 4F04254294FA679B79FC81B7566A0CEF;3816.
 
-Package rerunfilecheck Warning: File `jed0050_dokument.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
 
-Package rerunfilecheck Info: Checksums for `jed0050_dokument.out':
-(rerunfilecheck)             Before: C0FCC0F3F9F07248D11CEE066E3823AA;3274
-(rerunfilecheck)             After:  718D87284F0701C221637461D9425CFD;3823.
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                jed0050_dokument
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26028 strings out of 479382
- 422872 string characters out of 5867828
- 1151428 words of memory out of 5000000
- 42618 multiletter control sequences out of 15000+600000
- 465275 words of font info for 63 fonts, out of 8000000 for 9000
+ 26067 strings out of 479382
+ 423548 string characters out of 5867828
+ 1151462 words of memory out of 5000000
+ 42643 multiletter control sequences out of 15000+600000
+ 468272 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,128p,1112b,4813s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,128p,1112b,4819s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{d:/Skola-SW/texlive/20
 20/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive/2020/texmf-
@@ -1493,14 +1534,15 @@ SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/Skola-SW/texliv
 e/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><d:/Skola-SW/texlive/2020/tex
 mf-dist/fonts/type1/public/lm/lmr10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fo
 nts/type1/public/lm/lmr8.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/p
-ublic/lm/lmri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/
-lmss12.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss17.pf
-b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/S
-kola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/t
-exlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (29 pages, 1683683 bytes).
+ublic/lm/lmr9.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lm
+ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
+<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss17.pfb><d:/Skola
+-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
+live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
+/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on jed0050_dokument.pdf (34 pages, 1778520 bytes).
 PDF statistics:
- 460 PDF objects out of 1000 (max. 8388607)
- 101 named destinations out of 1000 (max. 500000)
- 252 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 527 PDF objects out of 1000 (max. 8388607)
+ 110 named destinations out of 1000 (max. 500000)
+ 304 words of extra memory for PDF output out of 10000 (max. 10000000)
 
