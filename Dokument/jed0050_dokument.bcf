@@ -2148,14 +2148,14 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="0" nocite="1">*</bcf:citekey>
+    <bcf:citekey order="1">medard</bcf:citekey>
+    <bcf:citekey order="2">medard</bcf:citekey>
     <bcf:citekey order="3">medard</bcf:citekey>
-    <bcf:citekey order="4">medard</bcf:citekey>
-    <bcf:citekey order="5">medard</bcf:citekey>
+    <bcf:citekey order="4">chmi</bcf:citekey>
+    <bcf:citekey order="5">chmi</bcf:citekey>
     <bcf:citekey order="6">chmi</bcf:citekey>
-    <bcf:citekey order="7">chmi</bcf:citekey>
-    <bcf:citekey order="8">chmi</bcf:citekey>
-    <bcf:citekey order="9">shull</bcf:citekey>
-    <bcf:citekey order="10">interp</bcf:citekey>
+    <bcf:citekey order="7">shull</bcf:citekey>
+    <bcf:citekey order="8">interp</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
