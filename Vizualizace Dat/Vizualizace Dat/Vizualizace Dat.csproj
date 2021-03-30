@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Class handlers\ApkConfig.cs" />
     <Compile Include="Class handlers\BitmapHandler.cs" />
+    <Compile Include="Class handlers\CustomRoute.cs" />
     <Compile Include="Class handlers\ForecastTypes.cs" />
     <Compile Include="Class handlers\ForecType.cs" />
     <Compile Include="Class handlers\PointLonLat.cs" />

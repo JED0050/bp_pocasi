@@ -17,7 +17,7 @@ namespace AgregaceDatLib
 {
     public class AvgForecast
     {
-        private static bool inDebug = false;
+        private static bool inDebug = true;
         private static bool inConsoleApk = false;
 
         private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);

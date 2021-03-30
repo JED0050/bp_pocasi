@@ -27,6 +27,7 @@ namespace Vizualizace_Dat
         private double latD = 0;
         private GMapOverlay markers = new GMapOverlay("markers");
         private List<GMapMarker> listMarkers = new List<GMapMarker>();
+        private List<GMapMarker> routePointsTooltipMarkers = new List<GMapMarker>();
         private GMapOverlay routes;
         private DateTime selectedTime;
         private List<PointLatLng> bounds;
@@ -46,6 +47,7 @@ namespace Vizualizace_Dat
         private string validLoaders = ApkConfig.Loaders;
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
+        private CustomRoute customRoute = new CustomRoute();
 
         public FormMain()
         {
@@ -100,7 +102,7 @@ namespace Vizualizace_Dat
 
             nUDAnimNumOfAnims.Value = ApkConfig.AnimMaxMove;
 
-            switch(ApkConfig.AnimStepMinutes)
+            switch (ApkConfig.AnimStepMinutes)
             {
                 case 10:
                     cBAnimStep.SelectedItem = cBAnimStep.Items[0];
@@ -111,7 +113,7 @@ namespace Vizualizace_Dat
                 case 60:
                     cBAnimStep.SelectedItem = cBAnimStep.Items[2];
                     break;
-                case 3*60:
+                case 3 * 60:
                     cBAnimStep.SelectedItem = cBAnimStep.Items[3];
                     break;
                 case 6 * 60:
@@ -169,14 +171,25 @@ namespace Vizualizace_Dat
                 markers.Markers.Remove(marker);
             }
 
+            foreach (var routeMarker in routePointsTooltipMarkers)
+            {
+                markers.Markers.Remove(routeMarker);
+            }
+
             listMarkers.Clear();
+
+            customRoute = new CustomRoute();
 
             gMap.Overlays.Remove(routes);
         }
 
         private int drawBitmapFromServer(Bitmap serverBitmap = null)
         {
-            if (serverBitmap == null)
+            if (customRoute.GetFullRoute().Count > 0)
+            {
+                return 1;
+            }
+            else if (serverBitmap == null)
             {
                 bounds = BitmapHandler.GetBounds(gMap);
 
@@ -308,7 +321,7 @@ namespace Vizualizace_Dat
 
         private void DrawNewGraphForSamePoint()
         {
-            if(listMarkers.Count == 1)
+            if (listMarkers.Count == 1)
             {
                 graphCols = new List<GraphElement>();
 
@@ -345,13 +358,13 @@ namespace Vizualizace_Dat
                     clearMarkers();
                 }
             }
-            else if(listMarkers.Count >= 10)
+            else if (listMarkers.Count >= 2)
             {
                 try
                 {
                     string oldType = listMarkers[0].ToolTipText.Split('\n')[2];
 
-                    if(oldType.StartsWith(forecType.CzForecType))
+                    if (oldType.StartsWith(forecType.CzForecType))
                     {
                         RedrawMark();
                         return;
@@ -453,7 +466,7 @@ namespace Vizualizace_Dat
 
         private void RedrawMark()
         {
-            if(isBitmapShown && listMarkers.Count == 1)
+            if (isBitmapShown && listMarkers.Count == 1)
             {
                 GMapMarker oldMark = listMarkers[0];
                 string oldMarkText = listMarkers[0].ToolTipText;
@@ -466,9 +479,11 @@ namespace Vizualizace_Dat
                 gMap.Overlays.Add(markers);
                 markers.Markers.Add(listMarkers[0]);
             }
-            else if(isBitmapShown && listMarkers.Count >= 10)
+            else if (customRoute.GetFullRoute().Count > 0)
             {
                 List<GMapMarker> newMarkers = new List<GMapMarker>(listMarkers);
+
+                CustomRoute newCustomRoute = customRoute;
 
                 clearMarkers();
                 gMap.Overlays.Remove(routes);
@@ -480,9 +495,77 @@ namespace Vizualizace_Dat
                     markers.Markers.Add(mark);
                 }
 
-                gMap.Overlays.Add(routes);
+                customRoute = newCustomRoute;
+
+                DrawNewRoute();
+
+                //gMap.Overlays.Add(routes);
                 gMap.Overlays.Add(markers);
             }
+        }
+
+        public void DrawNewRoute()
+        {
+            CustomRoute newRoute = new CustomRoute();
+
+            DateTime lastTime = DateTime.Now;
+            Bitmap lastBitmap = new Bitmap(1, 1);
+
+            int c = 0;
+
+            foreach (var point in customRoute.GetFullRoute())
+            {
+                if(c == 0)
+                {
+                    lastTime = point.Time;
+                    lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, lastTime, validLoaders, bounds);
+                }
+                else if ((point.Time - lastTime).TotalMinutes >= 30 || (point.Time.Minute > 30 && lastTime.Minute <= 30))
+                {
+                    lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, point.Time, validLoaders, bounds);
+                    lastTime = point.Time;
+                }
+
+                double value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
+
+                CustomRoutePoint newPoint = new CustomRoutePoint();
+                newPoint.Time = lastTime;
+                newPoint.Point = point.Point;
+                newPoint.Value = value;
+
+                if(c == customRoute.GetFullRoute().Count - 1)
+                    newRoute.AddPoint(newPoint, true);
+                else
+                    newRoute.AddPoint(newPoint);
+
+                if (c % 20 == 0 && c != 0 && c != customRoute.GetFullRoute().Count - 1)
+                {
+                    routePointsTooltipMarkers.Add(new GMarkerGoogle(point.Point, new Bitmap(10, 10)));
+                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"{forecType.CzForecType}: {value} {forecType.Unit}";
+                    markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
+                }
+
+                c++;
+            }
+
+            routes = new GMapOverlay("routes");
+
+            customRoute = newRoute;
+
+            foreach (var rPart in customRoute.GetAllRoutes())
+            {
+                Color col = forecType.GetColorFromValue(rPart.Value);
+
+                var route = new GMapRoute(rPart.Points, "route");
+                route.Stroke = new Pen(Color.FromArgb(255, col));
+                route.Stroke.Width = 4;
+                routes.Routes.Add(route);
+            }
+
+            gMap.Overlays.Add(routes);
+            zoomReload();
+
+            //customRoute.PrintInfo();
         }
 
         private void zoomReload()
@@ -721,7 +804,9 @@ namespace Vizualizace_Dat
                     }
 
                     gMap.Overlays.Remove(routes);
-                    clearMarkers();
+                    clearAllPoints(null, null);
+
+                    customRoute = new CustomRoute();
 
                     routePoints = BitmapHandler.GetRoutePoints(fileContent);
 
@@ -730,13 +815,10 @@ namespace Vizualizace_Dat
                         throw new Exception("Nebyl nalezen dostatečný počet bodů");
                     }
 
-                    int numberOfPoints = 10; //včetně začátku a cíle
+                    int numberOfPoints = 4; //včetně začátku a cíle
                     int step = routePoints.Count / (numberOfPoints - 1);
 
                     double distanceKm = 0;
-
-                    var r = new GMapRoute(routePoints, "route");
-                    routes = new GMapOverlay("routes");
 
                     if (hasBeginAndEndTimes)
                     {
@@ -752,85 +834,148 @@ namespace Vizualizace_Dat
                         kmPerMin = fullDistanceKm / (hourDif * 60);
                     }
 
-                    routes.Routes.Add(r);
-
-                    gMap.Overlays.Add(routes);
+                    DateTime lastTime = beginTime;
+                    Bitmap lastBitmap = new Bitmap(1, 1);
 
                     for (int i = 0; i < routePoints.Count; i++)
                     {
+                        double value = 0;
 
                         if (i == 0)
                         {
+                            lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, beginTime, validLoaders, bounds);
+
                             PointLatLng pointStart = routePoints[i];
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType);
+                            value = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType, lastBitmap);
 
-                            graphCols.Add(new GraphElement(precVal, beginTime, 0));
+                            graphCols.Add(new GraphElement(value, beginTime, 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
-                            listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                            listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
 
-                            gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[0]);
                         }
                         else if (i == routePoints.Count - 1)
                         {
-                            if(hasBeginAndEndTimes)
+                            PointLatLng pointEnd = routePoints[i];
+                            double timeMin = hourDif * 60;
+
+                            if (!hasBeginAndEndTimes)
                             {
-                                PointLatLng pointEnd = routePoints[i];
+                                timeMin = distanceKm / kmPerMin;
+                                endTime = beginTime.AddMinutes(timeMin);
+                            }
 
-                                double precVal = BitmapHandler.GetFullPrecInPoint(endTime, pointEnd, validLoaders, bounds, forecType);
-                                double roundedDistanceKm = Math.Round(distanceKm, 2);
+                            if((endTime - lastTime).TotalMinutes >= 30 || (endTime.Minute > 30 && lastTime.Minute <= 30))
+                            {
+                                lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, endTime, validLoaders, bounds);
+                            }
 
-                                graphCols.Add(new GraphElement(precVal, endTime, roundedDistanceKm));
+                            string takesTime = "";
 
-                                listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                                listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {hourDif * 60} min";
-
-                                gMap.Overlays.Add(markers);
-                                markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
-
-                                break;
+                            if (timeMin <= 180)
+                            {
+                                takesTime = Math.Round(timeMin) + " min";
                             }
                             else
                             {
-                                PointLatLng pointEnd = routePoints[i];
-
-                                int timeMin = (int)(distanceKm / kmPerMin);
-
-                                double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointEnd, validLoaders, bounds, forecType);
-                                double roundedDistanceKm = Math.Round(distanceKm, 2);
-
-                                graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
-
-                                listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                                listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
-
-                                gMap.Overlays.Add(markers);
-                                markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
-
-                                break;
+                                takesTime = Math.Round(timeMin / 60, 2) + " h";
                             }
+
+                            value = BitmapHandler.GetFullPrecInPoint(endTime, pointEnd, validLoaders, bounds, forecType, lastBitmap);
+                            double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                            graphCols.Add(new GraphElement(value, endTime, roundedDistanceKm));
+
+                            listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
+
+                            //gMap.Overlays.Add(markers);
+                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+
+                            CustomRoutePoint customPointLast = new CustomRoutePoint();
+                            customPointLast.Value = value;
+                            customPointLast.Point = routePoints[i];
+                            customPointLast.Time = endTime;
+                            customRoute.AddPoint(customPointLast, true);
+
+                            break;
                         }
-                        else if (i % step == 0)
+                        else
                         {
                             PointLatLng pointInner = routePoints[i];
 
-                            int timeMin = (int)(distanceKm / kmPerMin);
+                            double timeMin = distanceKm / kmPerMin;
 
-                            double precVal = BitmapHandler.GetFullPrecInPoint(beginTime.AddMinutes(timeMin), pointInner, validLoaders, bounds, forecType);
-                            double roundedDistanceKm = Math.Round(distanceKm, 2);
+                            DateTime timeNow = beginTime.AddMinutes(timeMin);
 
-                            graphCols.Add(new GraphElement(precVal, beginTime.AddMinutes(timeMin), roundedDistanceKm));
+                            if ((timeNow - lastTime).TotalMinutes >= 30 || (timeNow.Minute > 30 && lastTime.Minute <= 30))
+                            {
+                                lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, timeNow, validLoaders, bounds);
+                            }
 
-                            listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Krok\nčas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {timeMin} min";
+                            lastTime = timeNow;
 
-                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                            value = BitmapHandler.GetFullPrecInPoint(timeNow, pointInner, validLoaders, bounds, forecType, lastBitmap);
+
+                            if (i % step == 0)
+                            {
+                                double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                                graphCols.Add(new GraphElement(value, timeNow, roundedDistanceKm));
+
+                                string takesTime = "";
+
+                                if (timeMin <= 180)
+                                {
+                                    takesTime = Math.Round(timeMin) + " min";
+                                }
+                                else
+                                {
+                                    takesTime = Math.Round(timeMin / 60, 2) + " h";
+                                }
+
+                                listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
+                                listMarkers[listMarkers.Count - 1].ToolTipText = $"Krok\nčas: {timeNow.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
+
+                                markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                            }
                         }
 
+                        CustomRoutePoint customPoint = new CustomRoutePoint();
+                        customPoint.Value = value;
+                        customPoint.Point = routePoints[i];
+                        customPoint.Time = beginTime.AddMinutes(distanceKm / kmPerMin);
+                        customRoute.AddPoint(customPoint);
+
                         distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
+
+                        if(i % 20 == 0 && i != 0 && i != routePoints.Count - 1)
+                        {
+                            routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10,10)));
+                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"{forecType.CzForecType}: {value} {forecType.Unit}";
+                            markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
+                        }
                     }
+
+                    //var r = new GMapRoute(routePoints, "route");
+                    routes = new GMapOverlay("routes");
+
+                    foreach (var rPart in customRoute.GetAllRoutes())
+                    {
+                        Color col = forecType.GetColorFromValue(rPart.Value);
+
+                        var route = new GMapRoute(rPart.Points, "route");
+                        route.Stroke = new Pen(Color.FromArgb(255, col));
+                        route.Stroke.Width = 4;
+                        routes.Routes.Add(route);
+                    }
+
+                    //routes.Routes.Add(r);
+                    gMap.Overlays.Add(routes);
+                    gMap.Overlays.Add(markers);
+                    //customRoute.PrintInfo();
 
                     gMap.Position = routePoints[routePoints.Count / 2];
 
@@ -1271,6 +1416,8 @@ namespace Vizualizace_Dat
 
         private void gMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
+            Debug.WriteLine("MARK CLICK " + item.ToolTipText);
+
             if(listMarkers.Count == 1)
             {
                 if (item == listMarkers[0])

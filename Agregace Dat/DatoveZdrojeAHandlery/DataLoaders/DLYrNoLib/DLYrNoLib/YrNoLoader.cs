@@ -174,7 +174,14 @@ namespace DLYrNoLib
                     f.Humidity = humi;
                     f.Pressure = pres;
 
-                    f.Precipitation = double.Parse(timeSlot.Element("location").Element("precipitation").Attribute("value").Value, CultureInfo.InvariantCulture);
+                    if(timeSlot.Element("location").Element("precipitation") == null)
+                    {
+                        f.Precipitation = 0;
+                    }
+                    else
+                    {
+                        f.Precipitation = double.Parse(timeSlot.Element("location").Element("precipitation").Attribute("value").Value, CultureInfo.InvariantCulture);
+                    }
 
                     forecasts.Add(f);
 

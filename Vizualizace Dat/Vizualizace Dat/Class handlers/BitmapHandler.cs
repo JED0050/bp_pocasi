@@ -291,9 +291,10 @@ namespace Vizualizace_Dat
             return d;
         }
 
-        public static double GetFullPrecInPoint(DateTime time, PointLatLng point, string loaders, List<PointLatLng> bounds, ForecType forecType)
+        public static double GetFullPrecInPoint(DateTime time, PointLatLng point, string loaders, List<PointLatLng> bounds, ForecType forecType, Bitmap bFor = null)
         {
-            Bitmap bFor = GetBitmapFromServer(forecType.Type, time, loaders, bounds);
+            if (bFor == null)
+                bFor = GetBitmapFromServer(forecType.Type, time, loaders, bounds);
 
             //bFor.Save(@"C:\Users\Honza_PC\Desktop\testMap.bmp", ImageFormat.Bmp);
 

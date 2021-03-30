@@ -181,5 +181,22 @@ namespace Vizualizace_Dat
             }
         }
 
+        public Color GetColorFromValue(double val)
+        {
+            if(Type == "prec" && val == 0)
+            {
+                return Color.Gray;
+            }
+
+            foreach(var key in scaleDic.Keys)
+            {
+                if(val == scaleDic[key])
+                {
+                    return key;
+                }
+            }
+
+            return Color.Gray;
+        }
     }
 }
