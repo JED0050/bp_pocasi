@@ -319,7 +319,7 @@ namespace Vizualizace_Dat
 
         }
 
-        private void DrawNewGraphForSamePoint()
+        private void DrawNewGraphForSamePoint(bool dontRedrawRoute = false)
         {
             if (listMarkers.Count == 1)
             {
@@ -360,6 +360,11 @@ namespace Vizualizace_Dat
             }
             else if (listMarkers.Count >= 2)
             {
+                if(dontRedrawRoute)
+                {
+                    return;
+                }
+
                 try
                 {
                     string oldType = listMarkers[0].ToolTipText.Split('\n')[2];
@@ -529,7 +534,7 @@ namespace Vizualizace_Dat
                 double value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
 
                 CustomRoutePoint newPoint = new CustomRoutePoint();
-                newPoint.Time = lastTime;
+                newPoint.Time = point.Time;
                 newPoint.Point = point.Point;
                 newPoint.Value = value;
 
@@ -541,7 +546,7 @@ namespace Vizualizace_Dat
                 if (c % 20 == 0 && c != 0 && c != customRoute.GetFullRoute().Count - 1)
                 {
                     routePointsTooltipMarkers.Add(new GMarkerGoogle(point.Point, new Bitmap(10, 10)));
-                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"{forecType.CzForecType}: {value} {forecType.Unit}";
+                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
                     markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                 }
 
@@ -840,6 +845,7 @@ namespace Vizualizace_Dat
                     for (int i = 0; i < routePoints.Count; i++)
                     {
                         double value = 0;
+                        double timeMin = 0;
 
                         if (i == 0)
                         {
@@ -859,7 +865,7 @@ namespace Vizualizace_Dat
                         else if (i == routePoints.Count - 1)
                         {
                             PointLatLng pointEnd = routePoints[i];
-                            double timeMin = hourDif * 60;
+                            timeMin = hourDif * 60;
 
                             if (!hasBeginAndEndTimes)
                             {
@@ -906,7 +912,7 @@ namespace Vizualizace_Dat
                         {
                             PointLatLng pointInner = routePoints[i];
 
-                            double timeMin = distanceKm / kmPerMin;
+                            timeMin = distanceKm / kmPerMin;
 
                             DateTime timeNow = beginTime.AddMinutes(timeMin);
 
@@ -946,7 +952,7 @@ namespace Vizualizace_Dat
                         CustomRoutePoint customPoint = new CustomRoutePoint();
                         customPoint.Value = value;
                         customPoint.Point = routePoints[i];
-                        customPoint.Time = beginTime.AddMinutes(distanceKm / kmPerMin);
+                        customPoint.Time = beginTime.AddMinutes(timeMin);
                         customRoute.AddPoint(customPoint);
 
                         distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
@@ -954,7 +960,7 @@ namespace Vizualizace_Dat
                         if(i % 20 == 0 && i != 0 && i != routePoints.Count - 1)
                         {
                             routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10,10)));
-                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"{forecType.CzForecType}: {value} {forecType.Unit}";
+                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
                             markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                         }
                     }
@@ -1024,7 +1030,7 @@ namespace Vizualizace_Dat
 
             ValidetaTrackbarTimeMarks();
 
-            DrawNewGraphForSamePoint();
+            DrawNewGraphForSamePoint(true);
         }
 
         private void ValidetaTrackbarTimeMarks()
