@@ -12,20 +12,22 @@ namespace Vizualizace_Dat
     public class CustomRoute
     {
 
-        private List<CustomRoutePart> fullPartsRoute = new List<CustomRoutePart>();
-        private List<CustomRoutePoint> fullRouteWithoutParts = new List<CustomRoutePoint>();
+        private List<CustomRoutePart> listRouteParts = new List<CustomRoutePart>();
+        private List<CustomRoutePoint> listRoutePoints = new List<CustomRoutePoint>();
+        private List<PointLatLng> listLanLngPoints = new List<PointLatLng>();
 
         private CustomRoutePoint lastPoint = new CustomRoutePoint();
         private CustomRoutePart lastPart = new CustomRoutePart();
 
         public void AddPoint(CustomRoutePoint point, bool last = false)
         {
-            fullRouteWithoutParts.Add(point);
+            listRoutePoints.Add(point);
+            listLanLngPoints.Add(point.Point);
 
             if (last)
             {
                 lastPart.Add(point);
-                fullPartsRoute.Add(lastPart);
+                listRouteParts.Add(lastPart);
             }
             else
             {
@@ -36,7 +38,7 @@ namespace Vizualizace_Dat
                 else if (point.Value != lastPoint.Value)
                 {
                     lastPart.Add(point);
-                    fullPartsRoute.Add(lastPart);
+                    listRouteParts.Add(lastPart);
 
                     lastPart = new CustomRoutePart();
                     lastPart.Add(point);
@@ -54,7 +56,7 @@ namespace Vizualizace_Dat
         {
             int c = 0;
 
-            foreach(var rPart in fullPartsRoute)
+            foreach(var rPart in listRouteParts)
             {
                 Debug.WriteLine($"Part: {c} Points: {rPart.Points.Count} Value: {rPart.Value}");
                 c++;
@@ -62,14 +64,19 @@ namespace Vizualizace_Dat
 
         }
 
-        public List<CustomRoutePart> GetAllRoutes()
+        public List<CustomRoutePart> GetRouteParts()
         {
-            return fullPartsRoute;
+            return listRouteParts;
         }
 
-        public List<CustomRoutePoint> GetFullRoute()
+        public List<CustomRoutePoint> GetAllRoutePoints()
         {
-            return fullRouteWithoutParts;
+            return listRoutePoints;
+        }
+
+        public List<PointLatLng> GetAllLatLngPoints()
+        {
+            return listLanLngPoints;
         }
     }
 

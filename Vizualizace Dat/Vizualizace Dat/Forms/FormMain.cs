@@ -64,6 +64,9 @@ namespace Vizualizace_Dat
             gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
 
+            bClearRoute.Visible = false;
+            bRouteNewTime.Visible = false;
+
             ValidetaTrackbarTimeMarks();
 
             selectedTime = DateTime.Now;
@@ -180,12 +183,15 @@ namespace Vizualizace_Dat
 
             customRoute = new CustomRoute();
 
+            bClearRoute.Visible = false;
+            bRouteNewTime.Visible = false;
+
             gMap.Overlays.Remove(routes);
         }
 
         private int drawBitmapFromServer(Bitmap serverBitmap = null)
         {
-            if (customRoute.GetFullRoute().Count > 0)
+            if (customRoute.GetAllRoutePoints().Count > 0)
             {
                 return 1;
             }
@@ -269,8 +275,15 @@ namespace Vizualizace_Dat
             catch
             { }
 
+            //int routePoints = customRoute.GetFullRoute().Count;
+
             clearMarkers();
             gMap.Overlays.Remove(routes);
+
+            if(!isBitmapShown)
+            {
+                drawBitmapFromServer();
+            }
 
             PointLatLng point = new PointLatLng(latD, lonD);
 
@@ -484,7 +497,7 @@ namespace Vizualizace_Dat
                 gMap.Overlays.Add(markers);
                 markers.Markers.Add(listMarkers[0]);
             }
-            else if (customRoute.GetFullRoute().Count > 0)
+            else if (customRoute.GetAllRoutePoints().Count > 0)
             {
                 List<GMapMarker> newMarkers = new List<GMapMarker>(listMarkers);
 
@@ -511,6 +524,9 @@ namespace Vizualizace_Dat
 
         public void DrawNewRoute()
         {
+            bClearRoute.Visible = true;
+            bRouteNewTime.Visible = true;
+
             CustomRoute newRoute = new CustomRoute();
 
             DateTime lastTime = DateTime.Now;
@@ -518,7 +534,7 @@ namespace Vizualizace_Dat
 
             int c = 0;
 
-            foreach (var point in customRoute.GetFullRoute())
+            foreach (var point in customRoute.GetAllRoutePoints())
             {
                 if(c == 0)
                 {
@@ -538,12 +554,12 @@ namespace Vizualizace_Dat
                 newPoint.Point = point.Point;
                 newPoint.Value = value;
 
-                if(c == customRoute.GetFullRoute().Count - 1)
+                if(c == customRoute.GetAllRoutePoints().Count - 1)
                     newRoute.AddPoint(newPoint, true);
                 else
                     newRoute.AddPoint(newPoint);
 
-                if (c % 20 == 0 && c != 0 && c != customRoute.GetFullRoute().Count - 1)
+                if (c % 20 == 0 && c != 0 && c != customRoute.GetAllRoutePoints().Count - 1)
                 {
                     routePointsTooltipMarkers.Add(new GMarkerGoogle(point.Point, new Bitmap(10, 10)));
                     routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
@@ -557,7 +573,7 @@ namespace Vizualizace_Dat
 
             customRoute = newRoute;
 
-            foreach (var rPart in customRoute.GetAllRoutes())
+            foreach (var rPart in customRoute.GetRouteParts())
             {
                 Color col = forecType.GetColorFromValue(rPart.Value);
 
@@ -811,7 +827,8 @@ namespace Vizualizace_Dat
                     gMap.Overlays.Remove(routes);
                     clearAllPoints(null, null);
 
-                    customRoute = new CustomRoute();
+                    bClearRoute.Visible = true;
+                    bRouteNewTime.Visible = true;
 
                     routePoints = BitmapHandler.GetRoutePoints(fileContent);
 
@@ -968,7 +985,7 @@ namespace Vizualizace_Dat
                     //var r = new GMapRoute(routePoints, "route");
                     routes = new GMapOverlay("routes");
 
-                    foreach (var rPart in customRoute.GetAllRoutes())
+                    foreach (var rPart in customRoute.GetRouteParts())
                     {
                         Color col = forecType.GetColorFromValue(rPart.Value);
 
@@ -1422,8 +1439,6 @@ namespace Vizualizace_Dat
 
         private void gMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            Debug.WriteLine("MARK CLICK " + item.ToolTipText);
-
             if(listMarkers.Count == 1)
             {
                 if (item == listMarkers[0])
@@ -1526,6 +1541,290 @@ namespace Vizualizace_Dat
             ApkConfig.GraphColumnColor = Color.Green.ToArgb();
 
             DrawGraph();
+        }
+
+        private void bClearRoute_Click(object sender, EventArgs e)
+        {
+            clearMarkers();
+
+            gMap.Overlays.Remove(routes);
+            routePoints.Clear();
+
+            GraphClear();
+
+            drawBitmapFromServer();
+        }
+
+        private void bRouteNewTime_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult dialogResult = MessageBox.Show("Přejete si zadat počáteční a cílový čas cesty? (Ne = zadáte pouze počáteční čas)",
+                      "Volba zadání časů", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                bool hasBeginAndEndTimes = false;
+                DateTime beginTime;
+                DateTime endTime = DateTime.Now;
+                double kmPerMin = 0;
+                double hourDif = 0;
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    FormGpxBeginTime gpxBeginTimeForm = new FormGpxBeginTime("Zvol počáteční čas cesty", "vybrat čas konce");
+                    dialogResult = gpxBeginTimeForm.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                        beginTime = FormGpxBeginTime.BeginTime;
+                    else
+                        throw new Exception("Nebyl zvolen platný čas začátku cesty!");
+
+                    FormGpxBeginTime gpxEndTimeForm = new FormGpxBeginTime("Zvol koncový čas cesty", "vybrat GPX soubor");
+                    dialogResult = gpxEndTimeForm.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                        endTime = FormGpxBeginTime.BeginTime;
+                    else
+                        throw new Exception("Nebyl zvolen platný čas začátku cesty!");
+
+                    TimeSpan dTSpan = endTime - beginTime;
+                    hourDif = dTSpan.TotalHours;
+
+                    if (hourDif < 0)
+                    {
+                        throw new Exception("Čas počátku cesty musí předcházet času konce cesty.");
+                    }
+
+                    hasBeginAndEndTimes = true;
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    FormGpxBeginTime gpxBeginTimeForm = new FormGpxBeginTime("Zvol počáteční čas cesty", null);
+                    dialogResult = gpxBeginTimeForm.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                        beginTime = FormGpxBeginTime.BeginTime;
+                    else
+                        throw new Exception("Nebyl zvolen platný čas začátku cesty!");
+
+                    FormGpxChooseTravelForm travelMenu = new FormGpxChooseTravelForm();
+                    dialogResult = travelMenu.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                        kmPerMin = FormGpxChooseTravelForm.KmPerMinute;
+                    else
+                        throw new Exception("Nebyla zvolena žádní varianta dopravy!");
+                }
+                else
+                {
+                    return;
+                }
+
+
+                routePoints = customRoute.GetAllLatLngPoints();
+
+                gMap.Overlays.Remove(markers);
+
+                foreach (GMapMarker marker in listMarkers)
+                {
+                    markers.Markers.Remove(marker);
+                }
+
+                foreach (var routeMarker in routePointsTooltipMarkers)
+                {
+                    markers.Markers.Remove(routeMarker);
+                }
+
+                listMarkers.Clear();
+
+                customRoute = new CustomRoute();
+
+                gMap.Overlays.Remove(routes);
+                GraphClear();
+
+                if (routePoints.Count < 2)
+                {
+                    throw new Exception("Nebyl nalezen dostatečný počet bodů");
+                }
+
+                int numberOfPoints = 4; //včetně začátku a cíle
+                int step = routePoints.Count / (numberOfPoints - 1);
+
+                double distanceKm = 0;
+
+                if (hasBeginAndEndTimes)
+                {
+                    double fullDistanceKm = 0;
+
+                    for (int i = 0; i < routePoints.Count - 1; i++)
+                    {
+                        fullDistanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]);
+                    }
+
+                    fullDistanceKm /= 1000;
+
+                    kmPerMin = fullDistanceKm / (hourDif * 60);
+                }
+
+                DateTime lastTime = beginTime;
+                Bitmap lastBitmap = new Bitmap(1, 1);
+
+                for (int i = 0; i < routePoints.Count; i++)
+                {
+                    double value = 0;
+                    double timeMin = 0;
+
+                    if (i == 0)
+                    {
+                        lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, beginTime, validLoaders, bounds);
+
+                        PointLatLng pointStart = routePoints[i];
+
+                        value = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType, lastBitmap);
+
+                        graphCols.Add(new GraphElement(value, beginTime, 0));
+
+                        listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
+                        listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+
+                        markers.Markers.Add(listMarkers[0]);
+                    }
+                    else if (i == routePoints.Count - 1)
+                    {
+                        PointLatLng pointEnd = routePoints[i];
+                        timeMin = hourDif * 60;
+
+                        if (!hasBeginAndEndTimes)
+                        {
+                            timeMin = distanceKm / kmPerMin;
+                            endTime = beginTime.AddMinutes(timeMin);
+                        }
+
+                        if ((endTime - lastTime).TotalMinutes >= 30 || (endTime.Minute > 30 && lastTime.Minute <= 30))
+                        {
+                            lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, endTime, validLoaders, bounds);
+                        }
+
+                        string takesTime = "";
+
+                        if (timeMin <= 180)
+                        {
+                            takesTime = Math.Round(timeMin) + " min";
+                        }
+                        else
+                        {
+                            takesTime = Math.Round(timeMin / 60, 2) + " h";
+                        }
+
+                        value = BitmapHandler.GetFullPrecInPoint(endTime, pointEnd, validLoaders, bounds, forecType, lastBitmap);
+                        double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                        graphCols.Add(new GraphElement(value, endTime, roundedDistanceKm));
+
+                        listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
+                        listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
+
+                        //gMap.Overlays.Add(markers);
+                        markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+
+                        CustomRoutePoint customPointLast = new CustomRoutePoint();
+                        customPointLast.Value = value;
+                        customPointLast.Point = routePoints[i];
+                        customPointLast.Time = endTime;
+                        customRoute.AddPoint(customPointLast, true);
+
+                        break;
+                    }
+                    else
+                    {
+                        PointLatLng pointInner = routePoints[i];
+
+                        timeMin = distanceKm / kmPerMin;
+
+                        DateTime timeNow = beginTime.AddMinutes(timeMin);
+
+                        if ((timeNow - lastTime).TotalMinutes >= 30 || (timeNow.Minute > 30 && lastTime.Minute <= 30))
+                        {
+                            lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, timeNow, validLoaders, bounds);
+                        }
+
+                        lastTime = timeNow;
+
+                        value = BitmapHandler.GetFullPrecInPoint(timeNow, pointInner, validLoaders, bounds, forecType, lastBitmap);
+
+                        if (i % step == 0)
+                        {
+                            double roundedDistanceKm = Math.Round(distanceKm, 2);
+
+                            graphCols.Add(new GraphElement(value, timeNow, roundedDistanceKm));
+
+                            string takesTime = "";
+
+                            if (timeMin <= 180)
+                            {
+                                takesTime = Math.Round(timeMin) + " min";
+                            }
+                            else
+                            {
+                                takesTime = Math.Round(timeMin / 60, 2) + " h";
+                            }
+
+                            listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Krok\nčas: {timeNow.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
+
+                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                        }
+                    }
+
+                    CustomRoutePoint customPoint = new CustomRoutePoint();
+                    customPoint.Value = value;
+                    customPoint.Point = routePoints[i];
+                    customPoint.Time = beginTime.AddMinutes(timeMin);
+                    customRoute.AddPoint(customPoint);
+
+                    distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
+
+                    if (i % 20 == 0 && i != 0 && i != routePoints.Count - 1)
+                    {
+                        routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10, 10)));
+                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                        markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
+                    }
+                }
+
+                //var r = new GMapRoute(routePoints, "route");
+                routes = new GMapOverlay("routes");
+
+                foreach (var rPart in customRoute.GetRouteParts())
+                {
+                    Color col = forecType.GetColorFromValue(rPart.Value);
+
+                    var route = new GMapRoute(rPart.Points, "route");
+                    route.Stroke = new Pen(Color.FromArgb(255, col));
+                    route.Stroke.Width = 4;
+                    routes.Routes.Add(route);
+                }
+
+                //routes.Routes.Add(r);
+                gMap.Overlays.Add(routes);
+                gMap.Overlays.Add(markers);
+                //customRoute.PrintInfo();
+
+                gMap.Position = routePoints[routePoints.Count / 2];
+
+                DrawGraph();
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Chyba při zadávání nového času trasy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                if(customRoute.GetAllRoutePoints().Count == 0)
+                {
+                    clearMarkers();
+                    drawBitmapFromServer();
+                }
+            }
         }
     }
 }

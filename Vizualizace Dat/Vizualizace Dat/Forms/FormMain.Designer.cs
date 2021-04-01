@@ -100,6 +100,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pBScale = new System.Windows.Forms.PictureBox();
             this.bAnim = new System.Windows.Forms.Button();
+            this.bClearRoute = new System.Windows.Forms.Button();
+            this.bRouteNewTime = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tLPTimeMarks.SuspendLayout();
@@ -545,7 +547,7 @@
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 11F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);
@@ -581,7 +583,7 @@
             this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lT0.Location = new System.Drawing.Point(18, 0);
             this.lT0.Name = "lT0";
-            this.lT0.Size = new System.Drawing.Size(116, 13);
+            this.lT0.Size = new System.Drawing.Size(115, 13);
             this.lT0.TabIndex = 41;
             this.lT0.Text = "05.11. 10:30";
             this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -592,7 +594,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT1.Location = new System.Drawing.Point(140, 0);
+            this.lT1.Location = new System.Drawing.Point(139, 0);
             this.lT1.Name = "lT1";
             this.lT1.Size = new System.Drawing.Size(116, 13);
             this.lT1.TabIndex = 42;
@@ -605,7 +607,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT2.Location = new System.Drawing.Point(262, 0);
+            this.lT2.Location = new System.Drawing.Point(261, 0);
             this.lT2.Name = "lT2";
             this.lT2.Size = new System.Drawing.Size(116, 13);
             this.lT2.TabIndex = 39;
@@ -618,7 +620,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT3.Location = new System.Drawing.Point(384, 0);
+            this.lT3.Location = new System.Drawing.Point(383, 0);
             this.lT3.Name = "lT3";
             this.lT3.Size = new System.Drawing.Size(116, 13);
             this.lT3.TabIndex = 40;
@@ -631,7 +633,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT4.Location = new System.Drawing.Point(506, 0);
+            this.lT4.Location = new System.Drawing.Point(505, 0);
             this.lT4.Name = "lT4";
             this.lT4.Size = new System.Drawing.Size(116, 13);
             this.lT4.TabIndex = 43;
@@ -644,7 +646,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT5.Location = new System.Drawing.Point(628, 0);
+            this.lT5.Location = new System.Drawing.Point(627, 0);
             this.lT5.Name = "lT5";
             this.lT5.Size = new System.Drawing.Size(116, 13);
             this.lT5.TabIndex = 46;
@@ -657,7 +659,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT6.Location = new System.Drawing.Point(750, 0);
+            this.lT6.Location = new System.Drawing.Point(749, 0);
             this.lT6.Name = "lT6";
             this.lT6.Size = new System.Drawing.Size(116, 13);
             this.lT6.TabIndex = 47;
@@ -670,7 +672,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT7.Location = new System.Drawing.Point(872, 0);
+            this.lT7.Location = new System.Drawing.Point(871, 0);
             this.lT7.Name = "lT7";
             this.lT7.Size = new System.Drawing.Size(116, 13);
             this.lT7.TabIndex = 44;
@@ -683,7 +685,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT8.Location = new System.Drawing.Point(994, 0);
+            this.lT8.Location = new System.Drawing.Point(993, 0);
             this.lT8.Name = "lT8";
             this.lT8.Size = new System.Drawing.Size(116, 13);
             this.lT8.TabIndex = 45;
@@ -693,7 +695,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1116, 0);
+            this.label2.Location = new System.Drawing.Point(1115, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 40;
@@ -937,12 +939,38 @@
             this.bAnim.UseVisualStyleBackColor = false;
             this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
             // 
+            // bClearRoute
+            // 
+            this.bClearRoute.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bClearRoute.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.bClearRoute.Location = new System.Drawing.Point(571, 32);
+            this.bClearRoute.Name = "bClearRoute";
+            this.bClearRoute.Size = new System.Drawing.Size(88, 25);
+            this.bClearRoute.TabIndex = 43;
+            this.bClearRoute.Text = "smazat trasu";
+            this.bClearRoute.UseVisualStyleBackColor = true;
+            this.bClearRoute.Click += new System.EventHandler(this.bClearRoute_Click);
+            // 
+            // bRouteNewTime
+            // 
+            this.bRouteNewTime.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.bRouteNewTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.bRouteNewTime.Location = new System.Drawing.Point(460, 32);
+            this.bRouteNewTime.Name = "bRouteNewTime";
+            this.bRouteNewTime.Size = new System.Drawing.Size(109, 25);
+            this.bRouteNewTime.TabIndex = 44;
+            this.bRouteNewTime.Text = "změnit čas trasy";
+            this.bRouteNewTime.UseVisualStyleBackColor = true;
+            this.bRouteNewTime.Click += new System.EventHandler(this.bRouteNewTime_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.bRouteNewTime);
+            this.Controls.Add(this.bClearRoute);
             this.Controls.Add(this.lAnimProgress);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -1060,6 +1088,8 @@
         private System.Windows.Forms.ToolStripMenuItem modráToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem červenáToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zelenáToolStripMenuItem;
+        private System.Windows.Forms.Button bClearRoute;
+        private System.Windows.Forms.Button bRouteNewTime;
     }
 }
 
