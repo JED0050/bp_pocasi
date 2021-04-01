@@ -382,6 +382,8 @@ namespace Vizualizace_Dat
                 {
                     string oldType = listMarkers[0].ToolTipText.Split('\n')[2];
 
+                    Debug.WriteLine($"oT: {oldType} aT: {forecType.CzForecType}");
+
                     if (oldType.StartsWith(forecType.CzForecType))
                     {
                         RedrawMark();
@@ -391,76 +393,18 @@ namespace Vizualizace_Dat
                 catch
                 { }
 
-                graphCols = new List<GraphElement>();
-
-                DateTime now = DateTime.Now.AddHours(-12);
-
-                for (int i = 0; i < listMarkers.Count; i++)
+                foreach(var col in graphCols)
                 {
-                    string[] tooltipParts = listMarkers[i].ToolTipText.Split('\n');
-
-                    int mo;
-                    int d;
-                    int min;
-                    int h;
-                    int y = now.Year;
-
-                    double distance;
-
                     try
                     {
-                        mo = int.Parse(tooltipParts[1].Substring(16, 2));
-                        d = int.Parse(tooltipParts[1].Substring(13, 2));
-                        min = int.Parse(tooltipParts[1].Substring(8, 2));
-                        h = int.Parse(tooltipParts[1].Substring(5, 2));
-
-                        if (tooltipParts.Length == 3)
-                        {
-                            distance = 0;
-                        }
-                        else
-                        {
-                            distance = double.Parse(tooltipParts[4].Split(' ')[1]);
-                        }
+                        double val = BitmapHandler.GetFullPrecInPoint(col.Time, col.Point, validLoaders, bounds, forecType);
+                        col.Value = val;
                     }
                     catch
                     {
                         graphCols.Clear();
 
                         break;
-                    }
-
-                    DateTime dT = new DateTime(y, mo, d, h, min, 0);
-
-                    if (now.Month == 12 && mo == 1)
-                    {
-                        dT.AddYears(1);
-                    }
-
-                    double val;
-
-                    try
-                    {
-                        val = BitmapHandler.GetFullPrecInPoint(dT, routePoints[i], validLoaders, bounds, forecType);
-                    }
-                    catch
-                    {
-                        graphCols.Clear();
-
-                        break;
-                    }
-
-                    graphCols.Add(new GraphElement(val, dT, distance));
-
-                    string newPart = $"\n{forecType.CzForecType}: {val} {forecType.Unit}";
-
-                    if (tooltipParts.Length == 3)
-                    {
-                        listMarkers[i].ToolTipText = tooltipParts[0] + "\n" + tooltipParts[1] + newPart;
-                    }
-                    else
-                    {
-                        listMarkers[i].ToolTipText = tooltipParts[0] + "\n" + tooltipParts[1] + newPart + "\n\n" + tooltipParts[4] + "\n" + tooltipParts[5];
                     }
                 }
 
@@ -549,20 +493,32 @@ namespace Vizualizace_Dat
 
                 double value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
 
-                CustomRoutePoint newPoint = new CustomRoutePoint();
-                newPoint.Time = point.Time;
-                newPoint.Point = point.Point;
+                CustomRoutePoint newPoint = point;
+                //newPoint.Time = point.Time;
+                //newPoint.Point = point.Point;
                 newPoint.Value = value;
 
-                if(c == customRoute.GetAllRoutePoints().Count - 1)
+                if (c == customRoute.GetAllRoutePoints().Count - 1)
                     newRoute.AddPoint(newPoint, true);
                 else
                     newRoute.AddPoint(newPoint);
 
-                if (c % 20 == 0 && c != 0 && c != customRoute.GetAllRoutePoints().Count - 1)
+                if(c == 0)
+                {
+                    listMarkers.Add(new GMarkerGoogle(point.Point, GMarkerGoogleType.red_small));
+                    listMarkers[0].ToolTipText = $"Start\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                    markers.Markers.Add(listMarkers[0]);
+                }
+                else if (c == customRoute.GetAllRoutePoints().Count - 1)
+                {
+                    listMarkers.Add(new GMarkerGoogle(point.Point, GMarkerGoogleType.red_small));
+                    listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
+                    markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                }
+                else if (c % 20 == 0)
                 {
                     routePointsTooltipMarkers.Add(new GMarkerGoogle(point.Point, new Bitmap(10, 10)));
-                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
                     markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                 }
 
@@ -837,8 +793,8 @@ namespace Vizualizace_Dat
                         throw new Exception("Nebyl nalezen dostatečný počet bodů");
                     }
 
-                    int numberOfPoints = 4; //včetně začátku a cíle
-                    int step = routePoints.Count / (numberOfPoints - 1);
+                    int numOfGraphCols = 10; //včetně začátku a cíle
+                    int step = routePoints.Count / (numOfGraphCols - 1);
 
                     double distanceKm = 0;
 
@@ -872,7 +828,7 @@ namespace Vizualizace_Dat
 
                             value = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType, lastBitmap);
 
-                            graphCols.Add(new GraphElement(value, beginTime, 0));
+                            graphCols.Add(new GraphElement(value, beginTime, routePoints[i], 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
                             listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
@@ -895,37 +851,28 @@ namespace Vizualizace_Dat
                                 lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, endTime, validLoaders, bounds);
                             }
 
-                            string takesTime = "";
-
-                            if (timeMin <= 180)
-                            {
-                                takesTime = Math.Round(timeMin) + " min";
-                            }
-                            else
-                            {
-                                takesTime = Math.Round(timeMin / 60, 2) + " h";
-                            }
-
                             value = BitmapHandler.GetFullPrecInPoint(endTime, pointEnd, validLoaders, bounds, forecType, lastBitmap);
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
-
-                            graphCols.Add(new GraphElement(value, endTime, roundedDistanceKm));
-
-                            listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
-
-                            //gMap.Overlays.Add(markers);
-                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
 
                             CustomRoutePoint customPointLast = new CustomRoutePoint();
                             customPointLast.Value = value;
                             customPointLast.Point = routePoints[i];
                             customPointLast.Time = endTime;
+                            customPointLast.DistanceKm = roundedDistanceKm;
+                            customPointLast.TakesTime = (endTime - beginTime).TotalMinutes;
                             customRoute.AddPoint(customPointLast, true);
+
+                            graphCols.Add(new GraphElement(value, endTime, routePoints[i], roundedDistanceKm));
+
+                            listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+
+                            //gMap.Overlays.Add(markers);
+                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
 
                             break;
                         }
-                        else
+                        else //body mezi začátkem a koncem
                         {
                             PointLatLng pointInner = routePoints[i];
 
@@ -942,27 +889,11 @@ namespace Vizualizace_Dat
 
                             value = BitmapHandler.GetFullPrecInPoint(timeNow, pointInner, validLoaders, bounds, forecType, lastBitmap);
 
-                            if (i % step == 0)
+                            if (i % step == 0) //sloupce pro graf
                             {
                                 double roundedDistanceKm = Math.Round(distanceKm, 2);
 
-                                graphCols.Add(new GraphElement(value, timeNow, roundedDistanceKm));
-
-                                string takesTime = "";
-
-                                if (timeMin <= 180)
-                                {
-                                    takesTime = Math.Round(timeMin) + " min";
-                                }
-                                else
-                                {
-                                    takesTime = Math.Round(timeMin / 60, 2) + " h";
-                                }
-
-                                listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
-                                listMarkers[listMarkers.Count - 1].ToolTipText = $"Krok\nčas: {timeNow.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
-
-                                markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                                graphCols.Add(new GraphElement(value, timeNow, pointInner, roundedDistanceKm));
                             }
                         }
 
@@ -970,14 +901,27 @@ namespace Vizualizace_Dat
                         customPoint.Value = value;
                         customPoint.Point = routePoints[i];
                         customPoint.Time = beginTime.AddMinutes(timeMin);
+                        customPoint.DistanceKm = Math.Round(distanceKm, 2);
+                        customPoint.TakesTime = distanceKm / kmPerMin;
                         customRoute.AddPoint(customPoint);
 
                         distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
 
-                        if(i % 20 == 0 && i != 0 && i != routePoints.Count - 1)
+                        if(i % 20 == 0 && i != 0 && i != routePoints.Count - 1) //přidávání tooltipů na trase
                         {
+                            string takesTime = "";
+
+                            if (customPoint.TakesTime <= 180)
+                            {
+                                takesTime = Math.Round(customPoint.TakesTime) + "min";
+                            }
+                            else
+                            {
+                                takesTime = Math.Floor(customPoint.TakesTime / 60) + "h " + Math.Round(customPoint.TakesTime % 60) + "min";
+                            }
+
                             routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10,10)));
-                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
                             markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                         }
                     }
@@ -1280,11 +1224,13 @@ namespace Vizualizace_Dat
                 ValidateDataLoaders();
 
                 drawBitmapFromServer();
-                GraphClear();
 
                 pBScale.Image = forecType.ScaleBitmap;
                 lScaleMin.Text = forecType.GraphMinValue.ToString();
                 lScaleMax.Text = forecType.GraphMaxValue.ToString();
+
+                if(customRoute.GetAllRoutePoints().Count == 0)
+                    GraphClear();
 
                 if (areDataSendByUser)
                 {
@@ -1578,7 +1524,7 @@ namespace Vizualizace_Dat
                     else
                         throw new Exception("Nebyl zvolen platný čas začátku cesty!");
 
-                    FormGpxBeginTime gpxEndTimeForm = new FormGpxBeginTime("Zvol koncový čas cesty", "vybrat GPX soubor");
+                    FormGpxBeginTime gpxEndTimeForm = new FormGpxBeginTime("Zvol koncový čas cesty", "ok");
                     dialogResult = gpxEndTimeForm.ShowDialog();
 
                     if (dialogResult == DialogResult.OK)
@@ -1646,8 +1592,8 @@ namespace Vizualizace_Dat
                     throw new Exception("Nebyl nalezen dostatečný počet bodů");
                 }
 
-                int numberOfPoints = 4; //včetně začátku a cíle
-                int step = routePoints.Count / (numberOfPoints - 1);
+                int numOfGraphCols = 10; //včetně začátku a cíle
+                int step = routePoints.Count / (numOfGraphCols - 1);
 
                 double distanceKm = 0;
 
@@ -1681,7 +1627,7 @@ namespace Vizualizace_Dat
 
                         value = BitmapHandler.GetFullPrecInPoint(beginTime, pointStart, validLoaders, bounds, forecType, lastBitmap);
 
-                        graphCols.Add(new GraphElement(value, beginTime, 0));
+                        graphCols.Add(new GraphElement(value, beginTime, routePoints[i], 0));
 
                         listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
                         listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
@@ -1704,37 +1650,28 @@ namespace Vizualizace_Dat
                             lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, endTime, validLoaders, bounds);
                         }
 
-                        string takesTime = "";
-
-                        if (timeMin <= 180)
-                        {
-                            takesTime = Math.Round(timeMin) + " min";
-                        }
-                        else
-                        {
-                            takesTime = Math.Round(timeMin / 60, 2) + " h";
-                        }
-
                         value = BitmapHandler.GetFullPrecInPoint(endTime, pointEnd, validLoaders, bounds, forecType, lastBitmap);
                         double roundedDistanceKm = Math.Round(distanceKm, 2);
-
-                        graphCols.Add(new GraphElement(value, endTime, roundedDistanceKm));
-
-                        listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                        listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
-
-                        //gMap.Overlays.Add(markers);
-                        markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
 
                         CustomRoutePoint customPointLast = new CustomRoutePoint();
                         customPointLast.Value = value;
                         customPointLast.Point = routePoints[i];
                         customPointLast.Time = endTime;
+                        customPointLast.DistanceKm = roundedDistanceKm;
+                        customPointLast.TakesTime = (endTime - beginTime).TotalMinutes;
                         customRoute.AddPoint(customPointLast, true);
+
+                        graphCols.Add(new GraphElement(value, endTime, routePoints[i], roundedDistanceKm));
+
+                        listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
+                        listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+
+                        //gMap.Overlays.Add(markers);
+                        markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
 
                         break;
                     }
-                    else
+                    else //body mezi začátkem a koncem
                     {
                         PointLatLng pointInner = routePoints[i];
 
@@ -1751,27 +1688,11 @@ namespace Vizualizace_Dat
 
                         value = BitmapHandler.GetFullPrecInPoint(timeNow, pointInner, validLoaders, bounds, forecType, lastBitmap);
 
-                        if (i % step == 0)
+                        if (i % step == 0) //sloupce pro graf
                         {
                             double roundedDistanceKm = Math.Round(distanceKm, 2);
 
-                            graphCols.Add(new GraphElement(value, timeNow, roundedDistanceKm));
-
-                            string takesTime = "";
-
-                            if (timeMin <= 180)
-                            {
-                                takesTime = Math.Round(timeMin) + " min";
-                            }
-                            else
-                            {
-                                takesTime = Math.Round(timeMin / 60, 2) + " h";
-                            }
-
-                            listMarkers.Add(new GMarkerGoogle(pointInner, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Krok\nčas: {timeNow.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {takesTime}";
-
-                            markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
+                            graphCols.Add(new GraphElement(value, timeNow, pointInner, roundedDistanceKm));
                         }
                     }
 
@@ -1779,14 +1700,27 @@ namespace Vizualizace_Dat
                     customPoint.Value = value;
                     customPoint.Point = routePoints[i];
                     customPoint.Time = beginTime.AddMinutes(timeMin);
+                    customPoint.DistanceKm = Math.Round(distanceKm, 2);
+                    customPoint.TakesTime = distanceKm / kmPerMin;
                     customRoute.AddPoint(customPoint);
 
                     distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
 
-                    if (i % 20 == 0 && i != 0 && i != routePoints.Count - 1)
+                    if (i % 20 == 0 && i != 0 && i != routePoints.Count - 1) //přidávání tooltipů na trase
                     {
+                        string takesTime = "";
+
+                        if (customPoint.TakesTime <= 180)
+                        {
+                            takesTime = Math.Round(customPoint.TakesTime) + "min";
+                        }
+                        else
+                        {
+                            takesTime = Math.Floor(customPoint.TakesTime / 60) + "h " + Math.Round(customPoint.TakesTime % 60) + "min";
+                        }
+
                         routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10, 10)));
-                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {beginTime.AddMinutes(timeMin).ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
                         markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                     }
                 }

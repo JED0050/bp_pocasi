@@ -85,6 +85,24 @@ namespace Vizualizace_Dat
         public PointLatLng Point { get; set; }
         public double Value { get; set; }
         public DateTime Time { get; set; }
+        public double DistanceKm { get; set; }
+        public double TakesTime { get; set; }
+
+        public string GetTakesTimeString()
+        {
+            string takesTime = "";
+
+            if (TakesTime <= 180)
+            {
+                takesTime = Math.Round(TakesTime) + "min";
+            }
+            else
+            {
+                takesTime = Math.Floor(TakesTime / 60) + "h " + Math.Round(TakesTime % 60) + "min";
+            }
+
+            return takesTime;
+        }
     }
 
     public class CustomRoutePart
