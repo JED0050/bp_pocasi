@@ -316,5 +316,42 @@ namespace Vizualizace_Dat
 
             return precVal;
         }
+
+        public static PointLatLng GetPointCoordFromCityName(string cityName)
+        {
+            string url = @"https://api.mapbox.com/geocoding/v5/mapbox.places/" + cityName + @".json?access_token=sk.eyJ1IjoiZ2FhcmEzc2FuIiwiYSI6ImNrbjA5OW4zdjBhZHgyb3BiNDZkZmpucnUifQ.hcAnYzBqYxfx3zvZfZnMug&cachebuster=1617364889072&autocomplete=true";
+
+            string jsonContent = "";
+
+            using(WebClient client = new WebClient())
+            {
+                try
+                {
+                    jsonContent = client.DownloadString(url);
+                }
+                catch
+                {
+                    throw new Exception("Název místa obsahuje nepovolené znaky!");
+                }
+            }
+
+            try
+            {
+                dynamic jObjGeo = JObject.Parse(jsonContent);
+                JArray jArFeatures = (JArray)jObjGeo["features"];
+                JArray jArCenter = (JArray)jArFeatures[0]["center"];
+
+                double lon = (double)jArCenter[0];
+                double lat = (double)jArCenter[1];
+
+                return new PointLatLng(lat, lon);
+            }
+            catch
+            {
+                throw new Exception("Místo se nepodařilo zpracovat, zkuste jiné místo!");
+            }
+        }
+
+
     }
 }

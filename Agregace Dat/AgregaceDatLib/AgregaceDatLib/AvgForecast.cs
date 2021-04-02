@@ -195,7 +195,14 @@ namespace AgregaceDatLib
 
             Parallel.ForEach(dLs, dL =>
             {
-                dL.SaveNewDeleteOldBmps();
+                try
+                {
+                    dL.SaveNewDeleteOldBmps();
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine($"AgregaceDat: chyba při zpracovávání loaderu {dL.GetLoaderConfigFile().DataLoaderName}, chyba: {e.Message}");
+                }
             });
 
             Debug.WriteLine("AgregaceDat: Dokončení vytváření bitmap");
@@ -342,6 +349,9 @@ namespace AgregaceDatLib
             g.InterpolationMode = InterpolationMode.NearestNeighbor;
 
             g.DrawImage(smallBitmap, 0, 0, 728, 528);
+
+            bigBitmap.Dispose();
+            smallBitmap.Dispose();
 
             return newBitmap;
         }

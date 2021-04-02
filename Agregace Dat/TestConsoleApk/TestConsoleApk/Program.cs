@@ -10,6 +10,7 @@ using IDataLoaderAndHandlerLib.Interface;
 using DLWeatherUnlockedLib;
 using System.Linq;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
+using System.IO;
 
 namespace TestConsoleApk
 {
@@ -19,7 +20,39 @@ namespace TestConsoleApk
         static void Main(string[] args)
         {
             //DrawTriangulationExample();
-            DrawExampleBitmaps();
+            //DrawExampleBitmaps();
+
+            Bitmap bNew = new Bitmap(10,10);
+
+            bNew.SetPixel(3, 3, Color.Red);
+            bNew.Save("BNew.bmp", ImageFormat.Bmp);
+
+            //bNew.Dispose();
+
+            Bitmap bLoad = new Bitmap("BNew.bmp");
+            bLoad.SetPixel(6, 6, Color.Blue);
+
+            bLoad.Save("BNew2.bmp", ImageFormat.Bmp);
+
+            bLoad.Dispose();
+
+            DirectoryInfo dI = new DirectoryInfo(@"D:\Škola - programy\Bakalářka - Předpověď počasí\bp_pocasi\Agregace Dat\TestConsoleApk\TestConsoleApk\bin\Debug\netcoreapp2.1\");
+            foreach (var f in dI.GetFiles("*.bmp"))
+            {
+
+                if (f.Name == "BNew.bmp")
+                {
+                    f.Delete();
+                }
+            }
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    Console.WriteLine(bLoad.GetPixel(x, y));
+                }
+            }
         }
 
         public static void DrawExampleBitmaps()
@@ -54,7 +87,20 @@ namespace TestConsoleApk
 
                 Color c = ColorValueHandler.GetTemperatureColor(point.Temperature.Value);
 
-                bmp1.SetPixel((int)point.x, (int)point.y, c);
+                try
+                {
+                    for(int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            bmp1.SetPixel((int)point.x + i, (int)point.y + j, c);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
             }
 
             Console.WriteLine("b2 a b3");

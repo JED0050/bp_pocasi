@@ -48,6 +48,7 @@ namespace Vizualizace_Dat
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
         private CustomRoute customRoute = new CustomRoute();
+        private bool pressedEnter = true;
 
         public FormMain()
         {
@@ -1759,6 +1760,101 @@ namespace Vizualizace_Dat
                     drawBitmapFromServer();
                 }
             }
+        }
+
+        private void tBPointName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //enter = 13
+
+            int asciiNum = (int)e.KeyChar;
+            pressedEnter = false;
+
+            if (asciiNum == 13)
+            {
+                gMap.Focus();
+                pressedEnter = true;
+
+                PointLatLng point = BitmapHandler.GetPointCoordFromCityName(tBPointName.Text);
+
+                int x = BitmapHandler.GetX(point.Lng, dataBitmap.Width, bounds[0].Lng, bounds[1].Lng);
+                int y = BitmapHandler.GetY(point.Lat, dataBitmap.Height, bounds[0].Lat, bounds[1].Lat);
+
+                markPoint = point;
+
+                Color c = Color.Transparent;
+
+                try
+                {
+                    c = dataBitmap.GetPixel(x, y);
+                }
+                catch
+                { }
+
+                clearMarkers();
+                gMap.Overlays.Remove(routes);
+
+                if (!isBitmapShown)
+                {
+                    drawBitmapFromServer();
+                }
+
+                string precVal = "";
+                string exMsg = "";
+
+                graphCols = new List<GraphElement>();
+
+                //tBPointName.Foc
+
+                for (int i = 0; i < ApkConfig.DblclickMaxData; i++)
+                {
+                    double val;
+
+                    try
+                    {
+                        val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, validLoaders, bounds, forecType);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {ex.Message}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        exMsg = ex.Message;
+
+                        break;
+                    }
+
+                    if (i == 0)
+                        precVal = val.ToString();
+
+                    graphCols.Add(new GraphElement(val, selectedTime.AddHours(i)));
+                }
+
+                if (graphCols.Count > 0)
+                {
+                    DrawGraph();
+
+                    listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
+                    listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+
+                    gMap.Overlays.Add(markers);
+                    markers.Markers.Add(listMarkers[0]);
+                }
+                else
+                {
+                    MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {exMsg}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                pressedEnter = false;
+            }
+        }
+
+        private void tBPointName_Validated(object sender, EventArgs e)
+        {
+            if (tBPointName.Text.Length > 0 && !pressedEnter)
+                tBPointName.Focus();
+            else
+                gMap.Focus();
         }
     }
 }
