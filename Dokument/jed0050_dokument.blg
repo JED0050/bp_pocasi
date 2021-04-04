@@ -1,14 +1,14 @@
 [0] Config.pm:312> INFO - This is Biber 2.15
 [0] Config.pm:315> INFO - Logfile is 'jed0050_dokument.blg'
-[106] biber-MSWIN32:330> INFO - === 
-[126] Biber.pm:415> INFO - Reading 'jed0050_dokument.bcf'
-[234] Biber.pm:949> INFO - Using all citekeys in bib section 0
-[253] Biber.pm:4334> INFO - Processing section 0
-[268] Biber.pm:4523> INFO - Looking for bibtex format file 'citace.bib' for section 0
-[272] bibtex.pm:1682> INFO - LaTeX decoding ...
-[284] bibtex.pm:1494> INFO - Found BibTeX data source 'citace.bib'
-[349] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[350] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'variable = shifted' with 'variable = non-ignorable'
-[350] Biber.pm:4162> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'cs-CZ'
-[360] bbl.pm:651> INFO - Writing 'jed0050_dokument.bbl' with encoding 'UTF-8'
-[363] bbl.pm:754> INFO - Output to jed0050_dokument.bbl
+[121] biber-MSWIN32:330> INFO - === 
+[144] Biber.pm:415> INFO - Reading 'jed0050_dokument.bcf'
+[268] Biber.pm:949> INFO - Using all citekeys in bib section 0
+[291] Biber.pm:4334> INFO - Processing section 0
+[311] Biber.pm:4523> INFO - Looking for bibtex format file 'citace.bib' for section 0
+[315] bibtex.pm:1682> INFO - LaTeX decoding ...
+[335] bibtex.pm:1494> INFO - Found BibTeX data source 'citace.bib'
+[419] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'variable = shifted' with 'variable = non-ignorable'
+[419] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[419] Biber.pm:4162> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'cs-CZ'
+[434] bbl.pm:651> INFO - Writing 'jed0050_dokument.bbl' with encoding 'UTF-8'
+[439] bbl.pm:754> INFO - Output to jed0050_dokument.bbl

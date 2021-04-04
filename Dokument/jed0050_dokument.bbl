@@ -19,9 +19,66 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
+    \entry{yrno}{online}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labeltitlesource}{title}
+      \field{langid}{czech}
+      \field{title}{Yr.no}
+      \field{urlday}{4}
+      \field{urlmonth}{4}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.yr.no/en
+      \endverb
+      \verb{url}
+      \verb https://www.yr.no/en
+      \endverb
+    \endentry
+    \entry{owm}{online}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labeltitlesource}{title}
+      \field{langid}{czech}
+      \field{title}{OpenWeatherMap}
+      \field{urlday}{4}
+      \field{urlmonth}{4}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://openweathermap.org/
+      \endverb
+      \verb{url}
+      \verb https://openweathermap.org/
+      \endverb
+    \endentry
+    \entry{weun}{online}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{langid}{czech}
+      \field{title}{WeatherUnlocked}
+      \field{urlday}{4}
+      \field{urlmonth}{4}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb http://www.weatherunlocked.com/
+      \endverb
+      \verb{url}
+      \verb http://www.weatherunlocked.com/
+      \endverb
+    \endentry
     \entry{medard}{online}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labeltitlesource}{title}
       \field{langid}{czech}
       \field{title}{Medard-online}
@@ -39,8 +96,8 @@
       \endverb
     \endentry
     \entry{chmi}{online}{}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labeltitlesource}{title}
       \field{langid}{czech}
       \field{subtitle}{chmi}
@@ -77,8 +134,8 @@
       \strng{authorbibnamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
       \strng{authornamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
       \strng{authorfullhash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -97,8 +154,8 @@
       \endverb
     \endentry
     \entry{interp}{online}{}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labeltitlesource}{title}
       \field{langid}{english}
       \field{title}{Interpolating in a Triangle}
@@ -113,6 +170,25 @@
       \endverb
       \verb{url}
       \verb https://codeplea.com/triangular-interpolation
+      \endverb
+    \endentry
+    \entry{mapbox}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{langid}{czech}
+      \field{title}{Mapbox}
+      \field{urlday}{4}
+      \field{urlmonth}{4}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.mapbox.com/
+      \endverb
+      \verb{url}
+      \verb https://www.mapbox.com/
       \endverb
     \endentry
     \entry{bSkeet}{book}{}
@@ -135,8 +211,8 @@
       \strng{authorbibnamehash}{01b1383355da2f2a954d4cb264d9dc17}
       \strng{authornamehash}{01b1383355da2f2a954d4cb264d9dc17}
       \strng{authorfullhash}{01b1383355da2f2a954d4cb264d9dc17}
-      \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{0-816-52066-6}
@@ -167,8 +243,8 @@
       \strng{authorbibnamehash}{3e85ff35ac9460aa6193899e6707ba4a}
       \strng{authornamehash}{3e85ff35ac9460aa6193899e6707ba4a}
       \strng{authorfullhash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-1484231494}
@@ -206,8 +282,8 @@
       \strng{authorbibnamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
       \strng{authornamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
       \strng{authorfullhash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-3-642-12971-1}

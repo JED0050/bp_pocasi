@@ -8,9 +8,9 @@
 \usepackage{geometry}
 \usepackage{listings}
 
-\usepackage{mathtools}
+%\usepackage{mathtools} %- blokuje list obrázků a tabulek
 
-\ThesisAuthor{Jan Jelička}
+\ThesisAuthor{Jan Jedlička}
 
 \ThesisSupervisor{Ing. Jan Janoušek}
 
@@ -20,7 +20,7 @@
 
 \SubmissionYear{2021}
 
-\Acknowledgement{Rád bych na tomto místě poděkoval vedoucímu bakalářské práce panu Ing. Janu Janouškovi, za pravidelné konzultace a poskytnutí mnoha užitečných rad a nápadů pro řežení samotné práce.}
+\Acknowledgement{Rád bych na tomto místě poděkoval vedoucímu bakalářské práce panu Ing. Janu Janouškovi, za pravidelné konzultace a poskytnutí mnoha užitečných rad a nápadů pro řešení samotné práce.}
 
 % Zadame cestu a jmeno souboru ci nekolika souboru s digitalizovanou podobou zadani prace.
 % Pokud toto makro zapoznamkujeme sazi se stranka s upozornenim.
@@ -46,6 +46,9 @@
 \AddAcronym{XML}{Extensible Markup Language}
 \AddAcronym{JSON}{JavaScript Object Notation}
 \AddAcronym{BMP}{Bitmap}
+\AddAcronym{API}{Application Programming Interface}
+\AddAcronym{Typ počasí}{Druh meteorologického prvku}
+\AddAcronym{Loader}{Knihovna reprezentující jeden z datových zdrojů}
 
 \addbibresource{citace.bib}
 \nocite{*}
@@ -63,7 +66,7 @@
 	
 	Dalším úkolem je vytvořit službu která bude schopna tyto agregovaná data poskytovat na základě dotazů uživatele. Uživatel může žádat o poskytnutí dat pro určitou plochu v patřičném čase, čímž obdrží patřičnou bitmapu. Případně může zažádat o předpověď v jednom bodě pro jeden či více časů s různými rozestupy.
 	
-	Nakonec práce se musí vytvořit aplikace, která nám zobrazí agregovaná data z naší služby a otestuje veškeré potřebné dotazy. Převede hodnoty z bitmap zpět na patřičné číselné údaje, zobrazí různé typy počasí pro časy a plochu ať už pro jeden bod nebo trasu tvořenou desítkami různých míst.
+	Nakonec práce se musí vytvořit aplikace, která nám zobrazí agregovaná data z naší služby a otestuje veškeré potřebné dotazy. Převede hodnoty z bitmap zpět na patřičné číselné údaje, zobrazí různé meteorologické prvky počasí pro zvolené časy a plochu ať už pro jeden bod nebo trasu tvořenou desítkami různých míst.
 	
 	\chapter{Datové zdroje}
 	
@@ -72,72 +75,76 @@
 	\section{XML}
 	\subsection{Yr.no}
 	
-	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
+	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr \cite{yrno}. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
 	
-	\subsection{Ukázka API}
+	Při využívání této služby se používá API, které pro zadaná bod vrací počasí. To znamená že pro určení dat stačí znát pouze zeměpisné souřadnice zvoleného bodu a ty zadat jako parametry $lon$ a $lat$.
 	
 	Ukázka odkazu který vrací XML text obsahujících data o počasí pro Ostravu na následujících 9 dnů.
-	
-	https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923\&lon=18.262524
+	\begin{itemize}
+		\item \url{https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923\&lon=18.262524}
+	\end{itemize}
 	
 	\section{JSON}
 	\subsection{OpenWeather}
 	
-	Dalším datovým zdrojem v podobě textu je OpenWeather. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
+	Dalším datovým zdrojem v podobě textu je OpenWeather \cite{owm}. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
 	
-	\subsection{Ukázka API}
+	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč obdržený při registraci.
 	
-	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů.
+	\begin{itemize}
+		\item \url{https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=MY\_KEY}
+	\end{itemize}
 	
-	https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=MY\_KEY
-	
-	\section{JSON}
 	\subsection{WeatherUnlocked}
 	
-	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
+	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked \cite{weun}. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
 	
-	\subsection{Ukázka API}
+	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč včetně ID získaný při registraci.
 	
-	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů.
-	
-	http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=MY\_ID\&app\_key=MY\_KEY
+	\begin{itemize}
+		\item \url{http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=MY\_ID\&app\_key=MY\_KEY}
+	\end{itemize}
 	
 	\section{Bitmap}
 	\subsection{Medard}
 	
-	Medard je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou Evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
+	Medard \cite{medard} je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou Evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
 	
-	\subsection{Ukázka API a obsahu}
+	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Při využívání tohoto API je zapotřebí zadat čas poslední vytvořené bitmapy touto službou. Čas je ve formátu $YYMMDD_HH$, k nalezení platného času stačí cyklicky projít data a časy od toho aktuálního a vracet se po jedné hodině zpět než se narazí na ten správný. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
+	\begin{itemize}
+		\item \url{http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13}
+	\end{itemize}
 	
-	http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13
-	
-	\begin{center}
-		\captionof{figure}{Bitmapy od Medard-online \cite{medard}}
+	\begin{figure}
+		\centering
 		\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
-	\end{center}
+		\caption{Bitmapy od Medard-online \cite{medard}}
+	\end{figure}
 	
 	\subsection{Radar.bourky}
 	
-	Radar.bourky je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný pro určování budoucího počasí, protože poskytuje data pouze v aktuálním čase, mimo srážky neposkytuje jiné typy počasí a také pokrývá pouze Českou Republiku s blízkým okolím.
+	Radar.bourky \cite{chmi} je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný pro určování budoucího počasí, protože poskytuje data pouze v aktuálním čase, mimo srážky neposkytuje jiné prvky počasí a také pokrývá pouze Českou Republiku s blízkým okolím.
 	
 	Na druhou stranu tento zdroj uchovává informace o srážkách tři dny dozadu s časovým rozdílem pouhých 10 minut. Díky tomu se dá tento zdroj použít pro přesné zobrazení srážek v minulosti případně odhad počasí v následujících hodinách na základě velice přesného posunu hodnot na snímcích.
 	
 	Proto se zdroj využívá pouze pro určení srážek v aktuálním čase případně následujících šesti hodinách nebo pro určení srážek v minulých dnech s přesným posunem po deseti minutách.
 	
-	\subsection{Ukázka API a obsahu}
+	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}. Při využívání tohoto API je zapotřebí zadat čas požadovaného snímku tento čas je vždy ve formátu $YYYYMMDD.HHMM$. Nejnovější snímek z radaru je vždy ten z aktuálního času zaokrouhlený dolů na desítky minut.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}.
+	\begin{itemize}
+		\item \url{http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png}
+	\end{itemize}
 	
-	http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
-	
-	\begin{center}
-		\captionof{figure}{Snímek z radaru od Radar.bourky \cite{chmi}}
+	\begin{figure}
+		\centering
 		\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
-	\end{center}
+		\caption{Snímek z radaru od Radar.bourky \cite{chmi}}
+	\end{figure}
 	
 	\section{Shrnutí použitých zdrojů}
+	
+	Spousta datových zdrojů poskytujících data ve formě textu umožňuje poskytování dat jak v JSON tak XML formátu. Rovněž tak poskytují i informace o meteorologických prvcích jako rychlost a směr větru, čas východu a západu slunce nebo pocitovou teplotu vůči reálné teplotě. V práci se využívaly jen 4 základní prvky předpovědi a jen jeden předem zvolený způsob formátování dat. Proto se v tabulce shrnutí použitých zdrojů zobrazují pouze využívané prvky samotnou agregační knihovnou a jen jeden zvolený typ poskytnutých dat.
 	
 	\begin{center}
 		
@@ -145,7 +152,7 @@
 		
 		\begin{tabular} {l r c c c c c c c}
 			
-			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & Typ \\
+			Název & Typ dat & Počet dnů & Hodinový rozdíl & Stažení/min & Plocha & Prvek \\
 			\hline
 			Yr.no & XML & 9 & 1 a 6 & & svět & s,v,t1,t2 \\ 
 			OpenWeatherMap & JSON & 5 & 3 & 60 & svět & s,v,t1,t2 \\ 
@@ -160,7 +167,7 @@
 	
 	\chapter{Agregace dat}
 	
-	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, tímto formátem byly zvoleny bitmapy obsahující data o jednom typu počasí, data jsou reprezentována pomocí barev a pokrávají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec jsme potřebovali pokrýt celou bitmapu pokud známe hodnotu počasí pro určité body, což nám vyřešila triangulace v kombinaci s interpolací.
+	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, tímto formátem byly zvoleny bitmapy obsahující data o jednom prvku počasí, data jsou reprezentována pomocí barev a pokrývají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec jsme potřebovali pokrýt celou bitmapu pokud známe hodnotu počasí pro určité body, což nám vyřešila triangulace v kombinaci s interpolací.
 	
 	Každý z datových zdrojů je v agregaci dat realizován pomocí samostatné knihovny. Tato knihovna musí vždy implementovat rozhraní DataLoader a může využívat různé pomocné třídy pro správu dat o počasí jako je například triangulace nebo převod číselných hodnot na barvy a naopak. Dll soubor každé z knihoven je uložen do složky s datovými zdroji a následně je každá z knihoven datových zdrojů dynamicky načtena a zpracována pomocí reflexe třídou spravující agregaci dat.
 	
@@ -193,10 +200,11 @@
 		\item Sousední páry trojúhelníků této triangulace musí být \uv{převráceny} aby došlo k vytvoření Delaunayovi triangulace z počáteční nepřekrývající se triangulace.
 	\end{enumerate}
 	
-	\begin{center}
-		\captionof{figure}{S-hull pro 500 náhodně generovaných bodů v matici 300x300}
+	\begin{figure}
+		\centering
 		\includegraphics{Data/bmp_triangulace.png}
-	\end{center}
+		\caption{S-hull pro 500 náhodně generovaných bodů v matici 300x300}
+	\end{figure}
 	
 	\section{Interpolace}
 	
@@ -208,28 +216,32 @@
 	
 	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojúhelníku $V_1$, $V_2$, $V_3$ (\ref{eq_dist}). 
 	
-	\begin{equation}
-		\begin{split}
-			Distance_{v1} =\sqrt{(X_{v1}-P_x)^2+(Y_{v1}-P_y)^2} \\
-			Distance_{v2} =\sqrt{(X_{v2}-P_x)^2+(Y_{v2}-P_y)^2} \\
-			Distance_{v3} =\sqrt{(X_{v3}-P_x)^2+(Y_{v3}-P_y)^2}
-		\end{split}\label{eq_dist}
+	\begin{displaymath}
+		Distance_{v1} =\sqrt{(X_{v1}-P_x)^2+(Y_{v1}-P_y)^2}
+	\end{displaymath}
+	\begin{displaymath}
+		Distance_{v2} =\sqrt{(X_{v2}-P_x)^2+(Y_{v2}-P_y)^2}
+	\end{displaymath}
+	\begin{equation}\label{eq_dist}
+		Distance_{v3} =\sqrt{(X_{v3}-P_x)^2+(Y_{v3}-P_y)^2}
 	\end{equation}
 	
 	Následně se určí váha každého vrcholu $W$, neboli inverzní hodnota jeho vzdálenosti od zjišťovaného bodu (\ref{eq_w1}).
 	
-	\begin{align}\label{eq_w1}
-		W_{v1} =\frac{1}{Distance_{v1}} &&
-		W_{v2} =\frac{1}{Distance_{v1}} &&
-		W_{v3} =\frac{1}{Distance_{v1}} 
-	\end{align}
+	\begin{equation}\label{eq_w1}
+		W_{v1} =\frac{1}{Distance_{v1}}
+		\quad\mathrm{ }\quad 
+		W_{v2} =\frac{1}{Distance_{v2}}
+		\quad\mathrm{ }\quad 
+		W_{v3} =\frac{1}{Distance_{v3}} 
+	\end{equation}
 	
 	Ve finální části výpočtu se určí hodnota našeho zjišťovaného bodu $Value_p$, která je úměrná podílu součtu součinů vah a hodnot jednotlivých vrcholů trojúhelníku se součtem jednotlivých vah (\ref{eq_val}).
 	
 	\begin{equation}\label{eq_val}
 		Value_p = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}}
 	\end{equation}
-
+	
 	\section{Složky zdrojů}
 	
 	Každý z datových zdrojů má svou vlastní složku ze které čte a do které se ukládá informace.
@@ -238,7 +250,7 @@
 	
 	Pokud zpracovává datový zdroj informace ve formě bitmap obsahuje tato složka i škálu daného datového zdroje. Pomocí této škály se převádí veškeré barvy na číselné hodnoty a následně za použití obecné škály služby zpět z čísla na normalizovanou barvu.
 	
-	Nejdůležitější soubory ukládané do složek jsou samotné bitmapy s daty o počasí. Bitmapy si do své složky každý zdroj ukládá při požadavku vytváření bitmap a následně je z této složky vrací při požadavku na poskytnutí dat o počasí pro daný typ a čas.
+	Nejdůležitější soubory ukládané do složek jsou samotné bitmapy s daty o počasí. Bitmapy si do své složky každý zdroj ukládá při požadavku vytváření bitmap a následně je z této složky vrací při požadavku na poskytnutí dat o počasí pro daný prvek a čas.
 	
 	\section{Zpracovávání dat}
 	
@@ -253,28 +265,31 @@
 	
 	Použití triangulace není při zpracovávání rovnoměrně vzdálených bodů nutné, každopádně se v práci pro zpracování dat ponechala. Datové zdroje takto mohou zpracovávat i nerovnoměrně vzdálené body a pokud by došlo ke změně implementace určení dat v daných bodech, tedy pro jednotlivé časy by se body neurčovali cyklicky ale opět pomocí seznamu různě umístěných měst ve zpracované ploše, triangulace by se postarala o rozdělení bodů na síť trojúhelníků s následným vybarvením pomocí interpolace.
 	
-	\begin{center}
-		\captionof{figure}{Body reprezentující teplotu na ploše}
+	\begin{figure}
+		\centering
 		\includegraphics[scale=0.5]{Data/bmp_body.png}
-	\end{center}
+		\caption{Body reprezentující teplotu na ploše}
+	\end{figure}
 	
-	\begin{center}
-		\captionof{figure}{Síť trojúhelníků pro bitmapu teploty}
+	\begin{figure}
+		\centering
 		\includegraphics[scale=0.5]{Data/bmp_sit.png}
-	\end{center}
+		\caption{Síť trojúhelníků pro bitmapu teploty}
+	\end{figure}
 	
-	\begin{center}
-		\captionof{figure}{Kompletní bitmapa pro teplotu}
+	\begin{figure}
+		\centering
 		\includegraphics[scale=0.5]{Data/bmp_vybarvena.png}
-	\end{center}
+		\caption{Kompletní bitmapa pro teplotu}
+	\end{figure}
 	
 	\section{Ukládání dat}
 	
 	Veškerá zpracovaná data je potřeba uložit aby bylo možné je posléze poskytovat a nemuseli se pravidelně při každém dotazu o data generovat znovu. Vzhledem k tomu že se ukládají data o počasí na ploše nemá smysl používat žádnou databázi protože by bylo zbytečně složité ukládat celou předpověď pro každý bod zvlášť i když by bod vedle obsahovat obdobné, ne-li úplně totožné údaje. Právě proto se zvolilo ukládání dat do bitmap které nám jednoduše pokryjí celou zpracovanou plochu.
 	
-	Výhodou bitmap je že pro jeden zvolený čas dokáží pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jedné hodnotě počasí, například o teplotě, a proto pokud požadujeme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý typ uložit jednu samostatnou bitmapu s těmito daty.
+	Výhodou bitmap je že pro jeden zvolený čas dokáží pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jedné hodnotě počasí, například o teplotě, a proto pokud požadujeme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý prvek uložit jednu samostatnou bitmapu s těmito daty.
 	
-	Jednotlivé datové zdroje ukládají své bitmapy se jménem $TYP-ČAS$ a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje typ předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Druhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu $ROK-MĚSÍC-DEN-HODINA$. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu $ROK-MĚSÍC-DEN-MINUTA$.
+	Jednotlivé datové zdroje ukládají své bitmapy se jménem $TYP-ČAS$ a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje prvek předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Druhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu $ROK-MĚSÍC-DEN-HODINA$. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu $ROK-MĚSÍC-DEN-MINUTA$.
 	
 	To pro jakou plochu datové zdroje zpracovávají své bitmapy je dopředu určeno a proto nemá smysl tento údaj ukládat přímo do bitmap.
 	
@@ -282,7 +297,7 @@
 	
 	\section{Poskytování dat}
 	
-	Datové zdroje po obdržení informací o typu počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název typu počasí se musí shodovat s prefixem názvu bitmapy $typ$. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bitmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
+	Datové zdroje po obdržení informací o prvku počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název prvku počasí se musí shodovat s prefixem názvu bitmapy $typ$. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bitmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
 	
 	Zaokrouhlený čas je následně převeden do formátu $ROK-MĚSÍC-DEN$, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání výjimky.
 	
@@ -298,9 +313,9 @@
 	
 	\subsection{Bitmap předpověď}
 	
-	Tato předpověď se získává požadavkem bmp a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určena pro Českou republiku. Při určování této předpovědi je zapotřebí rovněž i čas pro který se má předpověď určitě $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas požadavku předpovědi. Následně je potře zadat typ předpovědi $type$, který má bitmapa reprezentovat tyto typy jsou 2 typ prec reprezentuje srážky v mm a typ temp teplotu ve stupních Celsia. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné současně.
+	Tato předpověď se získává požadavkem bmp a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určena pro Českou republiku. Při určování této předpovědi je zapotřebí rovněž i čas pro který se má předpověď určitě $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas požadavku předpovědi. Následně je potře zadat prvek předpovědi $type$, který má bitmapa reprezentovat. Tyto prvky jsou 4, prvek $prec$ reprezentuje srážky v mm, prvek $temp$ teplotu ve stupních Celsia,$pres$ tlak v [hPa] a $humi$ vlhkost v [\%]. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné současně.
 	\\\\
-	adresaserveru/bmp?type=\{typ\}\&time=\{čas\}\&loaders=\{datové zdroje\}\&p1=\{bod1\}\&p2=\{bod2\}
+	\url{adresaserveru/bmp?type={typ}\&time={čas}\&loaders={datové\_zdroje}\&p1={bod1}\&p2={bod2}}
 	
 	\begin{center}
 		
@@ -309,7 +324,7 @@
 		\begin{tabular}{c c p{13cm}}
 			Název & Povinnost & Význam \\
 			\midrule
-			type & ANO & Typ předpovědi, určuje druh vykreslených informací. Například typ $prec$ reprezentuje srážky v milimetrech a typ $temp$ teplotu ve stupních Celsia.\\ 
+			type & ANO & Typ předpovědi, určuje prvek vykreslených informací. Například prvek $prec$ reprezentuje srážky v milimetrech a prvek $temp$ teplotu ve stupních Celsia.\\ 
 			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  provede se předpověď pro aktuální čas.\\ 
 			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
 			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ a $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
@@ -320,26 +335,27 @@
 	Příklady požadavků:
 	\begin{itemize}
 		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývající celou možnou plochu a využívá veškeré datové zdroje.
-		\begin{itemize}
-			\item adresaserveru/bmp?type=temp
-		\end{itemize}
+		
+		\url{adresaserveru/bmp?type=temp}
+		
 		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývající celou možnou plochu a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
-		\begin{itemize}
-			\item adresaserveru/bmp?type=prec\&time=2021-05-26T18:30:00\&loaders=owm,yrno
-		\end{itemize}
+		
+		\url{adresaserveru/bmp?type=prec\&time=2021-05-26T18:30:00\&loaders=owm,yrno}
+		
 		\item Požadujeme bitmapu s daty o srážkách pro aktuální čas, která pokrývající město Olomouc a využívá datový zdroj od služby Medard-Online.
-		\begin{itemize}
-			\item adresaserveru/bmp?type=prec\&p1=49.621559,17.1507294\&p2=49.5211889,17.4213141\&loaders=mdrd
-		\end{itemize}
+		
+		\url{adresaserveru/bmp?type=prec\&p1=49.621559,17.1507294\&p2=49.5211889,17.4213141\&loaders=mdrd}
 	\end{itemize}
 	
 	\subsection{XML a JSON předpověď}
 	
-	Tento požadavek nám dovoluje získat data o počasí pro určitý bod v zadaném čase, případně lze určit data o počasí pro více časů za sebou s konstantním hodinovým rozdílem. Při získávání XML nebo JSON dat potřebujeme zadat stejně jako u bitmap předpovědí zadat parametr požadovaného času $time$ a datové zdroje které tento čas zpracovávají $loaders$. Dále musíme zadat požadovaný typ dat XML/JSON $data$ a zeměpisný bod pro který chceme počasí určit, bod se skládá z parametrů $lon$ a $lat$. Pro získání více časových oken v jedné předpovědi musíme přidat parametr reprezentující počet předpovědí $numOfFcs$ a hodinový rozdíl mezi těmito předpověďmi $hourDif$.
+	Tento požadavek nám dovoluje získat data o počasí pro určitý bod v zadaném čase, případně lze určit data o počasí pro více časů za sebou s konstantním hodinovým rozdílem. Při získávání XML nebo JSON dat potřebujeme zadat stejně jako u bitmap předpovědí zadat parametr požadovaného času $time$ a datové zdroje které tento čas zpracovávají $loaders$. Dále musíme zadat požadovaný formát dat XML/JSON $data$ a zeměpisný bod pro který chceme počasí určit, bod se skládá z parametrů $lon$ a $lat$. Pro získání více časových oken v jedné předpovědi musíme přidat parametr reprezentující počet předpovědí $numOfFcs$ a hodinový rozdíl mezi těmito předpověďmi $hourDif$.
 	\\\\
-	adresaserveru/{data}?time={čas}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}
+	\url{adresaserveru/{data}?time={čas}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}}
 	
-	adresaserveru/{data}?time={čas}\&numOfFcs={počet\_předpovědí}\&hourDif={hodinový\_rozdíl\_mezi\_předpověďmi}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}
+	\begin{flushleft}
+		\url{adresaserveru/{data}?time={čas}\&numOfFcs={počet\_předpovědí}\&hourDif={hodinový\_rozdíl\_mezi\_předpověďmi}\&lat={zeměpisná\_šířka}\&lon={zeměpisní\_délka}\&loaders={datové\_zdroje}}
+	\end{flushleft}
 	
 	\begin{center}
 		
@@ -361,44 +377,44 @@
 	Příklady požadavků:
 	\begin{itemize}
 		\item Požadujeme předpověď o počasí pro aktuální čas v Ostravě zpracovanou všemi datovými zdroji ve formátu XML.
-		\begin{itemize}
-			\item adresaserveru/xml?lon=18.262524\&lat=49.820923
-		\end{itemize}	
+		
+		\url{adresaserveru/xml?lon=18.262524\&lat=49.820923}
+		
 		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou všemi datovými zdroji ve formátu JSON.
-		\begin{itemize}
-			\item adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00
-		\end{itemize}
+		
+		\url{adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00}
+		
 		\item Požadujeme předpověď o počasí pro datum a čas 14.03.2021 18:35 v Ostravě zpracovanou datovými zdroji OpenWeatherMap a WeatherUnlocked ve formátu XML.
-		\begin{itemize}
-			\item adresaserveru/xml?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&loaders=owm,weun
-		\end{itemize}
+		
+		\url{adresaserveru/xml?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&loaders=owm,weun}
+		
 		\item Požadujeme předpověď o počasí v Ostravě pro 5 časových oken s 3 hodinovými rozestupy počínaje aktuálním časem.
-		\begin{itemize}
-			\item adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&numOfFcs=5\&hourDif=3
-		\end{itemize}
+		
+		\url{adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&numOfFcs=5\&hourDif=3}
+		
 	\end{itemize}
 	
 	\subsection{Využívané škály}
 	
 	Při stahování bitmap obsahujících data o počasí je vhodné mít prostředek na převod barev z jednotlivých pixelů na číselné hodnoty. Právě pro tento účel slouží škály.
 	
-	Služba nám proto umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku typu počasí a služba nám vrátí využívanou škálu.
+	Služba nám proto umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku prvku počasí a služba nám vrátí využívanou škálu.
 	
 	Příklady požadavků:
 	\begin{itemize}
 		\item Požadujeme škálu pro teploty.
-		\begin{itemize}
-			\item adresaserveru/scale?type=temp
-		\end{itemize}
+		
+		\url{adresaserveru/scale?type=temp}
+		
 		\item Požadujeme škálu pro srážky.
-		\begin{itemize}
-			\item adresaserveru/scale?type=prec
-		\end{itemize}
+		
+		\url{adresaserveru/scale?type=prec}
+		
 	\end{itemize}
 	
-	\subsection{Zkratky typů počasí}
+	\subsection{Zkratky prvků počasí}
 	
-	Zkratky pro jednotlivé typy předpovědí které se využívají v parametru type.
+	Zkratky pro jednotlivé prvky předpovědí které se využívají v parametru $type$.
 	
 	\begin{center}
 		
@@ -439,15 +455,15 @@
 	
 	\chapter{Vizualizace dat}
 	
-	Část vizualizace dat je realizována prostřednictvím desktopové aplikace Bude-hezky napsané v C\# Windows Forms. Aplikace umožňuje uživateli zobrazit informace o různých typech počasí v bodě či na trase pro zvolený čas. Předpověď je zároveň tvořena grafem a bitmapou barev pokrývající zobrazenou plochu. Data jsou distribuována webovou službou a uživatel si může zvolit které datové zdroje chce pro své předpovědi používat.
+	Část vizualizace dat je realizována prostřednictvím desktopové aplikace Bude-hezky napsané v C\# Windows Forms. Aplikace umožňuje uživateli zobrazit informace o různých prvcích počasí v bodě či na trase pro zvolený čas. Předpověď je zároveň tvořena grafem a bitmapou barev pokrývající zobrazenou plochu. Data jsou distribuována webovou službou a uživatel si může zvolit které datové zdroje chce pro své předpovědi používat.
 	
 	\section{Obecné použití}
 	
-	Aplikace je tvořena několika vzájemně propojenými částmi mapou reprezentující plochu pro kterou chceme znát počasí, lištou času pro který nebo od kterého chceme počasí určit, radio buttony reprezentující typ předpovědi, comboboxy pro volbu datových zdrojů, grafem zobrazující počasí pro více časových intervalů, tlačítkem pro přehrání animace počasí společně s nastavitelnými parametry této animace a nakonec meníčkem pro nastavení aplikace případně volby určitých akcí.
+	Aplikace je tvořena několika vzájemně propojenými částmi a to mapou reprezentující plochu pro kterou chceme znát počasí, lištou času pro který nebo od kterého chceme počasí určit, radio buttony reprezentující prvek předpovědi, check boxy pro volbu datových zdrojů, grafem zobrazující počasí pro více časových intervalů, text boxem pro vybrání místa textem, tlačítkem pro přehrání animace počasí společně s nastavitelnými parametry této animace a nakonec meníčkem pro nastavení aplikace případně volby určitých akcí.
 	
-	Při používání aplikace si uživatel zvolí který typ počasí chce zobrazit vybráním patřičného radio buttonu a které z datových zdrojů si přeje používat zakliknutím požadovaných check boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, typu počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
+	Při používání aplikace si uživatel zvolí který prvek počasí chce zobrazit vybráním patřičného radio buttonu a které z datových zdrojů si přeje používat zakliknutím požadovaných check boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, prvku počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
 	
-	Typy počasí odpovídají veškerým typům poskytovaným webovou službou, jedná se tedy o srážkám, teplotu, tlak a vlhkost. Pro datové zdroje se rovněž používají veškeré datové zdroje které služba poskytuje. Lišta dat a časů 
+	Prvky počasí odpovídají veškerým prvkům poskytovaným webovou službou, jedná se tedy o srážkám, teplotu, tlak a vlhkost. Pro datové zdroje se rovněž používají veškeré datové zdroje které služba poskytuje. Lišta dat a časů 
 	je pokryta časy od šesti hodin zpět po 5 dnů dopředu od aktuálního času a krokuje se po deseti minutách.
 	
 	Při určování číselných hodnot z bitmap se využívají totožné škály které webová služba používá při vyvážení samotných bitmap. Tyto škály si vizualizační aplikace dokáže stáhnout a přepsat pokud dojde k jejich změně na straně webové služby.
@@ -458,39 +474,41 @@
 	
 	Pro práci s mapou se nakonec využívá komponenta GMap.NET, která je volně dostupná pro rozšíření vlastností Windows Forms. Tato komponenta nám umožňuje vykreslit mapu po které se může uživatel pohybovat, přibližovat a oddalovat ji. Komponenta dokáže určit zeměpisné souřadnice bodu ve kterém se nachází kurzor myši, takže není problém určit souřadnice požadovaného místa a ani plochy pro kterou data určujeme protože ta je vyhrazena levým horním a pravým dolním rohem mapy. Komponenta nám dovoluje přidat značky s popisky na mapu pokud máme za potřebí vyznačit zjišťovaný bod či body na trase, pro trasu se krom bodů vykreslí i křivka reprezentující celou cestu. Do mapy máme také možnost přidat bitmapu což se využívá při nakreslení dat.
 	
-	Na samotné mapě se vždy při změnách času, typu a zdrojů vykresluje bitmapa reprezentující počasí, průhlednost této bitmapy má uživatel možnost nastavit prostřednictvím nastavení v menu.
+	Na samotné mapě se vždy při změnách času, prvku a zdrojů vykresluje bitmapa reprezentující počasí, průhlednost této bitmapy má uživatel možnost nastavit prostřednictvím nastavení v menu.
 	
 	\section{Počasí v bodě}
 	
-	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný.
+	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný. Mimo znázorňování počasí dvojitým kliknutím lze bod vybrat i napsáním názvu hledaného místa do textového pole v pravé dolní části mapy. Pokud uživatel napíše do tohoto pole název místa a akci potvrdí enterem, dojde k vyhodnocení textu a převodu na pravděpodobně smýšlené body službou Mapbox \cite{mapbox} z kterých je vybrán ten nejvěrohodnější. 
 	
-	Při zjišťování počasí v bodě se využívají data z bitmapy kterou si aplikace stáhla z webového serveru ve chvíli co byl zvolen typ počasí, datový zdroj a čas. Z této bitmapy se určí pixel obsahující data o počasí pro požadovaný bod a pomocí škály je RGB hodnota převedena na desetinné číslo.
+	Při zjišťování počasí v bodě se využívají data z bitmapy kterou si aplikace stáhla z webového serveru ve chvíli co byl zvolen prvek počasí, datový zdroj a čas. Z této bitmapy se určí pixel obsahující data o počasí pro požadovaný bod a pomocí škály je RGB hodnota převedena na desetinné číslo.
 	
 	\section{Počasí na trase}
 	
-	Mimo počasí pro jeden bod v různých časem máme možnost vykreslit i počasí na určité trase, tedy na více různých bodech v rozdílných časech na základě rychlosti pohybu. Trasa se zadává pomocí předem vytvořeného GPX souboru obsahujícího body reprezentující samotnou trasu. Při zobrazování trasy je potřeba zjistit jakou rychlostí se po trase postupuje pro možnost zjištění postupu času na následující bodech zvolené cesty. Tato rychlost se v aplikaci může určit dvěma způsoby. Prvním je zadání počátečního času a dopravního prostředku, každý dopravní prostředek má svou vlastní předem nastavenou rychlost a při výpočtu uplynulé vzdálenosti od počátku dokážeme určit i čas v tomto uplynulém bodě. Druhým způsobem určení času na trase je zadání času začátku cesty a času konce cesty, díky těmto informacím dokážeme určit jak dlouho trvá urazit celou cestu a tím pádem dokážeme spočítat i rychlost, když známe délku cesty.
+	Mimo počasí pro jeden bod v různých časem máme možnost vykreslit i počasí na určité trase, tedy na více různých bodech v rozdílných časech na základě rychlosti pohybu. Trasa se zadává pomocí předem vytvořeného GPX souboru obsahujícího body reprezentující samotnou trasu. Při zobrazování trasy je potřeba zjistit jakou rychlostí se po trase postupuje pro možnost zjištění postupu času na následující bodech zvolené cesty. Tato rychlost se v aplikaci může určit dvěma způsoby. Prvním je zadání počátečního času a dopravního prostředku, každý dopravní prostředek má svou vlastní předem nastavenou rychlost a při výpočtu uplynulé vzdálenosti od počátku dokážeme určit i čas v tomto uplynulém bodě. Druhým způsobem určení času na trase je zadání času začátku a konce cesty, díky těmto informacím dokážeme určit jak dlouho trvá urazit celou cestu a tím pádem dokážeme spočítat i rychlost, když známe délku cesty. Délka cesty se jednoduše spočítá jako součet vzdáleností v metrech mezi jednotlivými body trasy.
 	
-	Při požadavku o zobrazení počasí v trase musí uživatel vybrat možnost $Akce$ z menu a v něm zakliknout $Nahrát trasu z GPX souboru$. Poté si uživatel vybere jednu z možností určení rychlosti dopravy, zadá tedy počáteční čas a dopravní prostředek případně počáteční a koncový čas. Nakonec vybere cestu k samotnému GPX souboru. Pokud během toho procesu dojde k jakékoliv chybě proces se ukončí a uživateli se vypíše co přesně neproběhlo správně.
+	Při požadavku o zobrazení počasí v trase musí uživatel vybrat možnost $Akce$ z menu a v něm zakliknout $Nahrát trasu z GPX souboru$. Poté si uživatel vybere jednu z možností určení rychlosti dopravy, zadá tedy počáteční čas a dopravní prostředek případně počáteční a koncový čas. Nakonec vybere cestu k samotnému GPX souboru ve svém počítači. Pokud během toho procesu dojde k jakékoliv chybě proces se ukončí a uživateli se vypíše co přesně neproběhlo během zobrazování trasy správně.
 	
-	Po úspěšném zadání všech parametrů a zpracování souboru je na mapě nakreslena křivka reprezentující trasu. Na této křivce je zobrazeno 10 bodů oddělených rovnoměrně od sebe, každý bod obsahuje popis informací o počasí v tomto bodě. Součástí zobrazení trasy je i vykreslení grafu pod mapou, graf obsahuje 10 sloupců kde každý sloupec reprezentuje jeden z vyznačených bodů na trase. 
+	Po úspěšném zadání všech parametrů a zpracování souboru je na mapě nakreslena křivka reprezentující trasu. Na křivce jsou vyznačeny značky začátku a cíle trasy, každá ze značek obsahuje detailní popis informací o trase. Barva křivky je určena hodnotou počasí v bodě na křivce. Každý ze zobrazených bodů zná svou hodnotu počasí, čas v bodě, vzdálenost od začátku a čas potřebný k průchodu trasou od začátku k tomuto bodu. Při najetí myší na trasu dochází k zobrazení výpisu těchto informací pro snadnější zjištění počasí na trase. Zároveň se při vykreslení trasy zobrazí v horní části mapy dvě nová tlačítka pro možnost nastavení nového času trasy případně odstranění trasy. Při změně datového zdroje nebo prvku počasí během toho co je trasa vykreslená dochází k zpracování nově zadaných hodnot a zobrazení nových dat na stejné trase včetně jejího přebarvení.
 	
-	Určování dat pro počasí v těchto bodech se provádí stejně jako v určování informací o počasí v bodě. Pro každý vykreslený bod na trase s rozdílným časem se stáhne nová bitmapa na které se najde pixel reprezentující danou zeměpisnou souřadnici a pro tento pixel se určí hodnota počasí převodem RGB hodnoty na desetinné číslo prostřednictvím škály.
+	Součástí zobrazení trasy je i vykreslení grafu pod mapou, graf obsahuje 10 sloupců kde každý sloupec reprezentuje jeden ze stejně vzdálených bodů na trase. Graf slouží jako rychlý náhled k určení postupu počasí na celé trase, zda má stoupající či klesající tendenci případně se příliš nemění.
+	
+	Určování dat o počasí v bodech trasy se provádí stejně jako v určování informací o počasí v bodě. Pro každý vykreslený bod na trase se použije stažená bitmapa na které se najde pixel reprezentující danou zeměpisnou souřadnici a pro tento pixel se určí hodnota počasí převodem RGB hodnoty na desetinné číslo prostřednictvím škály. Ke stahování nových bitmap dochází při zpracovávání trasy a to vždy při překročení času který poslední stažená bitmapa poskytuje.
 	
 	\section{Animace počasí}
 	
-	Uživatel má možnost zobrazit si animaci předpovědí pro zvolený typ počasí od zvoleného počátečního času. Při kliknutí na tlačítko pro přehrání animace dochází k vykreslení bitmap předpovědí pro zvolený typ počasí, čas počasí pro animaci začíná od zvoleného času na liště, následně se v animaci vykreslují nové bitmapy pro následující čas inkrementovaný o zvolený interval. Intervaly se pohybují v hodnotách 10min, 30min, 1h, 3h a 6h. Počet kroků animace je rovněž nastavitelný a dodává nám možnost zobrazit průběh počasí pro dlouhé či krátké úseky času. Při běhu animace můžeme vidět v jakém časovém úseku se právě nacházíme a kolikátý snímek z celkového počtu je aktuálně zpracováván.
+	Uživatel má možnost zobrazit si animaci předpovědí pro zvolený prvek počasí od zvoleného počátečního času. Při kliknutí na tlačítko pro přehrání animace dochází k vykreslení bitmap předpovědí pro zvolený prvek počasí, čas počasí pro animaci začíná od zvoleného času na liště, následně se v animaci vykreslují nové bitmapy pro následující čas inkrementovaný o zvolený interval. Intervaly se pohybují v hodnotách 10min, 30min, 1h, 3h a 6h. Počet kroků animace je rovněž nastavitelný a dodává nám možnost zobrazit průběh počasí pro dlouhé či krátké úseky času. Při běhu animace můžeme vidět v jakém časovém úseku se právě nacházíme a kolikátý snímek z celkového počtu je aktuálně zpracováván.
 	
-	Při zpracování animace dochází k cyklickému stahování bitmap z webové služby. Hranice bitmapy jsou ohraničeny souřadnicemi rohů mapy a čas této předpovědi je vždy o hodinu vyšší než měla předpověď předešlá. Typ počasí ani datové zdroje se u animace neliší ty jsou pro celou animaci stejné.
+	Při zpracování animace dochází k cyklickému stahování bitmap z webové služby. Hranice bitmapy jsou ohraničeny souřadnicemi rohů mapy a čas této předpovědi je vždy o hodinu vyšší než měla předpověď předešlá. Prvek počasí ani datové zdroje se u animace neliší ty jsou pro celou animaci stejné.
 	
 	\section{Graf}
 	
-	Součástí aplikace je i graf obsahující informace o předpovědích pro jednotlivé časy. Šířka grafu se dynamicky mění při změně rozměrů okna aplikace. Graf má na ose $y$ sloupce ukazující hodnotu daného typu počasí v rozmezí od minima do maxima, na ose $x$ se nachází čas předpovědi pro daný sloupce. Graf je vykreslován na panel pomocí základních metod knihovny System.Drawing, nevyužívají pro tento účel se žádné externí knihovny. Barva sloupců společně s jejich počtem v grafu je nastavitelná.
+	Součástí aplikace je i graf obsahující informace o předpovědích pro jednotlivé časy. Šířka grafu se dynamicky mění při změně rozměrů okna aplikace. Graf má na ose $y$ sloupce ukazující hodnotu daného prvku počasí v rozmezí od minima do maxima, na ose $x$ se nachází čas předpovědi pro daný sloupce. Graf je vykreslován na panel pomocí základních metod knihovny System.Drawing, nevyužívají pro tento účel se žádné externí knihovny. Barva sloupců společně s jejich počtem v grafu je nastavitelná.
 	
 	Při vykreslování grafu pro bod reprezentují všechny sloupce stejné místo s rozdílným časem. Časy jsou od sebe posunuté o hodinu a počet vykreslených sloupců lze změnit v nastavení.
 	
 	Pro tuto předpověď nám graf vykresluje počasí pro 8 rovnoměrně vzdálených míst na trase. Proto počet sloupců v tomto grafu je vždy 8. Na rozdíl od grafu pro předpověď v bodě nám tento graf na ose $x$ reprezentuje čas sloupce v aktuálním bodě a vzdálenost tohoto bodu od počátku cesty.
 	
-	Zobrazený typ jednotek předpovědi na ose $y$ se mění dle zvoleného typu počasí v radio buttonech. Každý typ předpovědi zdá své jednotky a mimo to i minimální a maximální hodnotu počasí pro tuto jednotku. Hodnota předpovědi pro každý sloupec se tedy určí jako procentuální hodnota v rozmezí od minima po maximum.
+	Zobrazený typ jednotek předpovědi na ose $y$ se mění dle zvoleného prvku počasí v radio buttonech. Každý prvek předpovědi zná své jednotky a mimo to i minimální a maximální hodnotu počasí pro tuto jednotku. Hodnota předpovědi pro každý sloupec se tedy určí jako procentuální hodnota v rozmezí od minima po maximum.
 	
 	Pokud graf aktuálně nevykresluje žádné informace tak je v poli určeném pro sloupce vypsán text popisující co pole reprezentuje a kdy zde dojde k vykreslení dat. Nejprve bylo pole úplně prázdné a neobsahovalo žádný text čímž v aplikaci vznikla velká bílá plocha bez účelu, takto uživatel na první pohled ví k čemu tam tato plocha je. Tento text v poli je vždy vypsán při startu aplikace a následně spuštění animace nebo při vymazání zobrazené předpovědi.
 	
@@ -504,7 +522,7 @@
 	
 	V části menu akce je na výběr mezi vybráním cesty z GPX souboru pro vykreslení trasy a určení počasí na ni. Druhá možnost v akcích je přemazání mapy. Tato volba slouží k vymazání hodnot na mapě. Při této volbě dojde k smazání grafu, bitmapy počasí na mapě a značce označující počasí v bodě případně se odstraní trasa společně s jejími body a popisy.
 	
-	Veškeré nastavení aplikace se ukládá do konfiguračního JSON souboru. Při spuštění aplikace se z tohoto souboru načtou data o adrese serveru, průhlednosti bitmapy, počtu kroků při animaci, počtu předpovědí pro počasí v bodě, poslední zvolený typ počasí a naposledy zvolené datové zdroje. Díky tomuto souboru nemusí uživatel při každém spuštění znovu nastavovat veškeré věci znovu. Při změně jakéhokoliv z těchto atributů dochází k přepsání JSON souboru pro udržení neustále konzistence s aplikací po ukončení aplikace a opětovném spuštění.
+	Veškeré nastavení aplikace se ukládá do konfiguračního JSON souboru. Při spuštění aplikace se z tohoto souboru načtou data o adrese serveru, průhlednosti bitmapy, počtu kroků při animaci, počtu předpovědí pro počasí v bodě, poslední zvolený prvek počasí a naposledy zvolené datové zdroje. Díky tomuto souboru nemusí uživatel při každém spuštění znovu nastavovat veškeré věci znovu. Při změně jakéhokoliv z těchto atributů dochází k přepsání JSON souboru pro udržení neustále konzistence s aplikací po ukončení aplikace a opětovném spuštění.
 	
 	\section{Chyby při zobrazování dat}
 	
@@ -513,6 +531,10 @@
 	Může se stát že dojde k chybě i při určování počasí trasy z GPX soboru. Mimo pád při neschopnosti zjištění počasí pro daný bod dochází i k chybě při zpracování samotného GPX soboru při nepodporovaném formátování. Případně dochází k chybě při zadání většího počátečního času než toho koncového. Při těchto chybách dochází k oznámení informaci uživateli proč došlo k chybě a možnost napravení chyb při novém vykreslení trasy.
 	
 	\chapter{Závěr}
+	
+	Hlavní část této práce byla analýza různých datových zdrojů s daty o počasí a jejich následné využití pro poskytování vlastních agregovaných dat. Bylo zapotřebí zjistit jak každý ze zdrojů funguje a najít ideální řešení pro jeho využití v práci. Celá knihovna Agregace Dat byla vytvářena s předpokladem průběžného rozšíření o nové zdroje. Následně bylo zapotřebí najít ideální způsob poskytování zpracovaných dat pomocí webové služby, zjistit jak ideálně data ukládat a hledat. Nakonec se veškerá poskytovaná data zobrazila prostřednictvím vizualizační aplikace pro demonstraci možného využití dodávaných dat.
+	
+	Při zpracovávání této práce jsem se naučil jak psát více vzájemně kooperujících projektů současně. Pochopil jsem jakým způsobem služby s daty o počasí poskytují svá data a proč každá poskytuje své informace trochu jiným způsobem. Zjistil jsem jakým způsobem získávat data pomocí různých API a jak důležitý je jednoduchý a zároveň plně funkční návrh tohoto rozhraní. Ke konci práce jsem si uvědomil důležitost dobrého návrhu celé práce před samotnou realizací. Problémy vzniklé při změně funkcionality a složitému rozšíření některých částí se mohli s lepším návrhem řešit mnohem snadněji.
 	
 	\printbibliography[title={Literatura}, heading=bibintoc]
 	
