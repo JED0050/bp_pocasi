@@ -80,6 +80,12 @@ namespace Webova_Sluzba
                 );
 
                 routes.MapRoute(
+                "Bounds",
+                "bounds",
+                new { controller = "Home", action = "Bounds" }
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

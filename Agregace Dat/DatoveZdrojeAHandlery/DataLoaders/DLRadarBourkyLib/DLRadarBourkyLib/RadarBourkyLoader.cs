@@ -138,89 +138,96 @@ namespace DLRadarBourkyLib
 
             while (forTime <= now)
             {
+                string bitmapName = GetBitmapName(ForecastTypes.PRECIPITATION, TimeZoneInfo.ConvertTimeFromUtc(forTime, TimeZoneInfo.Local));
+                string bitmapPath = GetPathToDataDirectory(bitmapName);
 
-                try
+                if (!File.Exists(bitmapPath))
                 {
-                    radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.ToString("yyyyMMdd.HHmm") + ".0.png");
-
-                    string bitmapName = GetBitmapName(ForecastTypes.PRECIPITATION, forTime.AddHours(1)); //UTC na UTC+1
-                    string bitmapPath = GetPathToDataDirectory(bitmapName);
-
-                    ClearBitmap(radarBitmap);
-
-                    int xS = -1;
-                    int yS = -1;
-
-                    int xC = 0;
-                    int yC = 0;
-
-                    double lonDif = defaultBotRightBound.Lon - defaultTopLeftBound.Lon;
-                    double latDif = defaultTopLeftBound.Lat - defaultBotRightBound.Lat;
-
-                    double PixelLon = lonDif / 728;
-                    double PixelLat = latDif / 528;
-
-                    double bY = defaultTopLeftBound.Lat;
-                    double bX = defaultTopLeftBound.Lon;
-
-                    for (int x = 0; x < 728; x++)
+                    try
                     {
-                        if (bX >= botRight.Lon)
-                            break;
+                        //TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TimeZoneInfo.Utc);
 
-                        if (bX >= topLeft.Lon)
+                        radarBitmap = GetBitmap("http://radar.bourky.cz/data/pacz2gmaps.z_max3d." + forTime.ToString("yyyyMMdd.HHmm") + ".0.png");
+
+                        //string bitmapName = GetBitmapName(ForecastTypes.PRECIPITATION, forTime.AddHours(1)); //UTC na UTC+1
+                        //string bitmapPath = GetPathToDataDirectory(bitmapName);
+
+                        ClearBitmap(radarBitmap);
+
+                        int xS = -1;
+                        int yS = -1;
+
+                        int xC = 0;
+                        int yC = 0;
+
+                        double lonDif = DefaultBounds.BotRightCorner.Lon - DefaultBounds.TopLeftCorner.Lon;
+                        double latDif = DefaultBounds.TopLeftCorner.Lat - DefaultBounds.BotRightCorner.Lat;
+
+                        double PixelLon = lonDif / 728;
+                        double PixelLat = latDif / 528;
+
+                        double bY = DefaultBounds.TopLeftCorner.Lat;
+                        double bX = DefaultBounds.TopLeftCorner.Lon;
+
+                        for (int x = 0; x < 728; x++)
                         {
-                            xC++;
+                            if (bX >= botRight.Lon)
+                                break;
 
-                            if (xS == -1)
-                                xS = x;
+                            if (bX >= topLeft.Lon)
+                            {
+                                xC++;
+
+                                if (xS == -1)
+                                    xS = x;
+                            }
+
+                            bX += PixelLon;
                         }
 
-                        bX += PixelLon;
-                    }
-
-                    for (int y = 0; y < 528; y++)
-                    {
-                        if (bY <= botRight.Lat)
-                            break;
-
-                        if (bY <= topLeft.Lat)
+                        for (int y = 0; y < 528; y++)
                         {
-                            yC++;
+                            if (bY <= botRight.Lat)
+                                break;
 
-                            if (yS == -1)
-                                yS = y;
+                            if (bY <= topLeft.Lat)
+                            {
+                                yC++;
+
+                                if (yS == -1)
+                                    yS = y;
+                            }
+
+                            bY -= PixelLat;
                         }
 
-                        bY -= PixelLat;
-                    }
+                        Bitmap newBmp = new Bitmap(728, 528);
 
-                    Bitmap newBmp = new Bitmap(728, 528);
-
-                    Bitmap resizedBmp = new Bitmap(xC, yC);
-                    using (Graphics g = Graphics.FromImage(resizedBmp))
-                    {
-                        g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        g.DrawImage(radarBitmap, 0, 0, xC, yC);
-                    };
-
-                    for (int x = 0; x < xC; x++)
-                    {
-                        for (int y = 0; y < yC; y++)
+                        Bitmap resizedBmp = new Bitmap(xC, yC);
+                        using (Graphics g = Graphics.FromImage(resizedBmp))
                         {
-                            newBmp.SetPixel(x + xS, y + yS, resizedBmp.GetPixel(x, y));
+                            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                            g.DrawImage(radarBitmap, 0, 0, xC, yC);
+                        };
+
+                        for (int x = 0; x < xC; x++)
+                        {
+                            for (int y = 0; y < yC; y++)
+                            {
+                                newBmp.SetPixel(x + xS, y + yS, resizedBmp.GetPixel(x, y));
+                            }
                         }
+
+                        newBmp.Save(bitmapPath, ImageFormat.Bmp);
+                        newBmp.Dispose();
+
+                        resizedBmp.Dispose();
+
+                        radarBitmap.Dispose();
                     }
-
-                    newBmp.Save(bitmapPath, ImageFormat.Bmp);
-                    newBmp.Dispose();
-
-                    resizedBmp.Dispose();
-
-                    radarBitmap.Dispose();
+                    catch
+                    { }
                 }
-                catch
-                { }
 
                 forTime = forTime.AddMinutes(10);
             }
@@ -237,7 +244,7 @@ namespace DLRadarBourkyLib
 
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < DateTime.Now.AddHours(-6)) //smazání starých bitmap
+                if (dateTime < DateTime.Now.AddHours(-24)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -348,7 +355,7 @@ namespace DLRadarBourkyLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            forecast.Precipitation = GetValueFromBitmapTypeAndPoints(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), topLeft, botRight, location, ForecastTypes.PRECIPITATION);
+            forecast.Precipitation = GetValueFromBitmapTypeAndBounds(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), DefaultBounds, location, ForecastTypes.PRECIPITATION);
 
             forecast.Humidity = null;
             forecast.Pressure = null;

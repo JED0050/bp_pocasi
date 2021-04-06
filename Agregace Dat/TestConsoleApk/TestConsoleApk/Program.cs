@@ -11,6 +11,7 @@ using DLWeatherUnlockedLib;
 using System.Linq;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 using System.IO;
+using DLYrNoLib;
 
 namespace TestConsoleApk
 {
@@ -19,10 +20,16 @@ namespace TestConsoleApk
 
         static void Main(string[] args)
         {
+            DateTime time = DateTime.Parse("2021-04-06T13:00:00Z");
+            Console.WriteLine(time);
+        }
+
+        public static void DrawBiggerExampleBitmaps()
+        {
             //DrawTriangulationExample();
             //DrawExampleBitmaps();
 
-            Bitmap bNew = new Bitmap(10,10);
+            Bitmap bNew = new Bitmap(10, 10);
 
             bNew.SetPixel(3, 3, Color.Red);
             bNew.Save("BNew.bmp", ImageFormat.Bmp);

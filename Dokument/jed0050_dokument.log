@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  4 APR 2021 19:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  6 APR 2021 15:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1299,7 +1299,7 @@ File: Data/Mdrd_ukazka.png Graphic file (type png)
 Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 121.
 (pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
 [12 <./Data/Mdrd_ukazka.png>]
-<Data/Rb_ukazka.png, id=302, 796.47563pt x 577.40718pt>
+<Data/Rb_ukazka.png, id=300, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
 Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 141.
@@ -1346,27 +1346,12 @@ Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 282.
 
 LaTeX Warning: Command \v invalid in math mode on input line 292.
 
-
-LaTeX Warning: Command \v invalid in math mode on input line 292.
-
-
-LaTeX Warning: Command \v invalid in math mode on input line 292.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 292.
-
-
-LaTeX Warning: Command \v invalid in math mode on input line 292.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 292.
-
 [21 <./Data/bmp_vybarvena.png>]
-
-LaTeX Warning: Command \v invalid in math mode on input line 302.
-
-
-LaTeX Warning: Command \' invalid in math mode on input line 302.
+Overfull \hbox (9.43571pt too wide) in paragraph at lines 302--303
+[]\T1/lmr/m/n/10.95 Zaokrouhlený £as je ná-sledn¥ p°e-ve-den do for-mátu \T1/lm
+r/m/it/10.95 ROK-M…SÍC-DEN\T1/lmr/m/n/10.95 , p°í-padn¥ v£etn¥ $\OML/lmm/m/it/1
+0.95 MINUTA$
+ []
 
 [22]
 Kapitola 4.
@@ -1501,7 +1486,7 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (34 pages, 1797284 bytes).
+Output written on jed0050_dokument.pdf (34 pages, 1796547 bytes).
 PDF statistics:
  566 PDF objects out of 1000 (max. 8388607)
  111 named destinations out of 1000 (max. 500000)

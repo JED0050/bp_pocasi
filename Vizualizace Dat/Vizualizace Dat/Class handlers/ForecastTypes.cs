@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Vizualizace_Dat
 {
-    public class ForecastTypes
+    public struct ForecastTypes
     {
         public static readonly string PRECIPITATION = "prec";
         public static readonly string TEMPERATURE = "temp";

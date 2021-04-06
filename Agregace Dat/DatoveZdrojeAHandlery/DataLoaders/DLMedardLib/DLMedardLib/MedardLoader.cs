@@ -73,6 +73,8 @@ namespace DLMedardLib
                     }
                 }
 
+                scaleTempImage.Dispose();
+
                 //Debug.WriteLine(scaleTempArray.Count);
             }
 
@@ -98,6 +100,8 @@ namespace DLMedardLib
                         //Debug.WriteLine(actPixel);
                     }
                 }
+
+                scalePrecImage.Dispose();
 
                 //Debug.WriteLine(scalePrecArray.Count);
             }
@@ -148,7 +152,7 @@ namespace DLMedardLib
             int x;
             for (x = 0; x < bigBitmap.Width; x++)
             {
-                if (bX >= defaultTopLeftBound.Lon && defaultTopLeftBound.Lon <= bX + defaultTopLeftBound.Lon)
+                if (bX >= DefaultBounds.TopLeftCorner.Lon && DefaultBounds.TopLeftCorner.Lon <= bX + DefaultBounds.TopLeftCorner.Lon)
                     break;
 
                 bX += PixelLon;
@@ -159,7 +163,7 @@ namespace DLMedardLib
             int y;
             for (y = 0; y < bigBitmap.Height; y++)
             {
-                if (bY - PixelLat <= defaultTopLeftBound.Lat && defaultTopLeftBound.Lat <= bY)
+                if (bY - PixelLat <= DefaultBounds.TopLeftCorner.Lat && DefaultBounds.TopLeftCorner.Lat <= bY)
                     break;
 
                 bY -= PixelLat;
@@ -172,7 +176,7 @@ namespace DLMedardLib
 
             for (; x < bigBitmap.Width; x++)
             {
-                if (bX >= defaultBotRightBound.Lon && defaultBotRightBound.Lon <= bX + defaultBotRightBound.Lon)
+                if (bX >= DefaultBounds.BotRightCorner.Lon && DefaultBounds.BotRightCorner.Lon <= bX + DefaultBounds.BotRightCorner.Lon)
                     break;
 
                 bX += PixelLon;
@@ -182,7 +186,7 @@ namespace DLMedardLib
 
             for (; y < bigBitmap.Height; y++)
             {
-                if (bY - PixelLat <= defaultBotRightBound.Lat && defaultBotRightBound.Lat <= bY)
+                if (bY - PixelLat <= DefaultBounds.BotRightCorner.Lat && DefaultBounds.BotRightCorner.Lat <= bY)
                     break;
 
                 bY -= PixelLat;
@@ -218,7 +222,7 @@ namespace DLMedardLib
 
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < now.AddHours(-6)) //smazání starých bitmap
+                if (dateTime < now.AddHours(-24)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -471,7 +475,7 @@ namespace DLMedardLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728,528), defaultTopLeftBound, defaultBotRightBound, location);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728,528), DefaultBounds, location);
 
             forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);

@@ -7,17 +7,17 @@
 <h1>@ViewData["Title"]</h1>
 <h2>@ViewData["Message"]</h2>
 
-<h3>Bitmapa informací o určitém typu počasí pokrývající kompletní možnou oblast pro aktuální čas</h3>
+<h3>Bitmapa informací o určitém prvku počasí pokrývající kompletní možnou oblast pro aktuální čas</h3>
 <div>
-    API: https://localhost:44336/bmp?type={typ}&loaders={datové_zdroje}
+    API: https://localhost:44336/bmp?type={prvek}&loaders={datové_zdroje}
 </div>
 <div>
     <a href="https://localhost:44336/bmp?type=temp&loaders=owm">Příklad: https://localhost:44336/bmp?type=temp&loaders=owm</a>
 </div>
 
-<h3>Bitmapa informací o určitém typu počasí, pokrývající vybranou oblast pro zvolený čas</h3>
+<h3>Bitmapa informací o určitém prvku počasí, pokrývající vybranou oblast pro zvolený čas</h3>
 <div>
-    API: https://localhost:44336/bmp?type={typ}&time={čas}&p1={levý_horní_roh}&p2={pravý_dolní_roh}&loaders={datové_zdroje}
+    API: https://localhost:44336/bmp?type={prvek}&time={čas}&p1={levý_horní_roh}&p2={pravý_dolní_roh}&loaders={datové_zdroje}
 </div>
 <div>
     <a href="https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&p1=51.88,10.88&p2=47.09,20.21&loaders=yrno">Příklad: https://localhost:44336/bmp?type=prec&time=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")&p1=51.88,10.88&p2=47.09,20.21&loaders=yrno</a>
@@ -57,10 +57,16 @@
 
 <h3>Škála kterou služba používá pro správu bitmap</h3>
 <div>
-    API: https://localhost:44336/scale?type={typ}
+    API: https://localhost:44336/scale?type={prvek}
 </div>
 <div>
     <a href="https://localhost:44336/scale?type=prec">Příklad: https://localhost:44336/scale?type=prec</a>
 </div>
 
-
+<h3>Maximální hranice vytvářené bitmapy</h3>
+<div>
+    API: https://localhost:44336/bounds
+</div>
+<div>
+    <a href="https://localhost:44336/bounds">Příklad: https://localhost:44336/bounds</a>
+</div>

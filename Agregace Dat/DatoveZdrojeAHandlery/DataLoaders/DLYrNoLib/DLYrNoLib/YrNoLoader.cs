@@ -20,8 +20,8 @@ namespace DLYrNoLib
     public class YrNoDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft = DefaultBounds.TopLeftCorner;
+        private PointLonLat botRight = DefaultBounds.BotRightCorner;
 
         public string LOADER_NAME;// = "Yr.No";
 
@@ -46,8 +46,8 @@ namespace DLYrNoLib
 
             dataLoaderConfig = GetDataLoaderConfigFile();
 
-            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
-            botRight = dataLoaderConfig.BotRightCornerLonLat;
+            //topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            //botRight = dataLoaderConfig.BotRightCornerLonLat;
 
             LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
@@ -119,7 +119,7 @@ namespace DLYrNoLib
             {
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < DateTime.Now.AddHours(-6)) //smazání starých bitmap
+                if (dateTime < DateTime.Now.AddHours(-24)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -188,10 +188,14 @@ namespace DLYrNoLib
                     continue;
                 }
 
+                //nemusí se parsovat do local time protože ve formátu času je Z na konci
+                //DateTime from = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(timeSlot.Attribute("from").Value.ToString()), TimeZoneInfo.Local);
+                //DateTime to = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(timeSlot.Attribute("to").Value.ToString()), TimeZoneInfo.Local);
+
                 DateTime from = DateTime.Parse(timeSlot.Attribute("from").Value.ToString());
                 DateTime to = DateTime.Parse(timeSlot.Attribute("to").Value.ToString());
 
-                if(from == to)
+                if (from == to)
                 {
                     if(from < minimalTime)
                     {
@@ -233,7 +237,7 @@ namespace DLYrNoLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), defaultTopLeftBound, defaultBotRightBound, location);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), DefaultBounds, location);
 
             forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);

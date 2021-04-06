@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Webova_Sluzba</title>
+    <title>@ViewData["Title"] - Bude hezky online</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,11 +26,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Webova_Sluzba</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bude hezky online</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Hlavní strana</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Příklady</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Details">Detaily</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Účel</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a></li>
                 </ul>
@@ -44,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2020 - Webova_Sluzba</p>
+            <p>&copy; 2020-2021 - Bude hezky online</p>
         </footer>
     </div>
 

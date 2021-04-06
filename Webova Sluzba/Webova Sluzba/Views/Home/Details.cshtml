@@ -1,0 +1,277 @@
+﻿@{
+    ViewData["Title"] = "Detaily";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Poskytovaná data</h3>
+
+<ul>
+    <li>Bitmap předpověď</li>
+    <li>XML a JSON předpověď</li>
+    <li>Škála pro správu dat</li>
+    <li>Maximální hranice největší bitmapy</li>
+</ul>
+
+<h3>Bitmap předpověď</h3>
+
+    <p>
+    Bitmap předpověď poskytuje data o jednom konkrétním prvku počasí na ploše zadané pomocí hranic (pravého horního a levého dolního roku).
+    Předpověď je určena pro konkrétně zadaný čas.
+    Data jsou poskytována formou bitmap o rozměru 728x528 a každá z barev reprezentuje konkrétní hodnotu zpracovanou
+    pomocí <abbr title="Škála pro správu dat">škál</abbr>.
+    </p>
+
+    <p>https://localhost:44336/bmp?type={prvek}&time={čas}&p1={levý_horní_roh}&p2={pravý_dolní_roh}&loaders={datové_zdroje}</p>
+
+    <table style="width:100%">
+        <tr>
+            <th>Název</th>
+            <th>Povinnost</th>
+            <th>Význam</th>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>ANO</td>
+            <td>
+                Typ předpovědi, určuje prvek vykreslených informací. Například prvek prec
+                reprezentuje srážky v milimetrech a prvek temp teplotu ve stupních Celsia.
+            </td>
+        </tr>
+        <tr>
+            <td>time</td>
+            <td>NE</td>
+            <td>
+                Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán
+                není nebo je zadána hodnota 0 provede se předpověď pro aktuální čas.
+            </td>
+        </tr>
+        <tr>
+            <td>loaders</td>
+            <td>NE</td>
+            <td>
+                Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním
+                zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný
+                použijí se veškeré datové zdroje služby.
+            </td>
+        </tr>
+
+        <tr>
+            <td>p1</td>
+            <td>NE</td>
+            <td>
+                Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje
+                v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny
+                čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud
+                bod p1 a p1 není zadán, bitmapa se vykreslí pro celou možnou plochu.
+            </td>
+        </tr>
+
+        <tr>
+            <td>p2</td>
+            <td>NE</td>
+            <td>
+                Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje
+                v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny
+                čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud
+                bod p1 a p1 není zadán, bitmapa se vykreslí pro celou možnou plochu.
+            </td>
+        </tr>
+    </table>
+
+    <h3>XML a JSON předpověď</h3>
+
+    <p>
+        XML a JSON předpověď poskytuje informace o všech zpracovávaných a dostupných <abbr title="Poskytované meteorologické prvky předpovědi">prvích</abbr> touto službou.
+        Předpověď je určena vždy pro zadaý bod a čas. Předpověď může najednou obsahovat i více časových oken stejně vzdálených od sebe.
+    </p>
+
+    <p>https://localhost:44336/{data}?time={čas}&numOfFcs={počet_předpovědí}&hourDif={hodinový_rozdíl_mezi_předpověďmi}&lat={zeměpisná_šířka}&lon={zeměpisní_délka}&loaders={datové_zdroje}</p>
+
+    <table style="width:100%">
+        <tr>
+            <th>Název</th>
+            <th>Povinnost</th>
+            <th>Význam</th>
+        </tr>
+        <tr>
+            <td>data</td>
+            <td>ANO</td>
+            <td>
+                Formát v jakém mají být data o počasí zpracována. Rozlišujeme dva typy a
+                to xml a json.
+            </td>
+        </tr>
+        <tr>
+            <td>lon</td>
+            <td>ANO</td>
+            <td>
+                Longitude, parametr reprezentující zeměpisnou délku požadované souřadnice.
+                Desetinná a celá část souřadnice jsou odděleny tečkou.
+            </td>
+        </tr>
+        <tr>
+            <td>lat</td>
+            <td>ANO</td>
+            <td>
+                Latitude, parametr reprezentující zeměpisnou šířku požadované souřadnice.
+                Desetinná a celá část souřadnice jsou odděleny tečkou.
+            </td>
+        </tr>
+        <tr>
+            <td>loaders</td>
+            <td>NE</td>
+            <td>
+                Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním
+                zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný
+                použijí se veškeré datové zdroje služby.
+            </td>
+        </tr>
+
+        <tr>
+            <td>numOfFcs</td>
+            <td>NE</td>
+            <td>
+                Počet časových oken které má předpověď obsahovat. Pokud není tento parametr
+                zadán, v předpovědi bude právě jedno časové okno pro zadaný čas.
+            </td>
+        </tr>
+
+        <tr>
+            <td>hourDif</td>
+            <td>NE</td>
+            <td>
+                Hodinový rozdíl mezi jednotlivými časovými okny v předpovědi. Pokud není
+                tento parametr zadán, v předpovědi bude právě jedno časové okno pro zadaný
+                čas.
+            </td>
+        </tr>
+    </table>
+
+    <h3>Škála pro správu dat</h3>
+    
+    <p>
+        Při používání <abbr title="Bitmap předpověď">bitmap předpovědí</abbr> je zapotřebí dokázat převést barvy z bitmapy zpět na hodnoty.
+        K tomuto účelu slouží škály. Při zadání požadovaného prvku předpovědi uživatel obdrží škálu zpracovávající tenot prvek.
+    </p>
+
+    <p>https://localhost:44336/scale?type={prvek}</p>
+
+    <table style="width:100%">
+        <tr>
+            <th>Název</th>
+            <th>Povinnost</th>
+            <th>Význam</th>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>ANO</td>
+            <td>
+                Meteorologický prvek předpovědi. Všechny dostupné a zpracovávané prvky naleznete v tabulce prvků.
+            </td>
+        </tr>
+    </table>
+
+    <h3>Maximální hranice největší bitmapy</h3>
+    
+    <p>Vrací JSON soubor obsahující informace o maximálních hranicích vytvářené bitmapy. Hranice jsou pojmenovány TopLeftCornerLonLat a BotRightCornerLonLat. Každý z bodů obsahuje zeměpisné souřadnice Lon a Lat.</p>    
+
+    <p>https://localhost:44336/bounds</p>
+
+    <h3>Datové zdroje</h3>
+
+    <table style="width:100%">
+        <tr>
+            <th>Název</th>
+            <th>Zkratka pro API</th>
+            <th><abbr title="počet dnů co zdroj zpracovává (dopředu/zpětně)">Počet dnů</abbr></th>
+            <th><abbr title="časový rozdíl mezi jednotlivými předpověďmi">Hodinový rozdíl</abbr></th>
+            <th><abbr title="s = srážky, v = vlhkost, t1 = teplota, t2 = tlak">Prvek</abbr></th>
+        </tr>
+        <tr>
+            <td>Yr.no</td>
+            <td>yrno</td>
+            <td>9</td>
+            <td>1 a 6</td>
+            <td>s,v,t1,t2</td>
+        </tr>
+        <tr>
+            <td>OpenWeatherMap</td>
+            <td>owm</td>
+            <td>5</td>
+            <td>3</td>
+            <td>s,v,t1,t2</td>
+        </tr>
+        <tr>
+            <td>WeatherUnlocked</td>
+            <td>weun</td>
+            <td>5</td>
+            <td>3</td>
+            <td>s,v,t1,t2</td>
+        <tr>
+            <td>Medard-online</td>
+            <td>mdrd</td>
+            <td>5</td>
+            <td>1</td>
+            <td>s,t1</td>
+        </tr>
+        <tr>
+            <td>Radar.bourky</td>
+            <td>rb</td>
+            <td>-3</td>
+            <td>0.16 (10 min)</td>
+            <td>s</td>
+        </tr>
+    </table>
+
+    <h3>Poskytované meteorologické prvky předpovědi</h3>
+
+    <table style="width:100%">
+        <tr>
+            <th>Prvek</th>
+            <th>Zkratka pro API</th>
+            <th>Jednotka</th>
+            <th>Minimální hodnota</th>
+            <th>Maximální hodnota</th>
+            <th>Krok pro škálu</th>
+        </tr>
+        <tr>
+            <td>Srážky</td>
+            <td>prec</td>
+            <td>mm</td>
+            <td>0 = nic, 0.1 = první hodnota</td>
+            <td>30</td>
+            <td>0.1</td>
+        </tr>
+        <tr>
+            <td>Teplota</td>
+            <td>temp</td>
+            <td>°C</td>
+            <td>-50</td>
+            <td>50</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Tlak</td>
+            <td>pres</td>
+            <td>hPa</td>
+            <td>870</td>
+            <td>1084</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Vlhkost</td>
+            <td>humi</td>
+            <td>%</td>
+            <td>1</td>
+            <td>100</td>
+            <td>1</td>
+        </tr>
+    </table>
+
+    <h3>Čas, pásmo a formátování</h3>
+
+    <p>
+        Celý projekt pracuje s časovým pásmem UTC/GMT+1, proto je potřeba veškerá zadané časy (nejčasněji UTC/GMT+0) převádět do tohoto časového pásma.
+        Formát času odpovídá normě <abbr title="YYYY-MM-DDThh:mm:ss±hh:mm">ISO 8601</abbr>, pokud uživatel čas nezadá nebo zadá jako parametr času "0" provede se předpověď pro <abbr title=@DateTime.Now.ToString("dd.MM.yyyy_HH:mm")>aktuální čas (UTC/GMT+1)</abbr>.
+    </p>

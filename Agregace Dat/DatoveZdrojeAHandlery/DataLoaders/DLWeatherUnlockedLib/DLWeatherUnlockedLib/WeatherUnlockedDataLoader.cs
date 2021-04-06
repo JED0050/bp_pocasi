@@ -20,8 +20,8 @@ namespace DLWeatherUnlockedLib
     public class WeatherUnlockedDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft = DefaultBounds.TopLeftCorner;
+        private PointLonLat botRight = DefaultBounds.BotRightCorner;
 
         public string LOADER_NAME;// = "WeatherUnlocked";
 
@@ -46,8 +46,8 @@ namespace DLWeatherUnlockedLib
 
             dataLoaderConfig = GetDataLoaderConfigFile();
 
-            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
-            botRight = dataLoaderConfig.BotRightCornerLonLat;
+            //topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            //botRight = dataLoaderConfig.BotRightCornerLonLat;
 
             LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
@@ -70,7 +70,7 @@ namespace DLWeatherUnlockedLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), defaultTopLeftBound, defaultBotRightBound, location);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), DefaultBounds, location);
 
             forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);
@@ -89,7 +89,7 @@ namespace DLWeatherUnlockedLib
             {
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < DateTime.Now.AddHours(-6)) //smazání starých bitmap
+                if (dateTime < DateTime.Now.AddHours(-24)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -125,16 +125,16 @@ namespace DLWeatherUnlockedLib
 
                 string dateString = day.date;
 
-                DateTime dateTime = DateTime.Parse(dateString, CultureInfo.CreateSpecificCulture("cs-CZ"));    
+                DateTime dateTime = DateTime.Parse(dateString, CultureInfo.CreateSpecificCulture("cs-CZ")); 
 
                 foreach (dynamic timeSlot in jsonArTimeSlots)
                 {
                     int hour = timeSlot.time / 100;
 
-                    DateTime actTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, 0, 0);
+                    //DateTime actTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, 0, 0);
+                    DateTime actTime = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, 0, 0), TimeZoneInfo.Local);
 
-
-                    if(actTime >= t)
+                    if (actTime >= t)
                     {
                         Forecast f = new Forecast();
 

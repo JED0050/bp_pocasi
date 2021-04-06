@@ -77,7 +77,7 @@
 	
 	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr \cite{yrno}. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
 	
-	Při využívání této služby se používá API, které pro zadaná bod vrací počasí. To znamená že pro určení dat stačí znát pouze zeměpisné souřadnice zvoleného bodu a ty zadat jako parametry $lon$ a $lat$.
+	Při využívání této služby se používá API, které pro zadaná bod vrací počasí. To znamená že pro určení dat stačí znát pouze zeměpisné souřadnice zvoleného bodu a ty zadat jako parametry {\it lon} a {\it lat}.
 	
 	Ukázka odkazu který vrací XML text obsahujících data o počasí pro Ostravu na následujících 9 dnů.
 	\begin{itemize}
@@ -110,7 +110,7 @@
 	
 	Medard \cite{medard} je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou Evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Při využívání tohoto API je zapotřebí zadat čas poslední vytvořené bitmapy touto službou. Čas je ve formátu $YYMMDD_HH$, k nalezení platného času stačí cyklicky projít data a časy od toho aktuálního a vracet se po jedné hodině zpět než se narazí na ten správný. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
+	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Při využívání tohoto API je zapotřebí zadat čas poslední vytvořené bitmapy touto službou. Čas je ve formátu {\it YYMMDD\_HH}, k nalezení platného času stačí cyklicky projít data a časy od toho aktuálního a vracet se po jedné hodině zpět než se narazí na ten správný. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
 	
 	\begin{itemize}
 		\item \url{http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13}
@@ -130,7 +130,7 @@
 	
 	Proto se zdroj využívá pouze pro určení srážek v aktuálním čase případně následujících šesti hodinách nebo pro určení srážek v minulých dnech s přesným posunem po deseti minutách.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}. Při využívání tohoto API je zapotřebí zadat čas požadovaného snímku tento čas je vždy ve formátu $YYYYMMDD.HHMM$. Nejnovější snímek z radaru je vždy ten z aktuálního času zaokrouhlený dolů na desítky minut.
+	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}. Při využívání tohoto API je zapotřebí zadat čas požadovaného snímku tento čas je vždy ve formátu {\it YYYYMMDD.HHMM}. Nejnovější snímek z radaru je vždy ten z aktuálního času zaokrouhlený dolů na desítky minut.
 	
 	\begin{itemize}
 		\item \url{http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png}
@@ -289,7 +289,7 @@
 	
 	Výhodou bitmap je že pro jeden zvolený čas dokáží pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jedné hodnotě počasí, například o teplotě, a proto pokud požadujeme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý prvek uložit jednu samostatnou bitmapu s těmito daty.
 	
-	Jednotlivé datové zdroje ukládají své bitmapy se jménem $TYP-ČAS$ a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje prvek předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Druhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu $ROK-MĚSÍC-DEN-HODINA$. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu $ROK-MĚSÍC-DEN-MINUTA$.
+	Jednotlivé datové zdroje ukládají své bitmapy se jménem {\it TYP-ČAS} a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje prvek předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Druhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu {\it ROK-MĚSÍC-DEN-HODINA}. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu {\it ROK-MĚSÍC-DEN-MINUTA}.
 	
 	To pro jakou plochu datové zdroje zpracovávají své bitmapy je dopředu určeno a proto nemá smysl tento údaj ukládat přímo do bitmap.
 	
@@ -299,7 +299,7 @@
 	
 	Datové zdroje po obdržení informací o prvku počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název prvku počasí se musí shodovat s prefixem názvu bitmapy $typ$. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bitmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
 	
-	Zaokrouhlený čas je následně převeden do formátu $ROK-MĚSÍC-DEN$, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání výjimky.
+	Zaokrouhlený čas je následně převeden do formátu {\it ROK-MĚSÍC-DEN}, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání výjimky.
 	
 	Pokud datový zdroj vytváří bitmapy nekonzistentně, například prvních pár dnů je s rozestupem 1 hodiny a zbytek s rozestupem 6 hodin tak jak to dělá například Yr.no, dochází při nenalezení bitmapy se zaokrouhleným časem k sekvenčnímu průchodu všech zpracovaných bitmap a vrácení bitmapy s nejbližším časem k požadovanému času. Tato bitmapa je vrácena pouze tehdy pokud je odchylka času maximálně 6 hodin v opačném případě dochází opět k vyvolání výjimky.
 	
@@ -418,10 +418,10 @@
 	
 	\begin{center}
 		
-		\captionof{table}{Zkratky typů předpovědí}
+		\captionof{table}{Zkratky prvků předpovědí}
 		
 		\begin{tabular}{c c c}
-			Typ počasí & Jednotka & Zkratka pro API\\
+			Prvek počasí & Jednotka & Zkratka pro API\\
 			\midrule
 			Srážky & mm & prec \\
 			Teplota & °C & temp \\

@@ -44,9 +44,21 @@ namespace Webova_Sluzba.Controllers
             }
         }
 
+        public IActionResult Bounds()
+        {
+            string jsonContent = BoundsJsonHandler.LoadBoundsAsString();
+
+            return this.Content(jsonContent, "text/json");
+        }
+
+        public IActionResult Details()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
-            ViewData["Message"] = "Cíl bakalářské práce.";
+            ViewData["Message"] = "Cíl webové služby.";
 
             return View();
         }
@@ -55,11 +67,6 @@ namespace Webova_Sluzba.Controllers
         {
             ViewData["Message"] = "Různé kontaktní údaje.";
 
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 

@@ -13,8 +13,23 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
     {
         protected DataLoaderConfig dataLoaderConfig;
 
-        protected PointLonLat defaultTopLeftBound = new PointLonLat(4.1303633, 55.1995133);
-        protected PointLonLat defaultBotRightBound = new PointLonLat(37.9033283, 41.6999200);
+        //protected PointLonLat defaultTopLeftBound = new PointLonLat(4.1303633, 55.1995133);
+        //protected PointLonLat defaultBotRightBound = new PointLonLat(37.9033283, 41.6999200);
+
+        private static Bounds defaultBounds;
+        protected static Bounds DefaultBounds
+        {
+            get
+            {
+                if(defaultBounds == null)
+                {
+                    defaultBounds = BoundsJsonHandler.LoadBoundsFromJsonFile();
+                }
+
+                return defaultBounds;
+            }
+        }
+
 
         private float sign(Point p1, Point p2, Point p3)
         {
@@ -63,8 +78,11 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
             return ColorValueHandler.GetColorForValueAndType(avgVal, type);
         }
         
-        protected double GetValueFromBitmapTypeAndPoints(Bitmap bmp, PointLonLat p1, PointLonLat p2, PointLonLat target, string type)
+        protected double GetValueFromBitmapTypeAndBounds(Bitmap bmp, Bounds bounds, PointLonLat target, string type)
         {
+            PointLonLat p1 = bounds.TopLeftCorner;
+            PointLonLat p2 = bounds.BotRightCorner;
+
             double lonDif = Math.Abs(p1.Lon - p2.Lon);
             double latDif = Math.Abs(p1.Lat - p2.Lat);
 
@@ -100,8 +118,11 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
             return ColorValueHandler.GetValueForColorAndType(pixel, type);
         }
 
-        protected Point GetPointFromBoundsAndTarget(Size bmpSize, PointLonLat p1, PointLonLat p2, PointLonLat target)
+        protected Point GetPointFromBoundsAndTarget(Size bmpSize, Bounds bounds, PointLonLat target)
         {
+            PointLonLat p1 = bounds.TopLeftCorner;
+            PointLonLat p2 = bounds.BotRightCorner;
+
             Point point = new Point();
 
             double lonDif = Math.Abs(p1.Lon - p2.Lon);

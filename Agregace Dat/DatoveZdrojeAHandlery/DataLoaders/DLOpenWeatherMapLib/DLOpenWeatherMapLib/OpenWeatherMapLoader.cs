@@ -19,8 +19,8 @@ namespace DLOpenWeatherMapLib
     public class OpenWeatherMapDataLoader : DataLoaderHandler, DataLoader
     {
         //bounds
-        private PointLonLat topLeft;// = new PointLonLat(10.88, 51.88);
-        private PointLonLat botRight;// = new PointLonLat(20.21, 47.09);
+        private PointLonLat topLeft = DefaultBounds.TopLeftCorner;
+        private PointLonLat botRight = DefaultBounds.BotRightCorner;
 
         public string LOADER_NAME; // = "OpenWeatherMap";
         
@@ -46,8 +46,8 @@ namespace DLOpenWeatherMapLib
 
             dataLoaderConfig = GetDataLoaderConfigFile();
 
-            topLeft = dataLoaderConfig.TopLeftCornerLonLat;
-            botRight = dataLoaderConfig.BotRightCornerLonLat;
+            //topLeft = dataLoaderConfig.TopLeftCornerLonLat;
+            //botRight = dataLoaderConfig.BotRightCornerLonLat;
 
             LOADER_NAME = dataLoaderConfig.DataLoaderName;
         }
@@ -71,7 +71,7 @@ namespace DLOpenWeatherMapLib
 
                 DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
 
-                if (dateTime < DateTime.Now.AddHours(-6)) //smazání starých bitmap
+                if (dateTime < DateTime.Now.AddHours(-24)) //smazání starých bitmap
                 {
                     f.Delete();
                 }
@@ -109,7 +109,8 @@ namespace DLOpenWeatherMapLib
                 f.y = point.Y;
 
                 dynamic jsonElement = JObject.Parse(timeSlot.ToString());
-                DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
+                //DateTime elementTime = DateTime.Parse(jsonElement.dt_txt.ToString());
+                DateTime elementTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(jsonElement.dt_txt.ToString()), TimeZoneInfo.Local);
 
                 if (elementTime < now)
                     continue;
@@ -165,7 +166,7 @@ namespace DLOpenWeatherMapLib
             forecast.Time = forTime;
             forecast.AddDataSource(LOADER_NAME);
 
-            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), defaultTopLeftBound, defaultBotRightBound, location);
+            Point targetPoint = GetPointFromBoundsAndTarget(new Size(728, 528), DefaultBounds, location);
 
             forecast.Precipitation = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.PRECIPITATION), targetPoint, ForecastTypes.PRECIPITATION);
             forecast.Temperature = GetValueFromBitmapAndPoint(GetForecastBitmap(forTime, ForecastTypes.TEMPERATURE), targetPoint, ForecastTypes.TEMPERATURE);
@@ -259,7 +260,7 @@ namespace DLOpenWeatherMapLib
                         {
                             Thread.Sleep(60_000 - (int)apiLimitStopwatch.ElapsedMilliseconds);
 
-                            Debug.WriteLine("Čekáme");
+                            Debug.WriteLine($"{LOADER_NAME}: Čekáme na uvolnění API klíče");
                         }
 
                         apiLimitStopwatch.Reset();

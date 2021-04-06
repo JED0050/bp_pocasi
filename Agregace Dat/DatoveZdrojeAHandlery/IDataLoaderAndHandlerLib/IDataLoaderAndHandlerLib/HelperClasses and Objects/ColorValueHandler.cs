@@ -92,6 +92,10 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
                 scaleHumiDic.Add(pixel, value);
             }
 
+            scalePrecImage.Dispose();
+            scaleHumiImage.Dispose();
+            scalePrecImage.Dispose();
+            scaleTempImage.Dispose();
         }
 
 

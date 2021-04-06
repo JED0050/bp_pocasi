@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IDataLoaderAndHandlerLib.HandlersAndObjects
 {
-    public class ForecastTypes
+    public struct ForecastTypes
     {
         public static readonly string PRECIPITATION = "prec";
         public static readonly string TEMPERATURE = "temp";

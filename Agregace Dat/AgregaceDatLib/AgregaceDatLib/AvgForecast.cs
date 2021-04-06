@@ -20,8 +20,12 @@ namespace AgregaceDatLib
         private static bool inDebug = true;
         private static bool inConsoleApk = false;
 
-        private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
-        private PointLonLat botRightBound = new PointLonLat(37.9033283, 41.6999200);
+        private Bounds bounds = BoundsJsonHandler.LoadBoundsFromJsonFile();
+            
+            //new Bounds(new PointLonLat(4.1303633, 55.1995133), new PointLonLat(37.9033283, 41.6999200));
+
+        //private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
+        //private PointLonLat botRightBound = new PointLonLat(37.9033283, 41.6999200);
 
         private static DateTime lastLoad = DateTime.Now;
         private static List<DataLoader> allKnownLoaders;
@@ -274,14 +278,14 @@ namespace AgregaceDatLib
             Point p1 = new Point();
             Point p2 = new Point();
 
-            double lonDif = Math.Abs(botRightBound.Lon - topLeftBound.Lon);
-            double latDif = Math.Abs(topLeftBound.Lat - botRightBound.Lat);
+            double lonDif = Math.Abs(bounds.BotRightCorner.Lon - bounds.TopLeftCorner.Lon);
+            double latDif = Math.Abs(bounds.TopLeftCorner.Lat - bounds.BotRightCorner.Lat);
 
             double PixelLon = lonDif / bigBitmap.Width;
             double PixelLat = latDif / bigBitmap.Height;
 
-            double bY = topLeftBound.Lat;
-            double bX = topLeftBound.Lon;
+            double bY = bounds.TopLeftCorner.Lat;
+            double bX = bounds.TopLeftCorner.Lon;
 
             int x;
             for (x = 0; x < bigBitmap.Width; x++)
