@@ -13,6 +13,7 @@ using System.Collections.Concurrent;
 using IDataLoaderAndHandlerLib.Interface;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
+using System.Reflection;
 
 namespace DLOpenWeatherMapLib
 {
@@ -28,19 +29,32 @@ namespace DLOpenWeatherMapLib
         private int bitmapH = 528;
         public OpenWeatherMapDataLoader()
         {
-            if (!Directory.Exists(GetPathToDataDirectory(@"json_cache\")))
-            {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"Openweathermap\";
+            string dataDir = Environment.CurrentDirectory + @"\Data\";
+            string loaderDir = dataDir + @"Openweathermap\";
 
-                if (!Directory.Exists(dataDir))
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(dataDir);
+                Directory.CreateDirectory(loaderDir);
+            }
+            else if (!Directory.Exists(loaderDir))
+            {
+                Directory.CreateDirectory(loaderDir);
+            }
+
+            string jsonConfifFile = GetPathToDataDirectory("loaderConfig.json");
+
+            if (!File.Exists(jsonConfifFile))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLOpenWeatherMapLib.Resources.loaderConfig.json";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(dataDir);
-                    Directory.CreateDirectory(loaderDir);
-                }
-                else if (!Directory.Exists(loaderDir))
-                {
-                    Directory.CreateDirectory(loaderDir);
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(jsonConfifFile, reader.ReadToEnd());
+                    }
                 }
             }
 

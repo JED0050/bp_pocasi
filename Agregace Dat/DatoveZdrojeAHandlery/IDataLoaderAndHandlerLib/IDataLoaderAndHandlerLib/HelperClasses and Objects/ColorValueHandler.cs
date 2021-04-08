@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 
 namespace IDataLoaderAndHandlerLib.HandlersAndObjects
 {
@@ -19,8 +21,22 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
         {
             string workingDirectory = Environment.CurrentDirectory + @"\Data\";
 
+            if (!Directory.Exists(workingDirectory))
+                Directory.CreateDirectory(workingDirectory);
 
             string scalePrecName = "scale_prec.png";
+
+            if (!File.Exists(workingDirectory + scalePrecName))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "IDataLoaderAndHandlerLib.Resources.scale_prec.png";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                {
+                    Image.FromStream(stream).Save(workingDirectory + scalePrecName, ImageFormat.Png);
+                }
+            }
+
             Bitmap scalePrecImage = new Bitmap(workingDirectory + scalePrecName);
 
             scalePrecDic = new Dictionary<Color, double>();
@@ -42,6 +58,18 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
 
 
             string scaleTempName = "scale_temp.png";
+
+            if (!File.Exists(workingDirectory + scaleTempName))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "IDataLoaderAndHandlerLib.Resources.scale_temp.png";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                {
+                    Image.FromStream(stream).Save(workingDirectory + scaleTempName, ImageFormat.Png);
+                }
+            }
+
             Bitmap scaleTempImage = new Bitmap(workingDirectory + scaleTempName);
 
             scaleTempDic = new Dictionary<Color, double>();
@@ -59,6 +87,18 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
 
 
             string scalePresName = "scale_pres.png";
+
+            if (!File.Exists(workingDirectory + scalePresName))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "IDataLoaderAndHandlerLib.Resources.scale_pres.png";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                {
+                    Image.FromStream(stream).Save(workingDirectory + scalePresName, ImageFormat.Png);
+                }
+            }
+
             Bitmap scalePresImage = new Bitmap(workingDirectory + scalePresName);
 
             scalePresDic = new Dictionary<Color, double>();
@@ -77,6 +117,18 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
 
 
             string scaleHumiName = "scale_humi.png";
+
+            if (!File.Exists(workingDirectory + scaleHumiName))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "IDataLoaderAndHandlerLib.Resources.scale_humi.png";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                {
+                    Image.FromStream(stream).Save(workingDirectory + scaleHumiName, ImageFormat.Png);
+                }
+            }
+
             Bitmap scaleHumiImage = new Bitmap(workingDirectory + scaleHumiName);
 
             scaleHumiDic = new Dictionary<Color, double>();

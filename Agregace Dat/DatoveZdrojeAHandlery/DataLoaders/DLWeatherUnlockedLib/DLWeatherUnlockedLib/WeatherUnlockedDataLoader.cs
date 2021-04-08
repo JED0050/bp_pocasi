@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
 using IDataLoaderAndHandlerLib.Interface;
+using System.Reflection;
 
 namespace DLWeatherUnlockedLib
 {
@@ -27,20 +28,33 @@ namespace DLWeatherUnlockedLib
 
         public WeatherUnlockedDataLoader()
         {
-            if (!Directory.Exists(GetPathToDataDirectory("")))
+            string dataDir = Environment.CurrentDirectory + @"\Data\";
+            string loaderDir = dataDir + @"WeatherUnlocked\";
+
+            if (!Directory.Exists(dataDir))
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"WeatherUnlocked\";
+                Directory.CreateDirectory(dataDir);
 
-                if (!Directory.Exists(dataDir))
-                {
-                    Directory.CreateDirectory(dataDir);
+                Directory.CreateDirectory(loaderDir);
+            }
+            else if (!Directory.Exists(loaderDir))
+            {
+                Directory.CreateDirectory(loaderDir);
+            }
 
-                    Directory.CreateDirectory(loaderDir);
-                }
-                else if (!Directory.Exists(loaderDir))
+            string jsonConfifFile = GetPathToDataDirectory("loaderConfig.json");
+
+            if (!File.Exists(jsonConfifFile))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLWeatherUnlockedLib.Resources.loaderConfig.json";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(loaderDir);
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(jsonConfifFile, reader.ReadToEnd());
+                    }
                 }
             }
 

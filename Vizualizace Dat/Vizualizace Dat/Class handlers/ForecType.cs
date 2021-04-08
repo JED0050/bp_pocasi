@@ -18,7 +18,7 @@ namespace Vizualizace_Dat
 
         public ForecType(string type)
         {
-            string scaleName = "";
+            //string scaleName = "";
             double minVal = 0;
             double step = 0;
             Bitmap scaleBitmap = new Bitmap(1, 1);

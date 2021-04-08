@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using IDataLoaderAndHandlerLib.Interface;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
+using System.Reflection;
 
 namespace DLYrNoLib
 {
@@ -27,20 +28,33 @@ namespace DLYrNoLib
 
         public YrNoDataLoader()
         {
-            if (!Directory.Exists(GetPathToDataDirectory("")))
+            string dataDir = Environment.CurrentDirectory + @"\Data\";
+            string loaderDir = dataDir + @"Yr.no\";
+
+            if (!Directory.Exists(dataDir))
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"Yr.no\";
+                Directory.CreateDirectory(dataDir);
 
-                if (!Directory.Exists(dataDir))
-                {
-                    Directory.CreateDirectory(dataDir);
+                Directory.CreateDirectory(loaderDir);
+            }
+            else if (!Directory.Exists(loaderDir))
+            {
+                Directory.CreateDirectory(loaderDir);
+            }
 
-                    Directory.CreateDirectory(loaderDir);
-                }
-                else if (!Directory.Exists(loaderDir))
+            string jsonConfifFile = GetPathToDataDirectory("loaderConfig.json");
+
+            if (!File.Exists(jsonConfifFile))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLYrNoLib.Resources.loaderConfig.json";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(loaderDir);
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(jsonConfifFile, reader.ReadToEnd());
+                    }
                 }
             }
 

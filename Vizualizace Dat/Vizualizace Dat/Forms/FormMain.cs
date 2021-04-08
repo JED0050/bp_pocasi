@@ -48,7 +48,6 @@ namespace Vizualizace_Dat
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
         private CustomRoute customRoute = new CustomRoute();
-        private bool pressedEnter = true;
 
         public FormMain()
         {
@@ -1762,17 +1761,12 @@ namespace Vizualizace_Dat
             }
         }
 
-        private void tBPointName_KeyPress(object sender, KeyPressEventArgs e)
+        private void bCityNameSearch_Click(object sender, EventArgs e)
         {
-            //enter = 13
-
-            int asciiNum = (int)e.KeyChar;
-            pressedEnter = false;
-
-            if (asciiNum == 13)
+            if(tBPointName.Text.Length > 0 && tBPointName.ForeColor == Color.Black)
             {
+                //Debug.WriteLine(tBPointName.Text);
                 gMap.Focus();
-                pressedEnter = true;
 
                 PointLatLng point = BitmapHandler.GetPointCoordFromCityName(tBPointName.Text);
 
@@ -1843,18 +1837,34 @@ namespace Vizualizace_Dat
                     MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {exMsg}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+        }
+
+        private void tBPointName_Enter(object sender, EventArgs e)
+        {
+            if (tBPointName.ForeColor == Color.Gray)
             {
-                pressedEnter = false;
+                tBPointName.ForeColor = Color.Black;
+                tBPointName.Text = "";
             }
         }
 
-        private void tBPointName_Validated(object sender, EventArgs e)
+        private void tBPointName_Leave(object sender, EventArgs e)
         {
-            if (tBPointName.Text.Length > 0 && !pressedEnter)
-                tBPointName.Focus();
-            else
-                gMap.Focus();
+            if (tBPointName.Text.Length == 0)
+            {
+                tBPointName.ForeColor = Color.Gray;
+                tBPointName.Text = "Praha, Česko";
+            }
+        }
+
+        private void tBPointName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int keyNumber = (int)e.KeyChar;
+
+            if (keyNumber == 13) //13 = enter
+            {
+                bCityNameSearch_Click(sender, null);
+            }
         }
     }
 }

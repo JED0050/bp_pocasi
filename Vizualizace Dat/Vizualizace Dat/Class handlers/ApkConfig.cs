@@ -5,23 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vizualizace_Dat.Properties;
 
 namespace Vizualizace_Dat
 {
     public class ApkConfig
     {
         private static string fullPath = AppDomain.CurrentDomain.BaseDirectory;
-        private static string path = Path.GetFullPath(Path.Combine(fullPath, @"..\..\apkConfig.json"));
+        //private static string path = Path.GetFullPath(Path.Combine(fullPath, @"..\..\apkConfig.json"));
         private static JsonObjClass apkConfigObj;
+        private static string apkConfigFullPath;
 
         static ApkConfig()
         {
+            string envirDir = Environment.CurrentDirectory;
+            string resourcesDir = Path.GetFullPath(Path.Combine(envirDir, @"..\..\")) + @"Resources\";
+            apkConfigFullPath = resourcesDir + @"\apkConfig.json";
 
-            using (StreamReader file = File.OpenText(path))
-            {
-                apkConfigObj = JsonConvert.DeserializeObject<JsonObjClass>(file.ReadToEnd());
-            }
-
+            string jsonStr = Encoding.UTF8.GetString(Resources.apkConfig);
+            apkConfigObj = JsonConvert.DeserializeObject<JsonObjClass>(jsonStr);
         }
 
         public static string Loaders {
@@ -198,7 +200,7 @@ namespace Vizualizace_Dat
             {
                 JsonObjClass obj = value;
 
-                using (StreamWriter file = File.CreateText(path))
+                using (StreamWriter file = File.CreateText(apkConfigFullPath))
                 {
                     string jsonData = JsonConvert.SerializeObject(obj);
 

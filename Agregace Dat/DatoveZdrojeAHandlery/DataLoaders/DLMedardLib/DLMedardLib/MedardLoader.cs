@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using IDataLoaderAndHandlerLib.Interface;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
+using System.Reflection;
 
 namespace DLMedardLib
 {
@@ -26,20 +27,38 @@ namespace DLMedardLib
         public MedardDataLoader()
         {
 
-            if (!Directory.Exists(GetPathToDataDirectory("")))
+            string dataDir = Environment.CurrentDirectory + @"\Data\";
+            string loaderDir = dataDir + @"medard-online\";
+
+            if (!Directory.Exists(dataDir))
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"medard-online\";
+                Directory.CreateDirectory(dataDir);
+                Directory.CreateDirectory(loaderDir);
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
+            else if (!Directory.Exists(loaderDir))
+            {
+                Directory.CreateDirectory(loaderDir);
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
+            else if (!Directory.Exists(loaderDir + @"\scales"))
+            {
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
 
-                if (!Directory.Exists(dataDir))
-                {
-                    Directory.CreateDirectory(dataDir);
+            string jsonConfifFile = GetPathToDataDirectory("loaderConfig.json");
 
-                    Directory.CreateDirectory(loaderDir);
-                }
-                else if(!Directory.Exists(loaderDir))
+            if (!File.Exists(jsonConfifFile))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLMedardLib.Resources.loaderConfig.json";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(loaderDir);
+                    using(StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(jsonConfifFile, reader.ReadToEnd());
+                    }
                 }
             }
 
@@ -52,10 +71,21 @@ namespace DLMedardLib
 
             if (scaleTempArray == null)
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"medard-online\scales\";
+                loaderDir = dataDir + @"medard-online\scales\";
 
                 string scaleTempName = "scale_temp.png";
+
+                if (!File.Exists(loaderDir + scaleTempName))
+                {
+                    Assembly assembly = Assembly.GetExecutingAssembly();
+                    string scaleAssembylName = "DLMedardLib.Resources.scale_temp.PNG";
+
+                    using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                    {
+                        Image.FromStream(stream).Save(loaderDir + scaleTempName, ImageFormat.Png);
+                    }
+                }
+
                 Bitmap scaleTempImage = new Bitmap(loaderDir + scaleTempName);
 
                 scaleTempArray = new List<Color>();
@@ -80,10 +110,21 @@ namespace DLMedardLib
 
             if(scalePrecArray == null)
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"medard-online\scales\";
+                loaderDir = dataDir + @"medard-online\scales\";
 
                 string scalePrecName = "scale_prec.png";
+
+                if (!File.Exists(loaderDir + scalePrecName))
+                {
+                    Assembly assembly = Assembly.GetExecutingAssembly();
+                    string scaleAssembylName = "DLMedardLib.Resources.scale_prec.PNG";
+
+                    using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
+                    {
+                        Image.FromStream(stream).Save(loaderDir + scalePrecName, ImageFormat.Png);
+                    }
+                }
+
                 Bitmap scalePrecImage = new Bitmap(loaderDir + scalePrecName);
 
                 scalePrecArray = new List<Color>();

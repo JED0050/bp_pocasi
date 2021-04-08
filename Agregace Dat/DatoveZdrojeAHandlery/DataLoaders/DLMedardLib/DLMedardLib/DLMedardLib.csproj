@@ -11,6 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\loaderConfig.json" />
+    <None Remove="Resources\scale_prec.PNG" />
+    <None Remove="Resources\scale_temp.PNG" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\scale_prec.PNG" />
+    <EmbeddedResource Include="Resources\scale_temp.PNG" />
+    <EmbeddedResource Include="Resources\loaderConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib\IDataLoaderAndHandlerLib.csproj" />
   </ItemGroup>
 

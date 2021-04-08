@@ -17,11 +17,10 @@ namespace AgregaceDatLib
 {
     public class AvgForecast
     {
-        private static bool inDebug = true;
+        private static bool inDebug = false;
         private static bool inConsoleApk = false;
 
-        private Bounds bounds = BoundsJsonHandler.LoadBoundsFromJsonFile();
-            
+        private static Bounds bounds = BoundsJsonHandler.LoadBoundsFromJsonFile();
             //new Bounds(new PointLonLat(4.1303633, 55.1995133), new PointLonLat(37.9033283, 41.6999200));
 
         //private PointLonLat topLeftBound = new PointLonLat(4.1303633, 55.1995133);
@@ -45,7 +44,6 @@ namespace AgregaceDatLib
         public AvgForecast(string loaders)
         {
             dLs = new List<DataLoader>();
-
 
             allKnownLoaders = LoadAllKnownDataLoaders();
 

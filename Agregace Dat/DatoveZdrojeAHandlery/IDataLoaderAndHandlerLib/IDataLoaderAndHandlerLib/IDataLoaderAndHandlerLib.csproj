@@ -1,8 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\agrConfig.json" />
+    <None Remove="Resources\scale_humi.png" />
+    <None Remove="Resources\scale_prec.png" />
+    <None Remove="Resources\scale_pres.png" />
+    <None Remove="Resources\scale_temp.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\agrConfig.json" />
+    <EmbeddedResource Include="Resources\scale_humi.png" />
+    <EmbeddedResource Include="Resources\scale_prec.png" />
+    <EmbeddedResource Include="Resources\scale_pres.png" />
+    <EmbeddedResource Include="Resources\scale_temp.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

@@ -139,6 +139,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\apkConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -174,12 +175,12 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="apk_icon.ico" />
-    <None Include="Resources\scale_temp.png" />
-    <None Include="Resources\scale_pres.png" />
-    <None Include="Resources\scale_prec.png" />
-    <None Include="Resources\scale_humi.png" />
-    <None Include="Resources\play-button_32.png" />
-    <None Include="Resources\play-button_64.png" />
+    <EmbeddedResource Include="Resources\scale_temp.png" />
+    <EmbeddedResource Include="Resources\scale_pres.png" />
+    <EmbeddedResource Include="Resources\scale_prec.png" />
+    <EmbeddedResource Include="Resources\scale_humi.png" />
+    <EmbeddedResource Include="Resources\play-button_32.png" />
+    <EmbeddedResource Include="Resources\play-button_64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -12,6 +12,7 @@ using System.Linq;
 using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 using System.IO;
 using DLYrNoLib;
+using DLMedardLib;
 
 namespace TestConsoleApk
 {
@@ -20,8 +21,10 @@ namespace TestConsoleApk
 
         static void Main(string[] args)
         {
-            DateTime time = DateTime.Parse("2021-04-06T13:00:00Z");
-            Console.WriteLine(time);
+            //ColorValueHandler.GetColorForValueAndType(5,"prec");
+            //ColorValueHandler.GetColorForValueAndType(8, "prec");
+            //ColorValueHandler.GetColorForValueAndType(7, "humi");
+            AvgForecast a = new AvgForecast("");
         }
 
         public static void DrawBiggerExampleBitmaps()

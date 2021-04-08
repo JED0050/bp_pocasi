@@ -98,11 +98,12 @@
             this.nUDAnimNumOfAnims = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.pBScale = new System.Windows.Forms.PictureBox();
-            this.bAnim = new System.Windows.Forms.Button();
             this.bClearRoute = new System.Windows.Forms.Button();
             this.bRouteNewTime = new System.Windows.Forms.Button();
             this.tBPointName = new System.Windows.Forms.TextBox();
+            this.bCityNameSearch = new System.Windows.Forms.Button();
+            this.pBScale = new System.Windows.Forms.PictureBox();
+            this.bAnim = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tLPTimeMarks.SuspendLayout();
@@ -387,7 +388,7 @@
             // 
             this.rBPrec.AutoSize = true;
             this.rBPrec.BackColor = System.Drawing.SystemColors.Control;
-            this.rBPrec.Location = new System.Drawing.Point(12, 35);
+            this.rBPrec.Location = new System.Drawing.Point(12, 57);
             this.rBPrec.Name = "rBPrec";
             this.rBPrec.Size = new System.Drawing.Size(82, 17);
             this.rBPrec.TabIndex = 25;
@@ -399,7 +400,7 @@
             // 
             this.rBTemp.AutoSize = true;
             this.rBTemp.BackColor = System.Drawing.SystemColors.Control;
-            this.rBTemp.Location = new System.Drawing.Point(12, 58);
+            this.rBTemp.Location = new System.Drawing.Point(12, 80);
             this.rBTemp.Name = "rBTemp";
             this.rBTemp.Size = new System.Drawing.Size(81, 17);
             this.rBTemp.TabIndex = 26;
@@ -481,7 +482,7 @@
             // 
             this.rBPres.AutoSize = true;
             this.rBPres.BackColor = System.Drawing.SystemColors.Control;
-            this.rBPres.Location = new System.Drawing.Point(12, 81);
+            this.rBPres.Location = new System.Drawing.Point(12, 104);
             this.rBPres.Name = "rBPres";
             this.rBPres.Size = new System.Drawing.Size(74, 17);
             this.rBPres.TabIndex = 32;
@@ -493,7 +494,7 @@
             // 
             this.rBHumi.AutoSize = true;
             this.rBHumi.BackColor = System.Drawing.SystemColors.Control;
-            this.rBHumi.Location = new System.Drawing.Point(12, 104);
+            this.rBHumi.Location = new System.Drawing.Point(12, 127);
             this.rBHumi.Name = "rBHumi";
             this.rBHumi.Size = new System.Drawing.Size(77, 17);
             this.rBHumi.TabIndex = 33;
@@ -548,7 +549,7 @@
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
             this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);
@@ -584,7 +585,7 @@
             this.lT0.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.lT0.Location = new System.Drawing.Point(18, 0);
             this.lT0.Name = "lT0";
-            this.lT0.Size = new System.Drawing.Size(114, 13);
+            this.lT0.Size = new System.Drawing.Size(116, 13);
             this.lT0.TabIndex = 41;
             this.lT0.Text = "05.11. 10:30";
             this.lT0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -595,9 +596,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT1.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT1.Location = new System.Drawing.Point(138, 0);
+            this.lT1.Location = new System.Drawing.Point(140, 0);
             this.lT1.Name = "lT1";
-            this.lT1.Size = new System.Drawing.Size(114, 13);
+            this.lT1.Size = new System.Drawing.Size(116, 13);
             this.lT1.TabIndex = 42;
             this.lT1.Text = "05.11. 10:30";
             this.lT1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -608,9 +609,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT2.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT2.Location = new System.Drawing.Point(258, 0);
+            this.lT2.Location = new System.Drawing.Point(262, 0);
             this.lT2.Name = "lT2";
-            this.lT2.Size = new System.Drawing.Size(114, 13);
+            this.lT2.Size = new System.Drawing.Size(116, 13);
             this.lT2.TabIndex = 39;
             this.lT2.Text = "05.11. 10:30";
             this.lT2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -621,9 +622,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT3.Location = new System.Drawing.Point(378, 0);
+            this.lT3.Location = new System.Drawing.Point(384, 0);
             this.lT3.Name = "lT3";
-            this.lT3.Size = new System.Drawing.Size(114, 13);
+            this.lT3.Size = new System.Drawing.Size(116, 13);
             this.lT3.TabIndex = 40;
             this.lT3.Text = "05.11. 10:30";
             this.lT3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -634,9 +635,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT4.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT4.Location = new System.Drawing.Point(498, 0);
+            this.lT4.Location = new System.Drawing.Point(506, 0);
             this.lT4.Name = "lT4";
-            this.lT4.Size = new System.Drawing.Size(114, 13);
+            this.lT4.Size = new System.Drawing.Size(116, 13);
             this.lT4.TabIndex = 43;
             this.lT4.Text = "05.11. 10:30";
             this.lT4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -647,9 +648,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT5.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT5.Location = new System.Drawing.Point(618, 0);
+            this.lT5.Location = new System.Drawing.Point(628, 0);
             this.lT5.Name = "lT5";
-            this.lT5.Size = new System.Drawing.Size(114, 13);
+            this.lT5.Size = new System.Drawing.Size(116, 13);
             this.lT5.TabIndex = 46;
             this.lT5.Text = "05.11. 10:30";
             this.lT5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -660,9 +661,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT6.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT6.Location = new System.Drawing.Point(738, 0);
+            this.lT6.Location = new System.Drawing.Point(750, 0);
             this.lT6.Name = "lT6";
-            this.lT6.Size = new System.Drawing.Size(114, 13);
+            this.lT6.Size = new System.Drawing.Size(116, 13);
             this.lT6.TabIndex = 47;
             this.lT6.Text = "05.11. 10:30";
             this.lT6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -673,9 +674,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT7.Location = new System.Drawing.Point(858, 0);
+            this.lT7.Location = new System.Drawing.Point(872, 0);
             this.lT7.Name = "lT7";
-            this.lT7.Size = new System.Drawing.Size(114, 13);
+            this.lT7.Size = new System.Drawing.Size(116, 13);
             this.lT7.TabIndex = 44;
             this.lT7.Text = "05.11. 10:30";
             this.lT7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -686,9 +687,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lT8.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lT8.Location = new System.Drawing.Point(978, 0);
+            this.lT8.Location = new System.Drawing.Point(994, 0);
             this.lT8.Name = "lT8";
-            this.lT8.Size = new System.Drawing.Size(114, 13);
+            this.lT8.Size = new System.Drawing.Size(116, 13);
             this.lT8.TabIndex = 45;
             this.lT8.Text = "05.11. 10:30";
             this.lT8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -696,7 +697,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1098, 0);
+            this.label2.Location = new System.Drawing.Point(1116, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 40;
@@ -917,29 +918,6 @@
             this.label4.TabIndex = 42;
             this.label4.Text = "snímků v animaci";
             // 
-            // pBScale
-            // 
-            this.pBScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pBScale.Location = new System.Drawing.Point(12, 269);
-            this.pBScale.Name = "pBScale";
-            this.pBScale.Size = new System.Drawing.Size(20, 200);
-            this.pBScale.TabIndex = 35;
-            this.pBScale.TabStop = false;
-            // 
-            // bAnim
-            // 
-            this.bAnim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bAnim.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.bAnim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAnim.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.bAnim.Image = global::Vizualizace_Dat.Properties.Resources.play_button_32;
-            this.bAnim.Location = new System.Drawing.Point(1080, 630);
-            this.bAnim.Name = "bAnim";
-            this.bAnim.Size = new System.Drawing.Size(39, 38);
-            this.bAnim.TabIndex = 24;
-            this.bAnim.UseVisualStyleBackColor = false;
-            this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
-            // 
             // bClearRoute
             // 
             this.bClearRoute.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -966,13 +944,49 @@
             // 
             // tBPointName
             // 
-            this.tBPointName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tBPointName.Location = new System.Drawing.Point(997, 449);
+            this.tBPointName.ForeColor = System.Drawing.Color.Gray;
+            this.tBPointName.Location = new System.Drawing.Point(12, 34);
             this.tBPointName.Name = "tBPointName";
-            this.tBPointName.Size = new System.Drawing.Size(118, 20);
+            this.tBPointName.Size = new System.Drawing.Size(149, 20);
             this.tBPointName.TabIndex = 45;
+            this.tBPointName.Text = "Praha, Česko";
+            this.tBPointName.Enter += new System.EventHandler(this.tBPointName_Enter);
             this.tBPointName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBPointName_KeyPress);
-            this.tBPointName.Validated += new System.EventHandler(this.tBPointName_Validated);
+            this.tBPointName.Leave += new System.EventHandler(this.tBPointName_Leave);
+            // 
+            // bCityNameSearch
+            // 
+            this.bCityNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.bCityNameSearch.Location = new System.Drawing.Point(167, 32);
+            this.bCityNameSearch.Name = "bCityNameSearch";
+            this.bCityNameSearch.Size = new System.Drawing.Size(64, 25);
+            this.bCityNameSearch.TabIndex = 46;
+            this.bCityNameSearch.Text = "vyhledat";
+            this.bCityNameSearch.UseVisualStyleBackColor = true;
+            this.bCityNameSearch.Click += new System.EventHandler(this.bCityNameSearch_Click);
+            // 
+            // pBScale
+            // 
+            this.pBScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pBScale.Location = new System.Drawing.Point(12, 269);
+            this.pBScale.Name = "pBScale";
+            this.pBScale.Size = new System.Drawing.Size(20, 200);
+            this.pBScale.TabIndex = 35;
+            this.pBScale.TabStop = false;
+            // 
+            // bAnim
+            // 
+            this.bAnim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bAnim.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.bAnim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bAnim.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.bAnim.Image = global::Vizualizace_Dat.Properties.Resources.play_button_32;
+            this.bAnim.Location = new System.Drawing.Point(1080, 630);
+            this.bAnim.Name = "bAnim";
+            this.bAnim.Size = new System.Drawing.Size(39, 38);
+            this.bAnim.TabIndex = 24;
+            this.bAnim.UseVisualStyleBackColor = false;
+            this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
             // 
             // FormMain
             // 
@@ -980,6 +994,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.bCityNameSearch);
             this.Controls.Add(this.tLPTimeMarks);
             this.Controls.Add(this.tBPointName);
             this.Controls.Add(this.bRouteNewTime);
@@ -1103,6 +1118,7 @@
         private System.Windows.Forms.Button bClearRoute;
         private System.Windows.Forms.Button bRouteNewTime;
         private System.Windows.Forms.TextBox tBPointName;
+        private System.Windows.Forms.Button bCityNameSearch;
     }
 }
 

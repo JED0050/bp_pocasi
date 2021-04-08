@@ -8,6 +8,7 @@ using System.Net;
 using IDataLoaderAndHandlerLib.Interface;
 using IDataLoaderAndHandlerLib.HandlersAndObjects;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DLRadarBourkyLib
 {
@@ -23,20 +24,51 @@ namespace DLRadarBourkyLib
 
         public RadarBourkyDataLoader()
         {
-            if (!Directory.Exists(GetPathToDataDirectory("")))
+            string dataDir = Environment.CurrentDirectory + @"\Data\";
+            string loaderDir = dataDir + @"Radar.bourky\";
+
+            if (!Directory.Exists(dataDir))
             {
-                string dataDir = Environment.CurrentDirectory + @"\Data\";
-                string loaderDir = dataDir + @"Radar.bourky\";
+                Directory.CreateDirectory(dataDir);
+                Directory.CreateDirectory(loaderDir);
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
+            else if (!Directory.Exists(loaderDir))
+            {
+                Directory.CreateDirectory(loaderDir);
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
+            else if (!Directory.Exists(loaderDir + @"\scales"))
+            {
+                Directory.CreateDirectory(loaderDir + @"\scales");
+            }
 
-                if (!Directory.Exists(dataDir))
+            string jsonConfifFile = GetPathToDataDirectory("loaderConfig.json");
+
+            if (!File.Exists(jsonConfifFile))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLRadarBourkyLib.Resources.loaderConfig.json";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(dataDir);
-
-                    Directory.CreateDirectory(loaderDir);
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(jsonConfifFile, reader.ReadToEnd());
+                    }
                 }
-                else if (!Directory.Exists(loaderDir))
+            }
+
+            string scalePath = GetPathToDataDirectory(@"scales/scale.png");
+
+            if (!File.Exists(scalePath))
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string scaleAssembylName = "DLRadarBourkyLib.Resources.scale.png";
+
+                using (var stream = assembly.GetManifestResourceStream(scaleAssembylName))
                 {
-                    Directory.CreateDirectory(loaderDir);
+                    Image.FromStream(stream).Save(scalePath, ImageFormat.Png);
                 }
             }
 
@@ -281,6 +313,8 @@ namespace DLRadarBourkyLib
         {
             if (scaleDic.Keys.Count == 0)
             {
+                string scalePath = GetPathToDataDirectory(@"scales/scale.png");
+
                 Bitmap scaleBmp = new Bitmap(GetPathToDataDirectory(@"scales/scale.png"));
 
                 /*
