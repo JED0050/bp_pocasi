@@ -23,7 +23,13 @@ namespace Webova_Sluzba
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromHours(1));
+                //TimeSpan.FromDays(1));        //každý 1 den
+                //TimeSpan.FromHours(12));      //každých 12 hodinu
+                //TimeSpan.FromHours(6));       //každých 12 hodinu
+                //TimeSpan.FromHours(3));       //každých 12 hodinu
+                TimeSpan.FromHours(1));         //každou hodinu
+                //TimeSpan.FromMinutes(30));    //každých 30 minut
+                //TimeSpan.FromMinutes(15));    //každých 15 minut
 
             return Task.CompletedTask;
         }
