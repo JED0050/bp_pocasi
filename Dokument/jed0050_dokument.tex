@@ -73,6 +73,9 @@
 	V práci je zapotřebí použít minimálně 3 různé datové zdroje. Jako první se tedy zvolil norský datový zdroj poskytovaný serverem yr.no, který dodává data v podobě XML textu. Druhým zvoleným zdrojem jsou JSON předpovědi od společností OpenWeather a WeatherUnlocked. Poslední zdroj poskytuje data ve formě bitmap reprezentujících přímo snímky z radaru nebo předem zpracované bitmapy hodnot a pro tento účel byl vybrán český projekt Medard a Radar bouřky.
 	
 	\section{XML}
+	
+	Prvním zpracovávaným typem je XML. XML je způsob formátování dat v textové podobě, který nám v tomto případě poskytuje data o počasí mnoha meteorologických prvků pro jedno místo ve více časech. Tento formát se postupně nahrazuje modernějším typem JSON, nicméně služby poskytují zpětnou kompatibilitu a možnost získávat data stále v tomto formátu.
+	
 	\subsection{Yr.no}
 	
 	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr \cite{yrno}. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
@@ -85,6 +88,9 @@
 	\end{itemize}
 	
 	\section{JSON}
+	
+	Druhým zpracovávaným typem předpovědí v textové podobě je JSON, který obsahuje rovněž data o mnoha různých prvcích počasí pro jeden bod ve více časech. Většina dat o počasí je formátována právě do této podoby, zejména díky snazší deserializaci a podstatně kratšímu počtu znaků pro zápis informací.
+	
 	\subsection{OpenWeather}
 	
 	Dalším datovým zdrojem v podobě textu je OpenWeather \cite{owm}. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
@@ -106,6 +112,9 @@
 	\end{itemize}
 	
 	\section{Bitmap}
+	
+	Posledním zpracovávaným typem jsou bitmapy, ať už přímo snímky z radaru nebo již zpracované obrázky s daty o počasí. Velkou výhodou bitmap je, že poskytují grafické znázornění stavu počasí na jakkoliv rozsáhlé ploše. Nevýhodou je že bitmapa obsahuje data v jednom čase a především pro pouze jeden meteorologický prvek. Proto je potřeba stahovat mnoho bitmap při určování kompletního počasí v jednom bodě pro více časů, nicméně pro určení jednoho prvku v celé ploše stačí pouze jedna.
+	
 	\subsection{Medard}
 	
 	Medard \cite{medard} je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou Evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
@@ -208,7 +217,7 @@
 	
 	\section{Interpolace}
 	
-	Bitmapa je pokryta sítí trojúhelníků kde známe hodnotu každého vrcholu. Nyní vzniká potřeba každý trojúhelník vyplnit barvami, které reprezentují hodnotu pixelů uvnitř trojúhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
+	Bitmapa je pokryta sítí trojúhelníků kde známe hodnotu každého vrcholu $Value$. Nyní vzniká potřeba každý trojúhelník vyplnit barvami, které reprezentují hodnotu pixelů uvnitř trojúhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
 	
 	Pro výpočet interpolace postačí jednoduchý vzorec \emph{Interpolace v trojúhelníku} \cite{interp}, který na základě hodnot vrcholů trojúhelníku a vzdálenosti od nich pro zjišťovaný bod určí jakou hodnotu sám zjišťovaný bod má.
 	
@@ -217,13 +226,13 @@
 	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojúhelníku $V_1$, $V_2$, $V_3$ (\ref{eq_dist}). 
 	
 	\begin{displaymath}
-		Distance_{v1} =\sqrt{(X_{v1}-P_x)^2+(Y_{v1}-P_y)^2}
+		Distance_{v1} =\sqrt{(V_{1x}-P_x)^2+(V_{1y}-P_y)^2}
 	\end{displaymath}
 	\begin{displaymath}
-		Distance_{v2} =\sqrt{(X_{v2}-P_x)^2+(Y_{v2}-P_y)^2}
+		Distance_{v2} =\sqrt{(V_{2x}-P_x)^2+(V_{2y}-P_y)^2}
 	\end{displaymath}
 	\begin{equation}\label{eq_dist}
-		Distance_{v3} =\sqrt{(X_{v3}-P_x)^2+(Y_{v3}-P_y)^2}
+		Distance_{v3} =\sqrt{(V_{3x}-P_x)^2+(V_{3y}-P_y)^2}
 	\end{equation}
 	
 	Následně se určí váha každého vrcholu $W$, neboli inverzní hodnota jeho vzdálenosti od zjišťovaného bodu (\ref{eq_w1}).
@@ -239,7 +248,7 @@
 	Ve finální části výpočtu se určí hodnota našeho zjišťovaného bodu $Value_p$, která je úměrná podílu součtu součinů vah a hodnot jednotlivých vrcholů trojúhelníku se součtem jednotlivých vah (\ref{eq_val}).
 	
 	\begin{equation}\label{eq_val}
-		Value_p = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}}
+		Value_v = \frac{W_{v1}Value_{v1} + W_{v2}Value_{v2} + W_{v3}Value_{v3}}{W_{v1} + W_{v2} + W_{v3}}
 	\end{equation}
 	
 	\section{Složky zdrojů}

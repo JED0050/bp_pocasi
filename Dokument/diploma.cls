@@ -23,15 +23,14 @@
 %% This work is licensed under CC BY-NC-ND 3.0 CZ, https://creativecommons.org/licenses/by-nc-nd/3.0/cz/deed.en
 %% You may distribute it and use it for non-commercial purposes, but the author must be mentioned and the document can not be changed.
 %% 
-\def\fileversion{5.0}
-\def\filedate{2021/03/15}
-\def\docdate{15. března 2021}
+\def\fileversion{5.01}
+\def\filedate{2021/04/08}
+\def\docdate{8. dubna 2021}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{diploma}[\filedate\space \fileversion\space diploma LaTeX document class]
 \RequirePackage{ifthen}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage{totcount}
-\RequirePackage{assoccnt}
+\RequirePackage{xassoccnt}
 \newcommand{\Dipl@BachelorThesis}{0}
 \newcommand{\Dipl@BachelorPractice}{1}
 \newcommand{\Dipl@MasterThesis}{2}
@@ -73,10 +72,10 @@
 \setcounter{Dipl@CurrentThesisType}{\Dipl@MasterThesis}
 \newcounter{Dipl@CurrentThesisLanguage}
 \setcounter{Dipl@CurrentThesisLanguage}{\Dipl@CzechLanguage}
-\newtotcounter{Dipl@TotalFigures}
-\DeclareAssociatedCounters{figure}{Dipl@TotalFigures}
-\newtotcounter{Dipl@TotalTables}
-\DeclareAssociatedCounters{table}{Dipl@TotalTables}
+\NewTotalDocumentCounter{Dipl@TotalFigures}
+\DeclareTotalAssociatedCounters{figure}{Dipl@TotalFigures}
+\NewTotalDocumentCounter{Dipl@TotalTables}
+\DeclareTotalAssociatedCounters{table}{Dipl@TotalTables}
 \LoadClass[11pt,openany]{book}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lmodern}
@@ -90,7 +89,6 @@
 \RequirePackage{theorem}
 \RequirePackage{titlesec}
 \RequirePackage[nottoc,notindex,chapter]{tocbibind}
-\RequirePackage{totcount}
 \RequirePackage{xcolor}
 \RequirePackage[a-1b]{pdfx}
 \DeclareOption{czech}
@@ -207,8 +205,8 @@
 \pagestyle{plain}
 \tableofcontents\clearpage
 \Dipl@WriteAcronymsPage
-\ifthenelse{\totvalue{Dipl@TotalFigures}>0}{\listoffigures\clearpage}{\relax}
-\ifthenelse{\totvalue{Dipl@TotalTables}>0}{\listoftables\clearpage}{\relax}
+\ifthenelse{\TotalValue{Dipl@TotalFigures}>0}{\listoffigures\clearpage}{\relax}
+\ifthenelse{\TotalValue{Dipl@TotalTables}>0}{\listoftables\clearpage}{\relax}
 }
 {\theorembodyfont{\itshape}\newtheorem{definition}{\Dipl@LanguageDependentText{Definice}{Definícia}{Definition}}}
 {\theorembodyfont{\itshape}\newtheorem{theorem}{\Dipl@LanguageDependentText{Věta}{Veta}{Theorem}}}

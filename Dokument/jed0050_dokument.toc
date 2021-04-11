@@ -26,9 +26,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.2.2}WeatherUnlocked}{11}{subsection.2.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.3}Bitmap}{11}{section.2.3}%
+\contentsline {section}{\numberline {2.3}Bitmap}{12}{section.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3.1}Medard}{11}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.1}Medard}{12}{subsection.2.3.1}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.2}Radar.bourky}{12}{subsection.2.3.2}%
 \defcounter {refsection}{0}\relax 

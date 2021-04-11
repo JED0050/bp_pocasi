@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  6 APR 2021 15:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  11 APR 2021 16:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,7 +6,7 @@ entering extended mode
 (./jed0050_dokument.tex
 LaTeX2e <2020-10-01> patch level 2
 L3 programming layer <2020-12-07> xparse <2020-03-03> (./diploma.cls
-Document Class: diploma 2021/03/15 5.0 diploma LaTeX document class
+Document Class: diploma 2021/04/08 5.01 diploma LaTeX document class
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
@@ -15,18 +15,16 @@ Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
 )
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/totcount/totcount.sty
-Package: totcount 2011/01/25 v1.2 package for gettingthe total value of LaTeX c
-ounters
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xassoccnt/xassoccnt.sty
+Package: xassoccnt 2020/07/19 - v1.8
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks17
-))
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/assoccnt/assoccnt.sty
-Package: assoccnt 2015/09/29 v0.8-- Associate counters stepping
-
-assoccnt.sty{} -- version v0.8
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count177
+)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
@@ -48,68 +46,69 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count177
-)
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2020-12-07 L3 programming layer (loader) 
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks18
-\XKV@tempa@toks=\toks19
-)
-\XKV@depth=\count178
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
+\l__kernel_color_stack_int=\count178
+\l__pdf_internal_box=\box47
 ))
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xstring/xstring.sty
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/xstring/xstring.tex
-\integerpart=\count179
-\decimalpart=\count180
-)
-Package: xstring 2019/02/06 v1.83 String manipulations (CT)
-)
-\c@@@assoccnt@@internalcounter=\count181
-)
-\Dipl@ThesisAuthor=\toks20
-\Dipl@ThesisSupervisor=\toks21
-\Dipl@CzechThesisTitle=\toks22
-\Dipl@EnglishThesisTitle=\toks23
-\Dipl@SubmissionYear=\toks24
-\Dipl@Acknowledgement=\toks25
-\Dipl@CzechAbstract=\toks26
-\Dipl@CzechKeywords=\toks27
-\Dipl@EnglishAbstract=\toks28
-\Dipl@EnglishKeywords=\toks29
-\Dipl@Acronyms=\toks30
-\Dipl@BabelLanguageOptions=\toks31
-\Dipl@ThesisCaption=\toks32
-\Dipl@SupervisorCaption=\toks33
-\Dipl@FacultyLogoFileName=\toks34
-\Dipl@CzechAbstractCaption=\toks35
-\Dipl@EnglishAbstractCaption=\toks36
-\c@Dipl@CurrentThesisType=\count182
-\c@Dipl@CurrentThesisLanguage=\count183
-\c@Dipl@TotalFigures=\count184
-\c@Dipl@TotalFigures@totc=\count185
-\c@Dipl@TotalTables=\count186
-\c@Dipl@TotalTables@totc=\count187
+Package: xparse 2020-10-27 L3 Experimental document command parser
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/book.cls
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3packages/xparse/xparse-generic
+.tex))
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2020-10-27 LaTeX2e option processing using LaTeX3 keys
+)
+\g__xassoccnt_tmpa_int=\count179
+\l__xassoccnt_tmpa_int=\count180
+\l__xassoccnt_initialcountervalue_int=\count181
+\g__xassoccnt_lastcountervalue_int=\count182
+\g__xassoccnt_backupcalls_int=\count183
+\l__xassoccnt_backuptmpa_int=\count184
+\l_xassoccnt_resetlist_counter=\count185
+)
+Package xassoccnt Info: 2020/07/19-v1.8--steppingcounterssimultaneouslyandother
+features on input line 34.
+\Dipl@ThesisAuthor=\toks17
+\Dipl@ThesisSupervisor=\toks18
+\Dipl@CzechThesisTitle=\toks19
+\Dipl@EnglishThesisTitle=\toks20
+\Dipl@SubmissionYear=\toks21
+\Dipl@Acknowledgement=\toks22
+\Dipl@CzechAbstract=\toks23
+\Dipl@CzechKeywords=\toks24
+\Dipl@EnglishAbstract=\toks25
+\Dipl@EnglishKeywords=\toks26
+\Dipl@Acronyms=\toks27
+\Dipl@BabelLanguageOptions=\toks28
+\Dipl@ThesisCaption=\toks29
+\Dipl@SupervisorCaption=\toks30
+\Dipl@FacultyLogoFileName=\toks31
+\Dipl@CzechAbstractCaption=\toks32
+\Dipl@EnglishAbstractCaption=\toks33
+\c@Dipl@CurrentThesisType=\count186
+\c@Dipl@CurrentThesisLanguage=\count187
+\c@Dipl@TotalFigures=\count188
+\c@xassoccnt@total@Dipl@TotalFigures=\count189
+\c@Dipl@TotalTables=\count190
+\c@xassoccnt@total@Dipl@TotalTables=\count191
+ (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/bk11.clo
 File: bk11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
-\c@part=\count188
-\c@chapter=\count189
-\c@section=\count190
-\c@subsection=\count191
-\c@subsubsection=\count192
-\c@paragraph=\count193
-\c@subparagraph=\count194
-\c@figure=\count195
-\c@table=\count196
+\c@part=\count192
+\c@chapter=\count193
+\c@section=\count194
+\c@subsection=\count195
+\c@subsubsection=\count196
+\c@paragraph=\count197
+\c@subparagraph=\count198
+\c@figure=\count199
+\c@table=\count266
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -155,15 +154,19 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks34
+)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count197
-\Gm@cntv=\count198
-\c@Gm@tempcnt=\count199
+\Gm@cnth=\count267
+\Gm@cntv=\count268
+\c@Gm@tempcnt=\count269
 \Gm@bindingoffset=\dimen139
 \Gm@wd@mp=\dimen140
 \Gm@odd@mp=\dimen141
@@ -172,7 +175,7 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layoutheight=\dimen144
 \Gm@layouthoffset=\dimen145
 \Gm@layoutvoffset=\dimen146
-\Gm@dimlist=\toks37
+\Gm@dimlist=\toks35
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
@@ -186,12 +189,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen154
 \cmidrulekern=\dimen155
 \defaultaddspace=\dimen156
-\@cmidla=\count266
-\@cmidlb=\count267
+\@cmidla=\count270
+\@cmidlb=\count271
 \@aboverulesep=\dimen157
 \@belowrulesep=\dimen158
-\@thisruleclass=\count268
-\@lastruleclass=\count269
+\@thisruleclass=\count272
+\@lastruleclass=\count273
 \@thisrulewidth=\dimen159
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
@@ -217,17 +220,17 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTright=\skip50
 \LTpre=\skip51
 \LTpost=\skip52
-\LTchunksize=\count270
+\LTchunksize=\count274
 \LTcapwidth=\dimen162
-\LT@head=\box47
-\LT@firsthead=\box48
-\LT@foot=\box49
-\LT@lastfoot=\box50
-\LT@cols=\count271
-\LT@rows=\count272
-\c@LT@tables=\count273
-\c@LT@chunks=\count274
-\LT@p@ftn=\toks38
+\LT@head=\box48
+\LT@firsthead=\box49
+\LT@foot=\box50
+\LT@lastfoot=\box51
+\LT@cols=\count275
+\LT@rows=\count276
+\c@LT@tables=\count277
+\c@LT@chunks=\count278
+\LT@p@ftn=\toks36
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
@@ -243,8 +246,8 @@ Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
 \caption@hangindent=\dimen169
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count275
-\c@continuedfloat=\count276
+\c@caption@flags=\count279
+\c@continuedfloat=\count280
 Package caption Info: longtable package is loaded.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/caption/ltcaption.sty
@@ -252,19 +255,19 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
-\c@r@tfl@t=\count277
+\c@r@tfl@t=\count281
 \rotFPtop=\skip53
 \rotFPbot=\skip54
-\rot@float@box=\box51
-\rot@mess@toks=\toks39
+\rot@float@box=\box52
+\rot@mess@toks=\toks37
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/theorem.sty
 Package: theorem 2014/10/28 v2.2c Theorem extension package (FMi)
-\theorem@style=\toks40
-\theorem@bodyfont=\toks41
+\theorem@style=\toks38
+\theorem@bodyfont=\toks39
 \theorempreskipamount=\skip55
 \theorempostskipamount=\skip56
 
@@ -273,12 +276,12 @@ File: thp.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box52
+\ttl@box=\box53
 \beforetitleunit=\skip57
 \aftertitleunit=\skip58
 \ttl@plus=\dimen170
 \ttl@minus=\dimen171
-\ttl@toksa=\toks42
+\ttl@toksa=\toks40
 \titlewidth=\dimen172
 \titlewidthlast=\dimen173
 \titlewidthfirst=\dimen174
@@ -292,7 +295,7 @@ Package tocbibind Note: Using chapter style headings, unless overridden.
 
 ) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/pdfx/pdfx.sty
 Package: pdfx 2019/02/27 v1.6.3 PDF/X and PDF/A support (CVR/HTH/RRM/PS)
-\pdfx@minorversion=\count278
+\pdfx@minorversion=\count282
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
@@ -313,8 +316,8 @@ File: l8u-penc.def 2017/06/23 v0.8 Custom LaTeX file, for UTF8 encoded letters
 and symbols
 LaTeX Info: Composite with undeclared \b in encoding L8U on input line 278.
 )
-\pdfxsafeforxmp@toks=\toks43
-\pdfx@tmptoks=\toks44
+\pdfxsafeforxmp@toks=\toks41
+\pdfx@tmptoks=\toks42
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
@@ -344,9 +347,6 @@ Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
-Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
@@ -354,8 +354,8 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen175
-\Hy@linkcounter=\count279
-\Hy@pagecounter=\count280
+\Hy@linkcounter=\count283
+\Hy@pagecounter=\count284
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
@@ -366,7 +366,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count281
+\Hy@SavedSpaceFactor=\count285
 Package hyperref Info: Option `pdfa' set `true' on input line 4338.
 Package hyperref Info: Hyper figures OFF on input line 4464.
 Package hyperref Info: Link nesting OFF on input line 4469.
@@ -375,7 +375,7 @@ Package hyperref Info: Plain pages OFF on input line 4479.
 Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4717.
-\c@Hy@tempcnt=\count282
+\c@Hy@tempcnt=\count286
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
@@ -391,7 +391,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count283
+\Fld@menulength=\count287
 \Field@Width=\dimen177
 \Fld@charsize=\dimen178
 Package hyperref Info: Hyper figures OFF on input line 6347.
@@ -409,9 +409,9 @@ Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
 )
-\Hy@abspage=\count284
-\c@Item=\count285
-\c@Hfootnote=\count286
+\Hy@abspage=\count288
+\c@Item=\count289
+\c@Hfootnote=\count290
 )
 Package hyperref Info: Driver: hpdftex.
 
@@ -423,8 +423,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-\Fld@listcount=\count287
-\c@bookmark@seq@number=\count288
+\Fld@listcount=\count291
+\c@bookmark@seq@number=\count292
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.st
 y
@@ -490,14 +490,14 @@ Using XMP template file: pdfa.xmp
 Package: babel 2020/12/16 3.52 The Babel package
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2020/12/16 3.52 Babel common definitions
-\babel@savecnt=\count289
+\babel@savecnt=\count293
 \U@D=\dimen179
 \l@babelnohyphens=\language86
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read3
 )
-\bbl@dirlevel=\count290
+\bbl@dirlevel=\count294
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
@@ -511,7 +511,7 @@ Package babel Info: \l@newzealand = using hyphenrules for ukenglish
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-czech/czech.ldf
 Language: czech 2008/07/06 v3.1a Czech support from the babel system
 Package babel Info: Making " an active character on input line 172.
-\cs@wordlen=\count291
+\cs@wordlen=\count295
 Package babel Info: Making - an active character on input line 226.
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel-czech/czech.ldf
@@ -645,26 +645,26 @@ Language: czech 2008/07/06 v3.1a Czech support from the babel system
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@definition=\count292
-\c@theorem=\count293
-\c@remark=\count294
+\c@definition=\count296
+\c@theorem=\count297
+\c@remark=\count298
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/tools/thb.sty
 File: thb.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 )
-\c@Dipl@examplebody=\count295
-Package hyperref Info: Option `unicode' set `true' on input line 368.
-Package hyperref Info: Option `colorlinks' set `true' on input line 368.
+\c@Dipl@examplebody=\count299
+Package hyperref Info: Option `unicode' set `true' on input line 366.
+Package hyperref Info: Option `colorlinks' set `true' on input line 366.
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2019-12-06 v5.2j context-sensitive quotations (JAW)
-\csq@reset=\count296
-\csq@gtype=\count297
-\csq@glevel=\count298
-\csq@qlevel=\count299
-\csq@maxlvl=\count300
-\csq@tshold=\count301
-\csq@ltx@everypar=\toks45
+\csq@reset=\count300
+\csq@gtype=\count301
+\csq@glevel=\count302
+\csq@qlevel=\count303
+\csq@maxlvl=\count304
+\csq@tshold=\count305
+\csq@ltx@everypar=\toks43
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2019-12-06 v5.2j csquotes generic definitions (JAW)
@@ -683,53 +683,53 @@ Package: biblatex 2020/08/23 v3.15a programmable bibliographies (PK/MW)
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count302
+\lrq@indent=\count306
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-\c@tabx@nest=\count303
-\c@listtotal=\count304
-\c@listcount=\count305
-\c@liststart=\count306
-\c@liststop=\count307
-\c@citecount=\count308
-\c@citetotal=\count309
-\c@multicitecount=\count310
-\c@multicitetotal=\count311
-\c@instcount=\count312
-\c@maxnames=\count313
-\c@minnames=\count314
-\c@maxitems=\count315
-\c@minitems=\count316
-\c@citecounter=\count317
-\c@maxcitecounter=\count318
-\c@savedcitecounter=\count319
-\c@uniquelist=\count320
-\c@uniquename=\count321
-\c@refsection=\count322
-\c@refsegment=\count323
-\c@maxextratitle=\count324
-\c@maxextratitleyear=\count325
-\c@maxextraname=\count326
-\c@maxextradate=\count327
-\c@maxextraalpha=\count328
-\c@abbrvpenalty=\count329
-\c@highnamepenalty=\count330
-\c@lownamepenalty=\count331
-\c@maxparens=\count332
-\c@parenlevel=\count333
-\blx@tempcnta=\count334
-\blx@tempcntb=\count335
-\blx@tempcntc=\count336
-\blx@maxsection=\count337
-\blx@maxsegment@0=\count338
-\blx@notetype=\count339
-\blx@parenlevel@text=\count340
-\blx@parenlevel@foot=\count341
-\blx@sectionciteorder@0=\count342
-\blx@entrysetcounter=\count343
-\blx@biblioinstance=\count344
+\c@tabx@nest=\count307
+\c@listtotal=\count308
+\c@listcount=\count309
+\c@liststart=\count310
+\c@liststop=\count311
+\c@citecount=\count312
+\c@citetotal=\count313
+\c@multicitecount=\count314
+\c@multicitetotal=\count315
+\c@instcount=\count316
+\c@maxnames=\count317
+\c@minnames=\count318
+\c@maxitems=\count319
+\c@minitems=\count320
+\c@citecounter=\count321
+\c@maxcitecounter=\count322
+\c@savedcitecounter=\count323
+\c@uniquelist=\count324
+\c@uniquename=\count325
+\c@refsection=\count326
+\c@refsegment=\count327
+\c@maxextratitle=\count328
+\c@maxextratitleyear=\count329
+\c@maxextraname=\count330
+\c@maxextradate=\count331
+\c@maxextraalpha=\count332
+\c@abbrvpenalty=\count333
+\c@highnamepenalty=\count334
+\c@lownamepenalty=\count335
+\c@maxparens=\count336
+\c@parenlevel=\count337
+\blx@tempcnta=\count338
+\blx@tempcntb=\count339
+\blx@tempcntc=\count340
+\blx@maxsection=\count341
+\blx@maxsegment@0=\count342
+\blx@notetype=\count343
+\blx@parenlevel@text=\count344
+\blx@parenlevel@foot=\count345
+\blx@sectionciteorder@0=\count346
+\blx@entrysetcounter=\count347
+\blx@biblioinstance=\count348
 \labelnumberwidth=\skip60
 \labelalphawidth=\skip61
 \biblabelsep=\skip62
@@ -741,9 +741,9 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \blx@bcfin=\read4
 \blx@bcfout=\write4
 \blx@langwohyphens=\language87
-\c@mincomprange=\count345
-\c@maxcomprange=\count346
-\c@mincompwidth=\count347
+\c@mincomprange=\count349
+\c@maxcomprange=\count350
+\c@mincompwidth=\count351
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
@@ -758,76 +758,76 @@ File: iso-numeric.dbx 2020/03/25 v0.4.0 ISO 690 biblatex data model extension
 )
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count348
-\c@savedafterword=\count349
-\c@annotator=\count350
-\c@savedannotator=\count351
-\c@author=\count352
-\c@savedauthor=\count353
-\c@bookauthor=\count354
-\c@savedbookauthor=\count355
-\c@commentator=\count356
-\c@savedcommentator=\count357
-\c@editor=\count358
-\c@savededitor=\count359
-\c@editora=\count360
-\c@savededitora=\count361
-\c@editorb=\count362
-\c@savededitorb=\count363
-\c@editorc=\count364
-\c@savededitorc=\count365
-\c@foreword=\count366
-\c@savedforeword=\count367
-\c@holder=\count368
-\c@savedholder=\count369
-\c@introduction=\count370
-\c@savedintroduction=\count371
-\c@namea=\count372
-\c@savednamea=\count373
-\c@nameb=\count374
-\c@savednameb=\count375
-\c@namec=\count376
-\c@savednamec=\count377
-\c@translator=\count378
-\c@savedtranslator=\count379
-\c@shortauthor=\count380
-\c@savedshortauthor=\count381
-\c@shorteditor=\count382
-\c@savedshorteditor=\count383
-\c@supervisor=\count384
-\c@savedsupervisor=\count385
-\c@labelname=\count386
-\c@savedlabelname=\count387
-\c@institution=\count388
-\c@savedinstitution=\count389
-\c@lista=\count390
-\c@savedlista=\count391
-\c@listb=\count392
-\c@savedlistb=\count393
-\c@listc=\count394
-\c@savedlistc=\count395
-\c@listd=\count396
-\c@savedlistd=\count397
-\c@liste=\count398
-\c@savedliste=\count399
-\c@listf=\count400
-\c@savedlistf=\count401
-\c@location=\count402
-\c@savedlocation=\count403
-\c@organization=\count404
-\c@savedorganization=\count405
-\c@origlocation=\count406
-\c@savedoriglocation=\count407
-\c@origpublisher=\count408
-\c@savedorigpublisher=\count409
-\c@publisher=\count410
-\c@savedpublisher=\count411
-\c@language=\count412
-\c@savedlanguage=\count413
-\c@origlanguage=\count414
-\c@savedoriglanguage=\count415
-\c@pageref=\count416
-\c@savedpageref=\count417
+\c@afterword=\count352
+\c@savedafterword=\count353
+\c@annotator=\count354
+\c@savedannotator=\count355
+\c@author=\count356
+\c@savedauthor=\count357
+\c@bookauthor=\count358
+\c@savedbookauthor=\count359
+\c@commentator=\count360
+\c@savedcommentator=\count361
+\c@editor=\count362
+\c@savededitor=\count363
+\c@editora=\count364
+\c@savededitora=\count365
+\c@editorb=\count366
+\c@savededitorb=\count367
+\c@editorc=\count368
+\c@savededitorc=\count369
+\c@foreword=\count370
+\c@savedforeword=\count371
+\c@holder=\count372
+\c@savedholder=\count373
+\c@introduction=\count374
+\c@savedintroduction=\count375
+\c@namea=\count376
+\c@savednamea=\count377
+\c@nameb=\count378
+\c@savednameb=\count379
+\c@namec=\count380
+\c@savednamec=\count381
+\c@translator=\count382
+\c@savedtranslator=\count383
+\c@shortauthor=\count384
+\c@savedshortauthor=\count385
+\c@shorteditor=\count386
+\c@savedshorteditor=\count387
+\c@supervisor=\count388
+\c@savedsupervisor=\count389
+\c@labelname=\count390
+\c@savedlabelname=\count391
+\c@institution=\count392
+\c@savedinstitution=\count393
+\c@lista=\count394
+\c@savedlista=\count395
+\c@listb=\count396
+\c@savedlistb=\count397
+\c@listc=\count398
+\c@savedlistc=\count399
+\c@listd=\count400
+\c@savedlistd=\count401
+\c@liste=\count402
+\c@savedliste=\count403
+\c@listf=\count404
+\c@savedlistf=\count405
+\c@location=\count406
+\c@savedlocation=\count407
+\c@organization=\count408
+\c@savedorganization=\count409
+\c@origlocation=\count410
+\c@savedoriglocation=\count411
+\c@origpublisher=\count412
+\c@savedorigpublisher=\count413
+\c@publisher=\count414
+\c@savedpublisher=\count415
+\c@language=\count416
+\c@savedlanguage=\count417
+\c@origlanguage=\count418
+\c@savedoriglanguage=\count419
+\c@pageref=\count420
+\c@savedpageref=\count421
 \shorthandwidth=\skip68
 \shortjournalwidth=\skip69
 \shortserieswidth=\skip70
@@ -847,45 +847,34 @@ Package biblatex Info: ... file 'blx-compat.def' found.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-compat.def
 File: blx-compat.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
 )
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2020-12-07 L3 programming layer (loader) 
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
-\l__kernel_color_stack_int=\count418
-\l__pdf_internal_box=\box53
-))
 Package biblatex Info: expl3
 (biblatex)             2020-12-07 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 Package biblatex Info: Trying to load expl3 case changing code...
 Package biblatex Info: ... file 'blx-case-expl3.def' found.
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-case-expl3.def
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2020-10-27 L3 Experimental document command parser
 
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/l3packages/xparse/xparse-generic
-.tex))
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-case-expl3.def
 File: blx-case-expl3 2020/08/23 v3.15a expl3 case changing code for biblatex
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
- (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
-\c@textcitecount=\count419
-\c@textcitetotal=\count420
-\c@textcitemaxnames=\count421
-\c@biburlbigbreakpenalty=\count422
-\c@biburlbreakpenalty=\count423
-\c@biburlnumpenalty=\count424
-\c@biburlucpenalty=\count425
-\c@biburllcpenalty=\count426
+\c@textcitecount=\count422
+\c@textcitetotal=\count423
+\c@textcitemaxnames=\count424
+\c@biburlbigbreakpenalty=\count425
+\c@biburlbreakpenalty=\count426
+\c@biburlnumpenalty=\count427
+\c@biburlucpenalty=\count428
+\c@biburllcpenalty=\count429
 \biburlbigskip=\muskip17
 \biburlnumskip=\muskip18
 \biburlucskip=\muskip19
 \biburllcskip=\muskip20
-\c@smartand=\count427
+\c@smartand=\count430
 )
 Package biblatex Info: Trying to load bibliography style 'iso-numeric'...
 Package biblatex Info: ... file 'iso-numeric.bbx' found.
@@ -961,45 +950,45 @@ Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
 \col@sep=\dimen180
 \ar@mcellbox=\box54
 \extrarowheight=\dimen181
-\NC@list=\toks46
+\NC@list=\toks44
 \extratabsurround=\skip82
 \backup@length=\skip83
 \ar@cellbox=\box55
 ))
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count428
+\c@KVtest=\count431
 \sf@farskip=\skip84
 \sf@captopadj=\dimen182
 \sf@capskip=\skip85
 \sf@nearskip=\skip86
-\c@subfigure=\count429
-\c@subfigure@save=\count430
-\c@lofdepth=\count431
-\c@subtable=\count432
-\c@subtable@save=\count433
-\c@lotdepth=\count434
+\c@subfigure=\count432
+\c@subfigure@save=\count433
+\c@lofdepth=\count434
+\c@subtable=\count435
+\c@subtable@save=\count436
+\c@lotdepth=\count437
 \sf@top=\skip87
 \sf@bottom=\skip88
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count435
+\lst@mode=\count438
 \lst@gtempboxa=\box56
-\lst@token=\toks47
-\lst@length=\count436
+\lst@token=\toks45
+\lst@length=\count439
 \lst@currlwidth=\dimen183
-\lst@column=\count437
-\lst@pos=\count438
+\lst@column=\count440
+\lst@pos=\count441
 \lst@lostspace=\dimen184
 \lst@width=\dimen185
-\lst@newlines=\count439
-\lst@lineno=\count440
+\lst@newlines=\count442
+\lst@lineno=\count443
 \lst@maxwidth=\dimen186
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-\c@lstnumber=\count441
-\lst@skipnumbers=\count442
+\c@lstnumber=\count444
+\lst@skipnumbers=\count445
 \lst@framebox=\box57
 )
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/listings/listings.cfg
@@ -1038,17 +1027,17 @@ LaTeX Font Info:    ... okay on input line 57.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count443
+\scratchcounter=\count446
 \scratchdimen=\dimen187
 \scratchbox=\box58
-\nofMPsegments=\count444
-\nofMParguments=\count445
-\everyMPshowfont=\toks48
-\MPscratchCnt=\count446
+\nofMPsegments=\count447
+\nofMParguments=\count448
+\everyMPshowfont=\toks46
+\MPscratchCnt=\count449
 \MPscratchDim=\dimen188
-\MPnumerator=\count447
-\makeMPintoPDFobject=\count448
-\everyMPtoPDFconversion=\toks49
+\MPnumerator=\count450
+\makeMPintoPDFobject=\count451
+\everyMPtoPDFconversion=\toks47
 ) (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1108,7 +1097,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count449
+\c@section@level=\count452
 )
 LaTeX Info: Redefining \ref on input line 57.
 LaTeX Info: Redefining \pageref on input line 57.
@@ -1162,7 +1151,7 @@ Package biblatex Info: ... file 'jed0050_dokument.bbl' found.
 (./jed0050_dokument.bbl)
 Package biblatex Info: Reference section=0 on input line 57.
 Package biblatex Info: Reference segment=0 on input line 57.
-\c@lstlisting=\count450
+\c@lstlisting=\count453
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 5
 9.
 
@@ -1257,63 +1246,67 @@ Kapitola 1.
 
 ]
 Kapitola 2.
+[10
+
+]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
-4.
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
+7.
+ (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8
-4.
+7.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (15.24251pt too wide) in paragraph at lines 84--85
+Overfull \hbox (15.24251pt too wide) in paragraph at lines 87--88
 [][][]$\T1/lmtt/m/n/10.95 https : / / api . met . no / weatherapi / locationfor
 ecast / 2 . 0 / classic ? lat = 49 . 820923 & lon = 18 .
  []
 
-[10
 
-]
-Overfull \hbox (32.48871pt too wide) in paragraph at lines 95--96
+Overfull \hbox (32.48871pt too wide) in paragraph at lines 101--102
 [][][]$\T1/lmtt/m/n/10.95 https : / / api . openweathermap . org / data / 2 . 5
  / forecast ? lat = 49 . 820923 & lon = 18 . 262524 & appid =
  []
 
 
-Overfull \hbox (21.49124pt too wide) in paragraph at lines 105--106
+Overfull \hbox (21.49124pt too wide) in paragraph at lines 111--112
 [][][]$\T1/lmtt/m/n/10.95 http : / / api . weatherunlocked . com / api / foreca
 st / 49 . 820923 ,[] 18 . 262524 ? app _ id = MY _ ID & app _
  []
 
 [11]
-Overfull \hbox (9.99377pt too wide) in paragraph at lines 116--117
+Overfull \hbox (9.99377pt too wide) in paragraph at lines 125--126
 [][][]$\T1/lmtt/m/n/10.95 http : / / www . medard-[]online . cz / apiforecast ?
  run = 210313 _ 06 & forecast = precip & layer = eu &
  []
 
-<Data/Mdrd_ukazka.png, id=286, 684.3969pt x 435.0654pt>
+<Data/Mdrd_ukazka.png, id=284, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 121.
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 130.
 (pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
-[12 <./Data/Mdrd_ukazka.png>]
-<Data/Rb_ukazka.png, id=300, 796.47563pt x 577.40718pt>
+[12]
+<Data/Rb_ukazka.png, id=299, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 141.
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 150.
 (pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 151.
+(caption)                particular \caption on input line 160.
 See the caption package documentation for explanation.
 
-[13 <./Data/Rb_ukazka.png>] [14]
+
+Underfull \vbox (badness 3471) has occurred while \output is active []
+
+ [13 <./Data/Mdrd_ukazka.png>] [14 <./Data/Rb_ukazka.png>]
 Kapitola 3.
 
-Overfull \hbox (1.73695pt too wide) in paragraph at lines 172--173
+Overfull \hbox (1.73695pt too wide) in paragraph at lines 181--182
 []\T1/lmr/m/n/10.95 Kaºdý z da-to-vých zdroj· je v agre-gaci dat re-a-li-zo-ván
  po-mocí sa-mo-statné knihovny. Tato knihovna
  []
@@ -1324,30 +1317,30 @@ Overfull \hbox (1.73695pt too wide) in paragraph at lines 172--173
 <Data/bmp_triangulace.png, id=336, 225.84375pt x 225.84375pt>
 File: Data/bmp_triangulace.png Graphic file (type png)
 <use Data/bmp_triangulace.png>
-Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 205.
+Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 214.
 (pdftex.def)             Requested size: 225.84319pt x 225.84319pt.
  [17 <./Data/bmp_triangulace.png>] [18]
 <Data/bmp_body.png, id=357, 548.0475pt x 397.485pt>
 File: Data/bmp_body.png Graphic file (type png)
 <use Data/bmp_body.png>
-Package pdftex.def Info: Data/bmp_body.png  used on input line 270.
+Package pdftex.def Info: Data/bmp_body.png  used on input line 279.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
 <Data/bmp_sit.png, id=358, 548.0475pt x 397.485pt>
 File: Data/bmp_sit.png Graphic file (type png)
 <use Data/bmp_sit.png>
-Package pdftex.def Info: Data/bmp_sit.png  used on input line 276.
+Package pdftex.def Info: Data/bmp_sit.png  used on input line 285.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
 <Data/bmp_vybarvena.png, id=359, 548.0475pt x 397.485pt>
 File: Data/bmp_vybarvena.png Graphic file (type png)
 <use Data/bmp_vybarvena.png>
-Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 282.
+Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 291.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
  [19] [20 <./Data/bmp_body.png> <./Data/bmp_sit.png>]
 
-LaTeX Warning: Command \v invalid in math mode on input line 292.
+LaTeX Warning: Command \v invalid in math mode on input line 301.
 
 [21 <./Data/bmp_vybarvena.png>]
-Overfull \hbox (9.43571pt too wide) in paragraph at lines 302--303
+Overfull \hbox (9.43571pt too wide) in paragraph at lines 311--312
 []\T1/lmr/m/n/10.95 Zaokrouhlený £as je ná-sledn¥ p°e-ve-den do for-mátu \T1/lm
 r/m/it/10.95 ROK-M…SÍC-DEN\T1/lmr/m/n/10.95 , p°í-padn¥ v£etn¥ $\OML/lmm/m/it/1
 0.95 MINUTA$
@@ -1356,12 +1349,12 @@ r/m/it/10.95 ROK-M…SÍC-DEN\T1/lmr/m/n/10.95 , p°í-padn¥ v£etn¥ $\OML/lmm/m/it/1
 [22]
 Kapitola 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 316--319
+Underfull \hbox (badness 10000) in paragraph at lines 325--328
 
  []
 
 
-Overfull \hbox (5.11365pt too wide) in paragraph at lines 316--319
+Overfull \hbox (5.11365pt too wide) in paragraph at lines 325--328
 [][]$\T1/lmtt/m/n/10.95 adresaserveru / bmp ? type = {typ} & time = {£as} & loa
 ders = {datové _ zdroje} & p1 = {bod1} & p2 = {bod2}$[][] 
  []
@@ -1371,27 +1364,27 @@ ders = {datové _ zdroje} & p1 = {bod1} & p2 = {bod2}$[][]
 ]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 322.
+(caption)                particular \caption on input line 331.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (14.76302pt too wide) in paragraph at lines 324--333
+Overfull \hbox (14.76302pt too wide) in paragraph at lines 333--342
  [] 
  []
 
 
-Overfull \hbox (44.98618pt too wide) in paragraph at lines 347--348
+Overfull \hbox (44.98618pt too wide) in paragraph at lines 356--357
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / bmp ? type = prec & p1 = 49 . 621559 
 ,[] 17 . 1507294 & p2 = 49 . 5211889 ,[] 17 . 4213141 & loaders =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 352--355
+Underfull \hbox (badness 10000) in paragraph at lines 361--364
 
  []
 
 
-Overfull \hbox (10.86238pt too wide) in paragraph at lines 352--355
+Overfull \hbox (10.86238pt too wide) in paragraph at lines 361--364
 [][]$\T1/lmtt/m/n/10.95 adresaserveru / {data} ? time = {£as} & lat = {zem¥pisn
 á _ ²í°ka} & lon = {zem¥pisní _ délka} & loaders =
  []
@@ -1399,35 +1392,35 @@ Overfull \hbox (10.86238pt too wide) in paragraph at lines 352--355
 [24]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 362.
+(caption)                particular \caption on input line 371.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (29.48463pt too wide) in paragraph at lines 364--375
+Overfull \hbox (29.48463pt too wide) in paragraph at lines 373--384
  [] 
  []
 
 [25]
-Overfull \hbox (10.49377pt too wide) in paragraph at lines 389--390
+Overfull \hbox (10.49377pt too wide) in paragraph at lines 398--399
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / xml ? lon = 18 . 262524 & lat = 49 . 
 820923 & time = 2021-[]03-[]14T18 : 35 : 00 & loaders =
  []
 
 
-Overfull \hbox (21.99124pt too wide) in paragraph at lines 393--394
+Overfull \hbox (21.99124pt too wide) in paragraph at lines 402--403
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / json ? lon = 18 . 262524 & lat = 49 .
  820923 & time = 2021-[]03-[]14T18 : 35 : 00 & numOfFcs =
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 421.
+(caption)                particular \caption on input line 430.
 See the caption package documentation for explanation.
 
 [26]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 439.
+(caption)                particular \caption on input line 448.
 See the caption package documentation for explanation.
 
 [27]
@@ -1436,7 +1429,7 @@ Kapitola 5.
 
 ] [29]
 
-LaTeX Warning: Command \' invalid in math mode on input line 489.
+LaTeX Warning: Command \' invalid in math mode on input line 498.
 
 [30] [31] [32]
 Kapitola 6.
@@ -1461,13 +1454,13 @@ Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26078 strings out of 479382
- 423892 string characters out of 5867828
- 1154890 words of memory out of 5000000
- 42653 multiletter control sequences out of 15000+600000
+ 26848 strings out of 479382
+ 453076 string characters out of 5867828
+ 1168626 words of memory out of 5000000
+ 43439 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,128p,1169b,4819s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,100p,1169b,4671s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive
 /2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Skola-SW/texlive/2020/tex
@@ -1486,7 +1479,7 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (34 pages, 1796547 bytes).
+Output written on jed0050_dokument.pdf (34 pages, 1797565 bytes).
 PDF statistics:
  566 PDF objects out of 1000 (max. 8388607)
  111 named destinations out of 1000 (max. 500000)
