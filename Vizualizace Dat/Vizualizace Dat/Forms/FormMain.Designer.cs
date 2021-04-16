@@ -145,6 +145,7 @@
             this.gMap.OnMapZoomChanged += new GMap.NET.MapZoomChanged(this.gMap_OnMapZoomChanged);
             this.gMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mouseDoubleClickInMap);
             this.gMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMoveInMap);
+            this.gMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gMap_MouseUp);
             // 
             // lDateTimeForecast
             // 
@@ -224,7 +225,6 @@
             // 
             // vlastníAdresaToolStripMenuItem
             // 
-            this.vlastníAdresaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.vlastníAdresaToolStripMenuItem.Name = "vlastníAdresaToolStripMenuItem";
             this.vlastníAdresaToolStripMenuItem.Size = new System.Drawing.Size(180, 23);
             this.vlastníAdresaToolStripMenuItem.TextChanged += new System.EventHandler(this.vlastníAdresaToolStripMenuItem_TextChanged);
@@ -257,7 +257,6 @@
             // 
             // menuOwnTransparent
             // 
-            this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuOwnTransparent.Name = "menuOwnTransparent";
             this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
             this.menuOwnTransparent.MouseLeave += new System.EventHandler(this.menuOwnTransparent_MouseLeave);
@@ -297,7 +296,6 @@
             // 
             // dblclickCustomDataText
             // 
-            this.dblclickCustomDataText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dblclickCustomDataText.Name = "dblclickCustomDataText";
             this.dblclickCustomDataText.Size = new System.Drawing.Size(100, 23);
             this.dblclickCustomDataText.MouseLeave += new System.EventHandler(this.dblclickCustomData_MouseLeave);
@@ -539,17 +537,17 @@
             // 
             this.tLPTimeMarks.AutoScroll = true;
             this.tLPTimeMarks.ColumnCount = 11;
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.10779F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11153F));
-            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.350657F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.84664F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.85029F));
+            this.tLPTimeMarks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.000384F));
             this.tLPTimeMarks.Controls.Add(this.label1, 0, 0);
             this.tLPTimeMarks.Controls.Add(this.lT0, 1, 0);
             this.tLPTimeMarks.Controls.Add(this.lT1, 2, 0);

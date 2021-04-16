@@ -48,6 +48,9 @@ namespace Vizualizace_Dat
         private PointLatLng markPoint = new PointLatLng();
         private List<PointLatLng> routePoints = new List<PointLatLng>();
         private CustomRoute customRoute = new CustomRoute();
+        private PointLatLng doubleclickedPoint = new PointLatLng();
+        private int zoomLevel = 6;
+        private Bitmap bigDataBitmap = new Bitmap(1,1);
 
         public FormMain()
         {
@@ -58,9 +61,9 @@ namespace Vizualizace_Dat
 
             gMap.DragButton = MouseButtons.Left;
             gMap.MapProvider = GMapProviders.GoogleMap;
-            gMap.MinZoom = 2;
-            gMap.MaxZoom = 15;
-            gMap.Zoom = 6;
+            gMap.MinZoom = 4;
+            gMap.MaxZoom = 12;
+            gMap.Zoom = zoomLevel;
             gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
 
@@ -148,7 +151,8 @@ namespace Vizualizace_Dat
             selectedTime = selectedTime.AddMinutes(-selectedTime.Minute % 10).AddHours(-hoursBack);
 
             trackBar1.Value = hoursBack * 6;
-            lDateTimeForecast.Text = selectedTime.AddHours(hoursBack).ToString("dd. MM. yyyy - HH:mm");
+            selectedTime = selectedTime.AddHours(hoursBack);
+            lDateTimeForecast.Text = selectedTime.ToString("dd. MM. yyyy - HH:mm");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -285,7 +289,7 @@ namespace Vizualizace_Dat
                 drawBitmapFromServer();
             }
 
-            PointLatLng point = new PointLatLng(latD, lonD);
+            doubleclickedPoint = new PointLatLng(latD, lonD);
 
             string precVal = "";
             string exMsg = "";
@@ -298,7 +302,7 @@ namespace Vizualizace_Dat
 
                 try
                 {
-                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, validLoaders, bounds, forecType);
+                    val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), doubleclickedPoint, validLoaders, bounds, forecType);
                 }
                 catch (Exception ex)
                 {
@@ -319,11 +323,13 @@ namespace Vizualizace_Dat
             {
                 DrawGraph();
 
-                listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
+                listMarkers.Add(new GMarkerGoogle(doubleclickedPoint, GMarkerGoogleType.red_dot));
                 listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
 
                 gMap.Overlays.Add(markers);
                 markers.Markers.Add(listMarkers[0]);
+
+                ShowWeatherWindow();
             }
             else
             {
@@ -491,7 +497,13 @@ namespace Vizualizace_Dat
                     lastTime = point.Time;
                 }
 
-                double value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
+                double value = 0;
+
+                try
+                {
+                    value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
+                }
+                catch{ }
 
                 CustomRoutePoint newPoint = point;
                 //newPoint.Time = point.Time;
@@ -925,7 +937,6 @@ namespace Vizualizace_Dat
                             markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                         }
                     }
-
                     //var r = new GMapRoute(routePoints, "route");
                     routes = new GMapOverlay("routes");
 
@@ -1080,11 +1091,43 @@ namespace Vizualizace_Dat
 
             if (isBitmapShown)
             {
-                bitmapOverlay.Markers.Remove(bitmapMarker);
-                gMap.Overlays.Remove(bitmapOverlay);
-
                 try
                 {
+                    //Debug.WriteLine(gMap.Zoom + " " + zoomLevel);
+
+                    if ((gMap.Zoom > 8 && zoomLevel <= 8) || (gMap.Zoom <= 8 && zoomLevel > 8) || zoomLevel == -1)
+                    {
+                        bounds = BitmapHandler.GetBounds(gMap);
+
+                        Bitmap serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, validLoaders, bounds);
+
+                        Bitmap transparentBitmap = new Bitmap(serverBitmap.Width, serverBitmap.Height);
+
+                        for (int xP = 0; xP < serverBitmap.Width; xP++)
+                        {
+                            for (int yP = 0; yP < serverBitmap.Height; yP++)
+                            {
+                                Color oldP = serverBitmap.GetPixel(xP, yP);
+
+                                if ((oldP.R == 0 && oldP.G == 0 && oldP.B == 0) || (oldP.R == 255 && oldP.G == 255 && oldP.B == 255))
+                                    continue;
+
+                                transparentBitmap.SetPixel(xP, yP, Color.FromArgb(ApkConfig.BitmapAlpha, oldP.R, oldP.G, oldP.B));
+                            }
+                        }
+
+                        dataBitmap = transparentBitmap;
+
+                        if((zoomLevel == -1 && (int)gMap.Zoom == 9) || zoomLevel != -1)
+                        {
+                            zoomLevel = (int)gMap.Zoom;
+                        }
+                        
+                    }
+
+                    bitmapOverlay.Markers.Remove(bitmapMarker);
+                    gMap.Overlays.Remove(bitmapOverlay);
+
                     int xDif = (int)(gMap.FromLatLngToLocal(bounds[1]).X - gMap.FromLatLngToLocal(bounds[0]).X);
                     int yDif = (int)(gMap.FromLatLngToLocal(bounds[1]).Y - gMap.FromLatLngToLocal(bounds[0]).Y);
 
@@ -1099,7 +1142,7 @@ namespace Vizualizace_Dat
                 }
                 catch
                 {
-                    isBitmapShown = false;
+                    //isBitmapShown = false;
                 }
 
                 //zoomReload();
@@ -1768,12 +1811,12 @@ namespace Vizualizace_Dat
                 //Debug.WriteLine(tBPointName.Text);
                 gMap.Focus();
 
-                PointLatLng point = BitmapHandler.GetPointCoordFromCityName(tBPointName.Text);
+                doubleclickedPoint = BitmapHandler.GetPointCoordFromCityName(tBPointName.Text);
 
-                int x = BitmapHandler.GetX(point.Lng, dataBitmap.Width, bounds[0].Lng, bounds[1].Lng);
-                int y = BitmapHandler.GetY(point.Lat, dataBitmap.Height, bounds[0].Lat, bounds[1].Lat);
+                int x = BitmapHandler.GetX(doubleclickedPoint.Lng, dataBitmap.Width, bounds[0].Lng, bounds[1].Lng);
+                int y = BitmapHandler.GetY(doubleclickedPoint.Lat, dataBitmap.Height, bounds[0].Lat, bounds[1].Lat);
 
-                markPoint = point;
+                markPoint = doubleclickedPoint;
 
                 Color c = Color.Transparent;
 
@@ -1805,7 +1848,7 @@ namespace Vizualizace_Dat
 
                     try
                     {
-                        val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), point, validLoaders, bounds, forecType);
+                        val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), doubleclickedPoint, validLoaders, bounds, forecType);
                     }
                     catch (Exception ex)
                     {
@@ -1825,8 +1868,9 @@ namespace Vizualizace_Dat
                 if (graphCols.Count > 0)
                 {
                     DrawGraph();
+                    ShowWeatherWindow();
 
-                    listMarkers.Add(new GMarkerGoogle(point, GMarkerGoogleType.red_dot));
+                    listMarkers.Add(new GMarkerGoogle(doubleclickedPoint, GMarkerGoogleType.red_dot));
                     listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
 
                     gMap.Overlays.Add(markers);
@@ -1865,6 +1909,70 @@ namespace Vizualizace_Dat
             {
                 bCityNameSearch_Click(sender, null);
             }
+        }
+
+        private void ShowWeatherWindow()
+        {
+            FormPrecipDetail formPrecipDetail = new FormPrecipDetail(selectedTime, doubleclickedPoint, validLoaders, bounds);
+            formPrecipDetail.Show();
+        }
+
+        private void gMap_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isBitmapShown && gMap.Zoom > 8)
+            {
+                List<PointLatLng> actBounds = BitmapHandler.GetBounds(gMap);
+
+                if (!(bounds[0].Lng == actBounds[0].Lng && bounds[0].Lat == actBounds[0].Lat && bounds[1].Lng == actBounds[1].Lng && bounds[1].Lat == actBounds[1].Lat))
+                {
+                    try
+                    {
+                        Bitmap serverBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, selectedTime, validLoaders, actBounds);
+
+                        Bitmap transparentBitmap = new Bitmap(serverBitmap.Width, serverBitmap.Height);
+
+                        for (int xP = 0; xP < serverBitmap.Width; xP++)
+                        {
+                            for (int yP = 0; yP < serverBitmap.Height; yP++)
+                            {
+                                Color oldP = serverBitmap.GetPixel(xP, yP);
+
+                                if ((oldP.R == 0 && oldP.G == 0 && oldP.B == 0) || (oldP.R == 255 && oldP.G == 255 && oldP.B == 255))
+                                    continue;
+
+                                transparentBitmap.SetPixel(xP, yP, Color.FromArgb(ApkConfig.BitmapAlpha, oldP.R, oldP.G, oldP.B));
+                            }
+                        }
+
+                        dataBitmap = transparentBitmap;
+                    }
+                    catch
+                    {
+                        return;
+                    }
+
+                    zoomLevel = -1;
+
+                    bounds = actBounds;
+
+                    bitmapOverlay.Markers.Remove(bitmapMarker);
+                    gMap.Overlays.Remove(bitmapOverlay);
+
+                    int xDif = (int)(gMap.FromLatLngToLocal(bounds[1]).X - gMap.FromLatLngToLocal(bounds[0]).X);
+                    int yDif = (int)(gMap.FromLatLngToLocal(bounds[1]).Y - gMap.FromLatLngToLocal(bounds[0]).Y);
+
+                    Bitmap resizedBitmap = new Bitmap(dataBitmap, new Size(xDif, yDif));
+
+                    bitmapMarker = new GMarkerGoogle(new PointLatLng(bounds[1].Lat, (bounds[0].Lng + bounds[1].Lng) / 2), resizedBitmap) { IsHitTestVisible = false };
+                    bitmapOverlay.Markers.Add(bitmapMarker);
+
+                    gMap.Overlays.Add(bitmapOverlay);
+
+                    RedrawMark();
+                }
+
+            }
+                
         }
     }
 }

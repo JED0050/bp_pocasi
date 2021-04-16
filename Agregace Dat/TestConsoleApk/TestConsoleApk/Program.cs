@@ -13,6 +13,7 @@ using IDataLoaderAndHandlerLib.DelaunayTriangulator;
 using System.IO;
 using DLYrNoLib;
 using DLMedardLib;
+using DLOpenWeatherMapLib;
 
 namespace TestConsoleApk
 {
@@ -24,7 +25,9 @@ namespace TestConsoleApk
             //ColorValueHandler.GetColorForValueAndType(5,"prec");
             //ColorValueHandler.GetColorForValueAndType(8, "prec");
             //ColorValueHandler.GetColorForValueAndType(7, "humi");
-            AvgForecast a = new AvgForecast("");
+            //AvgForecast a = new AvgForecast("");
+
+            new OpenWeatherMapDataLoader().GetForecastBitmap(DateTime.Now, ForecastTypes.TEMPERATURE);
         }
 
         public static void DrawBiggerExampleBitmaps()

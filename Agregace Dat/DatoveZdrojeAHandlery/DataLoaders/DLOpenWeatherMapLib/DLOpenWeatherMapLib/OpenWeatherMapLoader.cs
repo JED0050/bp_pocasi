@@ -129,7 +129,7 @@ namespace DLOpenWeatherMapLib
                 if (elementTime < now)
                     continue;
 
-                f.Time = elementTime;
+                f.Time = GetValidTime(elementTime);
 
                 f.Temperature = jsonElement.main.temp - 273.15;
                 f.Humidity = jsonElement.main.humidity;

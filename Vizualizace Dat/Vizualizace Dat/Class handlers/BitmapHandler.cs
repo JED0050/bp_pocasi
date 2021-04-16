@@ -21,13 +21,13 @@ namespace Vizualizace_Dat
     {
         public static string baseUrl = ApkConfig.ServerAddress;
 
-        public static PointLonLat defaultTopLeftBound = new PointLonLat(4.1303633, 55.1995133);
-        public static PointLonLat defaultBotRightBound = new PointLonLat(37.9033283, 41.6999200);
+        public static PointLatLng defaultTopLeftBound = new PointLatLng(55.1995133, 4.1303633);
+        public static PointLatLng defaultBotRightBound = new PointLatLng(41.6999200, 37.9033283);
         public static double GetLon(int x, int bW)
         {
-            double lonDif = defaultBotRightBound.Lon - defaultTopLeftBound.Lon;
+            double lonDif = defaultBotRightBound.Lng - defaultTopLeftBound.Lng;
             double pixelLon = lonDif / bW;
-            double leftCorner = defaultTopLeftBound.Lon;
+            double leftCorner = defaultTopLeftBound.Lng;
 
             return Math.Round(leftCorner + x * pixelLon, 6);
         }
@@ -43,6 +43,9 @@ namespace Vizualizace_Dat
 
         public static int GetX(double lon, int bW, double bX, double bX2)
         {
+            if (lon < defaultTopLeftBound.Lng || lon > defaultBotRightBound.Lng)
+                return -1;
+
             double lonDif = Math.Abs(bX2 - bX);
             double pixelLon = lonDif / bW;
 
@@ -60,6 +63,8 @@ namespace Vizualizace_Dat
 
         public static int GetY(double lat, int bH, double bY, double bY2)
         {
+            if (lat > defaultTopLeftBound.Lat || lat < defaultBotRightBound.Lat)
+                return -1;
 
             double latDif = Math.Abs(bY - bY2);
             double pixelLat = latDif / bH;
@@ -126,7 +131,7 @@ namespace Vizualizace_Dat
 
             string pointUrl;
 
-            if((bounds.Count < 2) || (bounds[0].Lng == defaultTopLeftBound.Lon && bounds[0].Lat == defaultTopLeftBound.Lat && bounds[1].Lng == defaultBotRightBound.Lon && bounds[1].Lat == defaultBotRightBound.Lat))
+            if((bounds.Count < 2) || (bounds[0].Lng == defaultTopLeftBound.Lng && bounds[0].Lat == defaultTopLeftBound.Lat && bounds[1].Lng == defaultBotRightBound.Lng && bounds[1].Lat == defaultBotRightBound.Lat))
             {
                 pointUrl = "";
             }
@@ -248,10 +253,10 @@ namespace Vizualizace_Dat
         {
             List<PointLatLng> bounds = new List<PointLatLng>();
 
-            if (gMap.Zoom < 7)
+            if (gMap.Zoom <= 8)
             {
-                bounds.Add(new PointLatLng(defaultTopLeftBound.Lat, defaultTopLeftBound.Lon));
-                bounds.Add(new PointLatLng(defaultBotRightBound.Lat, defaultBotRightBound.Lon));
+                bounds.Add(defaultTopLeftBound);
+                bounds.Add(defaultBotRightBound);
 
                 return bounds;
             }
@@ -308,7 +313,11 @@ namespace Vizualizace_Dat
                 c = bFor.GetPixel(x, y);
             }
             catch
-            { }
+            {
+                throw new Exception("Zvolený bod se nenachází ve zpracovávané oblasti!");
+            }
+
+            c = bFor.GetPixel(x, y);
 
             double precVal = forecType.GetForecValue(c);
 

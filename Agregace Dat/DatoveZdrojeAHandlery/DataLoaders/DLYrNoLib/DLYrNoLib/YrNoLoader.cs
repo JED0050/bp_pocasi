@@ -182,7 +182,7 @@ namespace DLYrNoLib
                     f.x = point.X;
                     f.y = point.Y;
 
-                    f.Time = actTime;
+                    f.Time = GetValidTime(actTime);
 
                     f.Temperature = temp;
                     f.Humidity = humi;

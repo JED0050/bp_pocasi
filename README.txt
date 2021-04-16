@@ -49,7 +49,7 @@ Návod na používání:
 	2.4. Počasí na trase
 		2.4.1. Menu -> Nahrát trasu z GPX souboru
 		2.4.2. Po vyplnění potřebných informaxí a zadání GPX souboru dochází k vykreslení počasí na trase
-		2.4.3. Ukázkové GPX soubory s trasami trasa1.gpx, trasa2.gpx se nachází ve složce Vizualizace Dat/
+		2.4.3. Ukázkové GPX soubory s trasami trasa1.gpx, trasa2.gpx se nachází ve složce Vizualizace Dat/ (vlastní GPX trasu si můžete vytvořit na https://mapy.cz/zakladni?planovani-trasy)
 		2.4.4. Po vykreslení trasy je možné trasu vymazat nebo zadat nový čas zobrazenými tlačítky uprostřed nahoře na mapě
 		2.4.5. Při změně datových zdrojů nebo prvku počasí dochází k vykreslení nového počasí pro stejnou trasu
 	2.5. Počasí na ploše
