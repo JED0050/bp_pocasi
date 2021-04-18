@@ -50,7 +50,6 @@ namespace Vizualizace_Dat
         private CustomRoute customRoute = new CustomRoute();
         private PointLatLng doubleclickedPoint = new PointLatLng();
         private int zoomLevel = 6;
-        private Bitmap bigDataBitmap = new Bitmap(1,1);
 
         public FormMain()
         {
@@ -1913,8 +1912,11 @@ namespace Vizualizace_Dat
 
         private void ShowWeatherWindow()
         {
-            FormPrecipDetail formPrecipDetail = new FormPrecipDetail(selectedTime, doubleclickedPoint, validLoaders, bounds);
-            formPrecipDetail.Show();
+            if(ApkConfig.ShowDialogWindow)
+            {
+                FormPrecipDetail formPrecipDetail = new FormPrecipDetail(selectedTime, doubleclickedPoint, validLoaders, bounds);
+                formPrecipDetail.Show();
+            }
         }
 
         private void gMap_MouseUp(object sender, MouseEventArgs e)
@@ -1973,6 +1975,16 @@ namespace Vizualizace_Dat
 
             }
                 
+        }
+
+        private void zobrazovatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.ShowDialogWindow = true;
+        }
+
+        private void nezobrazovatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApkConfig.ShowDialogWindow = false;
         }
     }
 }

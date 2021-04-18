@@ -1,1 +1,1 @@
-{"Loaders":"yrno","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":10,"ForecastType":"temp","AnimStepMinutes":10,"GraphColumnColor":-16776961}
+{"Loaders":"yrno","ServerAddress":"https://localhost:44336/","BitmapAlpha":150,"AnimMaxMove":20,"DblclickMaxData":10,"ForecastType":"temp","AnimStepMinutes":10,"GraphColumnColor":-16776961,"ShowDialogWindow":true}

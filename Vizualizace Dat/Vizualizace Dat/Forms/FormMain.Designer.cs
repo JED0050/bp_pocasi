@@ -104,6 +104,9 @@
             this.bCityNameSearch = new System.Windows.Forms.Button();
             this.pBScale = new System.Windows.Forms.PictureBox();
             this.bAnim = new System.Windows.Forms.Button();
+            this.detailPočasíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nezobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tLPTimeMarks.SuspendLayout();
@@ -200,7 +203,8 @@
             this.početHodnotPřiDvojklikuToolStripMenuItem,
             this.setDefSettings,
             this.aktualizovatŠkályToolStripMenuItem,
-            this.barvaSloupcůToolStripMenuItem});
+            this.barvaSloupcůToolStripMenuItem,
+            this.detailPočasíToolStripMenuItem});
             this.nastaveníToolStripMenuItem.Name = "nastaveníToolStripMenuItem";
             this.nastaveníToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.nastaveníToolStripMenuItem.Text = "Nastavení";
@@ -225,6 +229,7 @@
             // 
             // vlastníAdresaToolStripMenuItem
             // 
+            this.vlastníAdresaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.vlastníAdresaToolStripMenuItem.Name = "vlastníAdresaToolStripMenuItem";
             this.vlastníAdresaToolStripMenuItem.Size = new System.Drawing.Size(180, 23);
             this.vlastníAdresaToolStripMenuItem.TextChanged += new System.EventHandler(this.vlastníAdresaToolStripMenuItem_TextChanged);
@@ -257,6 +262,7 @@
             // 
             // menuOwnTransparent
             // 
+            this.menuOwnTransparent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuOwnTransparent.Name = "menuOwnTransparent";
             this.menuOwnTransparent.Size = new System.Drawing.Size(100, 23);
             this.menuOwnTransparent.MouseLeave += new System.EventHandler(this.menuOwnTransparent_MouseLeave);
@@ -296,6 +302,7 @@
             // 
             // dblclickCustomDataText
             // 
+            this.dblclickCustomDataText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dblclickCustomDataText.Name = "dblclickCustomDataText";
             this.dblclickCustomDataText.Size = new System.Drawing.Size(100, 23);
             this.dblclickCustomDataText.MouseLeave += new System.EventHandler(this.dblclickCustomData_MouseLeave);
@@ -986,6 +993,29 @@
             this.bAnim.UseVisualStyleBackColor = false;
             this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
             // 
+            // detailPočasíToolStripMenuItem
+            // 
+            this.detailPočasíToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zobrazovatToolStripMenuItem,
+            this.nezobrazovatToolStripMenuItem});
+            this.detailPočasíToolStripMenuItem.Name = "detailPočasíToolStripMenuItem";
+            this.detailPočasíToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.detailPočasíToolStripMenuItem.Text = "Detail počasí";
+            // 
+            // zobrazovatToolStripMenuItem
+            // 
+            this.zobrazovatToolStripMenuItem.Name = "zobrazovatToolStripMenuItem";
+            this.zobrazovatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zobrazovatToolStripMenuItem.Text = "Zobrazovat";
+            this.zobrazovatToolStripMenuItem.Click += new System.EventHandler(this.zobrazovatToolStripMenuItem_Click);
+            // 
+            // nezobrazovatToolStripMenuItem
+            // 
+            this.nezobrazovatToolStripMenuItem.Name = "nezobrazovatToolStripMenuItem";
+            this.nezobrazovatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nezobrazovatToolStripMenuItem.Text = "Nezobrazovat";
+            this.nezobrazovatToolStripMenuItem.Click += new System.EventHandler(this.nezobrazovatToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1117,6 +1147,9 @@
         private System.Windows.Forms.Button bRouteNewTime;
         private System.Windows.Forms.TextBox tBPointName;
         private System.Windows.Forms.Button bCityNameSearch;
+        private System.Windows.Forms.ToolStripMenuItem detailPočasíToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zobrazovatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nezobrazovatToolStripMenuItem;
     }
 }
 

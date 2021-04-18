@@ -189,6 +189,20 @@ namespace Vizualizace_Dat
             }
         }
 
+        public static bool ShowDialogWindow
+        {
+            get
+            {
+                return apkConfigObj.ShowDialogWindow;
+            }
+
+            set
+            {
+                apkConfigObj.ShowDialogWindow = value;
+
+                ApkConfigObj = apkConfigObj;
+            }
+        }
         private static JsonObjClass ApkConfigObj
         {
             get
@@ -224,6 +238,7 @@ namespace Vizualizace_Dat
         public string ForecastType { get; set; }
         public int AnimStepMinutes { get; set; }
         public int GraphColumnColor { get; set; }
+        public bool ShowDialogWindow { get; set; }
     }
 
 }

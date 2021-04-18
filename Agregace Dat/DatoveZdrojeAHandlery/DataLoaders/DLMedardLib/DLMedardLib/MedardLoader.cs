@@ -344,6 +344,8 @@ namespace DLMedardLib
                 int nBW = 0;
                 int nBH = 0;
 
+                Bounds loaderBounds = new Bounds(topLeft, botRight);
+
                 for (int i = 0; i < 78; i++)
                 {
 
@@ -373,8 +375,11 @@ namespace DLMedardLib
                             tmpX++;
                         }
 
-                        newPrecBmp = GetPartOfBigBimtap(newPrecBmp);
-                        newTempBmp = GetPartOfBigBimtap(newTempBmp);
+                        //newPrecBmp = GetPartOfBigBimtap(newPrecBmp);
+                        //newTempBmp = GetPartOfBigBimtap(newTempBmp);
+
+                        newPrecBmp = GetPartOfBitmap(newPrecBmp, loaderBounds);
+                        newTempBmp = GetPartOfBitmap(newTempBmp, loaderBounds);
 
                         newPrecBmp.Save(GetPathToDataDirectory($"{ForecastTypes.PRECIPITATION}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);
                         newTempBmp.Save(GetPathToDataDirectory($"{ForecastTypes.TEMPERATURE}-" + bitmapTime.ToString("yyyy-MM-dd-HH") + ".bmp"), ImageFormat.Bmp);

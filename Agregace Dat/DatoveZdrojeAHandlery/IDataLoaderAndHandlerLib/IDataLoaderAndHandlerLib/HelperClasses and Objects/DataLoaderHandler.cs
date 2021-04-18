@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
@@ -222,6 +224,360 @@ namespace IDataLoaderAndHandlerLib.HandlersAndObjects
         }
 
         protected abstract string GetPathToDataDirectory(string fileName);
+
+        protected Bitmap GetPartOfBitmap(Bitmap dataBitmap, Bounds loaderBounds)
+        {
+
+            if (dataBitmap.Width != 728 || dataBitmap.Height != 528)
+            {
+                Bitmap resizedB = new Bitmap(728, 528);
+                using (Graphics g = Graphics.FromImage(resizedB))
+                {
+                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    g.DrawImage(dataBitmap, 0, 0, 728, 528);
+                };
+
+                dataBitmap = resizedB;
+            }
+
+            if (loaderBounds.TopLeftCorner.Lon <= DefaultBounds.TopLeftCorner.Lon && loaderBounds.TopLeftCorner.Lat >= DefaultBounds.TopLeftCorner.Lat && loaderBounds.BotRightCorner.Lon >= DefaultBounds.TopLeftCorner.Lon && loaderBounds.BotRightCorner.Lat <= DefaultBounds.TopLeftCorner.Lat)
+            {
+                //hranice jsou menší než datová bitmapa => vyřežeme ze staré bitmapy část kterou následně roztáhneme
+
+                Point p1 = new Point();
+                Point p2 = new Point();
+
+                double lonDif = loaderBounds.BotRightCorner.Lon - loaderBounds.TopLeftCorner.Lon;
+                double latDif = loaderBounds.TopLeftCorner.Lat - loaderBounds.BotRightCorner.Lat;
+
+                double PixelLon = lonDif / dataBitmap.Width;
+                double PixelLat = latDif / dataBitmap.Height;
+
+                double bY = loaderBounds.TopLeftCorner.Lat;
+                double bX = loaderBounds.TopLeftCorner.Lon;
+
+                int x;
+                for (x = 0; x < dataBitmap.Width; x++)
+                {
+                    if (bX >= DefaultBounds.TopLeftCorner.Lon && DefaultBounds.TopLeftCorner.Lon <= bX + DefaultBounds.TopLeftCorner.Lon)
+                        break;
+
+                    bX += PixelLon;
+                }
+
+                p1.X = x;
+
+                int y;
+                for (y = 0; y < dataBitmap.Height; y++)
+                {
+                    if (bY - PixelLat <= DefaultBounds.TopLeftCorner.Lat && DefaultBounds.TopLeftCorner.Lat <= bY)
+                        break;
+
+                    bY -= PixelLat;
+                }
+
+                p1.Y = y;
+
+                for (; x < dataBitmap.Width; x++)
+                {
+                    if (bX >= DefaultBounds.BotRightCorner.Lon && DefaultBounds.BotRightCorner.Lon <= bX + DefaultBounds.BotRightCorner.Lon)
+                        break;
+
+                    bX += PixelLon;
+                }
+
+                p2.X = x;
+
+                for (; y < dataBitmap.Height; y++)
+                {
+                    if (bY - PixelLat <= DefaultBounds.BotRightCorner.Lat && DefaultBounds.BotRightCorner.Lat <= bY)
+                        break;
+
+                    bY -= PixelLat;
+                }
+
+                p2.Y = y;
+
+                Bitmap smallBitmap = new Bitmap(p2.X - p1.X, p2.Y - p1.Y);
+
+                for (x = 0; x < smallBitmap.Width; x++)
+                {
+                    for (y = 0; y < smallBitmap.Height; y++)
+                    {
+                        Color c = dataBitmap.GetPixel(x + p1.X, y + p1.Y);
+
+                        smallBitmap.SetPixel(x, y, c);
+                    }
+                }
+
+                Bitmap newBitmap = new Bitmap(728, 528);
+
+                Graphics g = Graphics.FromImage(newBitmap);
+
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+                g.DrawImage(smallBitmap, 0, 0, 728, 528);
+
+                smallBitmap.Dispose();
+
+                return newBitmap;
+            }
+            else if (loaderBounds.TopLeftCorner.Lon >= DefaultBounds.TopLeftCorner.Lon && loaderBounds.TopLeftCorner.Lat <= DefaultBounds.TopLeftCorner.Lat && loaderBounds.BotRightCorner.Lon <= DefaultBounds.TopLeftCorner.Lon && loaderBounds.BotRightCorner.Lat >= DefaultBounds.TopLeftCorner.Lat)
+            {
+                //hranice jsou větší než bitmapa => změníme rozměry datové bitmapy a vložíme ji do nové bitmapy
+
+                int xS = -1;
+                int yS = -1;
+
+                int counter = 0;
+
+                Point p1 = new Point();
+                Point p2 = new Point();
+
+                double lonDif = DefaultBounds.BotRightCorner.Lon - DefaultBounds.TopLeftCorner.Lon;
+                double latDif = DefaultBounds.TopLeftCorner.Lat - DefaultBounds.BotRightCorner.Lat;
+
+                double PixelLon = lonDif / 728;
+                double PixelLat = latDif / 528;
+
+                double bY = DefaultBounds.TopLeftCorner.Lat;
+                double bX = DefaultBounds.TopLeftCorner.Lon;
+
+                while (bX < loaderBounds.BotRightCorner.Lon)
+                {
+                    if (bX >= loaderBounds.TopLeftCorner.Lon)
+                    {
+                        p2.X++;
+
+                        if (xS == -1)
+                        {
+                            xS = counter;
+                        }
+                    }
+
+                    if (counter <= 727)
+                    {
+                        p1.X = p2.X;
+                    }
+
+                    bX += PixelLon;
+                    counter++;
+                }
+
+                counter = 0;
+
+                while (bY > loaderBounds.BotRightCorner.Lat)
+                {
+                    if (bY <= loaderBounds.TopLeftCorner.Lat)
+                    {
+                        p2.Y++;
+
+                        if (yS == -1)
+                        {
+                            yS = counter;
+                        }
+                    }
+
+                    if (counter <= 527)
+                    {
+                        p1.Y = p2.Y;
+                    }
+
+                    bY -= PixelLat;
+                    counter++;
+                }
+
+                Bitmap newBmp = new Bitmap(728, 528);
+
+                Bitmap resizedBmp = new Bitmap(p1.X, p1.Y);
+                using (Graphics g = Graphics.FromImage(resizedBmp))
+                {
+                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    g.DrawImage(dataBitmap, 0, 0, p1.X, p1.Y);
+                };
+
+                for (int x = 0; x < p1.X; x++)
+                {
+                    for (int y = 0; y < p1.Y; y++)
+                    {
+                        newBmp.SetPixel(x + xS, y + yS, resizedBmp.GetPixel(x, y));
+                    }
+                }
+
+                resizedBmp.Dispose();
+
+                return newBmp;
+            }
+            else
+            {
+                //vyřezání části z data bitmapy
+
+                Point p1 = new Point();
+                Point p2 = new Point();
+
+                double lonDif = loaderBounds.BotRightCorner.Lon - loaderBounds.TopLeftCorner.Lon;
+                double latDif = loaderBounds.TopLeftCorner.Lat - loaderBounds.BotRightCorner.Lat;
+
+                double PixelLon = lonDif / dataBitmap.Width;
+                double PixelLat = latDif / dataBitmap.Height;
+
+                double bY = loaderBounds.TopLeftCorner.Lat;
+                double bX = loaderBounds.TopLeftCorner.Lon;
+
+                int x;
+                for (x = 0; x < dataBitmap.Width; x++)
+                {
+                    if (bX >= DefaultBounds.TopLeftCorner.Lon && DefaultBounds.TopLeftCorner.Lon <= bX + DefaultBounds.TopLeftCorner.Lon)
+                        break;
+
+                    bX += PixelLon;
+                }
+
+                p1.X = x;
+
+                int y;
+                for (y = 0; y < dataBitmap.Height; y++)
+                {
+                    if (bY - PixelLat <= DefaultBounds.TopLeftCorner.Lat && DefaultBounds.TopLeftCorner.Lat <= bY)
+                        break;
+
+                    bY -= PixelLat;
+                }
+
+                p1.Y = y;
+
+                for (; x < dataBitmap.Width; x++)
+                {
+                    if (bX >= DefaultBounds.BotRightCorner.Lon && DefaultBounds.BotRightCorner.Lon <= bX + DefaultBounds.BotRightCorner.Lon)
+                        break;
+
+                    bX += PixelLon;
+                }
+
+                p2.X = x;
+
+                for (; y < dataBitmap.Height; y++)
+                {
+                    if (bY - PixelLat <= DefaultBounds.BotRightCorner.Lat && DefaultBounds.BotRightCorner.Lat <= bY)
+                        break;
+
+                    bY -= PixelLat;
+                }
+
+                p2.Y = y;
+
+                int cutX = p2.X - p1.X;
+                if (cutX == 0)
+                {
+                    cutX = 728;
+                    p1.X = 0;
+                }
+
+                int cutY = p2.Y - p1.Y;
+                if (cutY == 0)
+                {
+                    cutY = 528;
+                    p1.Y = 0;
+                }
+
+                Bitmap smallBitmap = new Bitmap(cutX, cutY);
+
+                for (x = 0; x < smallBitmap.Width; x++)
+                {
+                    for (y = 0; y < smallBitmap.Height; y++)
+                    {
+                        Color c = dataBitmap.GetPixel(x + p1.X, y + p1.Y);
+
+                        smallBitmap.SetPixel(x, y, c);
+                    }
+                }
+
+                //vložení této části do nové bitmapy
+
+                int xS = -1;
+                int yS = -1;
+
+                int counter = 0;
+
+                p1 = new Point();
+                p2 = new Point();
+
+                lonDif = DefaultBounds.BotRightCorner.Lon - DefaultBounds.TopLeftCorner.Lon;
+                latDif = DefaultBounds.TopLeftCorner.Lat - DefaultBounds.BotRightCorner.Lat;
+
+                PixelLon = lonDif / 728;
+                PixelLat = latDif / 528;
+
+                bY = DefaultBounds.TopLeftCorner.Lat;
+                bX = DefaultBounds.TopLeftCorner.Lon;
+
+                while (bX < loaderBounds.BotRightCorner.Lon)
+                {
+                    if (bX >= loaderBounds.TopLeftCorner.Lon)
+                    {
+                        p2.X++;
+
+                        if (xS == -1)
+                        {
+                            xS = counter;
+                        }
+                    }
+
+                    if (counter <= 727)
+                    {
+                        p1.X = p2.X;
+                    }
+
+                    bX += PixelLon;
+                    counter++;
+                }
+
+                counter = 0;
+
+                while (bY > loaderBounds.BotRightCorner.Lat)
+                {
+                    if (bY <= loaderBounds.TopLeftCorner.Lat)
+                    {
+                        p2.Y++;
+
+                        if (yS == -1)
+                        {
+                            yS = counter;
+                        }
+                    }
+
+                    if (counter <= 527)
+                    {
+                        p1.Y = p2.Y;
+                    }
+
+                    bY -= PixelLat;
+                    counter++;
+                }
+
+                Bitmap newBmp = new Bitmap(728, 528);
+
+                Bitmap resizedBmp = new Bitmap(p1.X, p1.Y);
+                using (Graphics g = Graphics.FromImage(resizedBmp))
+                {
+                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    g.DrawImage(smallBitmap, 0, 0, p1.X, p1.Y);
+                };
+
+                for (x = 0; x < p1.X; x++)
+                {
+                    for (y = 0; y < p1.Y; y++)
+                    {
+                        newBmp.SetPixel(x + xS, y + yS, resizedBmp.GetPixel(x, y));
+                    }
+                }
+
+                smallBitmap.Dispose();
+                resizedBmp.Dispose();
+
+                return newBmp;
+            }
+        }
     }
 
 }
