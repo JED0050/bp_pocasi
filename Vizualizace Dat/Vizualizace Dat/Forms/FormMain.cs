@@ -65,6 +65,7 @@ namespace Vizualizace_Dat
             gMap.Zoom = zoomLevel;
             gMap.Position = new PointLatLng(49.89, 18.16);
             gMap.ShowCenter = false;
+            gMap.DisableFocusOnMouseEnter = true;
 
             bClearRoute.Visible = false;
             bRouteNewTime.Visible = false;

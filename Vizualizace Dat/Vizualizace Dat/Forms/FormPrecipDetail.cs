@@ -30,6 +30,8 @@ namespace Vizualizace_Dat
 
             for (int day = 0; day < 7; day++)
             {
+                bool canDraw = false;
+
                 DateTime time = selectedTime.AddDays(day);
 
                 string dateTime = time.ToString("ddd, dd.MM").ToUpper();
@@ -56,10 +58,12 @@ namespace Vizualizace_Dat
 
                         precs.Add(precString);
                         precIcons.Add(precIc);
+
+                        canDraw = true;
                     }
                     catch
                     {
-                        temps.Add("");
+                        precs.Add("");
                         precIcons.Add(nullIc);
                     }
 
@@ -71,6 +75,8 @@ namespace Vizualizace_Dat
 
                         temps.Add(tempString);
                         tempIcons.Add(tempIc);
+
+                        canDraw = true;
                     }
                     catch
                     {
@@ -87,18 +93,60 @@ namespace Vizualizace_Dat
                     double humiVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypeHumi);
 
                     humiString = humiVal + "%";
+
+                    canDraw = true;
                 }
-                catch{ }
+                catch 
+                {
+                    try
+                    {
+                        time = new DateTime(time.Year, time.Month, time.Day, 7, 0, 0);
+
+                        double humiVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypeHumi);
+
+                        humiString = humiVal + "%";
+
+                        canDraw = true;
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            time = new DateTime(time.Year, time.Month, time.Day, 21, 0, 0);
+
+                            double humiVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypeHumi);
+
+                            humiString = humiVal + "%";
+
+                            canDraw = true;
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
 
                 string presString = "";
                 try
                 {
                     double presVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypePres);
-                    presString = presVal + "hPa";
-                }
-                catch{ }
 
-                dataGrid.Rows.Add(dateTime, tempIc, temps[0], precIc, precs[0], tempIc, temps[1], precIc, precs[1], tempIc, temps[2], precIc, precs[2], humiString, presString);
+                    presString = presVal + "hPa";
+
+                    canDraw = true;
+                }
+                catch { }
+
+                if (canDraw)
+                {
+                    dataGrid.Rows.Add(dateTime, tempIcons[0], temps[0], precIcons[0], precs[0], tempIcons[1], temps[1], precIcons[1], precs[1], tempIcons[2], temps[2], precIcons[2], precs[2], humiString, presString);
+                }
+                else
+                {
+                    return;
+                }
+                
             }
         }
     }
