@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  11 APR 2021 16:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  20 APR 2021 12:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1278,32 +1278,27 @@ st / 49 . 820923 ,[] 18 . 262524 ? app _ id = MY _ ID & app _
  []
 
 [11]
-Overfull \hbox (9.99377pt too wide) in paragraph at lines 125--126
+<Data/Mdrd_ukazka.png, id=283, 684.3969pt x 435.0654pt>
+File: Data/Mdrd_ukazka.png Graphic file (type png)
+<use Data/Mdrd_ukazka.png>
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 126.
+(pdftex.def)             Requested size: 273.7539pt x 174.02306pt.
+
+Overfull \hbox (9.99377pt too wide) in paragraph at lines 131--132
 [][][]$\T1/lmtt/m/n/10.95 http : / / www . medard-[]online . cz / apiforecast ?
  run = 210313 _ 06 & forecast = precip & layer = eu &
  []
 
-<Data/Mdrd_ukazka.png, id=284, 684.3969pt x 435.0654pt>
-File: Data/Mdrd_ukazka.png Graphic file (type png)
-<use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 130.
-(pdftex.def)             Requested size: 342.1976pt x 217.53215pt.
-[12]
-<Data/Rb_ukazka.png, id=299, 796.47563pt x 577.40718pt>
+[12 <./Data/Mdrd_ukazka.png>]
+<Data/Rb_ukazka.png, id=298, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 150.
-(pdftex.def)             Requested size: 398.23685pt x 288.70288pt.
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 146.
+(pdftex.def)             Requested size: 318.58461pt x 230.95879pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 160.
-See the caption package documentation for explanation.
-
-
-Underfull \vbox (badness 3471) has occurred while \output is active []
-
- [13 <./Data/Mdrd_ukazka.png>] [14 <./Data/Rb_ukazka.png>]
+ [13 <./Data/Rb_ukazka.png>] [14]
 Kapitola 3.
 
 Overfull \hbox (1.73695pt too wide) in paragraph at lines 181--182
@@ -1427,19 +1422,26 @@ See the caption package documentation for explanation.
 Kapitola 5.
 [28
 
-] [29]
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Command \' invalid in math mode on input line 498.
+ [29]
 
-[30] [31] [32]
+LaTeX Warning: Command \' invalid in math mode on input line 500.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30]
+[31] [32] [33]
 Kapitola 6.
-[33
+[34
 
-] [34
+] [35
 
 ] (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: 7DB14A683D4B1B7F5CDA4E6AC9A92678;3742.
+(rerunfilecheck)             Checksum: ED3DC3111F9127C7C807969003279E18;3742.
 
 
 LaTeX Warning: There were undefined references.
@@ -1454,8 +1456,8 @@ Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26848 strings out of 479382
- 453076 string characters out of 5867828
+ 26849 strings out of 479382
+ 453090 string characters out of 5867828
  1168626 words of memory out of 5000000
  43439 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
@@ -1479,9 +1481,9 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (34 pages, 1797565 bytes).
+Output written on jed0050_dokument.pdf (35 pages, 1798447 bytes).
 PDF statistics:
- 566 PDF objects out of 1000 (max. 8388607)
- 111 named destinations out of 1000 (max. 500000)
+ 570 PDF objects out of 1000 (max. 8388607)
+ 112 named destinations out of 1000 (max. 500000)
  296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

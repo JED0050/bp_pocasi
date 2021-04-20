@@ -30,9 +30,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.1}Medard}{12}{subsection.2.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3.2}Radar.bourky}{12}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}Radar.bourky}{13}{subsection.2.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.4}Shrnutí použitých zdrojů}{13}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Shrnutí použitých zdrojů}{14}{section.2.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Agregace dat}{15}{chapter.3}%
 \defcounter {refsection}{0}\relax 
@@ -74,19 +74,19 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.3}Počasí v bodě}{29}{section.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}Počasí na trase}{29}{section.5.4}%
+\contentsline {section}{\numberline {5.4}Počasí na trase}{30}{section.5.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.5}Animace počasí}{30}{section.5.5}%
+\contentsline {section}{\numberline {5.5}Animace počasí}{31}{section.5.5}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.6}Graf}{31}{section.5.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.7}Nastavení a akce}{31}{section.5.7}%
+\contentsline {section}{\numberline {5.7}Nastavení a akce}{32}{section.5.7}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.8}Chyby při zobrazování dat}{32}{section.5.8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Závěr}{33}{chapter.6}%
+\contentsline {chapter}{\numberline {6}Závěr}{34}{chapter.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Literatura}{34}{chapter*.11}%
+\contentsline {chapter}{Literatura}{35}{chapter*.12}%
 \babel@toc {czech}{}
 \babel@toc {czech}{}
 \babel@toc {czech}{}

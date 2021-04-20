@@ -60,9 +60,9 @@
 	
 	\chapter{Úvod}
 	
-	Informace o počasí jsou v dnešní době distribuována mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde zprostředkovatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru či barevné bitmapy, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s vzájemnými rozestupy šesti hodin. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou sekundu či minutu, stačí nám předpověď jednou za pár desítek minut případně i pár hodin.
+	Informace o počasí jsou v dnešní době distribuovány mnoha službami v různých podobách. Nejčastěji narážíme na textové formáty (XML/JSON) kde zprostředkovatelé dodávají kompletní výpis informací pro stát, město nebo konkrétní bod na základě zeměpisných souřadnic. Mimo textový formát narážíme i na snímky z radaru či barevné bitmapy, které poskytují předpověď pro rozsáhlou plochu v konkrétním čase. Předpovědi jsou vytvářeny pro různé časové intervaly na rozdílnou dobu dopředu, můžete tedy například narazit na předpověď obsahující data na 24 hodin dopředu s hodinovými rozestupy nebo na týden s vzájemnými rozestupy šesti hodin. Vzhledem k tomu že ke změnám počasí dochází relativně pomalu tak není potřeba znát data pro každou sekundu či minutu, stačí nám předpověď jednou za pár desítek minut případně i pár hodin.
 	
-	Cílem této práce je tedy sjednotit různé datové zdroje do jednotného formátu a vytvořit předpověď počasí pro určitou plochu v čase dle průměru těchto dat. Mimo to že každá služba může mít data ve svém formátu, je potřeba i sjednotit časy a především pozice pro které se data zjišťují.
+	Cílem této práce je tedy sjednotit různé datové zdroje do jednotného formátu a vytvořit předpověď počasí pro určitou plochu v čase dle průměru těchto dat. Mimo to, že každá služba může mít data ve svém formátu, je potřeba i sjednotit časy a především pozice pro které se data zjišťují.
 	
 	Dalším úkolem je vytvořit službu která bude schopna tyto agregovaná data poskytovat na základě dotazů uživatele. Uživatel může žádat o poskytnutí dat pro určitou plochu v patřičném čase, čímž obdrží patřičnou bitmapu. Případně může zažádat o předpověď v jednom bodě pro jeden či více časů s různými rozestupy.
 	
@@ -78,11 +78,11 @@
 	
 	\subsection{Yr.no}
 	
-	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr \cite{yrno}. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML forma pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
+	Tímto datovým zdrojem je norská meteorologická služba zvaná Yr \cite{yrno}. Poskytují data o počasí pokrývající celý svět, lze si stáhnout data pro určité město pomocí zadání jeho názvu nebo bod založený na zeměpisných souřadnicích. Předpovědi jsou vždy od aktuálního času na 9 dnů dopředu a rozpětí mezi jednotlivými předpověďmi je 1 hodina pro následující 3 dny a 6 hodin pro zbylých 6 dnů. Předpověď vždy začíná od aktuálního času zaokrouhleného na hodiny dolů. Veškeré informace jsou v podobě XML případně JSON dokumentu. V práci se využívá XML formát pro ukázku využití odlišných forem předání dat, i když JSON formát je praktičtější a preferovanější z důvodů jako je snazší deserializace a potřeba stáhnout objemově mnohem méně dat.
 	
-	Při využívání této služby se používá API, které pro zadaná bod vrací počasí. To znamená že pro určení dat stačí znát pouze zeměpisné souřadnice zvoleného bodu a ty zadat jako parametry {\it lon} a {\it lat}.
+	Při využívání této služby se používá API, které pro zadaný bod vrací počasí. To znamená že pro určení dat stačí znát pouze zeměpisné souřadnice zvoleného bodu a ty zadat jako parametry {\it lon} a {\it lat}.
 	
-	Ukázka odkazu který vrací XML text obsahujících data o počasí pro Ostravu na následujících 9 dnů.
+	Ukázka odkazu který vrací XML text obsahující data o počasí pro Ostravu na následujících 9 dnů.
 	\begin{itemize}
 		\item \url{https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923\&lon=18.262524}
 	\end{itemize}
@@ -95,7 +95,7 @@
 	
 	Dalším datovým zdrojem v podobě textu je OpenWeather \cite{owm}. Tato služba poskytuje data ve formátu JSON na 5 dnů dopředu s časovým rozmezím 3 hodin. Data se dají získat pro určité město či vesnici případně pro konkrétní bod na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 60 dotazů na server za minutu. Tento limit stačí pokud zjišťujete pouze počasí pro jednotlivé body, při určování počasí na ploše (potřeba zjištění počasí na tisíci různých místech) je tento limit omezující a nutí nás čekat na stažení veškerých dat. Placené verze nám dovolují 600, 3 000, 30 000 a 200 000 dotazů na server dle koupeného balíčku.
 	
-	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč obdržený při registraci.
+	Ukázka odkazu který vrací JSON text obsahující data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč obdržený při registraci.
 	
 	\begin{itemize}
 		\item \url{https://api.openweathermap.org/data/2.5/forecast?lat=49.820923\&lon=18.262524\&appid=MY\_KEY}
@@ -103,9 +103,9 @@
 	
 	\subsection{WeatherUnlocked}
 	
-	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked \cite{weun}. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se opět dají získat pro určité body na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
+	Druhým datovým zdrojem který poskytuje text ve formátu JSON je WeatherUnlocked \cite{weun}. Tato služba dodává data opět na 5 dnů dopředu s časovým rozdílem 3 hodin. Data se rovněž dají získat pro určité body na základě zeměpisných souřadnic. Pro získání dat o počasí je potřeba vlastnit API key, který obdrží každý zaregistrovaný uživatel u této služby. Pokud používáte neplacenou verzi této služby tak jste omezeni na 75 dotazů na server za minutu. Při zakoupení určitých balíčků u služby tento limit mnohonásobně stoupá.
 	
-	Ukázka odkazu který vrací JSON text obsahujících data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč včetně ID získaný při registraci.
+	Ukázka odkazu který vrací JSON text obsahující data o počasí pro Ostravu na následujících 5 dnů. Při využívání tohoto API stačí zadat zeměpisné souřadnice bodu a API klíč včetně ID získaný při registraci.
 	
 	\begin{itemize}
 		\item \url{http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app\_id=MY\_ID\&app\_key=MY\_KEY}
@@ -113,49 +113,49 @@
 	
 	\section{Bitmap}
 	
-	Posledním zpracovávaným typem jsou bitmapy, ať už přímo snímky z radaru nebo již zpracované obrázky s daty o počasí. Velkou výhodou bitmap je, že poskytují grafické znázornění stavu počasí na jakkoliv rozsáhlé ploše. Nevýhodou je že bitmapa obsahuje data v jednom čase a především pro pouze jeden meteorologický prvek. Proto je potřeba stahovat mnoho bitmap při určování kompletního počasí v jednom bodě pro více časů, nicméně pro určení jednoho prvku v celé ploše stačí pouze jedna.
+	Posledním zpracovávaným typem jsou bitmapy, ať už přímo snímky z radaru nebo již zpracované obrázky s daty o počasí. Velkou výhodou bitmap je, že reprezentují grafické znázornění stavu počasí na jakkoliv rozsáhlé ploše. Nevýhodou je že bitmapa obsahuje data v jednom čase a především pro pouze jeden meteorologický prvek. Proto je potřeba stahovat mnoho bitmap při určování kompletního počasí v jednom bodě pro více časů, nicméně pro určení jednoho prvku v celé ploše stačí pouze jedna.
 	
 	\subsection{Medard}
 	
 	Medard \cite{medard} je webová služba poskytující informace o počasí ve formě bitmap. Bitmapy pokrývají celou Evropu a umožňují nám zjistit počasí na 5 dnů dopředu s pouze jedno hodinovým rozestupem. Díky nízkému časovému rozestupu je možné získávat velice přesná data. Bitmapy s daty jsou uloženy vedle sebe do jednoho velkého obrázku který je následně potřeba rozdělit do jednotlivých částí.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Při využívání tohoto API je zapotřebí zadat čas poslední vytvořené bitmapy touto službou. Čas je ve formátu {\it YYMMDD\_HH}, k nalezení platného času stačí cyklicky projít data a časy od toho aktuálního a vracet se po jedné hodině zpět než se narazí na ten správný. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
+	Zobrazená ukázka vrací bitmapu obsahující data o počasí pro Evropu v jednom aktuálním čase. Při využívání tohoto API je zapotřebí zadat čas poslední vytvořené bitmapy touto službou. Čas je ve formátu {\it YYMMDD\_HH}, k nalezení platného času stačí cyklicky projít data a časy od toho aktuálního a vracet se po jedné hodině zpět než se narazí na ten správný. Součástí ukázky je i samotná bitmapa \emph{Medard\_bitmapa} \cite{medard}.
+	
+	\begin{figure}[b!]
+		\centering
+		\includegraphics[scale=0.4]{Data/Mdrd_ukazka.png}
+		\caption{Bitmapy od Medard-online \cite{medard}}
+	\end{figure}
 	
 	\begin{itemize}
 		\item \url{http://www.medard-online.cz/apiforecast?run=210313\_06\&forecast=precip\&layer=eu\&step=13}
 	\end{itemize}
 	
-	\begin{figure}
-		\centering
-		\includegraphics[scale=0.5]{Data/Mdrd_ukazka.png}
-		\caption{Bitmapy od Medard-online \cite{medard}}
-	\end{figure}
-	
 	\subsection{Radar.bourky}
 	
-	Radar.bourky \cite{chmi} je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap. Tento datový zdroj je prakticky nepoužitelný pro určování budoucího počasí, protože poskytuje data pouze v aktuálním čase, mimo srážky neposkytuje jiné prvky počasí a také pokrývá pouze Českou Republiku s blízkým okolím.
+	Radar.bourky \cite{chmi} je datový zdroj který poskytuje data prostřednictvím snímků z radaru, data jsou tedy ve formátu bitmap a obsahují velice detailní předpověď. Tento datový zdroj je prakticky nepoužitelný pro určování budoucího počasí, protože poskytuje data pouze v aktuálním čase, mimo srážky neposkytuje jiné prvky počasí a také pokrývá pouze Českou republiku s blízkým okolím.
 	
 	Na druhou stranu tento zdroj uchovává informace o srážkách tři dny dozadu s časovým rozdílem pouhých 10 minut. Díky tomu se dá tento zdroj použít pro přesné zobrazení srážek v minulosti případně odhad počasí v následujících hodinách na základě velice přesného posunu hodnot na snímcích.
 	
-	Proto se zdroj využívá pouze pro určení srážek v aktuálním čase případně následujících šesti hodinách nebo pro určení srážek v minulých dnech s přesným posunem po deseti minutách.
+	Proto se zdroj využívá pouze pro určení srážek v aktuálním čase případně následujících pár hodinách nebo pro určení srážek v minulých dnech s přesným posunem po deseti minutách.
 	
-	Ukázka odkazu který vrací bitmapu obsahujících data o počasí Evropu v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}. Při využívání tohoto API je zapotřebí zadat čas požadovaného snímku tento čas je vždy ve formátu {\it YYYYMMDD.HHMM}. Nejnovější snímek z radaru je vždy ten z aktuálního času zaokrouhlený dolů na desítky minut.
+	Ukázka odkazu který vrací bitmapu obsahující data o počasí pro Česko v jednom aktuálním čase. Součástí ukázky je i samotná bitmapa \emph{Radar.bourky\_bitmapa} \cite{chmi}. Při využívání tohoto API je zapotřebí zadat čas požadovaného snímku tento čas je vždy ve formátu {\it YYYYMMDD.HHMM}. Nejnovější snímek z radaru je vždy ten z aktuálního času zaokrouhlený dolů na desítky minut.
+	
+	\begin{figure}[b!]
+		\centering
+		\includegraphics[scale=0.4]{Data/Rb_ukazka.png}
+		\caption{Snímek z radaru od Radar.bourky \cite{chmi}}
+	\end{figure}
 	
 	\begin{itemize}
 		\item \url{http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png}
 	\end{itemize}
 	
-	\begin{figure}
-		\centering
-		\includegraphics[scale=0.5]{Data/Rb_ukazka.png}
-		\caption{Snímek z radaru od Radar.bourky \cite{chmi}}
-	\end{figure}
-	
 	\section{Shrnutí použitých zdrojů}
 	
 	Spousta datových zdrojů poskytujících data ve formě textu umožňuje poskytování dat jak v JSON tak XML formátu. Rovněž tak poskytují i informace o meteorologických prvcích jako rychlost a směr větru, čas východu a západu slunce nebo pocitovou teplotu vůči reálné teplotě. V práci se využívaly jen 4 základní prvky předpovědi a jen jeden předem zvolený způsob formátování dat. Proto se v tabulce shrnutí použitých zdrojů zobrazují pouze využívané prvky samotnou agregační knihovnou a jen jeden zvolený typ poskytnutých dat.
 	
-	\begin{center}
+	\begin{table}[h]
 		
 		\captionof{table}{Shrnutí vlastností datových zdrojů}
 		
@@ -172,7 +172,7 @@
 			\multicolumn{7}{r}{\footnotesize *s = srážky, v = vlhkost, t1 = teplota, t2 = tlak}\\
 			
 		\end{tabular}
-	\end{center}
+	\end{table}
 	
 	\chapter{Agregace dat}
 	
@@ -209,7 +209,7 @@
 		\item Sousední páry trojúhelníků této triangulace musí být \uv{převráceny} aby došlo k vytvoření Delaunayovi triangulace z počáteční nepřekrývající se triangulace.
 	\end{enumerate}
 	
-	\begin{figure}
+	\begin{figure}[h]
 		\centering
 		\includegraphics{Data/bmp_triangulace.png}
 		\caption{S-hull pro 500 náhodně generovaných bodů v matici 300x300}
@@ -487,7 +487,9 @@
 	
 	\section{Počasí v bodě}
 	
-	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný. Mimo znázorňování počasí dvojitým kliknutím lze bod vybrat i napsáním názvu hledaného místa do textového pole v pravé dolní části mapy. Pokud uživatel napíše do tohoto pole název místa a akci potvrdí enterem, dojde k vyhodnocení textu a převodu na pravděpodobně smýšlené body službou Mapbox \cite{mapbox} z kterých je vybrán ten nejvěrohodnější. 
+	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný. Součástí této předpovědi je i zobrazení tabulky s detailem o počasí popisujícím hodnoty různých prvků na následujících 5 dní, tento detail je možné v nastavení vypnout.
+	
+	Mimo znázorňování počasí dvojitým kliknutím lze bod vybrat i napsáním názvu hledaného místa do textového pole v pravé dolní části mapy. Pokud uživatel napíše do tohoto pole název místa a akci potvrdí enterem, dojde k vyhodnocení textu a převodu na pravděpodobně smýšlené body službou Mapbox \cite{mapbox} z kterých je vybrán ten nejvěrohodnější. 
 	
 	Při zjišťování počasí v bodě se využívají data z bitmapy kterou si aplikace stáhla z webového serveru ve chvíli co byl zvolen prvek počasí, datový zdroj a čas. Z této bitmapy se určí pixel obsahující data o počasí pro požadovaný bod a pomocí škály je RGB hodnota převedena na desetinné číslo.
 	
@@ -543,7 +545,7 @@
 	
 	Hlavní část této práce byla analýza různých datových zdrojů s daty o počasí a jejich následné využití pro poskytování vlastních agregovaných dat. Bylo zapotřebí zjistit jak každý ze zdrojů funguje a najít ideální řešení pro jeho využití v práci. Celá knihovna Agregace Dat byla vytvářena s předpokladem průběžného rozšíření o nové zdroje. Následně bylo zapotřebí najít ideální způsob poskytování zpracovaných dat pomocí webové služby, zjistit jak ideálně data ukládat a hledat. Nakonec se veškerá poskytovaná data zobrazila prostřednictvím vizualizační aplikace pro demonstraci možného využití dodávaných dat.
 	
-	Při zpracovávání této práce jsem se naučil jak psát více vzájemně kooperujících projektů současně. Pochopil jsem jakým způsobem služby s daty o počasí poskytují svá data a proč každá poskytuje své informace trochu jiným způsobem. Zjistil jsem jakým způsobem získávat data pomocí různých API a jak důležitý je jednoduchý a zároveň plně funkční návrh tohoto rozhraní. Ke konci práce jsem si uvědomil důležitost dobrého návrhu celé práce před samotnou realizací. Problémy vzniklé při změně funkcionality a složitému rozšíření některých částí se mohli s lepším návrhem řešit mnohem snadněji.
+	Při zpracovávání této práce jsem se naučil jak psát více vzájemně kooperujících projektů současně. Pochopil jsem jakým způsobem služby s daty o počasí poskytují svá data a proč každá poskytuje své informace trochu jiným způsobem. Zjistil jsem jakým způsobem získávat data pomocí různých API a jak důležitý je jednoduchý a zároveň plně funkční návrh tohoto rozhraní. Ke konci práce jsem si uvědomil důležitost dobrého návrhu celé práce před samotnou realizací. Problémy vzniklé při změně funkcionality a složitém rozšíření některých částí se mohli s lepším návrhem řešit mnohem snadněji.
 	
 	\printbibliography[title={Literatura}, heading=bibintoc]
 	
