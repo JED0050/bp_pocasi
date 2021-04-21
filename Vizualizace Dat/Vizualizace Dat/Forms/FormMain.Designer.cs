@@ -55,6 +55,9 @@
             this.modráToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.červenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zelenáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailPočasíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nezobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.akceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nahrátCestuZGPXSouboruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.přemazatMapuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,11 +105,10 @@
             this.bRouteNewTime = new System.Windows.Forms.Button();
             this.tBPointName = new System.Windows.Forms.TextBox();
             this.bCityNameSearch = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lPB = new System.Windows.Forms.Label();
             this.pBScale = new System.Windows.Forms.PictureBox();
             this.bAnim = new System.Windows.Forms.Button();
-            this.detailPočasíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nezobrazovatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tLPTimeMarks.SuspendLayout();
@@ -366,6 +368,29 @@
             this.zelenáToolStripMenuItem.Text = "Zelená";
             this.zelenáToolStripMenuItem.Click += new System.EventHandler(this.zelenáToolStripMenuItem_Click);
             // 
+            // detailPočasíToolStripMenuItem
+            // 
+            this.detailPočasíToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zobrazovatToolStripMenuItem,
+            this.nezobrazovatToolStripMenuItem});
+            this.detailPočasíToolStripMenuItem.Name = "detailPočasíToolStripMenuItem";
+            this.detailPočasíToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.detailPočasíToolStripMenuItem.Text = "Detail počasí";
+            // 
+            // zobrazovatToolStripMenuItem
+            // 
+            this.zobrazovatToolStripMenuItem.Name = "zobrazovatToolStripMenuItem";
+            this.zobrazovatToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.zobrazovatToolStripMenuItem.Text = "Zobrazovat";
+            this.zobrazovatToolStripMenuItem.Click += new System.EventHandler(this.zobrazovatToolStripMenuItem_Click);
+            // 
+            // nezobrazovatToolStripMenuItem
+            // 
+            this.nezobrazovatToolStripMenuItem.Name = "nezobrazovatToolStripMenuItem";
+            this.nezobrazovatToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.nezobrazovatToolStripMenuItem.Text = "Nezobrazovat";
+            this.nezobrazovatToolStripMenuItem.Click += new System.EventHandler(this.nezobrazovatToolStripMenuItem_Click);
+            // 
             // akceToolStripMenuItem
             // 
             this.akceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -426,6 +451,10 @@
             this.checkBox1.Text = "Radar.Bourky";
             this.checkBox1.UseVisualStyleBackColor = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBoxLoaders_CheckedChanged);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
             // 
             // checkBox2
             // 
@@ -970,6 +999,24 @@
             this.bCityNameSearch.UseVisualStyleBackColor = true;
             this.bCityNameSearch.Click += new System.EventHandler(this.bCityNameSearch_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.progressBar1.Location = new System.Drawing.Point(338, 647);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(351, 23);
+            this.progressBar1.TabIndex = 47;
+            // 
+            // lPB
+            // 
+            this.lPB.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lPB.AutoSize = true;
+            this.lPB.Location = new System.Drawing.Point(475, 633);
+            this.lPB.Name = "lPB";
+            this.lPB.Size = new System.Drawing.Size(74, 13);
+            this.lPB.TabIndex = 48;
+            this.lPB.Text = "zpracovávám.";
+            // 
             // pBScale
             // 
             this.pBScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -993,35 +1040,14 @@
             this.bAnim.UseVisualStyleBackColor = false;
             this.bAnim.Click += new System.EventHandler(this.bAnim_Click);
             // 
-            // detailPočasíToolStripMenuItem
-            // 
-            this.detailPočasíToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zobrazovatToolStripMenuItem,
-            this.nezobrazovatToolStripMenuItem});
-            this.detailPočasíToolStripMenuItem.Name = "detailPočasíToolStripMenuItem";
-            this.detailPočasíToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.detailPočasíToolStripMenuItem.Text = "Detail počasí";
-            // 
-            // zobrazovatToolStripMenuItem
-            // 
-            this.zobrazovatToolStripMenuItem.Name = "zobrazovatToolStripMenuItem";
-            this.zobrazovatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.zobrazovatToolStripMenuItem.Text = "Zobrazovat";
-            this.zobrazovatToolStripMenuItem.Click += new System.EventHandler(this.zobrazovatToolStripMenuItem_Click);
-            // 
-            // nezobrazovatToolStripMenuItem
-            // 
-            this.nezobrazovatToolStripMenuItem.Name = "nezobrazovatToolStripMenuItem";
-            this.nezobrazovatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nezobrazovatToolStripMenuItem.Text = "Nezobrazovat";
-            this.nezobrazovatToolStripMenuItem.Click += new System.EventHandler(this.nezobrazovatToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.lPB);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.bCityNameSearch);
             this.Controls.Add(this.tLPTimeMarks);
             this.Controls.Add(this.tBPointName);
@@ -1150,6 +1176,8 @@
         private System.Windows.Forms.ToolStripMenuItem detailPočasíToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zobrazovatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nezobrazovatToolStripMenuItem;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lPB;
     }
 }
 

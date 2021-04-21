@@ -19,7 +19,7 @@ namespace Vizualizace_Dat
         private ForecType forecTypeHumi = new ForecType(ForecastTypes.HUMIDITY);
         private ForecType forecTypePres = new ForecType(ForecastTypes.PRESSURE);
 
-        public FormPrecipDetail(DateTime selectedTime, PointLatLng point, string validLoaders, List<PointLatLng> bounds)
+        public FormPrecipDetail(DateTime selectedTime, PointLatLng point, string validLoaders, List<PointLatLng> bounds, FormMain mainForm)
         {
             InitializeComponent();
 
@@ -51,6 +51,8 @@ namespace Vizualizace_Dat
 
                     try
                     {
+                        mainForm.ProgressBarIncrement();
+
                         double precValue = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypePrec);
 
                         string precString = precValue + "mm";
@@ -69,6 +71,8 @@ namespace Vizualizace_Dat
 
                     try
                     {
+                        mainForm.ProgressBarIncrement();
+
                         double tempValue = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypeTemp);
 
                         string tempString = tempValue + "°";
@@ -90,6 +94,8 @@ namespace Vizualizace_Dat
                 string humiString = "";
                 try
                 {
+                    mainForm.ProgressBarIncrement();
+
                     double humiVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypeHumi);
 
                     humiString = humiVal + "%";
@@ -130,6 +136,8 @@ namespace Vizualizace_Dat
                 string presString = "";
                 try
                 {
+                    mainForm.ProgressBarIncrement();
+
                     double presVal = BitmapHandler.GetFullPrecInPoint(time, point, validLoaders, bounds, forecTypePres);
 
                     presString = presVal + "hPa";

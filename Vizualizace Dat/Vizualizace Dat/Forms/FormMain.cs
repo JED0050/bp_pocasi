@@ -70,6 +70,8 @@ namespace Vizualizace_Dat
             bClearRoute.Visible = false;
             bRouteNewTime.Visible = false;
 
+            ProgressBarHide();
+
             ValidetaTrackbarTimeMarks();
 
             selectedTime = DateTime.Now;
@@ -264,6 +266,11 @@ namespace Vizualizace_Dat
         private void mouseDoubleClickInMap(object sender, MouseEventArgs e)
         {
 
+            if(ApkConfig.ShowDialogWindow)
+                ProgressBarShow(ApkConfig.DblclickMaxData + 56);
+            else
+                ProgressBarShow(ApkConfig.DblclickMaxData);
+
             int x = BitmapHandler.GetX(lonD, dataBitmap.Width, bounds[0].Lng, bounds[1].Lng);
             int y = BitmapHandler.GetY(latD, dataBitmap.Height, bounds[0].Lat, bounds[1].Lat);
 
@@ -284,7 +291,7 @@ namespace Vizualizace_Dat
             clearMarkers();
             gMap.Overlays.Remove(routes);
 
-            if(!isBitmapShown)
+            if (!isBitmapShown)
             {
                 drawBitmapFromServer();
             }
@@ -303,6 +310,8 @@ namespace Vizualizace_Dat
                 try
                 {
                     val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), doubleclickedPoint, validLoaders, bounds, forecType);
+
+                    ProgressBarIncrement();
                 }
                 catch (Exception ex)
                 {
@@ -335,6 +344,8 @@ namespace Vizualizace_Dat
             {
                 MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {exMsg}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            ProgressBarHide();
 
         }
 
@@ -379,7 +390,7 @@ namespace Vizualizace_Dat
             }
             else if (listMarkers.Count >= 2)
             {
-                if(dontRedrawRoute)
+                if (dontRedrawRoute)
                 {
                     return;
                 }
@@ -399,7 +410,7 @@ namespace Vizualizace_Dat
                 catch
                 { }
 
-                foreach(var col in graphCols)
+                foreach (var col in graphCols)
                 {
                     try
                     {
@@ -486,7 +497,7 @@ namespace Vizualizace_Dat
 
             foreach (var point in customRoute.GetAllRoutePoints())
             {
-                if(c == 0)
+                if (c == 0)
                 {
                     lastTime = point.Time;
                     lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, lastTime, validLoaders, bounds);
@@ -503,7 +514,7 @@ namespace Vizualizace_Dat
                 {
                     value = BitmapHandler.GetFullPrecInPoint(lastTime, point.Point, validLoaders, bounds, forecType, lastBitmap);
                 }
-                catch{ }
+                catch { }
 
                 CustomRoutePoint newPoint = point;
                 //newPoint.Time = point.Time;
@@ -515,7 +526,7 @@ namespace Vizualizace_Dat
                 else
                     newRoute.AddPoint(newPoint);
 
-                if(c == 0)
+                if (c == 0)
                 {
                     listMarkers.Add(new GMarkerGoogle(point.Point, GMarkerGoogleType.red_small));
                     listMarkers[0].ToolTipText = $"Start\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
@@ -670,7 +681,7 @@ namespace Vizualizace_Dat
                 firstDate = firstDate.AddHours(1);
             }
 
-            if(min < 0)
+            if (min < 0)
             {
                 double perc = (incVal + 0) / (double)(max - min);
 
@@ -736,14 +747,14 @@ namespace Vizualizace_Dat
                     TimeSpan dTSpan = endTime - beginTime;
                     hourDif = dTSpan.TotalHours;
 
-                    if(hourDif < 0)
+                    if (hourDif < 0)
                     {
                         throw new Exception("Čas počátku cesty musí předcházet času konce cesty.");
                     }
 
                     hasBeginAndEndTimes = true;
                 }
-                else if(dialogResult == DialogResult.No)
+                else if (dialogResult == DialogResult.No)
                 {
                     FormGpxBeginTime gpxBeginTimeForm = new FormGpxBeginTime("Zvol počáteční čas cesty", null);
                     dialogResult = gpxBeginTimeForm.ShowDialog();
@@ -805,6 +816,8 @@ namespace Vizualizace_Dat
                         throw new Exception("Nebyl nalezen dostatečný počet bodů");
                     }
 
+                    ProgressBarShow(routePoints.Count);
+
                     int numOfGraphCols = 10; //včetně začátku a cíle
                     int step = routePoints.Count / (numOfGraphCols - 1);
 
@@ -813,8 +826,8 @@ namespace Vizualizace_Dat
                     if (hasBeginAndEndTimes)
                     {
                         double fullDistanceKm = 0;
-                        
-                        for(int i = 0; i < routePoints.Count - 1; i++)
+
+                        for (int i = 0; i < routePoints.Count - 1; i++)
                         {
                             fullDistanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]);
                         }
@@ -829,6 +842,8 @@ namespace Vizualizace_Dat
 
                     for (int i = 0; i < routePoints.Count; i++)
                     {
+                        ProgressBarIncrement();
+
                         double value = 0;
                         double timeMin = 0;
 
@@ -858,7 +873,7 @@ namespace Vizualizace_Dat
                                 endTime = beginTime.AddMinutes(timeMin);
                             }
 
-                            if((endTime - lastTime).TotalMinutes >= 30 || (endTime.Minute > 30 && lastTime.Minute <= 30))
+                            if ((endTime - lastTime).TotalMinutes >= 30 || (endTime.Minute > 30 && lastTime.Minute <= 30))
                             {
                                 lastBitmap = BitmapHandler.GetBitmapFromServer(forecType.Type, endTime, validLoaders, bounds);
                             }
@@ -919,7 +934,7 @@ namespace Vizualizace_Dat
 
                         distanceKm += BitmapHandler.GetDistance(routePoints[i], routePoints[i + 1]) / 1000;
 
-                        if(i % 20 == 0 && i != 0 && i != routePoints.Count - 1) //přidávání tooltipů na trase
+                        if (i % 20 == 0 && i != 0 && i != routePoints.Count - 1) //přidávání tooltipů na trase
                         {
                             string takesTime = "";
 
@@ -932,7 +947,7 @@ namespace Vizualizace_Dat
                                 takesTime = Math.Floor(customPoint.TakesTime / 60) + "h " + Math.Round(customPoint.TakesTime % 60) + "min";
                             }
 
-                            routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10,10)));
+                            routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10, 10)));
                             routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
                             markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                         }
@@ -971,6 +986,8 @@ namespace Vizualizace_Dat
             {
                 MessageBox.Show(ex.Message, "Chyba při zpracování gpx souboru", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            ProgressBarHide();
         }
 
         private void přemazatMapuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -984,6 +1001,8 @@ namespace Vizualizace_Dat
             routePoints.Clear();
 
             GraphClear();
+
+            ProgressBarHide();
         }
 
         private void nastavitVýchozíAdresuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1009,9 +1028,9 @@ namespace Vizualizace_Dat
         {
             double stepVal = trackBar1.Maximum / (tLPTimeMarks.ColumnCount - 2);
             DateTime dateTimeNow = DateTime.Now;
-            dateTimeNow = dateTimeNow.AddMinutes(- dateTimeNow.Minute % 10).AddHours(-6);
+            dateTimeNow = dateTimeNow.AddMinutes(-dateTimeNow.Minute % 10).AddHours(-6);
 
-            for (int i = 1; i < tLPTimeMarks.ColumnCount -1; i++)
+            for (int i = 1; i < tLPTimeMarks.ColumnCount - 1; i++)
                 tLPTimeMarks.Controls[i].Text = dateTimeNow.AddMinutes(Math.Ceiling(stepVal / 2 + (i - 1) * stepVal) * 10).ToString("dd.MM. HH:mm");
 
         }
@@ -1033,7 +1052,7 @@ namespace Vizualizace_Dat
 
                 if (res == 1)
                 {
-                    selectedTime = selectedTime.AddMinutes(- ApkConfig.AnimStepMinutes);
+                    selectedTime = selectedTime.AddMinutes(-ApkConfig.AnimStepMinutes);
                     trackBar1.Value -= (ApkConfig.AnimStepMinutes / 10);
 
                     break;
@@ -1118,11 +1137,11 @@ namespace Vizualizace_Dat
 
                         dataBitmap = transparentBitmap;
 
-                        if((zoomLevel == -1 && (int)gMap.Zoom == 9) || zoomLevel != -1)
+                        if ((zoomLevel == -1 && (int)gMap.Zoom == 9) || zoomLevel != -1)
                         {
                             zoomLevel = (int)gMap.Zoom;
                         }
-                        
+
                     }
 
                     bitmapOverlay.Markers.Remove(bitmapMarker);
@@ -1175,6 +1194,9 @@ namespace Vizualizace_Dat
         {
             if (areDataSendByUser)
             {
+                ProgressBarShow(1);
+                ProgressBarIncrement();
+
                 string jsonLoaders = "";
 
                 if (checkBox1.Checked)
@@ -1213,6 +1235,8 @@ namespace Vizualizace_Dat
                 drawBitmapFromServer();
 
                 DrawNewGraphForSamePoint();
+
+                ProgressBarHide();
             }
         }
 
@@ -1242,12 +1266,12 @@ namespace Vizualizace_Dat
 
         private void rBTemp_CheckedChanged(object sender, EventArgs e)
         {
-            
-            if(rBPrec.Checked)
+
+            if (rBPrec.Checked)
             {
                 forecType = forecTypePrec;
             }
-            else if(rBTemp.Checked)
+            else if (rBTemp.Checked)
             {
                 forecType = forecTypeTemp;
             }
@@ -1262,7 +1286,7 @@ namespace Vizualizace_Dat
 
             RadioButton rB = (RadioButton)sender;
 
-            if(rB.Checked)
+            if (rB.Checked)
             {
                 ValidateDataLoaders();
 
@@ -1272,7 +1296,7 @@ namespace Vizualizace_Dat
                 lScaleMin.Text = forecType.GraphMinValue.ToString();
                 lScaleMax.Text = forecType.GraphMaxValue.ToString();
 
-                if(customRoute.GetAllRoutePoints().Count == 0)
+                if (customRoute.GetAllRoutePoints().Count == 0)
                     GraphClear();
 
                 if (areDataSendByUser)
@@ -1280,6 +1304,12 @@ namespace Vizualizace_Dat
                     DrawNewGraphForSamePoint();
                     ApkConfig.ForecastType = forecType.Type;
                 }
+                ProgressBarHide();
+            }
+            else
+            {
+                ProgressBarShow(1);
+                ProgressBarIncrement();
             }
         }
 
@@ -1290,7 +1320,7 @@ namespace Vizualizace_Dat
             {
                 checkBox1.Enabled = false;
             }
-            else if(rBTemp.Checked || rBPres.Checked || rBHumi.Checked)
+            else if (rBTemp.Checked || rBPres.Checked || rBHumi.Checked)
             {
                 checkBox1.Enabled = false;
             }
@@ -1304,7 +1334,7 @@ namespace Vizualizace_Dat
             {
                 checkBox2.Enabled = false;
             }
-            else if(rBPres.Checked || rBHumi.Checked)
+            else if (rBPres.Checked || rBHumi.Checked)
             {
                 checkBox2.Enabled = false;
             }
@@ -1349,7 +1379,7 @@ namespace Vizualizace_Dat
 
         private void pGraph_Paint(object sender, PaintEventArgs e)
         {
-            if(graphCols.Count == 0)
+            if (graphCols.Count == 0)
             {
                 //base.OnPaint(e);
                 using (Graphics g = e.Graphics)
@@ -1384,7 +1414,7 @@ namespace Vizualizace_Dat
 
                 val = ApkConfig.DblclickMaxData;
 
-                if(graphCols.Count == 0)
+                if (graphCols.Count == 0)
                     GraphClear();
             }
             catch
@@ -1428,7 +1458,7 @@ namespace Vizualizace_Dat
 
         private void gMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            if(listMarkers.Count == 1)
+            if (listMarkers.Count == 1)
             {
                 if (item == listMarkers[0])
                 {
@@ -1463,7 +1493,7 @@ namespace Vizualizace_Dat
                         scale.Save(scaleName, ImageFormat.Png);
                         scale.Dispose();
 
-                        if(type == ForecastTypes.TEMPERATURE)
+                        if (type == ForecastTypes.TEMPERATURE)
                         {
                             forecTypeTemp = new ForecType(type);
                         }
@@ -1635,6 +1665,8 @@ namespace Vizualizace_Dat
                     throw new Exception("Nebyl nalezen dostatečný počet bodů");
                 }
 
+                ProgressBarShow(routePoints.Count);
+
                 int numOfGraphCols = 10; //včetně začátku a cíle
                 int step = routePoints.Count / (numOfGraphCols - 1);
 
@@ -1659,6 +1691,8 @@ namespace Vizualizace_Dat
 
                 for (int i = 0; i < routePoints.Count; i++)
                 {
+                    ProgressBarIncrement();
+
                     double value = 0;
                     double timeMin = 0;
 
@@ -1796,20 +1830,26 @@ namespace Vizualizace_Dat
             {
                 MessageBox.Show(ex.Message, "Chyba při zadávání nového času trasy", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                if(customRoute.GetAllRoutePoints().Count == 0)
+                if (customRoute.GetAllRoutePoints().Count == 0)
                 {
                     clearMarkers();
                     drawBitmapFromServer();
                 }
             }
+
+            ProgressBarHide();
         }
 
         private void bCityNameSearch_Click(object sender, EventArgs e)
         {
-            if(tBPointName.Text.Length > 0 && tBPointName.ForeColor == Color.Black)
+            if (tBPointName.Text.Length > 0 && tBPointName.ForeColor == Color.Black)
             {
-                //Debug.WriteLine(tBPointName.Text);
                 gMap.Focus();
+
+                if (ApkConfig.ShowDialogWindow)
+                    ProgressBarShow(ApkConfig.DblclickMaxData + 56);
+                else
+                    ProgressBarShow(ApkConfig.DblclickMaxData);
 
                 doubleclickedPoint = BitmapHandler.GetPointCoordFromCityName(tBPointName.Text);
 
@@ -1848,6 +1888,8 @@ namespace Vizualizace_Dat
 
                     try
                     {
+                        ProgressBarIncrement();
+
                         val = BitmapHandler.GetFullPrecInPoint(selectedTime.AddHours(i), doubleclickedPoint, validLoaders, bounds, forecType);
                     }
                     catch (Exception ex)
@@ -1880,6 +1922,8 @@ namespace Vizualizace_Dat
                 {
                     MessageBox.Show($"Chyba, ze serveru se nepodařilo stáhnout potřebná data! Zkuste změnit datové zdroje, čas či typ předpovědi.\n\nOdpověď serveru: {exMsg}", "Chyba při získávání dat", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                ProgressBarHide();
             }
         }
 
@@ -1913,9 +1957,9 @@ namespace Vizualizace_Dat
 
         private void ShowWeatherWindow()
         {
-            if(ApkConfig.ShowDialogWindow)
+            if (ApkConfig.ShowDialogWindow)
             {
-                FormPrecipDetail formPrecipDetail = new FormPrecipDetail(selectedTime, doubleclickedPoint, validLoaders, bounds);
+                FormPrecipDetail formPrecipDetail = new FormPrecipDetail(selectedTime, doubleclickedPoint, validLoaders, bounds, this);
                 formPrecipDetail.Show();
             }
         }
@@ -1975,7 +2019,7 @@ namespace Vizualizace_Dat
                 }
 
             }
-                
+
         }
 
         private void zobrazovatToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1986,6 +2030,47 @@ namespace Vizualizace_Dat
         private void nezobrazovatToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApkConfig.ShowDialogWindow = false;
+        }
+
+        public void ProgressBarIncrement()
+        {
+            if(progressBar1.Maximum >= progressBar1.Value + 1)
+                progressBar1.Value += 1;
+
+            int dotCount = lPB.Text.Count(c => c == '.');
+
+            if (dotCount < 3)
+                dotCount++;
+            else
+                dotCount = 0;
+
+            lPB.Text = "zpracovávám";
+
+            for (int i = 0; i < dotCount; i++)
+                lPB.Text += ".";
+
+            lPB.Update();
+            progressBar1.Refresh();
+            //Debug.WriteLine(progressBar1.Value);
+        }
+
+        private void ProgressBarShow(int maximum)
+        {
+            progressBar1.Maximum = maximum;
+            progressBar1.Show();
+            progressBar1.Step = 1;
+            progressBar1.Value = 0;
+
+            lPB.Text = "zpracovávám";
+
+            lPB.Show();
+        }
+
+        private void ProgressBarHide()
+        {
+            progressBar1.Hide();
+
+            lPB.Hide();
         }
     }
 }
