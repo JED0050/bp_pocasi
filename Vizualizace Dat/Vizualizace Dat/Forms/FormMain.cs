@@ -18,6 +18,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using GMap.NET.WindowsForms.ToolTips;
 
 namespace Vizualizace_Dat
 {
@@ -333,7 +334,8 @@ namespace Vizualizace_Dat
                 DrawGraph();
 
                 listMarkers.Add(new GMarkerGoogle(doubleclickedPoint, GMarkerGoogleType.red_dot));
-                listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                listMarkers[0].ToolTipText = $"\nčas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                listMarkers[0].ToolTip.Foreground = Brushes.Black;
 
                 gMap.Overlays.Add(markers);
                 markers.Markers.Add(listMarkers[0]);
@@ -371,7 +373,7 @@ namespace Vizualizace_Dat
                     }
 
                     if (text == null)
-                        text = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {val} {forecType.Unit}";
+                        text = $"\nčas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {val} {forecType.Unit}";
 
                     graphCols.Add(new GraphElement(val, selectedTime.AddHours(i)));
                 }
@@ -397,9 +399,9 @@ namespace Vizualizace_Dat
 
                 try
                 {
-                    string oldType = listMarkers[0].ToolTipText.Split('\n')[2];
+                    string oldType = listMarkers[0].ToolTipText.Split('\n')[3];
 
-                    Debug.WriteLine($"oT: {oldType} aT: {forecType.CzForecType}");
+                    //Debug.WriteLine($"oT: {oldType} aT: {forecType.CzForecType}");
 
                     if (oldType.StartsWith(forecType.CzForecType))
                     {
@@ -529,19 +531,22 @@ namespace Vizualizace_Dat
                 if (c == 0)
                 {
                     listMarkers.Add(new GMarkerGoogle(point.Point, GMarkerGoogleType.red_small));
-                    listMarkers[0].ToolTipText = $"Start\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                    listMarkers[0].ToolTipText = $"\nStart\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                    listMarkers[0].ToolTip.Foreground = Brushes.Black;
                     markers.Markers.Add(listMarkers[0]);
                 }
                 else if (c == customRoute.GetAllRoutePoints().Count - 1)
                 {
                     listMarkers.Add(new GMarkerGoogle(point.Point, GMarkerGoogleType.red_small));
-                    listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
+                    listMarkers[listMarkers.Count - 1].ToolTipText = $"\nCíl\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
+                    listMarkers[listMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
                     markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
                 }
                 else if (c % 20 == 0)
                 {
                     routePointsTooltipMarkers.Add(new GMarkerGoogle(point.Point, new Bitmap(10, 10)));
-                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
+                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"\nčas: {point.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {point.DistanceKm} km\nzabere: {point.GetTakesTimeString()}";
+                    routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
                     markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                 }
 
@@ -858,7 +863,8 @@ namespace Vizualizace_Dat
                             graphCols.Add(new GraphElement(value, beginTime, routePoints[i], 0));
 
                             listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
-                            listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                            listMarkers[0].ToolTipText = $"\nStart\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                            listMarkers[0].ToolTip.Foreground = Brushes.Black;
 
                             markers.Markers.Add(listMarkers[0]);
                         }
@@ -892,7 +898,8 @@ namespace Vizualizace_Dat
                             graphCols.Add(new GraphElement(value, endTime, routePoints[i], roundedDistanceKm));
 
                             listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                            listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+                            listMarkers[listMarkers.Count - 1].ToolTipText = $"\nCíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+                            listMarkers[listMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
 
                             //gMap.Overlays.Add(markers);
                             markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
@@ -948,7 +955,8 @@ namespace Vizualizace_Dat
                             }
 
                             routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10, 10)));
-                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
+                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"\nčas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
+                            routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
                             markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                         }
                     }
@@ -1707,7 +1715,8 @@ namespace Vizualizace_Dat
                         graphCols.Add(new GraphElement(value, beginTime, routePoints[i], 0));
 
                         listMarkers.Add(new GMarkerGoogle(pointStart, GMarkerGoogleType.red_small));
-                        listMarkers[0].ToolTipText = $"Start\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                        listMarkers[0].ToolTipText = $"\nStart\nčas: {beginTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}";
+                        listMarkers[0].ToolTip.Foreground = Brushes.Black;
 
                         markers.Markers.Add(listMarkers[0]);
                     }
@@ -1741,7 +1750,8 @@ namespace Vizualizace_Dat
                         graphCols.Add(new GraphElement(value, endTime, routePoints[i], roundedDistanceKm));
 
                         listMarkers.Add(new GMarkerGoogle(pointEnd, GMarkerGoogleType.red_small));
-                        listMarkers[listMarkers.Count - 1].ToolTipText = $"Cíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+                        listMarkers[listMarkers.Count - 1].ToolTipText = $"\nCíl\nčas: {endTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {roundedDistanceKm} km\nzabere: {customPointLast.GetTakesTimeString()}";
+                        listMarkers[listMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
 
                         //gMap.Overlays.Add(markers);
                         markers.Markers.Add(listMarkers[listMarkers.Count - 1]);
@@ -1797,7 +1807,8 @@ namespace Vizualizace_Dat
                         }
 
                         routePointsTooltipMarkers.Add(new GMarkerGoogle(routePoints[i], new Bitmap(10, 10)));
-                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"čas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
+                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTipText = $"\nčas: {customPoint.Time.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {value} {forecType.Unit}\n\nvzdálenost: {customPoint.DistanceKm} km\nzabere: {customPoint.GetTakesTimeString()}";
+                        routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1].ToolTip.Foreground = Brushes.Black;
                         markers.Markers.Add(routePointsTooltipMarkers[routePointsTooltipMarkers.Count - 1]);
                     }
                 }
@@ -1913,7 +1924,8 @@ namespace Vizualizace_Dat
                     ShowWeatherWindow();
 
                     listMarkers.Add(new GMarkerGoogle(doubleclickedPoint, GMarkerGoogleType.red_dot));
-                    listMarkers[0].ToolTipText = $"čas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                    listMarkers[0].ToolTipText = $"\nčas: {selectedTime.ToString("HH:mm - dd.MM.")}\n{forecType.CzForecType}: {precVal} {forecType.Unit}";
+                    listMarkers[0].ToolTip.Foreground = Brushes.Black;
 
                     gMap.Overlays.Add(markers);
                     markers.Markers.Add(listMarkers[0]);
