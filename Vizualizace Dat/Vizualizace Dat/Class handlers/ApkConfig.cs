@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GMap.NET;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -224,7 +225,35 @@ namespace Vizualizace_Dat
             }
         }
 
+        public static PointLatLng TopLeftCorner
+        {
+            get
+            {
+                return apkConfigObj.TopLeftCorner;
+            }
 
+            set
+            {
+                apkConfigObj.TopLeftCorner = value;
+
+                ApkConfigObj = apkConfigObj;
+            }
+        }
+
+        public static PointLatLng BotRightCorner
+        {
+            get
+            {
+                return apkConfigObj.BotRightCorner;
+            }
+
+            set
+            {
+                apkConfigObj.BotRightCorner = value;
+
+                ApkConfigObj = apkConfigObj;
+            }
+        }
 
     }
 
@@ -239,6 +268,8 @@ namespace Vizualizace_Dat
         public int AnimStepMinutes { get; set; }
         public int GraphColumnColor { get; set; }
         public bool ShowDialogWindow { get; set; }
+        public PointLatLng TopLeftCorner { get; set; }
+        public PointLatLng BotRightCorner { get; set; }
     }
 
 }

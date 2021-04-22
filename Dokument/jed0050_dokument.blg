@@ -1,14 +1,65 @@
-[0] Config.pm:312> INFO - This is Biber 2.15
-[0] Config.pm:315> INFO - Logfile is 'jed0050_dokument.blg'
-[182] biber-MSWIN32:330> INFO - === 
-[214] Biber.pm:415> INFO - Reading 'jed0050_dokument.bcf'
-[400] Biber.pm:949> INFO - Using all citekeys in bib section 0
-[423] Biber.pm:4334> INFO - Processing section 0
-[442] Biber.pm:4523> INFO - Looking for bibtex format file 'citace.bib' for section 0
-[465] bibtex.pm:1682> INFO - LaTeX decoding ...
-[489] bibtex.pm:1494> INFO - Found BibTeX data source 'citace.bib'
-[584] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'variable = shifted' with 'variable = non-ignorable'
-[584] UCollate.pm:68> INFO - Overriding locale 'cs-CZ' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[584] Biber.pm:4162> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'cs-CZ'
-[601] bbl.pm:651> INFO - Writing 'jed0050_dokument.bbl' with encoding 'UTF-8'
-[606] bbl.pm:754> INFO - Output to jed0050_dokument.bbl
+This is BibTeX, Version 0.99d (TeX Live 2020/W32TeX)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: jed0050_dokument.aux
+The style file: biblatex.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: jed0050_dokument-blx.bib
+Database file #2: citace.bib
+Biblatex version: 3.15
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 13 entries,
+            6393 wiz_defined-function locations,
+            1260 strings with 10089 characters,
+and the built_in function-call counts, 79161 in all, are:
+= -- 2465
+> -- 8861
+< -- 567
++ -- 8327
+- -- 7762
+* -- 2366
+:= -- 11130
+add.period$ -- 0
+call.type$ -- 13
+change.case$ -- 171
+chr.to.int$ -- 550
+cite$ -- 24
+duplicate$ -- 5837
+empty$ -- 5291
+format.name$ -- 238
+if$ -- 10430
+int.to.chr$ -- 0
+int.to.str$ -- 21
+missing$ -- 0
+newline$ -- 242
+num.names$ -- 281
+pop$ -- 4014
+preamble$ -- 1
+purify$ -- 192
+quote$ -- 0
+skip$ -- 2149
+stack$ -- 0
+substring$ -- 4629
+swap$ -- 1787
+text.length$ -- 410
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 430
+warning$ -- 0
+while$ -- 742
+width$ -- 0
+write$ -- 230

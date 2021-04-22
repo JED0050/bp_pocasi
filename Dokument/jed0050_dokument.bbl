@@ -3,8 +3,8 @@
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
-% This file may safely be deleted. It will be recreated by
-% biber as required.
+% This file may safely be deleted. It will be recreated as
+% required.
 %
 \begingroup
 \makeatletter
@@ -16,284 +16,228 @@
   {}
 \endgroup
 
+\datalist[entry]{none/global//global/global}
+  \entry{yrno}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Yr.no}
+    \verb{url}
+    \verb https://www.yr.no/en
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
 
-\refsection{0}
-  \datalist[entry]{none/global//global/global}
-    \entry{yrno}{online}{}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{title}{Yr.no}
-      \field{urlday}{4}
-      \field{urlmonth}{4}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.yr.no/en
-      \endverb
-      \verb{url}
-      \verb https://www.yr.no/en
-      \endverb
-    \endentry
-    \entry{owm}{online}{}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{title}{OpenWeatherMap}
-      \field{urlday}{4}
-      \field{urlmonth}{4}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://openweathermap.org/
-      \endverb
-      \verb{url}
-      \verb https://openweathermap.org/
-      \endverb
-    \endentry
-    \entry{weun}{online}{}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{title}{WeatherUnlocked}
-      \field{urlday}{4}
-      \field{urlmonth}{4}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb http://www.weatherunlocked.com/
-      \endverb
-      \verb{url}
-      \verb http://www.weatherunlocked.com/
-      \endverb
-    \endentry
-    \entry{medard}{online}{}
-      \field{sortinit}{6}
-      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{title}{Medard-online}
-      \field{urlday}{24}
-      \field{urlmonth}{1}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb http://www.medard-online.cz/apiforecast?run=210313_06&forecast=precip&layer=eu&step=13
-      \endverb
-      \verb{url}
-      \verb http://www.medard-online.cz/apiforecast?run=210313_06&forecast=precip&layer=eu&step=13
-      \endverb
-    \endentry
-    \entry{chmi}{online}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{subtitle}{chmi}
-      \field{title}{Radar.bourky}
-      \field{urlday}{1}
-      \field{urlmonth}{10}
-      \field{urlyear}{2020}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
-      \endverb
-      \verb{url}
-      \verb http://radar.bourky.cz/data/pacz2gmaps.z%5C_max3d.20201001.1600.0.png
-      \endverb
-    \endentry
-    \entry{shull}{online}{}
-      \name{author}{2}{}{%
-        {{hash=b448391fed0d4c5ed1b398d95be03578}{%
-           family={Sinclair},
-           familyi={S\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod}}}%
-        {{hash=37b214c8d678259e210337aa9ea73241}{%
-           family={Atkin},
-           familyi={A\bibinitperiod},
-           given={Phil},
-           giveni={P\bibinitperiod}}}%
-      }
-      \strng{namehash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \strng{fullhash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \strng{bibnamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \strng{authorbibnamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \strng{authornamehash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \strng{authorfullhash}{6fbf802ec6efe8c631ebfddc10f97cee}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{S-hull: a fast sweep-hull routine for Delaunay triangulation}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb http://www.s-hull.org/
-      \endverb
-      \verb{url}
-      \verb http://www.s-hull.org/
-      \endverb
-    \endentry
-    \entry{interp}{online}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{Interpolating in a Triangle}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://codeplea.com/triangular-interpolation
-      \endverb
-      \verb{url}
-      \verb https://codeplea.com/triangular-interpolation
-      \endverb
-    \endentry
-    \entry{mapbox}{online}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labeltitlesource}{title}
-      \field{langid}{czech}
-      \field{title}{Mapbox}
-      \field{urlday}{4}
-      \field{urlmonth}{4}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.mapbox.com/
-      \endverb
-      \verb{url}
-      \verb https://www.mapbox.com/
-      \endverb
-    \endentry
-    \entry{bSkeet}{book}{}
-      \name{author}{1}{}{%
-        {{hash=01b1383355da2f2a954d4cb264d9dc17}{%
-           family={Skeet},
-           familyi={S\bibinitperiod},
-           given={Jon},
-           giveni={J\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {New York}%
-      }
-      \list{publisher}{1}{%
-        {Shelter Island, N.Y: Manning}%
-      }
-      \strng{namehash}{01b1383355da2f2a954d4cb264d9dc17}
-      \strng{fullhash}{01b1383355da2f2a954d4cb264d9dc17}
-      \strng{bibnamehash}{01b1383355da2f2a954d4cb264d9dc17}
-      \strng{authorbibnamehash}{01b1383355da2f2a954d4cb264d9dc17}
-      \strng{authornamehash}{01b1383355da2f2a954d4cb264d9dc17}
-      \strng{authorfullhash}{01b1383355da2f2a954d4cb264d9dc17}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{0-816-52066-6}
-      \field{langid}{english}
-      \field{langidopts}{variant=american}
-      \field{title}{C\# in Depth, Third edition}
-      \field{year}{2014}
-      \field{dateera}{ce}
-      \true{nocite}
-    \endentry
-    \entry{bMVC}{book}{}
-      \name{author}{1}{}{%
-        {{hash=3e85ff35ac9460aa6193899e6707ba4a}{%
-           family={Freeman},
-           familyi={F\bibinitperiod},
-           given={Adam},
-           giveni={A\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {New York}%
-      }
-      \list{publisher}{1}{%
-        {NY: Springer Science+Business Media}%
-      }
-      \strng{namehash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \strng{fullhash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \strng{bibnamehash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \strng{authorbibnamehash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \strng{authornamehash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \strng{authorfullhash}{3e85ff35ac9460aa6193899e6707ba4a}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{978-1484231494}
-      \field{langid}{english}
-      \field{langidopts}{variant=american}
-      \field{title}{Pro ASP.NET Core MVC 2}
-      \field{year}{2017}
-      \field{dateera}{ce}
-      \true{nocite}
-    \endentry
-    \entry{bTriangulation}{book}{}
-      \name{author}{3}{}{%
-        {{hash=3afc7ec573310e081ed1c42935d47c34}{%
-           family={A.\bibnamedelimi De\bibnamedelima Loera},
-           familyi={A\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim L\bibinitperiod},
-           given={Jesús},
-           giveni={J\bibinitperiod}}}%
-        {{hash=309aa21f1615eba15c04852c3038bc70}{%
-           family={Rambau},
-           familyi={R\bibinitperiod},
-           given={Jörg},
-           giveni={J\bibinitperiod}}}%
-        {{hash=71a176c979f0a6bf7228668676f8c26a}{%
-           family={Santos},
-           familyi={S\bibinitperiod},
-           given={Francisco},
-           giveni={F\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer Publishing Company, Incorporated}%
-      }
-      \strng{namehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \strng{fullhash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \strng{bibnamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \strng{authorbibnamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \strng{authornamehash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \strng{authorfullhash}{2e21b6eba6e9cc29847a64b3ba5d8f75}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{978-3-642-12971-1}
-      \field{langid}{english}
-      \field{title}{Triangulations, Structures for Algorithms and Applications}
-      \field{year}{2010}
-      \field{dateera}{ce}
-      \true{nocite}
-    \endentry
-  \enddatalist
-\endrefsection
+  \entry{owm}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{OpenWeatherMap}
+    \verb{url}
+    \verb https://openweathermap.org/
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{weun}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{WeatherUnlocked}
+    \verb{url}
+    \verb http://www.weatherunlocked.com/
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{medard}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Medard-online}
+    \verb{url}
+    \verb http://www.medard-online.cz/apiforecast?run=210313_06&forecast=precip
+    \verb &layer=eu&step=13
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{24}
+    \field{urlmonth}{01}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{chmi}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{chmi}
+    \field{title}{Radar.bourky}
+    \verb{url}
+    \verb http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{01}
+    \field{urlmonth}{10}
+    \field{urlyear}{2020}
+  \endentry
+
+  \entry{shull}{online}{}
+    \name{author}{2}{}{%
+      {{hash=SD}{%
+         family={Sinclair},
+         familyi={S\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=AP}{%
+         family={Atkin},
+         familyi={A\bibinitperiod},
+         given={Phil},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SDAP1}
+    \strng{fullhash}{SDAP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{S-hull: a fast sweep-hull routine for Delaunay triangulation}
+    \verb{url}
+    \verb http://www.s-hull.org/
+    \endverb
+    \field{langid}{english}
+    \field{year}{2021}
+    \field{urlday}{16}
+    \field{urlmonth}{03}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{rhs}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Pravidlo pravé ruky}
+    \verb{url}
+    \verb https://cs.wikipedia.org/wiki/Pravidlo_prav%C3%A9_ruky
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{05}
+    \field{urlmonth}{06}
+    \field{urlyear}{2020}
+  \endentry
+
+  \entry{interp}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Interpolating in a Triangle}
+    \verb{url}
+    \verb https://codeplea.com/triangular-interpolation
+    \endverb
+    \field{langid}{english}
+    \field{year}{2021}
+    \field{urlday}{16}
+    \field{urlmonth}{03}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{mapbox}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Mapbox}
+    \verb{url}
+    \verb https://www.mapbox.com/
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{bSkeet}{book}{}
+    \name{author}{1}{}{%
+      {{hash=SJ}{%
+         family={Skeet},
+         familyi={S\bibinitperiod},
+         given={Jon},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Shelter Island, N.Y: Manning}%
+    }
+    \strng{namehash}{SJ1}
+    \strng{fullhash}{SJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{0-816-52066-6}
+    \field{langidopts}{variant=american}
+    \field{title}{C\# in Depth, Third edition}
+    \field{langid}{english}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{2014}
+  \endentry
+
+  \entry{bMVC}{book}{}
+    \name{author}{1}{}{%
+      {{hash=FA}{%
+         family={Freeman},
+         familyi={F\bibinitperiod},
+         given={Adam},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {NY: Springer Science+Business Media}%
+    }
+    \strng{namehash}{FA1}
+    \strng{fullhash}{FA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{978-1484231494}
+    \field{langidopts}{variant=american}
+    \field{title}{Pro ASP.NET Core MVC 2}
+    \field{langid}{english}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{2017}
+  \endentry
+
+  \entry{bTriangulation}{book}{}
+    \name{author}{3}{}{%
+      {{hash=ADLJ}{%
+         family={A.\bibnamedelima De\bibnamedelima Loera},
+         familyi={A\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim
+  L\bibinitperiod},
+         given={Jesús},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=RJ}{%
+         family={Rambau},
+         familyi={R\bibinitperiod},
+         given={Jörg},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SF}{%
+         family={Santos},
+         familyi={S\bibinitperiod},
+         given={Francisco},
+         giveni={F\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer Publishing Company, Incorporated}%
+    }
+    \strng{namehash}{ADLJRJSF1}
+    \strng{fullhash}{ADLJRJSF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{978-3-642-12971-1}
+    \field{title}{Triangulations, Structures for Algorithms and Applications}
+    \field{langid}{english}
+    \field{year}{2010}
+  \endentry
+\enddatalist
 \endinput
-

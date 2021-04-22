@@ -41,10 +41,11 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="1">
+  <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>jed0050_dokument.bcf</file>
+      <file>jed0050_dokument.aux</file>
+      <file>jed0050_dokument-blx.bib</file>
     </provides>
     <requires type="dynamic">
       <file>jed0050_dokument.bbl</file>
@@ -54,6 +55,7 @@
       <file>iso-numeric.dbx</file>
       <file>blx-compat.def</file>
       <file>blx-case-expl3.def</file>
+      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>iso.bbx</file>
       <file>iso-numeric.bbx</file>
@@ -67,14 +69,15 @@
       <file>english-iso.lbx</file>
     </requires>
   </internal>
-  <external package="biblatex" priority="5" active="1">
-    <generic>biber</generic>
+  <external package="biblatex" priority="5" active="0">
+    <generic>bibtex</generic>
     <cmdline>
-      <binary>biber</binary>
+      <binary>bibtex</binary>
+      <option>-min-crossrefs 2</option>
       <infile>jed0050_dokument</infile>
     </cmdline>
     <input>
-      <file>jed0050_dokument.bcf</file>
+      <file>jed0050_dokument.aux</file>
     </input>
     <output>
       <file>jed0050_dokument.bbl</file>
@@ -83,10 +86,14 @@
       <file>jed0050_dokument.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>jed0050_dokument.bcf</file>
+      <file>jed0050_dokument.aux</file>
+      <file>jed0050_dokument-blx.bib</file>
     </requires>
     <requires type="editable">
       <file>citace.bib</file>
+    </requires>
+    <requires type="static">
+      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>

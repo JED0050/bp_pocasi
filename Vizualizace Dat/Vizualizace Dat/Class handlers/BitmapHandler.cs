@@ -21,8 +21,8 @@ namespace Vizualizace_Dat
     {
         public static string baseUrl = ApkConfig.ServerAddress;
 
-        public static PointLatLng defaultTopLeftBound = new PointLatLng(55.1995133, 4.1303633);
-        public static PointLatLng defaultBotRightBound = new PointLatLng(41.6999200, 37.9033283);
+        public static PointLatLng defaultTopLeftBound = ApkConfig.TopLeftCorner; //new PointLatLng(55.1995133, 4.1303633);
+        public static PointLatLng defaultBotRightBound = ApkConfig.BotRightCorner; //new PointLatLng(41.6999200, 37.9033283);
         public static double GetLon(int x, int bW)
         {
             double lonDif = defaultBotRightBound.Lng - defaultTopLeftBound.Lng;

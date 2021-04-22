@@ -1,7 +1,7 @@
 \documentclass[czech,bachelor,dept460,male,csharp,cpdeclaration]{diploma}
 
 \usepackage[autostyle=true,czech=quotes]{csquotes} % korektni sazba uvozovek, podpora pro balik biblatex
-\usepackage[backend=biber, style=iso-numeric, alldates=iso]{biblatex} % bibliografie
+\usepackage[backend=bibtex, style=iso-numeric, alldates=iso]{biblatex} % bibliografie
 \usepackage{dcolumn} % sloupce tabulky s ciselnymi hodnotami
 \usepackage{subfig} % makra pro "podobrazky" a "podtabulky"
 
@@ -51,7 +51,6 @@
 \AddAcronym{Loader}{Knihovna reprezentující jeden z datových zdrojů}
 
 \addbibresource{citace.bib}
-\nocite{*}
 
 % Zacatek dokumentu
 \begin{document}
@@ -176,7 +175,7 @@
 	
 	\chapter{Agregace dat}
 	
-	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, tímto formátem byly zvoleny bitmapy obsahující data o jednom prvku počasí, data jsou reprezentována pomocí barev a pokrývají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec jsme potřebovali pokrýt celou bitmapu pokud známe hodnotu počasí pro určité body, což nám vyřešila triangulace v kombinaci s interpolací.
+	Při agregaci dat bylo zapotřebí vyřešit pár otázek. První z nich byla potřeba jednotného výstupního formátu pro různorodá vstupní data, jako tento formát byly zvoleny bitmapy obsahující data o jednom prvku počasí, data jsou reprezentována pomocí barev a pokrývají určitou plochu pro určitý čas. Další otázkou bylo jak převádět barvy na číselné hodnoty a hodnoty zpět na barvy, tento problém vyřešilo využití škál. A nakonec byla potřeba pokrýt celou bitmapu daty pokud známe hodnotu počasí pro určité body, což nám vyřešila triangulace v kombinaci s interpolací.
 	
 	Každý z datových zdrojů je v agregaci dat realizován pomocí samostatné knihovny. Tato knihovna musí vždy implementovat rozhraní DataLoader a může využívat různé pomocné třídy pro správu dat o počasí jako je například triangulace nebo převod číselných hodnot na barvy a naopak. Dll soubor každé z knihoven je uložen do složky s datovými zdroji a následně je každá z knihoven datových zdrojů dynamicky načtena a zpracována pomocí reflexe třídou spravující agregaci dat.
 	
@@ -186,11 +185,11 @@
 	
 	Nejprve tyto metody obsahovaly desítky podmínek které staticky kontrolovaly zda se jedná o konkrétní barvu, později zda barva patří do určitého rozmezí pro R, G, B složky. Tento přístup ale není vhodný, protože při potřebě změnit barvy pro určitá desetinná čísla vznikala nutnost přepsat hodnoty barev pro všechny metody ve veškerých podmínkách.
 	
-	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být pouze 1 pixel. Výhodou škál je, že změna barev reprezentujících hodnoty případně změna rozsahu uchovávaných hodnot se vyměnit pouze pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
+	Finálním řešením se stalo využití škál, škály jsou obrázky široké přesné tolik pixelů kolik hodnot uchovávají, kde každý pixel obsahuje unikátní barvu a reprezentuje jednu konkrétní číselnou hodnotu kterou daná barva reprezentuje. Výška škály může být pouze 1 pixel. Výhodou škál je, že změny barev reprezentujících hodnoty případně změny rozsahu uchovávaných hodnot se dá docílit pomocí použití nové škály která bude opět orientovaná na šířku. Další z výhod je, že metody které vrací hodnotu z barvy nemusí obsahovat desítky podmínek a stačí pouze vrátit hodnotu uloženou pro pixel. V programu jsou barvy ze škály uložený do slovníku, kde klíč reprezentuje barva a hodnotu desetinné číslo. Pro určení čísla z barvy stačí vypočítat index na kterém barva leží a tuto barvu vrátit.
 	
 	\section{Triangulace}
 	
-	Při vytváření bitmap dochází k určování hodnot počasí (teplota, srážky atp.) pro konkrétní zeměpisné souřadnice, které jsou následně převedeny na pixely bitmapy. Zjišťovat hodnotu pro každý jednotlivý pixel by bylo velice časově náročné, a protože můžeme předpokládat že v okolí pixelu budou obdobné hodnoty jako na pixelu samotné stačí nám určit hodnoty pouze pro určité množství pixelů rozložených správně po bitmapě. Následně je potřeba tyto pixely nějakým způsobem propojit, zde nám problém řeší využité triangulace.
+	Při vytváření bitmap dochází k určování hodnot počasí (teplota, srážky atp.) pro konkrétní zeměpisné souřadnice, které jsou následně převedeny na pixely bitmapy. Zjišťovat hodnotu pro každý jednotlivý pixel by bylo časově velice náročné, a protože můžeme předpokládat že v okolí pixelu budou obdobné hodnoty jako na pixelu samotném. Stačí nám tedy určit hodnoty pouze pro určité množství pixelů rozložených správně po bitmapě. Následně je potřeba tyto pixely nějakým způsobem propojit a dopočítat obsah mezi nimi, zde nám problém řeší využité triangulace.
 	
 	V práci se využívá S-hull Algoritmus pro triangulaci. Konkrétně Phil Atkinova implementace pro C\# \emph{S-hull} \cite{shull}. Algoritmus nám množinu bodů, v našem případě pixelů, rozdělí na trojúhelníky. Respektive nám pro každý vrchol řekne s kterými vrcholy je spojen hranou, čímž nám vznikne síť trojúhelníků pokrývající většinu bitmapy.
 	
@@ -201,10 +200,10 @@
 		\item Vybere počáteční bod $x_0$ z množiny bodů $x_i$.
 		\item Seřadí body dle vzdálenosti od tohoto bodu $|x_i - x_0|^2$.
 		\item Nalezne bod $x_j$, který je k bodu $x_0$ nejblíž.
-		\item Nalezne bod $x_k$, který vytvoří nejmenší kružnici opsanou s body $x_0$ a $x_j$ současně i zaznamená střed kružnice opsané $C$.
-		\item Seřadí body $x_0$, $x_j$, $x_k$ pro získání pravorukého systému, tohle je počáteční prvek pro convex hull.
+		\item Nalezne bod $x_k$, který vytvoří nejmenší kružnici opsanou s body $x_0$ a $x_j$, současně i zaznamená střed kružnice opsané $C$.
+		\item Seřadí body $x_0$, $x_j$, $x_k$ a za pomocí pravidla pravé ruky \cite{rhs} je získán počáteční prvek pro convex hull.
 		\item Přetřídí zbývající body na základě vzdálenosti bodů od středu kružnice opsané $|x_i - C|^2$ pro získání bodů $s_i$.
-		\item Postupně se přidávají body $s_i$ do rostoucího 2D convex hull který je závislý na trojúhelníku vytvořeném z bodů $x_0$, $x_j$, $x_k$. Následné jsou přidány zkosené hrany pro 2D-hull, které jsou bodu viditelné z nově vytvořených trojúhelníků.
+		\item Postupně se přidávají body $s_i$ do rostoucího 2D convex hull který je závislý na trojúhelníku vytvořeném z bodů $x_0$, $x_j$, $x_k$. Následně jsou přidány zkosené hrany pro 2D-hull, které jsou bodu viditelné z nově vytvořených trojúhelníků.
 		\item Vzájemně se nepřekrývající triangulace pro množinu bodů je nyní vytvořena. Tato metoda je velice rychlá mezi způsoby vytváření 2D triangulace.
 		\item Sousední páry trojúhelníků této triangulace musí být \uv{převráceny} aby došlo k vytvoření Delaunayovi triangulace z počáteční nepřekrývající se triangulace.
 	\end{enumerate}
@@ -217,7 +216,7 @@
 	
 	\section{Interpolace}
 	
-	Bitmapa je pokryta sítí trojúhelníků kde známe hodnotu každého vrcholu $Value$. Nyní vzniká potřeba každý trojúhelník vyplnit barvami, které reprezentují hodnotu pixelů uvnitř trojúhelníku. Tuto práci řeší využití interpolace, nebole výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
+	Bitmapa je pokryta sítí trojúhelníků kde známe hodnotu $Value$ každého vrcholu $V$. Nyní vzniká potřeba každý trojúhelník vyplnit barvami, které reprezentují hodnotu pixelů uvnitř trojúhelníku. Tuto práci řeší využití interpolace, neboli výpočet hodnoty uvnitř objektu na základě vzdálenosti od vrcholů.
 	
 	Pro výpočet interpolace postačí jednoduchý vzorec \emph{Interpolace v trojúhelníku} \cite{interp}, který na základě hodnot vrcholů trojúhelníku a vzdálenosti od nich pro zjišťovaný bod určí jakou hodnotu sám zjišťovaný bod má.
 	
@@ -253,24 +252,23 @@
 	
 	\section{Složky zdrojů}
 	
-	Každý z datových zdrojů má svou vlastní složku ze které čte a do které se ukládá informace.
+	Každý z datových zdrojů má svou vlastní složku ze které čte a do které si ukládá informace.
 	
-	V této složce se nachází konfigurační JSON soubor obsahující informace na základě kterých si služba nastaví své parametry při vytvoření instance. Mezi tyto informace patří název datového zdroje včetně zkratky. Zeměpisné souřadnice zpracovávané plochy. Maximální dovolený počet stažení dat za minutu. Počet hodin který má služba zpracovávat zpětně, minimální potřebný hodinový rozdíl pro nové stažení dat a především poslední čas zpracování dat. Na základě posledního času zpracování bitmap a minimálního potřebného hodinového rozdílu datový zdroj určí zda dojde k vytváření nových bitmap či nikoli.
+	V této složce se nachází konfigurační JSON soubor obsahující informace na základě kterých si služba nastaví své parametry při vytvoření instance. Mezi tyto informace patří název datového zdroje včetně zkratky. Zeměpisné souřadnice zpracovávané plochy. Maximální dovolený počet stažení dat za minutu. Počet hodin který má služba zpracovávat zpětně, minimální potřebný hodinový rozdíl pro nové stažení dat a především poslední čas zpracování dat. Na základě posledního času zpracování bitmap a minimálního potřebného hodinového rozdílu si datový zdroj při požadavku na vytvoření novývh bitmap určí zda dojde k jejich vytváření či nikoli.
 	
-	Pokud zpracovává datový zdroj informace ve formě bitmap obsahuje tato složka i škálu daného datového zdroje. Pomocí této škály se převádí veškeré barvy na číselné hodnoty a následně za použití obecné škály služby zpět z čísla na normalizovanou barvu.
+	Pokud zpracovává datový zdroj informace ve formě bitmap obsahuje tato složka i škálu daného datového zdroje. Pomocí této škály se převádí veškeré barvy na číselné hodnoty a následně za použití obecné škály služby se převádí čísla zpět na normalizovanou barvu.
 	
-	Nejdůležitější soubory ukládané do složek jsou samotné bitmapy s daty o počasí. Bitmapy si do své složky každý zdroj ukládá při požadavku vytváření bitmap a následně je z této složky vrací při požadavku na poskytnutí dat o počasí pro daný prvek a čas.
+	Nejdůležitější soubory ukládané do složek jsou samotné bitmapy s daty o počasí. Bitmapy si do své složky každý zdroj ukládá při požadavku na vytváření bitmap a následně je z této složky vrací při požadavku na poskytnutí dat o počasí pro daný prvek a čas.
 	
 	\section{Zpracovávání dat}
 	
 	Při zpracování dat do bitmap záleží na tom jakým způsobem jsou data datovým zdrojem poskytována.
 	
-	Pokud jsou data poskytována ve formě bitmap potřebujeme zjistit jakou škálou jsou data v bitmapě zobrazena a rozsah zpracované plochy. Následně se musí bitmapa přeškálovat, teď jednotlivé pixely jsou převedeny na číselnou hodnotu pomocí škály služby a následně jsou čísla převedeny zpět na barvu za pomocí obecné škály pro agregaci dat využívané pro všechny zdroje na správu dat. Nakonec je potřeba správně pozicovat bitmapu, na základě zeměpisných souřadnic rohů bitmapy se zjistí jaká plocha je zpracována. Pokud je plocha příliš velká tak jak tomu je u zdroje Medard, dochází k vyřezání požadované části a následnému roztažení na 728x528 pixelů. Naopak u zdroje Yr.no je plocha příliš malá a tak dochází k patřičnému zmenšení bitmapy ze zdroje a napozicování do finální větší bitmapy.
+	Pokud jsou data poskytována ve formě bitmap potřebujeme zjistit jakou škálou jsou data v bitmapě zobrazena a rozsah zpracované plochy. Následně se musí bitmapa přeškálovat, tedy jednotlivé pixely jsou převedeny na číselnou hodnotu pomocí škály zdroje a následně jsou čísla převedeny zpět na barvu za pomocí obecné škály pro agregaci dat využívané pro všechny zdroje na správu dat. Nakonec je potřeba správně pozicovat bitmapu. Na základě zeměpisných souřadnic rohů bitmapy se zjistí jaká plocha je zpracována. Pokud je plocha příliš velká tak jak tomu je u zdroje Medard, dochází k vyřezání požadované části a následnému roztažení na 728x528 pixelů. Naopak u zdroje Radar.bourky je plocha příliš malá a tak dochází k patřičnému zmenšení bitmapy ze zdroje a napozicování do finální větší bitmapy.
 	
-	Data poskytována ve formátu XML či JSON se zpracovávají jiným způsobem. Nejprve měla každá služba svůj seznam měst nacházejících se ve zpracovávané ploše pro který poskytuje informace o počasí. Pro každé z těchto měst se určilo počasí a 
-	pozice pixelu reprezentujícího dané město. Pixel se následně vykreslil na mapu a pomocí triangulace se vytvořilo síť trojúhelníků, které se ve finále vybarvily. Tento způsob nebyl vhodný protože nepokrýval celou bitmapu rovnoměrně, v určitých místech chyběly informace a naopak v jiným místech bylo příliš mnoho bodů u sebe, proto se způsob zpracování změnil.
+	Data poskytována ve formátu XML či JSON se zpracovávají jiným způsobem. Nejprve měla každá služba svůj seznam měst nacházejících se ve zpracovávané ploše pro který poskytuje informace o počasí. Pro každé z těchto měst se určilo počasí a pozice pixelu reprezentujícího dané město. Pixel se následně vykreslil na mapu a pomocí triangulace se vytvořila síť trojúhelníků, které se ve finále vybarvily. Tento způsob nebyl vhodný protože nepokrýval celou bitmapu rovnoměrně, v určitých místech chyběly informace a naopak v jiným místech bylo příliš mnoho bodů u sebe, proto se způsob zpracování změnil.
 	
-	Aktuálně dochází k cyklickému průchodu bitmapou s posunem 25 pixelů na výšku a šířku. Každý z těchto pixelů je převeden na zeměpisné souřadnice na základě vzdálenosti od levého horního rohu přičemž dochází k určení počasí v tomto bodě. Počasí je následně uloženo do slovníku kde klíč tvoří čas dané předpovědi a hodnotou je list počasí pro stejný čas v různých bodech. Nakonec je pro každý z časů proveden průchod listem, vykreslení pixelů na své pozice, následuje vytvoření sítě trojúhelníků pomocí triangulace zakončená s vybarvením jednotlivých trojúhelníků využitím interpolace. Pro každý čas je vytvořeno tolik bitmap kolik parametrů počasí daná služba zpracovává. Počet jednotlivých časů je úměrný počtu všech dostupných předpovědí pro všechny body.
+	Aktuálně dochází k cyklickému průchodu bitmapou s posunem 25 pixelů na výšku a šířku (\ref{bmpBody}). Každý z těchto pixelů je převeden na zeměpisné souřadnice na základě vzdálenosti od levého horního rohu přičemž dochází k určení počasí v tomto bodě. Počasí je následně uloženo do slovníku kde klíč tvoří čas dané předpovědi a hodnotou je list počasí pro stejný čas v různých bodech. Nakonec je pro každý z časů proveden průchod listem předpovědí a následuje vytvoření sítě trojúhelníků (\ref{bmpTriang}) pomocí triangulace zakončená vybarvením jednotlivých trojúhelníků využitím interpolace (\ref{bmpColors}) a vykreslení těchto barev do bitmapy. Pro každý čas je vytvořeno tolik bitmap kolik prvků počasí daná služba zpracovává. Počet jednotlivých časů je úměrný počtu všech dostupných předpovědí pro jednotlivé body.
 	
 	Použití triangulace není při zpracovávání rovnoměrně vzdálených bodů nutné, každopádně se v práci pro zpracování dat ponechala. Datové zdroje takto mohou zpracovávat i nerovnoměrně vzdálené body a pokud by došlo ke změně implementace určení dat v daných bodech, tedy pro jednotlivé časy by se body neurčovali cyklicky ale opět pomocí seznamu různě umístěných měst ve zpracované ploše, triangulace by se postarala o rozdělení bodů na síť trojúhelníků s následným vybarvením pomocí interpolace.
 	
@@ -278,27 +276,30 @@
 		\centering
 		\includegraphics[scale=0.5]{Data/bmp_body.png}
 		\caption{Body reprezentující teplotu na ploše}
+		\label{bmpBody}
 	\end{figure}
 	
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.5]{Data/bmp_sit.png}
 		\caption{Síť trojúhelníků pro bitmapu teploty}
+		\label{bmpTriang}
 	\end{figure}
 	
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.5]{Data/bmp_vybarvena.png}
 		\caption{Kompletní bitmapa pro teplotu}
+		\label{bmpColors}
 	\end{figure}
 	
 	\section{Ukládání dat}
 	
 	Veškerá zpracovaná data je potřeba uložit aby bylo možné je posléze poskytovat a nemuseli se pravidelně při každém dotazu o data generovat znovu. Vzhledem k tomu že se ukládají data o počasí na ploše nemá smysl používat žádnou databázi protože by bylo zbytečně složité ukládat celou předpověď pro každý bod zvlášť i když by bod vedle obsahovat obdobné, ne-li úplně totožné údaje. Právě proto se zvolilo ukládání dat do bitmap které nám jednoduše pokryjí celou zpracovanou plochu.
 	
-	Výhodou bitmap je že pro jeden zvolený čas dokáží pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jedné hodnotě počasí, například o teplotě, a proto pokud požadujeme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý prvek uložit jednu samostatnou bitmapu s těmito daty.
+	Výhodou bitmap je, že pro jeden zvolený čas mohou pokrýt velkou plochu a tím pádem stačí jeden soubor pro určitý čas. Nevýhodou je, že bitmapa nám poskytuje data pouze o jednom prvku počasí, například o teplotě, a proto pokud chceme zjišťovat více vlastností počasí v jedno chvíli musíme pro každý prvek uložit jednu samostatnou bitmapu s těmito daty.
 	
-	Jednotlivé datové zdroje ukládají své bitmapy se jménem {\it TYP-ČAS} a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako $TYP$ reprezentuje prvek předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. Druhé části názvu zvané $ČAS$ je uložený čas pro většinu datových zdrojů ve formátu {\it ROK-MĚSÍC-DEN-HODINA}. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu {\it ROK-MĚSÍC-DEN-MINUTA}.
+	Jednotlivé datové zdroje ukládají své bitmapy se jménem {\it TYP-ČAS} a na základě tohoto jména je následně možné bitmapy vracet. Prefix názvu matice pojmenovaný jako {\it TYP} reprezentuje prvek předpovědi která bitmapa zpracovává, pro teplotu to je $TEMP$, srážky $PREC$ a tak podobně. V druhé části názvu zvané $ČAS$ je uložený čas předpovědi, pro většinu datových zdrojů ve formátu {\it ROK-MĚSÍC-DEN-HODINA}. Vzhledem k tomu že datové zdroje poskytují předpovědi pro časy vzdálené v řádu hodin je zbytečné ukládat do názvu času minuty nebo sekundy. Pouze jediný z datových zdrojů Radar.bourky poskytuje data o počasí v rámci minut s posunem po 10 minutách a proto je pro tento zdroj zahrnut i parametr minut v časové části názvu {\it ROK-MĚSÍC-DEN-HODINA-MINUTA}.
 	
 	To pro jakou plochu datové zdroje zpracovávají své bitmapy je dopředu určeno a proto nemá smysl tento údaj ukládat přímo do bitmap.
 	
@@ -306,9 +307,9 @@
 	
 	\section{Poskytování dat}
 	
-	Datové zdroje po obdržení informací o prvku počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název prvku počasí se musí shodovat s prefixem názvu bitmapy $typ$. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bitmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
+	Datové zdroje po obdržení informací o prvku počasí a času dokáží vrátit správnou bitmapu, která je vybrána dle svého názvu. Název prvku počasí se musí shodovat s prefixem názvu bitmapy {\it TYP}. Požadovaný čas předpovědi si každý z datových zdrojů umí správně zaokrouhlit aby bylo jasné jaká bitmapa tento čas zpracovává. Pokud datový zdroj poskytuje data každých 10 minut je čas zaokrouhlen na desítky minut dolů. Při poskytování dat každou hodinu je k času přičteno 30 minut a následně je tento čas zaokrouhlen na hodiny dolů. Poslední možností je vracení času jednou za 3 nebo 6 hodin, v tomto případě se zjistí ke které časové hranici má zadaný čas blíže a tato varianta je zvolena.
 	
-	Zaokrouhlený čas je následně převeden do formátu {\it ROK-MĚSÍC-DEN}, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání výjimky.
+	Zaokrouhlený čas je následně převeden do formátu {\it ROK-MĚSÍC-DEN-HODINA}, případně včetně $MINUTA$ pro Radar.bourky. V tuto chvíli zná datový zdroj celý název hledané bitmapy a tu jednoduše vrátí. Pokud bitmapa neexistuje dojde k vyvolání výjimky.
 	
 	Pokud datový zdroj vytváří bitmapy nekonzistentně, například prvních pár dnů je s rozestupem 1 hodiny a zbytek s rozestupem 6 hodin tak jak to dělá například Yr.no, dochází při nenalezení bitmapy se zaokrouhleným časem k sekvenčnímu průchodu všech zpracovaných bitmap a vrácení bitmapy s nejbližším časem k požadovanému času. Tato bitmapa je vrácena pouze tehdy pokud je odchylka času maximálně 6 hodin v opačném případě dochází opět k vyvolání výjimky.
 	
@@ -546,6 +547,8 @@
 	Hlavní část této práce byla analýza různých datových zdrojů s daty o počasí a jejich následné využití pro poskytování vlastních agregovaných dat. Bylo zapotřebí zjistit jak každý ze zdrojů funguje a najít ideální řešení pro jeho využití v práci. Celá knihovna Agregace Dat byla vytvářena s předpokladem průběžného rozšíření o nové zdroje. Následně bylo zapotřebí najít ideální způsob poskytování zpracovaných dat pomocí webové služby, zjistit jak ideálně data ukládat a hledat. Nakonec se veškerá poskytovaná data zobrazila prostřednictvím vizualizační aplikace pro demonstraci možného využití dodávaných dat.
 	
 	Při zpracovávání této práce jsem se naučil jak psát více vzájemně kooperujících projektů současně. Pochopil jsem jakým způsobem služby s daty o počasí poskytují svá data a proč každá poskytuje své informace trochu jiným způsobem. Zjistil jsem jakým způsobem získávat data pomocí různých API a jak důležitý je jednoduchý a zároveň plně funkční návrh tohoto rozhraní. Ke konci práce jsem si uvědomil důležitost dobrého návrhu celé práce před samotnou realizací. Problémy vzniklé při změně funkcionality a složitém rozšíření některých částí se mohli s lepším návrhem řešit mnohem snadněji.
+	
+	\nocite{*}
 	
 	\printbibliography[title={Literatura}, heading=bibintoc]
 	

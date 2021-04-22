@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  20 APR 2021 12:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  22 APR 2021 19:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -857,10 +857,20 @@ Package biblatex Info: ... file 'blx-case-expl3.def' found.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-case-expl3.def
 File: blx-case-expl3 2020/08/23 v3.15a expl3 case changing code for biblatex
 )
+Package biblatex Info: Trying to load BibTeX backend compatibility...
+Package biblatex Info: ... file 'blx-bibtex.def' found.
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-bibtex.def
+File: blx-bibtex.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
+
+
+Package biblatex Warning: Using fall-back BibTeX(8) backend:
+(biblatex)                functionality may be reduced/unavailable.
+
+)
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
-
-(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
+ (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
 \c@textcitecount=\count422
 \c@textcitetotal=\count423
@@ -997,7 +1007,7 @@ File: listings.cfg 2020/03/24 1.8d listings configuration
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 57
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 56
 .
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmr.fd
@@ -1006,24 +1016,24 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 (./jed0050_dokument.aux)
 \openout1 = `jed0050_dokument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
-LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1086,7 +1096,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 57.
+Package hyperref Info: Link coloring ON on input line 56.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
@@ -1099,9 +1109,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count452
 )
-LaTeX Info: Redefining \ref on input line 57.
-LaTeX Info: Redefining \pageref on input line 57.
-LaTeX Info: Redefining \nameref on input line 57.
+LaTeX Info: Redefining \ref on input line 56.
+LaTeX Info: Redefining \pageref on input line 56.
+LaTeX Info: Redefining \nameref on input line 56.
  (./jed0050_dokument.out) (./jed0050_dokument.out)
 \@outlinefile=\write5
 \openout5 = `jed0050_dokument.out'.
@@ -1143,17 +1153,20 @@ File: english.lbx 2020/08/23 v3.15a biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout4 = `jed0050_dokument.bcf'.
+Package biblatex Info: Input encoding 'utf8' specified.
+Package biblatex Info: Data encoding 'utf8' specified.
+(biblatex)             No need to reencode data.
+\openout4 = `jed0050_dokument-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'jed0050_dokument.bbl' found.
 
 (./jed0050_dokument.bbl)
-Package biblatex Info: Reference section=0 on input line 57.
-Package biblatex Info: Reference segment=0 on input line 57.
+Package biblatex Info: Reference section=0 on input line 56.
+Package biblatex Info: Reference segment=0 on input line 56.
 \c@lstlisting=\count453
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 5
-9.
+8.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1164,37 +1177,37 @@ PDF version <1.6>, but at most version <1.5> allowed
 <Figures/FEI_CZ.pdf, id=130, 350.70023pt x 109.21pt>
 File: Figures/FEI_CZ.pdf Graphic file (type pdf)
 <use Figures/FEI_CZ.pdf>
-Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 59.
+Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 58.
 (pdftex.def)             Requested size: 274.11765pt x 85.35826pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5
-9.
+8.
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5
-9.
+8.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-59.
+58.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-59.
+58.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 59.
+(Font)              <14.4> on input line 58.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 59.
+(Font)              <10> on input line 58.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 59.
+(Font)              <7> on input line 58.
  [1
 
 
@@ -1250,29 +1263,29 @@ Kapitola 2.
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
-7.
+6.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8
-7.
+6.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (15.24251pt too wide) in paragraph at lines 87--88
+Overfull \hbox (15.24251pt too wide) in paragraph at lines 86--87
 [][][]$\T1/lmtt/m/n/10.95 https : / / api . met . no / weatherapi / locationfor
 ecast / 2 . 0 / classic ? lat = 49 . 820923 & lon = 18 .
  []
 
 
-Overfull \hbox (32.48871pt too wide) in paragraph at lines 101--102
+Overfull \hbox (32.48871pt too wide) in paragraph at lines 100--101
 [][][]$\T1/lmtt/m/n/10.95 https : / / api . openweathermap . org / data / 2 . 5
  / forecast ? lat = 49 . 820923 & lon = 18 . 262524 & appid =
  []
 
 
-Overfull \hbox (21.49124pt too wide) in paragraph at lines 111--112
+Overfull \hbox (21.49124pt too wide) in paragraph at lines 110--111
 [][][]$\T1/lmtt/m/n/10.95 http : / / api . weatherunlocked . com / api / foreca
 st / 49 . 820923 ,[] 18 . 262524 ? app _ id = MY _ ID & app _
  []
@@ -1281,10 +1294,10 @@ st / 49 . 820923 ,[] 18 . 262524 ? app _ id = MY _ ID & app _
 <Data/Mdrd_ukazka.png, id=283, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
-Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 126.
+Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 125.
 (pdftex.def)             Requested size: 273.7539pt x 174.02306pt.
 
-Overfull \hbox (9.99377pt too wide) in paragraph at lines 131--132
+Overfull \hbox (9.99377pt too wide) in paragraph at lines 130--131
 [][][]$\T1/lmtt/m/n/10.95 http : / / www . medard-[]online . cz / apiforecast ?
  run = 210313 _ 06 & forecast = precip & layer = eu &
  []
@@ -1293,7 +1306,7 @@ Overfull \hbox (9.99377pt too wide) in paragraph at lines 131--132
 <Data/Rb_ukazka.png, id=298, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
-Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 146.
+Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 145.
 (pdftex.def)             Requested size: 318.58461pt x 230.95879pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1301,7 +1314,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [13 <./Data/Rb_ukazka.png>] [14]
 Kapitola 3.
 
-Overfull \hbox (1.73695pt too wide) in paragraph at lines 181--182
+Overfull \hbox (1.73695pt too wide) in paragraph at lines 180--181
 []\T1/lmr/m/n/10.95 Kaºdý z da-to-vých zdroj· je v agre-gaci dat re-a-li-zo-ván
  po-mocí sa-mo-statné knihovny. Tato knihovna
  []
@@ -1309,47 +1322,46 @@ Overfull \hbox (1.73695pt too wide) in paragraph at lines 181--182
 [15
 
 ] [16]
-<Data/bmp_triangulace.png, id=336, 225.84375pt x 225.84375pt>
+<Data/bmp_triangulace.png, id=338, 225.84375pt x 225.84375pt>
 File: Data/bmp_triangulace.png Graphic file (type png)
 <use Data/bmp_triangulace.png>
-Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 214.
+Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 213.
 (pdftex.def)             Requested size: 225.84319pt x 225.84319pt.
  [17 <./Data/bmp_triangulace.png>] [18]
-<Data/bmp_body.png, id=357, 548.0475pt x 397.485pt>
+<Data/bmp_body.png, id=362, 548.0475pt x 397.485pt>
 File: Data/bmp_body.png Graphic file (type png)
 <use Data/bmp_body.png>
-Package pdftex.def Info: Data/bmp_body.png  used on input line 279.
+Package pdftex.def Info: Data/bmp_body.png  used on input line 277.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
-<Data/bmp_sit.png, id=358, 548.0475pt x 397.485pt>
+<Data/bmp_sit.png, id=363, 548.0475pt x 397.485pt>
 File: Data/bmp_sit.png Graphic file (type png)
 <use Data/bmp_sit.png>
-Package pdftex.def Info: Data/bmp_sit.png  used on input line 285.
+Package pdftex.def Info: Data/bmp_sit.png  used on input line 284.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
-<Data/bmp_vybarvena.png, id=359, 548.0475pt x 397.485pt>
+<Data/bmp_vybarvena.png, id=364, 548.0475pt x 397.485pt>
 File: Data/bmp_vybarvena.png Graphic file (type png)
 <use Data/bmp_vybarvena.png>
 Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 291.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
  [19] [20 <./Data/bmp_body.png> <./Data/bmp_sit.png>]
 
-LaTeX Warning: Command \v invalid in math mode on input line 301.
+LaTeX Warning: Command \v invalid in math mode on input line 302.
 
 [21 <./Data/bmp_vybarvena.png>]
-Overfull \hbox (9.43571pt too wide) in paragraph at lines 311--312
+Overfull \hbox (3.93948pt too wide) in paragraph at lines 312--313
 []\T1/lmr/m/n/10.95 Zaokrouhlený £as je ná-sledn¥ p°e-ve-den do for-mátu \T1/lm
-r/m/it/10.95 ROK-M…SÍC-DEN\T1/lmr/m/n/10.95 , p°í-padn¥ v£etn¥ $\OML/lmm/m/it/1
-0.95 MINUTA$
+r/m/it/10.95 ROK-M…SÍC-DEN-HODINA\T1/lmr/m/n/10.95 , p°í-padn¥ v£etn¥
  []
 
 [22]
 Kapitola 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--328
+Underfull \hbox (badness 10000) in paragraph at lines 326--329
 
  []
 
 
-Overfull \hbox (5.11365pt too wide) in paragraph at lines 325--328
+Overfull \hbox (5.11365pt too wide) in paragraph at lines 326--329
 [][]$\T1/lmtt/m/n/10.95 adresaserveru / bmp ? type = {typ} & time = {£as} & loa
 ders = {datové _ zdroje} & p1 = {bod1} & p2 = {bod2}$[][] 
  []
@@ -1359,27 +1371,27 @@ ders = {datové _ zdroje} & p1 = {bod1} & p2 = {bod2}$[][]
 ]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 331.
+(caption)                particular \caption on input line 332.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (14.76302pt too wide) in paragraph at lines 333--342
+Overfull \hbox (14.76302pt too wide) in paragraph at lines 334--343
  [] 
  []
 
 
-Overfull \hbox (44.98618pt too wide) in paragraph at lines 356--357
+Overfull \hbox (44.98618pt too wide) in paragraph at lines 357--358
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / bmp ? type = prec & p1 = 49 . 621559 
 ,[] 17 . 1507294 & p2 = 49 . 5211889 ,[] 17 . 4213141 & loaders =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 361--364
+Underfull \hbox (badness 10000) in paragraph at lines 362--365
 
  []
 
 
-Overfull \hbox (10.86238pt too wide) in paragraph at lines 361--364
+Overfull \hbox (10.86238pt too wide) in paragraph at lines 362--365
 [][]$\T1/lmtt/m/n/10.95 adresaserveru / {data} ? time = {£as} & lat = {zem¥pisn
 á _ ²í°ka} & lon = {zem¥pisní _ délka} & loaders =
  []
@@ -1387,35 +1399,35 @@ Overfull \hbox (10.86238pt too wide) in paragraph at lines 361--364
 [24]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 371.
+(caption)                particular \caption on input line 372.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (29.48463pt too wide) in paragraph at lines 373--384
+Overfull \hbox (29.48463pt too wide) in paragraph at lines 374--385
  [] 
  []
 
 [25]
-Overfull \hbox (10.49377pt too wide) in paragraph at lines 398--399
+Overfull \hbox (10.49377pt too wide) in paragraph at lines 399--400
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / xml ? lon = 18 . 262524 & lat = 49 . 
 820923 & time = 2021-[]03-[]14T18 : 35 : 00 & loaders =
  []
 
 
-Overfull \hbox (21.99124pt too wide) in paragraph at lines 402--403
+Overfull \hbox (21.99124pt too wide) in paragraph at lines 403--404
 [][][]$\T1/lmtt/m/n/10.95 adresaserveru / json ? lon = 18 . 262524 & lat = 49 .
  820923 & time = 2021-[]03-[]14T18 : 35 : 00 & numOfFcs =
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 430.
+(caption)                particular \caption on input line 431.
 See the caption package documentation for explanation.
 
 [26]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 448.
+(caption)                particular \caption on input line 449.
 See the caption package documentation for explanation.
 
 [27]
@@ -1427,7 +1439,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [29]
 
-LaTeX Warning: Command \' invalid in math mode on input line 500.
+LaTeX Warning: Command \' invalid in math mode on input line 501.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1442,27 +1454,18 @@ Kapitola 6.
 ] (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
 (rerunfilecheck)             Checksum: ED3DC3111F9127C7C807969003279E18;3742.
-
-
-LaTeX Warning: There were undefined references.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                jed0050_dokument
-(biblatex)                and rerun LaTeX afterwards.
-
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26849 strings out of 479382
- 453090 string characters out of 5867828
- 1168626 words of memory out of 5000000
- 43439 multiletter control sequences out of 15000+600000
+ 26937 strings out of 479382
+ 454885 string characters out of 5867828
+ 992332 words of memory out of 5000000
+ 43522 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,9n,100p,1169b,4671s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 96i,9n,100p,1890b,4665s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{d:/Skola-S
 W/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{d:/Skola-SW/texlive
 /2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{d:/Skola-SW/texlive/2020/tex
@@ -1481,9 +1484,9 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (35 pages, 1798447 bytes).
+Output written on jed0050_dokument.pdf (35 pages, 1800354 bytes).
 PDF statistics:
- 570 PDF objects out of 1000 (max. 8388607)
- 112 named destinations out of 1000 (max. 500000)
+ 577 PDF objects out of 1000 (max. 8388607)
+ 113 named destinations out of 1000 (max. 500000)
  296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -127,9 +127,7 @@ namespace Vizualizace_Dat
                             canDraw = true;
                         }
                         catch
-                        {
-
-                        }
+                        { }
                     }
                 }
 
