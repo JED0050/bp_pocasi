@@ -21,29 +21,29 @@ namespace Vizualizace_Dat
     {
         public static string baseUrl = ApkConfig.ServerAddress;
 
-        public static PointLatLng defaultTopLeftBound = ApkConfig.TopLeftCorner; //new PointLatLng(55.1995133, 4.1303633);
-        public static PointLatLng defaultBotRightBound = ApkConfig.BotRightCorner; //new PointLatLng(41.6999200, 37.9033283);
+        //public static PointLatLng ApkConfigTopLeftCorner = ApkConfig.TopLeftCorner; //new PointLatLng(55.1995133, 4.1303633);
+        //public static PointLatLng ApkConfigBotRightCorner = ApkConfig.BotRightCorner; //new PointLatLng(41.6999200, 37.9033283);
         public static double GetLon(int x, int bW)
         {
-            double lonDif = defaultBotRightBound.Lng - defaultTopLeftBound.Lng;
+            double lonDif = ApkConfig.BotRightCorner.Lng - ApkConfig.TopLeftCorner.Lng;
             double pixelLon = lonDif / bW;
-            double leftCorner = defaultTopLeftBound.Lng;
+            double leftCorner = ApkConfig.TopLeftCorner.Lng;
 
             return Math.Round(leftCorner + x * pixelLon, 6);
         }
 
         public static double GetLat(int y, int bH)
         {
-            double latDif = defaultTopLeftBound.Lat - defaultBotRightBound.Lat;
+            double latDif = ApkConfig.TopLeftCorner.Lat - ApkConfig.BotRightCorner.Lat;
             double pixelLat = latDif / bH;
-            double leftCorner = defaultTopLeftBound.Lat;
+            double leftCorner = ApkConfig.TopLeftCorner.Lat;
 
             return Math.Round(leftCorner - y * pixelLat, 6);
         }
 
         public static int GetX(double lon, int bW, double bX, double bX2)
         {
-            if (lon < defaultTopLeftBound.Lng || lon > defaultBotRightBound.Lng)
+            if (lon < ApkConfig.TopLeftCorner.Lng || lon > ApkConfig.BotRightCorner.Lng)
                 return -1;
 
             double lonDif = Math.Abs(bX2 - bX);
@@ -63,7 +63,7 @@ namespace Vizualizace_Dat
 
         public static int GetY(double lat, int bH, double bY, double bY2)
         {
-            if (lat > defaultTopLeftBound.Lat || lat < defaultBotRightBound.Lat)
+            if (lat > ApkConfig.TopLeftCorner.Lat || lat < ApkConfig.BotRightCorner.Lat)
                 return -1;
 
             double latDif = Math.Abs(bY - bY2);
@@ -131,7 +131,7 @@ namespace Vizualizace_Dat
 
             string pointUrl;
 
-            if((bounds.Count < 2) || (bounds[0].Lng == defaultTopLeftBound.Lng && bounds[0].Lat == defaultTopLeftBound.Lat && bounds[1].Lng == defaultBotRightBound.Lng && bounds[1].Lat == defaultBotRightBound.Lat))
+            if((bounds.Count < 2) || (bounds[0].Lng == ApkConfig.TopLeftCorner.Lng && bounds[0].Lat == ApkConfig.TopLeftCorner.Lat && bounds[1].Lng == ApkConfig.BotRightCorner.Lng && bounds[1].Lat == ApkConfig.BotRightCorner.Lat))
             {
                 pointUrl = "";
             }
@@ -255,8 +255,8 @@ namespace Vizualizace_Dat
 
             if (gMap.Zoom <= 8)
             {
-                bounds.Add(defaultTopLeftBound);
-                bounds.Add(defaultBotRightBound);
+                bounds.Add(ApkConfig.TopLeftCorner);
+                bounds.Add(ApkConfig.BotRightCorner);
 
                 return bounds;
             }
@@ -359,6 +359,37 @@ namespace Vizualizace_Dat
             {
                 throw new Exception("Místo se nepodařilo zpracovat, zkuste jiné místo!");
             }
+        }
+
+        public static List<PointLatLng> GetDefaultBoundsFromServer()
+        {
+            List<PointLatLng> boundsFromServer = new List<PointLatLng>();
+
+            PointLatLng topLeft = new PointLatLng();
+            PointLatLng botRight = new PointLatLng();
+
+            string webContent;
+
+            using(WebClient client = new WebClient())
+            {
+                string urlPostfix = @"/bounds";
+
+                webContent = client.DownloadString(ApkConfig.ServerAddress + urlPostfix);
+            }
+
+            dynamic jContent = JObject.Parse(webContent);
+
+            topLeft.Lat = jContent.TopLeftCornerLonLat.Lat;
+            topLeft.Lng = jContent.TopLeftCornerLonLat.Lon;
+
+            botRight.Lat = jContent.BotRightCornerLonLat.Lat;
+            botRight.Lng = jContent.BotRightCornerLonLat.Lon;
+
+            boundsFromServer.Add(topLeft);
+            boundsFromServer.Add(botRight);
+
+            return boundsFromServer;
+
         }
 
 

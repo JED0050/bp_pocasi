@@ -218,6 +218,8 @@ namespace Vizualizace_Dat
                 }
             }
 
+            Debug.WriteLine(bounds[0].Lat + " " + bounds[0].Lng);
+
             bitmapOverlay.Markers.Remove(bitmapMarker);
             gMap.Overlays.Remove(bitmapOverlay);
 
@@ -2084,5 +2086,34 @@ namespace Vizualizace_Dat
 
             lPB.Hide();
         }
+
+        private void aktualizovatHranicePředpovědiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                List<PointLatLng> newBounds = BitmapHandler.GetDefaultBoundsFromServer();
+
+                double zoom = gMap.Zoom;
+
+                if(zoom > zoomLevel)
+                    gMap.Zoom = zoomLevel;
+
+                bounds = BitmapHandler.GetBounds(gMap);
+                gMap.Zoom = zoom;
+
+                if (bounds[0].Lng != newBounds[0].Lng || bounds[0].Lat != newBounds[0].Lat || bounds[1].Lng != newBounds[1].Lng || bounds[1].Lat != newBounds[1].Lat)
+                {
+                    ApkConfig.TopLeftCorner = newBounds[0];
+                    ApkConfig.BotRightCorner = newBounds[1];
+
+                    drawBitmapFromServer();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Bohužel se nepodařilo aktualizovat hranice předpovědi počasí stažené ze serveru.", "Chyba při aktualizaci hranic souboru", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
