@@ -1,0 +1,14 @@
+YrNo ukazka
+https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=49.820923&lon=18.262524
+
+Openweather ukázka
+https://api.openweathermap.org/data/2.5/forecast?lat=49.820923&lon=18.262524&appid=ea63080a4f8e99972630d2671e3ef805
+
+WeatherUnlocked
+http://api.weatherunlocked.com/api/forecast/49.820923,18.262524?app_id=79ef9432&app_key=904d54d78eec41c2c55ed93cbaf7c7ca
+
+Medard ukazka
+http://www.medard-online.cz/apiforecast?run=210313_06&forecast=precip&layer=eu&step=13
+
+RadarBourky ukazka
+http://radar.bourky.cz/data/pacz2gmaps.z_max3d.20201001.1600.0.png

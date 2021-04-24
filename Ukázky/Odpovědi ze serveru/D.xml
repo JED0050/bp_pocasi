@@ -1,0 +1,22 @@
+<XMLForecasts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <DataSources>
+      <DataSource>Medard-online</DataSource>
+      <DataSource>OpenWeatherMap</DataSource>
+      <DataSource>Radar.bourky</DataSource>
+      <DataSource>WeatherUnlocked</DataSource>
+      <DataSource>Yr.no</DataSource>
+   </DataSources>
+   <Coord>
+      <Lon>18.262524</Lon>
+      <Lat>49.820923</Lat>
+   </Coord>
+   <Forecasts>
+      <Forecast>
+         <DateTime Value="2021-04-24T14:00:00" Format="ISO 8601" />
+         <Temperature Value="9.75" Unit="°C" />
+         <Precipitation Value="0.42" Unit="mm" />
+         <Humidity Value="57.3333" Unit="%" />
+         <Pressure Value="1022.6667" Unit="hPa" />
+      </Forecast>
+   </Forecasts>
+</XMLForecasts>

@@ -1,0 +1,45 @@
+A
+- https://localhost:44336/bmp?type=temp&loaders=yrno
+- bitmapa teploty pokrývající celou plochu pro aktuálníčas zpracována zdrojem yrno
+
+B
+- https://localhost:44336/bmp?type=prec&time=2021-04-24T18:30:00&loaders=owm,yrno
+- bitmapa s daty o srážkách pro 26. 5. 2021 18:30, která pokrývá celou možnou
+plochu a využívá datové zdroje od služeb OpenWeatherMap a Yr.No
+	
+C
+- https://localhost:44336/bmp?type=temp&p1=49.621559,17.1507294&p2=49.5211889,17.4213141&loaders=mdrd
+- bitmapa s daty o teplotě pro aktuální čas, která pokrývá město Olomouc a
+využívá datový zdroj od služby Medard-Online
+
+D
+- https://localhost:44336/xml?lon=18.262524&lat=49.820923
+- předpověď o počasí pro aktuální čas v Ostravě zpracovanou všemi datovými zdroji
+ve formátu XML
+
+E
+- https://localhost:44336/json?lon=18.262524&lat=49.820923&time=2021-04-29T16:00:00
+- předpověď o počasí pro datum a čas 29.04.2021 16:00 v Ostravě zpracovanou
+všemi datovými zdroji ve formátu JSON
+
+F
+- https://localhost:44336/xml?lon=18.262524&lat=49.820923&time=2021-04-29T16:00:00&numOfFcs=5&hourDif=3
+- předpověď o počasí v Ostravě pro 5 časových oken s 3 hodinovými rozestupy
+počínaje aktuálním časem ve formátu XML
+
+G
+- https://localhost:44336/json?lon=18.262524&lat=49.820923&time=2021-04-29T16:00:00&numOfFcs=5&hourDif=3
+- předpověď o počasí v Ostravě pro 5 časových oken s 3 hodinovými rozestupy
+počínaje aktuálním časem ve formátu XML 
+
+H
+- https://localhost:44336/bounds
+- hranice maximální bitmapy
+
+I
+- https://localhost:44336/scale?type=temp
+- škála pro teplotu
+
+J
+- https://localhost:44336/bmp?type=prec&time=20A21-0B4-2C4T13:42:29
+- chyba při zadání špatného formátování času

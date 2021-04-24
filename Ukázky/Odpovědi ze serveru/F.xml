@@ -1,0 +1,47 @@
+<XMLForecasts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <DataSources>
+      <DataSource>WeatherUnlocked</DataSource>
+      <DataSource>Yr.no</DataSource>
+   </DataSources>
+   <Coord>
+      <Lon>18.262524</Lon>
+      <Lat>49.820923</Lat>
+   </Coord>
+   <Forecasts>
+      <Forecast>
+         <DateTime Value="2021-04-29T16:00:00" Format="ISO 8601" />
+         <Temperature Value="15" Unit="°C" />
+         <Precipitation Value="0" Unit="mm" />
+         <Humidity Value="66" Unit="%" />
+         <Pressure Value="1007.5" Unit="hPa" />
+      </Forecast>
+      <Forecast>
+         <DateTime Value="2021-04-29T19:00:00" Format="ISO 8601" />
+         <Temperature Value="12.5" Unit="°C" />
+         <Precipitation Value="0.35" Unit="mm" />
+         <Humidity Value="81.5" Unit="%" />
+         <Pressure Value="1007" Unit="hPa" />
+      </Forecast>
+      <Forecast>
+         <DateTime Value="2021-04-29T22:00:00" Format="ISO 8601" />
+         <Temperature Value="11.5" Unit="°C" />
+         <Precipitation Value="0.4" Unit="mm" />
+         <Humidity Value="85.5" Unit="%" />
+         <Pressure Value="1007" Unit="hPa" />
+      </Forecast>
+      <Forecast>
+         <DateTime Value="2021-04-30T01:00:00" Format="ISO 8601" />
+         <Temperature Value="9.5" Unit="°C" />
+         <Precipitation Value="0.15" Unit="mm" />
+         <Humidity Value="90.5" Unit="%" />
+         <Pressure Value="1007" Unit="hPa" />
+      </Forecast>
+      <Forecast>
+         <DateTime Value="2021-04-30T04:00:00" Format="ISO 8601" />
+         <Temperature Value="9" Unit="°C" />
+         <Precipitation Value="0" Unit="mm" />
+         <Humidity Value="92.5" Unit="%" />
+         <Pressure Value="1007" Unit="hPa" />
+      </Forecast>
+   </Forecasts>
+</XMLForecasts>

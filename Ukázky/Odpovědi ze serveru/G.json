@@ -1,0 +1,47 @@
+{
+  "DataSources": [
+    "WeatherUnlocked",
+    "Yr.no"
+  ],
+  "Forecasts": [
+    {
+      "Time": "2021-04-29T16:00:00",
+      "Temperature": 15.0,
+      "Precipitation": 0.0,
+      "Humidity": 66.0,
+      "Pressure": 1007.5
+    },
+    {
+      "Time": "2021-04-29T19:00:00",
+      "Temperature": 12.5,
+      "Precipitation": 0.35,
+      "Humidity": 81.5,
+      "Pressure": 1007.0
+    },
+    {
+      "Time": "2021-04-29T22:00:00",
+      "Temperature": 11.5,
+      "Precipitation": 0.4,
+      "Humidity": 85.5,
+      "Pressure": 1007.0
+    },
+    {
+      "Time": "2021-04-30T01:00:00",
+      "Temperature": 9.5,
+      "Precipitation": 0.15,
+      "Humidity": 90.5,
+      "Pressure": 1007.0
+    },
+    {
+      "Time": "2021-04-30T04:00:00",
+      "Temperature": 9.0,
+      "Precipitation": 0.0,
+      "Humidity": 92.5,
+      "Pressure": 1007.0
+    }
+  ],
+  "Coord": {
+    "Lon": 18.262524,
+    "Lat": 49.820923
+  }
+}

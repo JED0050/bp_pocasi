@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  22 APR 2021 19:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  24 APR 2021 13:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1419,15 +1419,15 @@ Overfull \hbox (21.99124pt too wide) in paragraph at lines 403--404
  820923 & time = 2021-[]03-[]14T18 : 35 : 00 & numOfFcs =
  []
 
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 431.
-See the caption package documentation for explanation.
-
 [26]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 449.
+(caption)                particular \caption on input line 442.
+See the caption package documentation for explanation.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 460.
 See the caption package documentation for explanation.
 
 [27]
@@ -1439,7 +1439,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [29]
 
-LaTeX Warning: Command \' invalid in math mode on input line 501.
+LaTeX Warning: Command \' invalid in math mode on input line 512.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1459,8 +1459,8 @@ Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26937 strings out of 479382
- 454885 string characters out of 5867828
+ 26938 strings out of 479382
+ 454901 string characters out of 5867828
  992332 words of memory out of 5000000
  43522 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
@@ -1484,9 +1484,9 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (35 pages, 1800354 bytes).
+Output written on jed0050_dokument.pdf (35 pages, 1801584 bytes).
 PDF statistics:
- 577 PDF objects out of 1000 (max. 8388607)
- 113 named destinations out of 1000 (max. 500000)
+ 579 PDF objects out of 1000 (max. 8388607)
+ 114 named destinations out of 1000 (max. 500000)
  296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -315,15 +315,15 @@
 	
 	\chapter{Distribuce dat}
 	
-	Shromážděné a zprůměrované předpovědi počasí je potřeba nějakým způsobem dodávat klientovi. Tuto úlohu nám splní webová služba, která pro různé dotazy ve formě url API vrací agregovaná data o počasí v požadovaných formátech. Služba se implementovala jako MVC aplikace pro C\# a využívá pro svou práci knihovnu pro agregaci dat z předešlé sekce. Vzhledem k tomu že jsou data o počasí uložená do bitmap, lze informace o počasí poskytovat i bez připojení k internetu, musíme však mít pro dané časy bitmapy dopředu vytvořené. Služba volá požadavek o vytvoření bitmap vždy při spuštění a následně každou další hodnu běhu, jednotlivé datové zdroje si následně zjistí kdy byly bitmapy naposledy vytvořený a pokud již uplynul minimální čas dojde k vytváření bitmap nových, tento čas se může u každého datového zdroje lišit.
+	Shromážděné a zprůměrované předpovědi počasí je potřeba nějakým způsobem dodávat klientovi. Tuto úlohu nám splní webová služba, která pro různé dotazy ve formě url API vrací agregovaná data o počasí v požadovaných formátech. Služba se implementovala jako MVC aplikace pro C\# a využívá pro svou práci knihovnu pro agregaci dat z předešlé sekce. Vzhledem k tomu, že jsou data o počasí uložená do bitmap, lze informace o počasí poskytovat i bez připojení k internetu, musíme však mít pro dané časy bitmapy dopředu vytvořené. Služba volá požadavek na vytvoření nových bitmap vždy při spuštění a následně každou další hodinu běhu, jednotlivé datové zdroje si následně zjistí kdy byly bitmapy naposledy vytvořený a pokud již uplynul minimální čas dojde k vytváření bitmap nových, tento čas se může u každého datového zdroje lišit.
 	
 	\section{API}
 	
-	Při práci se službou se využívá vytvořeného API které pro správně zadané vstupní parametry vrací požadovanou předpověď. Webová služba vrací data ve třech formátech XML, JSON a bitmapa. Nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
+	Při práci se službou je využíváno webové API které pro správně zadané vstupní parametry vrací požadovaná data. Webová služba poskytuje data o počasí ve třech formátech XML, JSON a BMP. Dále lze získat souřadnice ohraničující maximální plochu předpovědi a nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
 	
 	\subsection{Bitmap předpověď}
 	
-	Tato předpověď se získává požadavkem bmp a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určena pro Českou republiku. Při určování této předpovědi je zapotřebí rovněž i čas pro který se má předpověď určitě $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas požadavku předpovědi. Následně je potře zadat prvek předpovědi $type$, který má bitmapa reprezentovat. Tyto prvky jsou 4, prvek $prec$ reprezentuje srážky v mm, prvek $temp$ teplotu ve stupních Celsia,$pres$ tlak v [hPa] a $humi$ vlhkost v [\%]. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné současně.
+	Tato předpověď se získává požadavkem $bmp$ a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určena pro maximální možnou plochu. Při určování této předpovědi je rovněž zapotřebí i čas pro který se má předpověď určit $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas. Následně je potřeba zadat prvek předpovědi $type$, který má bitmapa reprezentovat. Tyto prvky jsou 4, prvek $prec$ reprezentuje srážky [mm], prvek $temp$ teplotu [°C], $pres$ tlak [hPa] a $humi$ vlhkost [\%]. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné datové zdroje současně.
 	\\\\
 	\url{adresaserveru/bmp?type={typ}\&time={čas}\&loaders={datové\_zdroje}\&p1={bod1}\&p2={bod2}}
 	
@@ -335,24 +335,24 @@
 			Název & Povinnost & Význam \\
 			\midrule
 			type & ANO & Typ předpovědi, určuje prvek vykreslených informací. Například prvek $prec$ reprezentuje srážky v milimetrech a prvek $temp$ teplotu ve stupních Celsia.\\ 
-			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  provede se předpověď pro aktuální čas.\\ 
+			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  určí se předpověď pro aktuální čas.\\ 
 			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
-			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ a $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
-			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ a $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
+			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
+			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p2$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
 		\end{tabular}
 	\end{center}
 	
 	Příklady požadavků:
 	\begin{itemize}
-		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývající celou možnou plochu a využívá veškeré datové zdroje.
+		\item Požadujeme bitmapu s daty o teplotě pro aktuální čas, která pokrývá celou možnou plochu a využívá veškeré datové zdroje.
 		
 		\url{adresaserveru/bmp?type=temp}
 		
-		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývající celou možnou plochu a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
+		\item Požadujeme bitmapu s daty o srážkách pro 26. 5. 2021 18:30, která pokrývá celou možnou plochu a využívá datové zdroje od služeb OpenWeatherMap a Yr.No.
 		
 		\url{adresaserveru/bmp?type=prec\&time=2021-05-26T18:30:00\&loaders=owm,yrno}
 		
-		\item Požadujeme bitmapu s daty o srážkách pro aktuální čas, která pokrývající město Olomouc a využívá datový zdroj od služby Medard-Online.
+		\item Požadujeme bitmapu s daty o srážkách pro aktuální čas, která pokrývá město Olomouc a využívá datový zdroj od služby Medard-Online.
 		
 		\url{adresaserveru/bmp?type=prec\&p1=49.621559,17.1507294\&p2=49.5211889,17.4213141\&loaders=mdrd}
 	\end{itemize}
@@ -377,7 +377,7 @@
 			data & ANO & Formát v jakém mají být data o počasí zpracována. Rozlišujeme dva typy a to $xml$ a $json$.\\
 			lon & ANO & Longitude, parametr reprezentující zeměpisnou délku požadované souřadnice. Desetinná a celá část souřadnice jsou odděleny tečkou.\\
 			lat & ANO & Latitude, parametr reprezentující zeměpisnou šířku požadované souřadnice. Desetinná a celá část souřadnice jsou odděleny tečkou.\\
-			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  provede se předpověď pro aktuální čas.\\ 
+			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  určí se předpověď pro aktuální čas.\\ 
 			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdrojů se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\
 			numOfFcs & NE & Počet časových oken které má předpověď obsahovat. Pokud není tento parametr zadán, v předpovědi bude právě jedno časové okno pro zadaný čas.\\
 			hourDif & NE & Hodinový rozdíl mezi jednotlivými časovými okny v předpovědi. Pokud není tento parametr zadán, v předpovědi bude právě jedno časové okno pro zadaný čas.\\
@@ -398,12 +398,23 @@
 		
 		\url{adresaserveru/xml?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&loaders=owm,weun}
 		
-		\item Požadujeme předpověď o počasí v Ostravě pro 5 časových oken s 3 hodinovými rozestupy počínaje aktuálním časem.
+		\item Požadujeme předpověď o počasí v Ostravě pro 5 časových oken s 3 hodinovými rozestupy počínaje aktuálním časem ve formátu JSON.
 		
 		\url{adresaserveru/json?lon=18.262524\&lat=49.820923\&time=2021-03-14T18:35:00\&numOfFcs=5\&hourDif=3}
 		
 	\end{itemize}
 	
+	\subsection{Ohraničení bitmapy}
+	
+	Služba vytváří bitmapy pro určitou plochu. Aby bylo možné zjistit jaké maximální ohraničení bitmapy můžeme zadávat, respektive jakou plochu bitmapa pokrývá pokud žádné parametry hranic nezadáme, máme možnost získat JSON data obsahující maximální ohraničení bitmapy tedy levý horní roh $TopLeftCornerLonLat$ a pravý dolní roh $BotRightCornerLonLat$. Oba body obsahují konkrétní hodnoty zeměpisné délky $Lon$ a šířky $Lat$.
+	
+	Příklad požadavku:
+	\begin{itemize}
+		\item Požadujeme škálu pro teploty.
+	
+		\url{adresaserveru/bounds}
+	\end{itemize}
+
 	\subsection{Využívané škály}
 	
 	Při stahování bitmap obsahujících data o počasí je vhodné mít prostředek na převod barev z jednotlivých pixelů na číselné hodnoty. Právě pro tento účel slouží škály.
@@ -461,7 +472,7 @@
 	
 	\section{Chyba při zpracování dat}
 	
-	Při požadavku o dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovaných dat vrátí text ve formátu JSON obsahující jediný parametr $message$ obsahující informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
+	Při požadavku na dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovaných dat vrátí text ve formátu JSON obsahující jediný prvek $message$ s informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
 	
 	\chapter{Vizualizace dat}
 	

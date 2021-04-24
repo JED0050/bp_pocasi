@@ -58,11 +58,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.1.2}XML a JSON předpověď}{25}{subsection.4.1.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.3}Využívané škály}{26}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.3}Ohraničení bitmapy}{26}{subsection.4.1.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.4}Zkratky prvků počasí}{26}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.4}Využívané škály}{26}{subsection.4.1.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.5}Zkratky datových zdrojů}{27}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.5}Zkratky prvků počasí}{27}{subsection.4.1.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1.6}Zkratky datových zdrojů}{27}{subsection.4.1.6}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.2}Chyba při zpracování dat}{27}{section.4.2}%
 \defcounter {refsection}{0}\relax 
