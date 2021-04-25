@@ -44,29 +44,29 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.4}Složky zdrojů}{18}{section.3.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.5}Zpracovávání dat}{18}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Zpracovávání dat}{19}{section.3.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.6}Ukládání dat}{19}{section.3.6}%
+\contentsline {section}{\numberline {3.6}Ukládání dat}{21}{section.3.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.7}Poskytování dat}{21}{section.3.7}%
+\contentsline {section}{\numberline {3.7}Poskytování dat}{22}{section.3.7}%
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {4}Distribuce dat}{23}{chapter.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.1}API}{23}{section.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.1}Bitmap předpověď}{23}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Bitmap předpověď}{23}{section.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.2}XML a JSON předpověď}{25}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.3}XML a JSON předpověď}{25}{section.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.3}Ohraničení bitmapy}{26}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.4}Ohraničení bitmapy}{26}{section.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.4}Využívané škály}{26}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.5}Využívané škály}{26}{section.4.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.5}Zkratky prvků počasí}{27}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.6}Zkratky prvků počasí}{27}{section.4.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.6}Zkratky datových zdrojů}{27}{subsection.4.1.6}%
+\contentsline {section}{\numberline {4.7}Zkratky datových zdrojů}{27}{section.4.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}Chyba při zpracování dat}{27}{section.4.2}%
+\contentsline {section}{\numberline {4.8}Chyba při zpracování dat}{27}{section.4.8}%
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {5}Vizualizace dat}{28}{chapter.5}%
 \defcounter {refsection}{0}\relax 

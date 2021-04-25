@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  24 APR 2021 13:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  25 APR 2021 18:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1174,7 +1174,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 pdfTeX warning: pdflatex.exe (file ./Figures/FEI_CZ.pdf): PDF inclusion: found 
 PDF version <1.6>, but at most version <1.5> allowed
-<Figures/FEI_CZ.pdf, id=130, 350.70023pt x 109.21pt>
+<Figures/FEI_CZ.pdf, id=154, 350.70023pt x 109.21pt>
 File: Figures/FEI_CZ.pdf Graphic file (type pdf)
 <use Figures/FEI_CZ.pdf>
 Package pdftex.def Info: Figures/FEI_CZ.pdf  used on input line 58.
@@ -1291,7 +1291,7 @@ st / 49 . 820923 ,[] 18 . 262524 ? app _ id = MY _ ID & app _
  []
 
 [11]
-<Data/Mdrd_ukazka.png, id=283, 684.3969pt x 435.0654pt>
+<Data/Mdrd_ukazka.png, id=313, 684.3969pt x 435.0654pt>
 File: Data/Mdrd_ukazka.png Graphic file (type png)
 <use Data/Mdrd_ukazka.png>
 Package pdftex.def Info: Data/Mdrd_ukazka.png  used on input line 125.
@@ -1303,7 +1303,7 @@ Overfull \hbox (9.99377pt too wide) in paragraph at lines 130--131
  []
 
 [12 <./Data/Mdrd_ukazka.png>]
-<Data/Rb_ukazka.png, id=298, 796.47563pt x 577.40718pt>
+<Data/Rb_ukazka.png, id=328, 796.47563pt x 577.40718pt>
 File: Data/Rb_ukazka.png Graphic file (type png)
 <use Data/Rb_ukazka.png>
 Package pdftex.def Info: Data/Rb_ukazka.png  used on input line 145.
@@ -1322,28 +1322,35 @@ Overfull \hbox (1.73695pt too wide) in paragraph at lines 180--181
 [15
 
 ] [16]
-<Data/bmp_triangulace.png, id=338, 225.84375pt x 225.84375pt>
+<Data/bmp_triangulace.png, id=368, 225.84375pt x 225.84375pt>
 File: Data/bmp_triangulace.png Graphic file (type png)
 <use Data/bmp_triangulace.png>
 Package pdftex.def Info: Data/bmp_triangulace.png  used on input line 213.
 (pdftex.def)             Requested size: 225.84319pt x 225.84319pt.
- [17 <./Data/bmp_triangulace.png>] [18]
-<Data/bmp_body.png, id=362, 548.0475pt x 397.485pt>
+ [17 <./Data/bmp_triangulace.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18]
+<Data/bmp_body.png, id=392, 548.0475pt x 397.485pt>
 File: Data/bmp_body.png Graphic file (type png)
 <use Data/bmp_body.png>
 Package pdftex.def Info: Data/bmp_body.png  used on input line 277.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
-<Data/bmp_sit.png, id=363, 548.0475pt x 397.485pt>
+<Data/bmp_sit.png, id=393, 548.0475pt x 397.485pt>
 File: Data/bmp_sit.png Graphic file (type png)
 <use Data/bmp_sit.png>
 Package pdftex.def Info: Data/bmp_sit.png  used on input line 284.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
-<Data/bmp_vybarvena.png, id=364, 548.0475pt x 397.485pt>
+<Data/bmp_vybarvena.png, id=394, 548.0475pt x 397.485pt>
 File: Data/bmp_vybarvena.png Graphic file (type png)
 <use Data/bmp_vybarvena.png>
 Package pdftex.def Info: Data/bmp_vybarvena.png  used on input line 291.
 (pdftex.def)             Requested size: 274.02307pt x 198.742pt.
- [19] [20 <./Data/bmp_body.png> <./Data/bmp_sit.png>]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [19]
+[20 <./Data/bmp_body.png> <./Data/bmp_sit.png>]
 
 LaTeX Warning: Command \v invalid in math mode on input line 302.
 
@@ -1435,17 +1442,20 @@ Kapitola 5.
 [28
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6625) has occurred while \output is active []
 
  [29]
-
-LaTeX Warning: Command \' invalid in math mode on input line 512.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [30]
-[31] [32] [33]
+
+LaTeX Warning: Command \' invalid in math mode on input line 540.
+
+[31]
+
+LaTeX Warning: Command \' invalid in math mode on input line 542.
+
+[32] [33]
 Kapitola 6.
 [34
 
@@ -1453,16 +1463,16 @@ Kapitola 6.
 
 ] (./jed0050_dokument.aux)
 Package rerunfilecheck Info: File `jed0050_dokument.out' has not changed.
-(rerunfilecheck)             Checksum: ED3DC3111F9127C7C807969003279E18;3742.
+(rerunfilecheck)             Checksum: 5A268BC055785F67AA03750545DCA322;4716.
 Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 \openout1 = `jed0050_dokument.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26938 strings out of 479382
- 454901 string characters out of 5867828
- 992332 words of memory out of 5000000
- 43522 multiletter control sequences out of 15000+600000
+ 26944 strings out of 479382
+ 454949 string characters out of 5867828
+ 993332 words of memory out of 5000000
+ 43528 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  96i,9n,100p,1890b,4665s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1484,9 +1494,9 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (35 pages, 1801584 bytes).
+Output written on jed0050_dokument.pdf (35 pages, 1805533 bytes).
 PDF statistics:
- 579 PDF objects out of 1000 (max. 8388607)
+ 603 PDF objects out of 1000 (max. 8388607)
  114 named destinations out of 1000 (max. 500000)
- 296 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 344 words of extra memory for PDF output out of 10000 (max. 10000000)
 

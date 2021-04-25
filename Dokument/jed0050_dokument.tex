@@ -223,7 +223,7 @@
 	%\vspace{10mm}
 	
 	V prvním kroku výpočtu je zapotřebí spočítat vzdálenost $Distance$ zjišťovaného bodu $P$ od všech tří vrcholů trojúhelníku $V_1$, $V_2$, $V_3$ (\ref{eq_dist}). 
-	
+	\newpage
 	\begin{displaymath}
 		Distance_{v1} =\sqrt{(V_{1x}-P_x)^2+(V_{1y}-P_y)^2}
 	\end{displaymath}
@@ -254,7 +254,7 @@
 	
 	Každý z datových zdrojů má svou vlastní složku ze které čte a do které si ukládá informace.
 	
-	V této složce se nachází konfigurační JSON soubor obsahující informace na základě kterých si služba nastaví své parametry při vytvoření instance. Mezi tyto informace patří název datového zdroje včetně zkratky. Zeměpisné souřadnice zpracovávané plochy. Maximální dovolený počet stažení dat za minutu. Počet hodin který má služba zpracovávat zpětně, minimální potřebný hodinový rozdíl pro nové stažení dat a především poslední čas zpracování dat. Na základě posledního času zpracování bitmap a minimálního potřebného hodinového rozdílu si datový zdroj při požadavku na vytvoření novývh bitmap určí zda dojde k jejich vytváření či nikoli.
+	V této složce se nachází konfigurační JSON soubor obsahující informace na základě kterých si služba nastaví své parametry při vytvoření instance. Mezi tyto informace patří název datového zdroje včetně zkratky. Zeměpisné souřadnice zpracovávané plochy. Maximální dovolený počet stažení dat za minutu. Počet hodin který má služba zpracovávat zpětně, minimální potřebný hodinový rozdíl pro nové stažení dat a především poslední čas zpracování dat. Na základě posledního času zpracování bitmap a minimálního potřebného hodinového rozdílu si datový zdroj při požadavku na vytvoření nových bitmap určí zda dojde k jejich vytváření či nikoli.
 	
 	Pokud zpracovává datový zdroj informace ve formě bitmap obsahuje tato složka i škálu daného datového zdroje. Pomocí této škály se převádí veškeré barvy na číselné hodnoty a následně za použití obecné škály služby se převádí čísla zpět na normalizovanou barvu.
 	
@@ -321,7 +321,7 @@
 	
 	Při práci se službou je využíváno webové API které pro správně zadané vstupní parametry vrací požadovaná data. Webová služba poskytuje data o počasí ve třech formátech XML, JSON a BMP. Dále lze získat souřadnice ohraničující maximální plochu předpovědi a nakonec je možné získat jednotlivé škály, které služba využívá pro správu dat o počasí v bitmapách.
 	
-	\subsection{Bitmap předpověď}
+	\section{Bitmap předpověď}
 	
 	Tato předpověď se získává požadavkem $bmp$ a vždy vrací bitmapu o rozměrech 728x528 pixelů pokrývající určitou plochu. Plocha je vymezená body zeměpisných souřadnic, konkrétně levým horním $p1$ a pravým dolním $p2$ rohem. Pokud nedojde k zadání těchto bodů je bitmapa určena pro maximální možnou plochu. Při určování této předpovědi je rovněž zapotřebí i čas pro který se má předpověď určit $time$, tento čas musí být ve formátu ISO 8601 a pokud není zadán nebo je místo něj vyplněna hodnota 0 určí se předpověď pro aktuální čas. Následně je potřeba zadat prvek předpovědi $type$, který má bitmapa reprezentovat. Tyto prvky jsou 4, prvek $prec$ reprezentuje srážky [mm], prvek $temp$ teplotu [°C], $pres$ tlak [hPa] a $humi$ vlhkost [\%]. Nakonec se zadávají datové zdroje $loaders$, takzvané loadery, ze kterých má služba získávat data. Je potřeba zadat zkratky loaderů oddělené čárkami pro každý loader který má služba využít pokud není zadán žádný loader použijí se všechny dostupné datové zdroje současně.
 	\\\\
@@ -336,7 +336,7 @@
 			\midrule
 			type & ANO & Typ předpovědi, určuje prvek vykreslených informací. Například prvek $prec$ reprezentuje srážky v milimetrech a prvek $temp$ teplotu ve stupních Celsia.\\ 
 			time & NE & Čas předpovědi, pokud je zadán musí být ve formátu ISO 8601. Pokud zadán není nebo je zadána hodnota 0  určí se předpověď pro aktuální čas.\\ 
-			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdroju se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
+			loaders & NE & Datové zdroje které se mají použít. Výběr datových zdrojů se provede zadáním zkratek jednotlivých zdrojů oddělených čárkami. Pokud je parametr prázdný použijí se veškeré datové zdroje služby. \\ 
 			p1 & NE & Levý horní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p1$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
 			p2 & NE & Pravý dolní roh vymezující plochu bitmapy. Bod reprezentuje zeměpisné údaje v pořadí zeměpisná šířka a délka (latitude a longitude), údaje jsou odděleny čárkou. Pro oddělení celé a desetinné části souřadnice se používá tečka. Pokud bod $p2$ není zadán, bitmapa se vykreslí pro celou možnou plochu.\\
 		\end{tabular}
@@ -357,7 +357,7 @@
 		\url{adresaserveru/bmp?type=prec\&p1=49.621559,17.1507294\&p2=49.5211889,17.4213141\&loaders=mdrd}
 	\end{itemize}
 	
-	\subsection{XML a JSON předpověď}
+	\section{XML a JSON předpověď}
 	
 	Tento požadavek nám dovoluje získat data o počasí pro určitý bod v zadaném čase, případně lze určit data o počasí pro více časů za sebou s konstantním hodinovým rozdílem. Při získávání XML nebo JSON dat potřebujeme zadat stejně jako u bitmap předpovědí zadat parametr požadovaného času $time$ a datové zdroje které tento čas zpracovávají $loaders$. Dále musíme zadat požadovaný formát dat XML/JSON $data$ a zeměpisný bod pro který chceme počasí určit, bod se skládá z parametrů $lon$ a $lat$. Pro získání více časových oken v jedné předpovědi musíme přidat parametr reprezentující počet předpovědí $numOfFcs$ a hodinový rozdíl mezi těmito předpověďmi $hourDif$.
 	\\\\
@@ -383,7 +383,7 @@
 			hourDif & NE & Hodinový rozdíl mezi jednotlivými časovými okny v předpovědi. Pokud není tento parametr zadán, v předpovědi bude právě jedno časové okno pro zadaný čas.\\
 		\end{tabular}
 	\end{center}
-	
+	\newpage
 	Příklady požadavků:
 	\begin{itemize}
 		\item Požadujeme předpověď o počasí pro aktuální čas v Ostravě zpracovanou všemi datovými zdroji ve formátu XML.
@@ -404,7 +404,7 @@
 		
 	\end{itemize}
 	
-	\subsection{Ohraničení bitmapy}
+	\section{Ohraničení bitmapy}
 	
 	Služba vytváří bitmapy pro určitou plochu. Aby bylo možné zjistit jaké maximální ohraničení bitmapy můžeme zadávat, respektive jakou plochu bitmapa pokrývá pokud žádné parametry hranic nezadáme, máme možnost získat JSON data obsahující maximální ohraničení bitmapy tedy levý horní roh $TopLeftCornerLonLat$ a pravý dolní roh $BotRightCornerLonLat$. Oba body obsahují konkrétní hodnoty zeměpisné délky $Lon$ a šířky $Lat$.
 	
@@ -415,12 +415,12 @@
 		\url{adresaserveru/bounds}
 	\end{itemize}
 
-	\subsection{Využívané škály}
+	\section{Využívané škály}
 	
 	Při stahování bitmap obsahujících data o počasí je vhodné mít prostředek na převod barev z jednotlivých pixelů na číselné hodnoty. Právě pro tento účel slouží škály.
 	
 	Služba nám proto umožňuje stažení jednotlivých škál, které používá při zpracovávání bitmap s daty o počasí. Stačí znát zkratku prvku počasí a služba nám vrátí využívanou škálu.
-	
+	\newpage
 	Příklady požadavků:
 	\begin{itemize}
 		\item Požadujeme škálu pro teploty.
@@ -433,7 +433,7 @@
 		
 	\end{itemize}
 	
-	\subsection{Zkratky prvků počasí}
+	\section{Zkratky prvků počasí}
 	
 	Zkratky pro jednotlivé prvky předpovědí které se využívají v parametru $type$.
 	
@@ -451,7 +451,7 @@
 		\end{tabular}
 	\end{center}
 	
-	\subsection{Zkratky datových zdrojů}
+	\section{Zkratky datových zdrojů}
 	
 	Zkratky pro jednotlivé datové zdroje které se využívají v parametru loaders. Při použití více zkratek za sebou oddělených čárkou dojde k použití více zdrojů současně.
 	
@@ -472,7 +472,7 @@
 	
 	\section{Chyba při zpracování dat}
 	
-	Při požadavku na dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovaných dat vrátí text ve formátu JSON obsahující jediný prvek $message$ s informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
+	Při požadavku na dodání dat může dojít k chybě, nejčastěji při chybném zadání parametrů v API, případně i při požadování dat pro čas který ještě bitmapami není zpracován. Pokud tato situace nastane služba místo požadovaných dat vrátí text ve formátu JSON obsahující jediný atribut $message$ s informace proč k pádu došlo a jak parametry upravit aby se chyba neopakovala a bylo možné nějaké informace o počasí získat.
 	
 	\chapter{Vizualizace dat}
 	
@@ -482,24 +482,24 @@
 	
 	Aplikace je tvořena několika vzájemně propojenými částmi a to mapou reprezentující plochu pro kterou chceme znát počasí, lištou času pro který nebo od kterého chceme počasí určit, radio buttony reprezentující prvek předpovědi, check boxy pro volbu datových zdrojů, grafem zobrazující počasí pro více časových intervalů, text boxem pro vybrání místa textem, tlačítkem pro přehrání animace počasí společně s nastavitelnými parametry této animace a nakonec meníčkem pro nastavení aplikace případně volby určitých akcí.
 	
-	Při používání aplikace si uživatel zvolí který prvek počasí chce zobrazit vybráním patřičného radio buttonu a které z datových zdrojů si přeje používat zakliknutím požadovaných check boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, prvku počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně pozice na mapě nebo změně přiblížení se bitmapa patřičně překreslí.
+	Při používání aplikace si uživatel zvolí který prvek počasí chce zobrazit vybráním patřičného radio buttonu a které z datových zdrojů si přeje používat zakliknutím požadovaných check boxů. Následně je potřeba zvolit čas první předpovědi reprezentovaný spodní lištou. Při každé změně času, prvku počasí nebo datového zdroje dojde k vykreslení bitmapy na mapu. Bitmapa reprezentuje počasí na ploše a při změně zobrazené plochy nebo změně přiblížení se bitmapa patřičně překreslí.
 	
 	Prvky počasí odpovídají veškerým prvkům poskytovaným webovou službou, jedná se tedy o srážkám, teplotu, tlak a vlhkost. Pro datové zdroje se rovněž používají veškeré datové zdroje které služba poskytuje. Lišta dat a časů 
 	je pokryta časy od šesti hodin zpět po 5 dnů dopředu od aktuálního času a krokuje se po deseti minutách.
 	
-	Při určování číselných hodnot z bitmap se využívají totožné škály které webová služba používá při vyvážení samotných bitmap. Tyto škály si vizualizační aplikace dokáže stáhnout a přepsat pokud dojde k jejich změně na straně webové služby.
+	Při určování číselných hodnot z bitmap se využívají totožné škály které webová služba používá při vyvážení samotných bitmap. Tyto škály si vizualizační aplikace dokáže stáhnout a přepsat vybráním akce aktualizace v menu pokud dojde k jejich změně na straně webové služby.
 	
 	\section{Mapa}
 	
 	Pro vykreslení a práci s mapou se nejprve používala komponenta MapWinGIS která poskytovala veškeré potřebné vlastnosti, naneštěstí bylo zapotřebí tuto komponentu nejdříve na zařízení nainstalovat a až poté ji mohla aplikace využívat. Tento důvod způsobil nutnost výměny komponenty za konkurence schopnou alternativu.
 	
-	Pro práci s mapou se nakonec využívá komponenta GMap.NET, která je volně dostupná pro rozšíření vlastností Windows Forms. Tato komponenta nám umožňuje vykreslit mapu po které se může uživatel pohybovat, přibližovat a oddalovat ji. Komponenta dokáže určit zeměpisné souřadnice bodu ve kterém se nachází kurzor myši, takže není problém určit souřadnice požadovaného místa a ani plochy pro kterou data určujeme protože ta je vyhrazena levým horním a pravým dolním rohem mapy. Komponenta nám dovoluje přidat značky s popisky na mapu pokud máme za potřebí vyznačit zjišťovaný bod či body na trase, pro trasu se krom bodů vykreslí i křivka reprezentující celou cestu. Do mapy máme také možnost přidat bitmapu což se využívá při nakreslení dat.
+	Pro práci s mapou se nakonec využívá komponenta GMap.NET, která je volně dostupná pro rozšíření vlastností Windows Forms prostřednictvím NuGet balíčků. Tato komponenta nám umožňuje vykreslit mapu po které se může uživatel pohybovat, přibližovat a oddalovat ji. Komponenta dokáže určit zeměpisné souřadnice bodu ve kterém se nachází kurzor myši, takže není problém určit souřadnice požadovaného místa a ani plochy pro kterou data určujeme protože ta je vyhrazena levým horním a pravým dolním rohem mapy. Komponenta nám dovoluje přidat značky s popisky na mapu pokud máme za potřebí vyznačit zjišťovaný bod či body na trase, pro trasu se krom bodů vykreslí i křivka reprezentující celou cestu. Do mapy máme také možnost vykreslit bitmapu což se využívá při zobrazení dat v celé ploše.
 	
-	Na samotné mapě se vždy při změnách času, prvku a zdrojů vykresluje bitmapa reprezentující počasí, průhlednost této bitmapy má uživatel možnost nastavit prostřednictvím nastavení v menu.
+	Na samotné mapě se vždy při změnách času, prvku a zdrojů vykresluje bitmapa reprezentující počasí, průhlednost této bitmapy lze nastavit prostřednictvím volby v menu.
 	
 	\section{Počasí v bodě}
 	
-	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, teda času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný. Součástí této předpovědi je i zobrazení tabulky s detailem o počasí popisujícím hodnoty různých prvků na následujících 5 dní, tento detail je možné v nastavení vypnout.
+	Při určování počasí v bodě stačí dvakrát kliknout do mapy na místo kde chceme zjistit přesnou hodnotu počasí. Následně se na tomto bodě vykreslí značka s popiskem reprezentujícím hodnotu počasí v tomto bodě. Při opětovném kliknutí na značku dojde k jejímu odstranění. Součástí předpovědi je i zobrazení grafu pod mapou, graf reprezentuje počasí v zvoleném bodě od počátečního času, tedy času nastaveném na liště a každý další sloupec grafu zobrazuje počasí pro stejný bod v čase inkrementovaném o hodinu. Počet sloupců je nastavitelný. Součástí této předpovědi je i zobrazení tabulky s detailem o počasí popisujícím hodnoty různých prvků na následujících 5 dní, tento detail je možné v nastavení vypnout.
 	
 	Mimo znázorňování počasí dvojitým kliknutím lze bod vybrat i napsáním názvu hledaného místa do textového pole v pravé dolní části mapy. Pokud uživatel napíše do tohoto pole název místa a akci potvrdí enterem, dojde k vyhodnocení textu a převodu na pravděpodobně smýšlené body službou Mapbox \cite{mapbox} z kterých je vybrán ten nejvěrohodnější. 
 	
@@ -509,23 +509,23 @@
 	
 	Mimo počasí pro jeden bod v různých časem máme možnost vykreslit i počasí na určité trase, tedy na více různých bodech v rozdílných časech na základě rychlosti pohybu. Trasa se zadává pomocí předem vytvořeného GPX souboru obsahujícího body reprezentující samotnou trasu. Při zobrazování trasy je potřeba zjistit jakou rychlostí se po trase postupuje pro možnost zjištění postupu času na následující bodech zvolené cesty. Tato rychlost se v aplikaci může určit dvěma způsoby. Prvním je zadání počátečního času a dopravního prostředku, každý dopravní prostředek má svou vlastní předem nastavenou rychlost a při výpočtu uplynulé vzdálenosti od počátku dokážeme určit i čas v tomto uplynulém bodě. Druhým způsobem určení času na trase je zadání času začátku a konce cesty, díky těmto informacím dokážeme určit jak dlouho trvá urazit celou cestu a tím pádem dokážeme spočítat i rychlost, když známe délku cesty. Délka cesty se jednoduše spočítá jako součet vzdáleností v metrech mezi jednotlivými body trasy.
 	
-	Při požadavku o zobrazení počasí v trase musí uživatel vybrat možnost $Akce$ z menu a v něm zakliknout $Nahrát trasu z GPX souboru$. Poté si uživatel vybere jednu z možností určení rychlosti dopravy, zadá tedy počáteční čas a dopravní prostředek případně počáteční a koncový čas. Nakonec vybere cestu k samotnému GPX souboru ve svém počítači. Pokud během toho procesu dojde k jakékoliv chybě proces se ukončí a uživateli se vypíše co přesně neproběhlo během zobrazování trasy správně.
+	Při požadavku o zobrazení počasí v trase musí uživatel vybrat možnost $Akce$ z menu a v něm zakliknout {\it Nahrát trasu z GPX souboru}. Poté si uživatel vybere jednu z možností určení rychlosti dopravy, zadá tedy počáteční čas a dopravní prostředek případně počáteční a koncový čas. Nakonec vybere cestu k samotnému GPX souboru ve svém počítači. Pokud během toho procesu dojde k jakékoliv chybě proces se ukončí a uživateli se vypíše co přesně neproběhlo během zobrazování trasy správně.
 	
 	Po úspěšném zadání všech parametrů a zpracování souboru je na mapě nakreslena křivka reprezentující trasu. Na křivce jsou vyznačeny značky začátku a cíle trasy, každá ze značek obsahuje detailní popis informací o trase. Barva křivky je určena hodnotou počasí v bodě na křivce. Každý ze zobrazených bodů zná svou hodnotu počasí, čas v bodě, vzdálenost od začátku a čas potřebný k průchodu trasou od začátku k tomuto bodu. Při najetí myší na trasu dochází k zobrazení výpisu těchto informací pro snadnější zjištění počasí na trase. Zároveň se při vykreslení trasy zobrazí v horní části mapy dvě nová tlačítka pro možnost nastavení nového času trasy případně odstranění trasy. Při změně datového zdroje nebo prvku počasí během toho co je trasa vykreslená dochází k zpracování nově zadaných hodnot a zobrazení nových dat na stejné trase včetně jejího přebarvení.
 	
 	Součástí zobrazení trasy je i vykreslení grafu pod mapou, graf obsahuje 10 sloupců kde každý sloupec reprezentuje jeden ze stejně vzdálených bodů na trase. Graf slouží jako rychlý náhled k určení postupu počasí na celé trase, zda má stoupající či klesající tendenci případně se příliš nemění.
 	
-	Určování dat o počasí v bodech trasy se provádí stejně jako v určování informací o počasí v bodě. Pro každý vykreslený bod na trase se použije stažená bitmapa na které se najde pixel reprezentující danou zeměpisnou souřadnici a pro tento pixel se určí hodnota počasí převodem RGB hodnoty na desetinné číslo prostřednictvím škály. Ke stahování nových bitmap dochází při zpracovávání trasy a to vždy při překročení času který poslední stažená bitmapa poskytuje.
+	Určování dat o počasí v bodech trasy se provádí stejně jako v určování informací o počasí v bodě. Pro každý vykreslený bod na trase se použije stažená bitmapa na které se najde pixel reprezentující danou zeměpisnou souřadnici a pro tento pixel se určí hodnota počasí převodem RGB hodnoty na desetinné číslo prostřednictvím škály. Ke stahování nových bitmap dochází během zpracovávání trasy a to vždy při překročení času který poslední stažená bitmapa poskytuje.
 	
 	\section{Animace počasí}
 	
 	Uživatel má možnost zobrazit si animaci předpovědí pro zvolený prvek počasí od zvoleného počátečního času. Při kliknutí na tlačítko pro přehrání animace dochází k vykreslení bitmap předpovědí pro zvolený prvek počasí, čas počasí pro animaci začíná od zvoleného času na liště, následně se v animaci vykreslují nové bitmapy pro následující čas inkrementovaný o zvolený interval. Intervaly se pohybují v hodnotách 10min, 30min, 1h, 3h a 6h. Počet kroků animace je rovněž nastavitelný a dodává nám možnost zobrazit průběh počasí pro dlouhé či krátké úseky času. Při běhu animace můžeme vidět v jakém časovém úseku se právě nacházíme a kolikátý snímek z celkového počtu je aktuálně zpracováván.
 	
-	Při zpracování animace dochází k cyklickému stahování bitmap z webové služby. Hranice bitmapy jsou ohraničeny souřadnicemi rohů mapy a čas této předpovědi je vždy o hodinu vyšší než měla předpověď předešlá. Prvek počasí ani datové zdroje se u animace neliší ty jsou pro celou animaci stejné.
+	Při zpracování animace dochází k cyklickému stahování bitmap z webové služby. Hranice bitmapy jsou ohraničeny souřadnicemi rohů mapy a čas této předpovědi je vždy o zvolený časový interval vyšší než byl u předpovědi předešlá. Prvek počasí ani datové zdroje se u animace neliší ty jsou pro celou animaci stejné.
 	
 	\section{Graf}
 	
-	Součástí aplikace je i graf obsahující informace o předpovědích pro jednotlivé časy. Šířka grafu se dynamicky mění při změně rozměrů okna aplikace. Graf má na ose $y$ sloupce ukazující hodnotu daného prvku počasí v rozmezí od minima do maxima, na ose $x$ se nachází čas předpovědi pro daný sloupce. Graf je vykreslován na panel pomocí základních metod knihovny System.Drawing, nevyužívají pro tento účel se žádné externí knihovny. Barva sloupců společně s jejich počtem v grafu je nastavitelná.
+	Součástí aplikace je i graf obsahující informace o předpovědích pro jednotlivé časy. Šířka grafu se dynamicky mění při změně rozměrů okna aplikace. Graf má na ose $y$ sloupce ukazující hodnotu daného prvku počasí v rozmezí od minima do maxima, na ose $x$ se nachází čas předpovědi pro daný sloupce. Graf je vykreslován na panel pomocí základních metod knihovny System.Drawing, pro tento účel se nevyužívají žádné externí knihovny. Barva sloupců společně s jejich počtem v grafu je nastavitelná.
 	
 	Při vykreslování grafu pro bod reprezentují všechny sloupce stejné místo s rozdílným časem. Časy jsou od sebe posunuté o hodinu a počet vykreslených sloupců lze změnit v nastavení.
 	
@@ -533,25 +533,25 @@
 	
 	Zobrazený typ jednotek předpovědi na ose $y$ se mění dle zvoleného prvku počasí v radio buttonech. Každý prvek předpovědi zná své jednotky a mimo to i minimální a maximální hodnotu počasí pro tuto jednotku. Hodnota předpovědi pro každý sloupec se tedy určí jako procentuální hodnota v rozmezí od minima po maximum.
 	
-	Pokud graf aktuálně nevykresluje žádné informace tak je v poli určeném pro sloupce vypsán text popisující co pole reprezentuje a kdy zde dojde k vykreslení dat. Nejprve bylo pole úplně prázdné a neobsahovalo žádný text čímž v aplikaci vznikla velká bílá plocha bez účelu, takto uživatel na první pohled ví k čemu tam tato plocha je. Tento text v poli je vždy vypsán při startu aplikace a následně spuštění animace nebo při vymazání zobrazené předpovědi.
+	Pokud graf aktuálně nevykresluje žádné informace tak je v poli určeném pro sloupce vypsán text popisující co pole reprezentuje a kdy zde dojde k vykreslení dat. Nejprve bylo pole úplně prázdné a neobsahovalo žádný text čímž v aplikaci vznikla velká bílá plocha bez účelu, takto uživatel na první pohled ví k čemu zde tato plocha je. Tento text je v poli vypsán vždy při startu aplikace a následně při spuštění animace nebo při vymazání zobrazené předpovědi.
 	
 	\section{Nastavení a akce}
 	
-	Součástí aplikace je i menu nacházející se v horní liště. Menu je rozděleno do části nastavení pro individuální změny aplikace a akce pro rychlé volby.
+	Součástí aplikace je i menu nacházející se v horní liště. Menu je rozděleno do části $nastavení$ pro individuální změny aplikace a $akce$ pro rychlé volby.
 	
-	V části nastavení lze nastavit adresu webové služby poskytující data o počasí. Dále se zde nachází možnost změny průhlednosti vykreslené bitmapy na samotnou mapu, lze vybrat vlastní hodnotu v rozmezí od 0 do 255 kde 0 je naprosto průhledná bitmapa a 255 bitmapa bez jakékoliv průhlednosti je zde i volba pro přímé nastavení minima či maxima bez potřeby zapisovat hodnotu ručně. Následně zde lze nastavit počet vykreslených sloupců v grafu při určování počasí v bodě. Všechny tyto hodnoty se musí nacházet v předem definovaném rozmezí od minima po maximum, při zadání neplatné hodnoty dojde k nastavení nejbližší platné. Nastavení obsahuje i možnost změny barvy sloupců grafu a nakonec zde lze i stáhnout nové škály z webové služby pro určování číselných hodnot z RGB pixelů. Při potřeba nastavení výchozích hodnot lze v nastavení zvolit i tuto variantu.
+	V části $nastavení$ lze nastavit adresu webové služby poskytující data o počasí. Dále se zde nachází možnost změny průhlednosti vykreslené bitmapy na samotnou mapu, lze vybrat vlastní hodnotu v rozmezí od 0 do 255 kde 0 je naprosto průhledná bitmapa a 255 bitmapa bez jakékoliv průhlednosti je zde i volba pro přímé nastavení minima či maxima bez potřeby zapisovat hodnotu ručně. Následně zde lze nastavit počet vykreslených sloupců v grafu při určování počasí v bodě. Všechny tyto hodnoty se musí nacházet v předem definovaném rozmezí od minima po maximum, při zadání neplatné hodnoty dojde k nastavení nejbližší platné. Nastavení obsahuje i možnost změny barvy sloupců grafu a nakonec zde lze i aktualizovat maximální hranice bitmapy nebo stáhnout nové škály z webové služby pro určování číselných hodnot z RGB pixelů. Při potřebě nastavení výchozích hodnot lze v nastavení zvolit i tuto variantu.
 	
 	Součástí tohoto nastavení byla i možnost změny počtu kroků při animaci a změna časového intervalu mezi jednotlivými kroky. Změny těchto parametrů se nakonec přesunuly přímo do aplikace vedle tlačítka pro spuštění animace. K této změně došlo protože se předpokládá že tyto parametry se budou pravidelně měnit a proto je zbytečné je mít schované v sekci s nastavením prvků které se změní pouze jednou případně velice výjimečně.
 	
-	V části menu akce je na výběr mezi vybráním cesty z GPX souboru pro vykreslení trasy a určení počasí na ni. Druhá možnost v akcích je přemazání mapy. Tato volba slouží k vymazání hodnot na mapě. Při této volbě dojde k smazání grafu, bitmapy počasí na mapě a značce označující počasí v bodě případně se odstraní trasa společně s jejími body a popisy.
+	V části menu $akce$ je na výběr mezi dvěma volbami. První je vykreslení cesty z GPX souboru pro zobrazení trasy s počasím. Druhou je možnost přemazání mapy při zobrazení nežádoucích dat. Tato volba slouží k vymazání všech hodnot v aplikaci. Při této volbě dojde k smazání grafu, bitmapy počasí na mapě a značce označující počasí v bodě, případně se odstraní trasa společně s jejími body a popisy.
 	
-	Veškeré nastavení aplikace se ukládá do konfiguračního JSON souboru. Při spuštění aplikace se z tohoto souboru načtou data o adrese serveru, průhlednosti bitmapy, počtu kroků při animaci, počtu předpovědí pro počasí v bodě, poslední zvolený prvek počasí a naposledy zvolené datové zdroje. Díky tomuto souboru nemusí uživatel při každém spuštění znovu nastavovat veškeré věci znovu. Při změně jakéhokoliv z těchto atributů dochází k přepsání JSON souboru pro udržení neustále konzistence s aplikací po ukončení aplikace a opětovném spuštění.
+	Veškeré nastavení aplikace se ukládá do konfiguračního JSON souboru. Při spuštění aplikace se z tohoto souboru načtou data o adrese serveru, průhlednosti bitmapy, ohraničení plochy, počtu kroků při animaci, počtu předpovědí pro počasí v bodě, poslední zvolený prvek počasí a naposledy zvolené datové zdroje. Díky tomuto souboru nemusí uživatel při každém spuštění znovu nastavovat veškeré věci znovu. Při změně jakéhokoliv z těchto atributů dochází k přepsání JSON souboru pro udržení neustále konzistence s aplikací po ukončení aplikace a opětovném spuštění.
 	
 	\section{Chyby při zobrazování dat}
 	
-	Pokud dojde k chybě při získávání dat ze serveru vypíše se chybová hláška vrácená samotnou službou jako atribut message v chybovém JSON výstupu. K těmto chybám dochází nejčastěji při pokusu o získání počasí pro čas pro který nemá žádný ze zvolených datových zdrojů vytvořenou bitmapu. Pokud dochází k pádu z neznámého důvodu dochází k výpisu obecné chyby a prosba o kontrolu zda je webová služba aktuálně dostupná.
+	Pokud dojde k chybě při získávání dat ze serveru vypíše se chybová hláška vrácená samotnou službou jako atribut $message$ v chybovém JSON výstupu. K těmto chybám dochází nejčastěji při pokusu o získání počasí pro čas pro který nemá žádný ze zvolených datových zdrojů vytvořenou bitmapu. Případně při pokusu o zjištění počasí v bodě mimo zpracovávanou plochu. Pokud dochází k pádu z neznámého důvodu dochází k výpisu obecné chyby a prosba o kontrolu zda je webová služba aktuálně dostupná.
 	
-	Může se stát že dojde k chybě i při určování počasí trasy z GPX soboru. Mimo pád při neschopnosti zjištění počasí pro daný bod dochází i k chybě při zpracování samotného GPX soboru při nepodporovaném formátování. Případně dochází k chybě při zadání většího počátečního času než toho koncového. Při těchto chybách dochází k oznámení informaci uživateli proč došlo k chybě a možnost napravení chyb při novém vykreslení trasy.
+	Může se stát že dojde k chybě i při určování počasí trasy z GPX soboru. Mimo pád při neschopnosti zjištění počasí pro daný bod dochází i k chybě při zpracování samotného GPX soboru při nepodporovaném formátování. Případně dochází k chybě při zadání většího počátečního času než toho koncového. Při těchto chybách dochází k oznámení informace uživateli proč došlo k chybě a možnost napravení chyb při novém vykreslení trasy.
 	
 	\chapter{Závěr}
 	
