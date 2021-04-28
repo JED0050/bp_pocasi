@@ -249,7 +249,6 @@ namespace DLRadarBourkyLib
         {
             if (scaleDic.Keys.Count == 0)
             {
-                string scalePath = GetPathToDataDirectory(@"scales/scale.png");
 
                 Bitmap scaleBmp = new Bitmap(GetPathToDataDirectory(@"scales/scale.png"));
 

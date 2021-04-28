@@ -179,8 +179,6 @@ namespace Vizualizace_Dat
                 }
             }
 
-            //Debug.WriteLine(fullUrl);
-
             return precBitmap;
         }
 
@@ -320,8 +318,6 @@ namespace Vizualizace_Dat
             c = bFor.GetPixel(x, y);
 
             double precVal = forecType.GetForecValue(c);
-
-            //Debug.WriteLine(forecType.Type);
 
             return precVal;
         }

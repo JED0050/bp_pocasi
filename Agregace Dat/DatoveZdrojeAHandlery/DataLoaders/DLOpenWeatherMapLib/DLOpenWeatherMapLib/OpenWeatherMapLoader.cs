@@ -203,7 +203,38 @@ namespace DLOpenWeatherMapLib
             }
             else
             {
-                throw new Exception("Bitmapa počasí pro daný čas nebyla nalezena!");
+                DateTime closestTime = DateTime.Now.AddHours(-100);
+                TimeSpan closestTimeSpan = forTime - closestTime;
+                double minHourSpan = Math.Abs(closestTimeSpan.TotalHours);
+                string bitmapFullName = "";
+
+                DirectoryInfo dI = new DirectoryInfo(GetPathToDataDirectory(""));
+                foreach (var f in dI.GetFiles($"{type}-*.bmp"))
+                {
+                    DateTime dateTime = GetDateTimeFromBitmapName(f.Name);
+
+                    TimeSpan actTimeSpan = forTime - dateTime;
+                    double actHourSpan = Math.Abs(actTimeSpan.TotalHours);
+
+                    if (actHourSpan < minHourSpan)
+                    {
+                        bitmapFullName = f.FullName;
+
+                        if (actHourSpan <= 3)
+                        {
+                            return new Bitmap(bitmapFullName);
+                        }
+
+                        minHourSpan = actHourSpan;
+                    }
+                }
+
+                if (minHourSpan <= 6)
+                {
+                    return new Bitmap(bitmapFullName);
+                }
+
+                throw new Exception("Bitmapa počasí pro požadovaný čas nebyla nalezena!");
             }
         }
 

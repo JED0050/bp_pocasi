@@ -186,6 +186,8 @@ namespace Vizualizace_Dat
                 markers.Markers.Remove(routeMarker);
             }
 
+            markers.Markers.Clear();
+
             listMarkers.Clear();
 
             customRoute = new CustomRoute();
@@ -217,8 +219,6 @@ namespace Vizualizace_Dat
                     return 1;
                 }
             }
-
-            Debug.WriteLine(bounds[0].Lat + " " + bounds[0].Lng);
 
             bitmapOverlay.Markers.Remove(bitmapMarker);
             gMap.Overlays.Remove(bitmapOverlay);
@@ -402,8 +402,6 @@ namespace Vizualizace_Dat
                 try
                 {
                     string oldType = listMarkers[0].ToolTipText.Split('\n')[3];
-
-                    //Debug.WriteLine($"oT: {oldType} aT: {forecType.CzForecType}");
 
                     if (oldType.StartsWith(forecType.CzForecType))
                     {
@@ -1122,7 +1120,6 @@ namespace Vizualizace_Dat
             {
                 try
                 {
-                    //Debug.WriteLine(gMap.Zoom + " " + zoomLevel);
 
                     if ((gMap.Zoom > 8 && zoomLevel <= 8) || (gMap.Zoom <= 8 && zoomLevel > 8) || zoomLevel == -1)
                     {
@@ -1402,8 +1399,6 @@ namespace Vizualizace_Dat
                     Size textSize = TextRenderer.MeasureText(g, textContent, textFont);
 
                     int xPos = (pGraph.Width / 2) - (textSize.Width / 2);
-
-                    //Debug.WriteLine($"x {xPos} w {pGraph.Width} t {size.Width}");
 
                     g.DrawString(textContent, textFont, textBrush, xPos, 55);
 
@@ -2065,7 +2060,6 @@ namespace Vizualizace_Dat
 
             lPB.Update();
             progressBar1.Refresh();
-            //Debug.WriteLine(progressBar1.Value);
         }
 
         private void ProgressBarShow(int maximum)

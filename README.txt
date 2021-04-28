@@ -1,14 +1,14 @@
-IDE: Visual Studio 2019
+IDE: Visual Studio 2019 (Konfigurace řešení: Debug, Platforma řešení: Any CPU)
 OS: Windows 10
 
 
 Návod na spuštění:
 1. Nejprve je potřeba zkompilovat knihovnu pro agregaci dat
 	1.1. Solution této knihovny se nachází na  Agregace Dat/AgregaceDatLib/AgregaceDatLib.sln
-	1.2. Otevřeme solution této knihovny ve Visual Studiu a zkompilujeme ji
+	1.2. Otevřeme solution této knihovny ve Visual Studiu a sestavíme ji
 2. Následně je potřeba zkompilovat a spustit webovou službu
 	2.1. Solution tohoto projektu se nachází na  Webova Sluzba/Webova Sluzba.sln
-	2.2. Otevřeme solution ve Visual Studiu a spustíme ji čímž se spustí webový server a vytvoří se veškeré potřebné složky s daty (složka Webova Sluzba/Data)
+	2.2. Otevřeme solution ve Visual Studiu a spustíme ji čímž se spustí webový server a vytvoří se veškeré potřebné složky s daty (složka Webova Sluzba/Data) *při mazání bin složky ve Vizualizaci dat zde musí zůstat podsložky x32 a x64 s dll soubory SQLite.Interop.dll
 3. Nakonec je potřeba zprovoznit Vizualizační aplikaci
 	3.1. Solution aplikace se nachází na Vizualizace Dat/Vizualizace Dat.sln
 	3.2. Otevřeme solution ve Visual Studiu a zkompilujeme ji

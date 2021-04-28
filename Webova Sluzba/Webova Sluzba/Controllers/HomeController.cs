@@ -23,27 +23,6 @@ namespace Webova_Sluzba.Controllers
             return View();
         }
 
-        public IActionResult Loader()
-        {
-            try
-            {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-
-                AvgForecast aF = new AvgForecast("");
-
-                aF.SaveForecastBitmaps();
-
-                Debug.WriteLine(stopwatch.ElapsedMilliseconds); //565162 ms = 9.5 minut bez YrNo
-
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
-            }
-        }
-
         public IActionResult Bounds()
         {
             string jsonContent = BoundsJsonHandler.LoadBoundsAsString();
@@ -363,6 +342,27 @@ namespace Webova_Sluzba.Controllers
             AvgForecast aF = new AvgForecast(loaders);
 
             return aF.GetForecastFromTimeAndPoint(time, point);
+        }
+
+        public IActionResult Loader()
+        {
+            try
+            {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                AvgForecast aF = new AvgForecast("");
+
+                aF.SaveForecastBitmaps();
+
+                Debug.WriteLine(stopwatch.ElapsedMilliseconds); //565162 ms = 9.5 minut bez YrNo
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return this.Content("{\"message\": \"" + e.Message + "\"}", "text/json");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -21,6 +21,9 @@ namespace DLMedardLib
 
         public string LOADER_NAME;// = "Medard-online";
 
+        private static Dictionary<Color, double> scaleTempDic = new Dictionary<Color, double>();
+        private static Dictionary<Color, double> scalePrecDic = new Dictionary<Color, double>();
+
         private static List<Color> scaleTempArray;
         private static List<Color> scalePrecArray;
 
@@ -69,7 +72,7 @@ namespace DLMedardLib
 
             LOADER_NAME = dataLoaderConfig.DataLoaderName;
 
-            if (scaleTempArray == null)
+            if (scaleTempDic.Keys.Count == 0)
             {
                 loaderDir = dataDir + @"medard-online\scales\";
 
@@ -99,16 +102,28 @@ namespace DLMedardLib
                     if(actPixel != scaleTempArray[scaleTempArray.Count - 1])   //vložení pouze odlišných pixelů (škála z webu má více stejných pixelů pod sebou)
                     {
                         scaleTempArray.Add(actPixel);
-                        //Debug.WriteLine(actPixel);
                     }
                 }
 
-                scaleTempImage.Dispose();
+                //scaleTempImage.Dispose();
 
-                //Debug.WriteLine(scaleTempArray.Count);
+                double minValue = -16;
+                double maxValue = 39;
+
+                double stepValue = (maxValue - minValue) / (scaleTempArray.Count - 1);
+
+                double actValue = minValue;
+
+                foreach(Color col in scaleTempArray)
+                {
+                    //Console.WriteLine($"Temp col:{col} val:{actValue}");
+
+                    scaleTempDic.Add(col, actValue);
+                    actValue += stepValue;
+                }
             }
 
-            if(scalePrecArray == null)
+            if(scalePrecDic.Keys.Count == 0)
             {
                 loaderDir = dataDir + @"medard-online\scales\";
 
@@ -138,13 +153,25 @@ namespace DLMedardLib
                     if (actPixel != scalePrecArray[scalePrecArray.Count - 1])   //vložení pouze odlišných pixelů (škála z webu má více stejných pixelů pod sebou)
                     {
                         scalePrecArray.Add(actPixel);
-                        //Debug.WriteLine(actPixel);
                     }
                 }
 
-                scalePrecImage.Dispose();
+                //scalePrecImage.Dispose();
 
-                //Debug.WriteLine(scalePrecArray.Count);
+                double minValue = 1.5;
+                double maxValue = 23.5;
+
+                double stepValue = (maxValue - minValue) / (scalePrecArray.Count - 1);
+
+                double actValue = minValue;
+
+                foreach (Color col in scalePrecArray)
+                {
+                    //Console.WriteLine($"Prec col:{col} val:{actValue}");
+
+                    scalePrecDic.Add(col, actValue);
+                    actValue += stepValue;
+                }
             }
 
         }
@@ -442,74 +469,81 @@ namespace DLMedardLib
 
         private double GetPrecFromColor(Color pixel)
         {
-            //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
 
-            if(pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+            if ((pixel.R == 0 && pixel.G == 0 && pixel.B == 0) || (pixel.R == 255 && pixel.G == 255 && pixel.B == 255))
             {
                 return 0;
             }
+            else if (scalePrecDic.ContainsKey(pixel))
+            {
+                return scalePrecDic[pixel];
+            }
+            else
+            {
+                int dif = 255 * 3;
+                Color col = Color.Black;
 
-            double minValue = 1.5;
-            double maxValue = 23.5;
+                foreach (Color actCol in scalePrecDic.Keys)
+                {
+                    int actDif = Math.Abs(pixel.R - actCol.R) + Math.Abs(pixel.G - actCol.G) + Math.Abs(pixel.B - actCol.B);
 
-            double stepValue = (maxValue - minValue) / (scalePrecArray.Count - 1);
+                    if (actDif < dif)
+                    {
+                        dif = actDif;
+                        col = actCol;
+
+                        if (actDif == 0)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (scalePrecDic.ContainsKey(col))
+                {
+                    return scalePrecDic[col];
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        private double GetTempFromColor(Color pixel)
+        {
+            if (scaleTempDic.ContainsKey(pixel))
+            {
+                return scaleTempDic[pixel];
+            }
 
             int dif = 255 * 3;
-            int index = 0;
+            Color col = Color.Black;
 
-            for (int i = 0; i < scalePrecArray.Count; i++)
+            foreach(Color actCol in scaleTempDic.Keys)
             {
-
-                int actDif = Math.Abs(pixel.R - scalePrecArray[i].R) + Math.Abs(pixel.G - scalePrecArray[i].G) + Math.Abs(pixel.B - scalePrecArray[i].B);
+                int actDif = Math.Abs(pixel.R - actCol.R) + Math.Abs(pixel.G - actCol.G) + Math.Abs(pixel.B - actCol.B);
 
                 if (actDif < dif)
                 {
                     dif = actDif;
-                    index = i;
+                    col = actCol;
 
                     if (actDif == 0)
                     {
                         break;
                     }
                 }
-
-
             }
-            
-            return minValue + index * stepValue;
-        }
 
-        private double GetTempFromColor(Color pixel)
-        {
-            //Color pixelAlpha = Color.FromArgb(255, pixel.R, pixel.G, pixel.B);
-
-            double minValue = -25;
-            double maxValue = 25;
-
-            double stepValue = (maxValue - minValue) / (scaleTempArray.Count - 1);
-
-            int dif = 255 * 3;
-            int index = 0;
-
-            for (int i = 0; i < scaleTempArray.Count; i++)
+            if (scaleTempDic.ContainsKey(col))
             {
-
-                int actDif = Math.Abs(pixel.R - scaleTempArray[i].R) + Math.Abs(pixel.G - scaleTempArray[i].G) + Math.Abs(pixel.B - scaleTempArray[i].B);
-
-                if(actDif < dif)
-                {
-                    dif = actDif;
-                    index = i;
-
-                    if(actDif == 0)
-                    {
-                        break;
-                    }
-                }
-
+                return scaleTempDic[col];
             }
-
-            return minValue + index * stepValue;
+            else
+            {
+                return 0;
+            }
         }
 
         public Forecast GetForecastPoint(DateTime forTime, PointLonLat location)

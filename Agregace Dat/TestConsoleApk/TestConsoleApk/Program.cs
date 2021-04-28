@@ -30,8 +30,8 @@ namespace TestConsoleApk
 
             //new OpenWeatherMapDataLoader().GetForecastBitmap(DateTime.Now, ForecastTypes.TEMPERATURE);
 
-            //new MedardDataLoader().SaveNewDeleteOldBmps();
-            new RadarBourkyDataLoader().SaveNewDeleteOldBmps();
+            new MedardDataLoader().SaveNewDeleteOldBmps();
+            //new RadarBourkyDataLoader().SaveNewDeleteOldBmps();
 
             /*
             Bounds LoaderBounds = new Bounds() { TopLeftCorner = new PointLonLat(14.7432875, 50.23636), BotRightCorner = new PointLonLat(18.3313879, 48.7553031) };

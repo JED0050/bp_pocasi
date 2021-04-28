@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  26 APR 2021 00:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  28 APR 2021 14:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1471,7 +1471,7 @@ Package logreq Info: Writing requests to 'jed0050_dokument.run.xml'.
 Here is how much of TeX's memory you used:
  26944 strings out of 479382
  454949 string characters out of 5867828
- 993332 words of memory out of 5000000
+ 992337 words of memory out of 5000000
  43528 multiletter control sequences out of 15000+600000
  468272 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1494,7 +1494,7 @@ ri10.pfb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb>
 -SW/texlive/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/Skola-SW/tex
 live/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/Skola-SW/texlive/2020
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on jed0050_dokument.pdf (35 pages, 1805533 bytes).
+Output written on jed0050_dokument.pdf (35 pages, 1805847 bytes).
 PDF statistics:
  603 PDF objects out of 1000 (max. 8388607)
  114 named destinations out of 1000 (max. 500000)
