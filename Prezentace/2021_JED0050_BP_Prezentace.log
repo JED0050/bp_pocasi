@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  19 MAY 2021 17:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.30)  27 MAY 2021 17:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1044,6 +1044,16 @@ Package: xparse 2020-10-27 L3 Experimental document command parser
 .tex))
 File: blx-case-expl3 2020/08/23 v3.15a expl3 case changing code for biblatex
 )
+Package biblatex Info: Trying to load BibTeX backend compatibility...
+Package biblatex Info: ... file 'blx-bibtex.def' found.
+ (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/blx-bibtex.def
+File: blx-bibtex.def 2020/08/23 v3.15a biblatex compatibility (PK/MW)
+
+
+Package biblatex Warning: Using fall-back BibTeX(8) backend:
+(biblatex)                functionality may be reduced/unavailable.
+
+)
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
@@ -1148,25 +1158,30 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 
 \@quotelevel=\count459
 \@quotereset=\count460
-(./2021_JED0050_BP_Prezentace.aux)
+(./2021_JED0050_BP_Prezentace.aux
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/generic/babel/locale/en/babel-english.
+tex
+Package babel Info: Importing data for english
+(babel)             from babel-en.ini. Reported on input line 11.
+))
 \openout1 = `2021_JED0050_BP_Prezentace.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1223,7 +1238,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 17.
+Package hyperref Info: Link coloring OFF on input line 19.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -1237,65 +1252,65 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count467
 )
-LaTeX Info: Redefining \ref on input line 17.
-LaTeX Info: Redefining \pageref on input line 17.
-LaTeX Info: Redefining \nameref on input line 17.
+LaTeX Info: Redefining \ref on input line 19.
+LaTeX Info: Redefining \pageref on input line 19.
+LaTeX Info: Redefining \nameref on input line 19.
  (./2021_JED0050_BP_Prezentace.out) (./2021_JED0050_BP_Prezentace.out)
 \@outlinefile=\write6
 \openout6 = `2021_JED0050_BP_Prezentace.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 17.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 19.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 19.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 17.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 17.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 19.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 17.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 17.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 19.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 17.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 17.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 19.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 17.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 17.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 19.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 17.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 19.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 17.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 17.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 17.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 17.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 17.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 19.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 17.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 17.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 19.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 19.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
-7.
+9.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 1
-7.
+9.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 17.
+ut line 19.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/translator/translator-basic-dict
 ionary-English.dict
@@ -1341,16 +1356,19 @@ File: czech.lbx 2020/08/23 v3.15a biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout5 = `2021_JED0050_BP_Prezentace.bcf'.
+Package biblatex Info: Input encoding 'utf8' specified.
+Package biblatex Info: Data encoding 'utf8' specified.
+(biblatex)             No need to reencode data.
+\openout5 = `2021_JED0050_BP_Prezentace-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file '2021_JED0050_BP_Prezentace.bbl' not found.
+Package biblatex Info: ... file '2021_JED0050_BP_Prezentace.bbl' found.
 
-No file 2021_JED0050_BP_Prezentace.bbl.
-Package biblatex Info: Reference section=0 on input line 17.
-Package biblatex Info: Reference segment=0 on input line 17.
-(./2021_JED0050_BP_Prezentace.nav)
-Overfull \hbox (25.64464pt too wide) in paragraph at lines 17--17
+(./2021_JED0050_BP_Prezentace.bbl)
+Package biblatex Info: Reference section=0 on input line 19.
+Package biblatex Info: Reference segment=0 on input line 19.
+ (./2021_JED0050_BP_Prezentace.nav)
+Overfull \hbox (25.64464pt too wide) in paragraph at lines 19--19
  [][][][]  
  []
 
@@ -1369,13 +1387,13 @@ Overfull \hbox (25.64464pt too wide) has occurred while \output is active
 [2
 
 ]
-<figures/schema prace.png, id=86, 1086.30844pt x 217.5628pt>
+<figures/schema prace.png, id=90, 1086.30844pt x 217.5628pt>
 File: figures/schema prace.png Graphic file (type png)
 <use figures/schema prace.png>
-Package pdftex.def Info: figures/schema prace.png  used on input line 48.
+Package pdftex.def Info: figures/schema prace.png  used on input line 50.
 (pdftex.def)             Requested size: 350.87465pt x 70.27219pt.
 
-Overfull \hbox (8.57935pt too wide) in paragraph at lines 48--48
+Overfull \hbox (8.57935pt too wide) in paragraph at lines 50--50
  [] 
  []
 
@@ -1394,26 +1412,26 @@ Overfull \hbox (25.64464pt too wide) has occurred while \output is active
 [4
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 85.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 87.
 
  (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 85.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 87.
 
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 85.
+ut line 87.
 
 (d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.f
 d
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-Overfull \hbox (10.51259pt too wide) in paragraph at lines 85--85
+Overfull \hbox (10.51259pt too wide) in paragraph at lines 87--87
 [][]  
  []
 
@@ -1425,39 +1443,208 @@ Overfull \hbox (25.64464pt too wide) has occurred while \output is active
 [5
 
 ]
+<figures/bmp_body.png, id=173, 548.0475pt x 397.485pt>
+File: figures/bmp_body.png Graphic file (type png)
+<use figures/bmp_body.png>
+Package pdftex.def Info: figures/bmp_body.png  used on input line 99.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
+Overfull \vbox (7.21587pt too high) detected at line 99
+ []
+
+
 Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [6
 
-]
+ <./figures/bmp_body.png>]
+<figures/bmp_sit.png, id=202, 548.0475pt x 397.485pt>
+File: figures/bmp_sit.png Graphic file (type png)
+<use figures/bmp_sit.png>
+Package pdftex.def Info: figures/bmp_sit.png  used on input line 111.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
+Overfull \vbox (7.21587pt too high) detected at line 111
+ []
+
+
 Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [7
 
-]
+ <./figures/bmp_sit.png>]
+<figures/interpolace_trojuhelnik.jpg, id=231, 401.5pt x 346.29375pt>
+File: figures/interpolace_trojuhelnik.jpg Graphic file (type jpg)
+<use figures/interpolace_trojuhelnik.jpg>
+Package pdftex.def Info: figures/interpolace_trojuhelnik.jpg  used on input lin
+e 127.
+(pdftex.def)             Requested size: 100.37474pt x 86.57321pt.
+
 Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [8
 
-]
+ <./figures/interpolace_trojuhelnik.jpg>]
+<figures/bmp_vybarvena.png, id=263, 548.0475pt x 397.485pt>
+File: figures/bmp_vybarvena.png Graphic file (type png)
+<use figures/bmp_vybarvena.png>
+Package pdftex.def Info: figures/bmp_vybarvena.png  used on input line 139.
+(pdftex.def)             Requested size: 274.02307pt x 198.742pt.
+
+Overfull \vbox (7.21587pt too high) detected at line 139
+ []
+
+
 Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [9
 
-]
+ <./figures/bmp_vybarvena.png>]
+<figures/scale_temp.png, id=292, 101.37875pt x 1.00375pt>
+File: figures/scale_temp.png Graphic file (type png)
+<use figures/scale_temp.png>
+Package pdftex.def Info: figures/scale_temp.png  used on input line 157.
+(pdftex.def)             Requested size: 304.13548pt x 3.01122pt.
+
 Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [10
+
+ <./figures/scale_temp.png>]
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[11
+
+]
+<figures/bmp_prec.PNG, id=346, 546.54187pt x 394.47375pt>
+File: figures/bmp_prec.PNG Graphic file (type png)
+<use figures/bmp_prec.PNG>
+Package pdftex.def Info: figures/bmp_prec.PNG  used on input line 184.
+(pdftex.def)             Requested size: 191.29251pt x 138.06787pt.
+
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[12
+
+ <./figures/bmp_prec.PNG>]
+\openout4 = `2021_JED0050_BP_Prezentace.vrb'.
+
+ (./2021_JED0050_BP_Prezentace.vrb
+Overfull \hbox (8.37465pt too wide) in paragraph at lines 23--23
+[]    \OT1/cmtt/m/n/10.95 <DateTime Value="2021-04-24T14:00:00" Format="ISO 860
+1"/>[] 
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+23.
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+))
+Overfull \vbox (2.78607pt too high) detected at line 211
+ []
+
+
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[13
+
+]
+\openout4 = `2021_JED0050_BP_Prezentace.vrb'.
+
+ (./2021_JED0050_BP_Prezentace.vrb)
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[14
+
+]
+<figures/bod počasí.PNG, id=456, 828.09375pt x 580.41844pt>
+File: figures/bod počasí.PNG Graphic file (type png)
+<use figures/bod počasí.PNG>
+Package pdftex.def Info: figures/bod počasí.PNG  used on input line 252.
+(pdftex.def)             Requested size: 289.83716pt x 203.14949pt.
+
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[15
+
+ <./figures/bod počasí.PNG>]
+<figures/trasa počasí.png, id=485, 829.59938pt x 580.41844pt>
+File: figures/trasa počasí.png Graphic file (type png)
+<use figures/trasa počasí.png>
+Package pdftex.def Info: figures/trasa počasí.png  used on input line 267.
+(pdftex.def)             Requested size: 290.36414pt x 203.14949pt.
+
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[16
+
+ <./figures/trasa počasí.png>]
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[17
+
+]
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[18
+
+]
+Package biblatex Info: Trying to load language 'english' -> 'english-iso'...
+Package biblatex Info: ... file 'english-iso.lbx' found.
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex-iso690/english-iso.lbx
+File: english-iso.lbx 2020/03/25 v0.4.0 ISO 690 extended biblatex localization
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2020/08/23 v3.15a biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2020/08/23 v3.15a biblatex localization (PK/MW)
+))
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[19
+
+ <d:/Skola-SW/texlive/2020/texmf-dist/tex/latex/beamer/beamericonarticle.pdf>]
+Overfull \hbox (25.64464pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[20
+
 
 ]
 \tf@nav=\write7
@@ -1472,29 +1659,35 @@ Overfull \hbox (25.64464pt too wide) has occurred while \output is active
  (./2021_JED0050_BP_Prezentace.aux)
 Package rerunfilecheck Info: File `2021_JED0050_BP_Prezentace.out' has not chan
 ged.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+(rerunfilecheck)             Checksum: FAD94194CF60C85FEE87612594B85C9C;41.
 Package logreq Info: Writing requests to '2021_JED0050_BP_Prezentace.run.xml'.
 \openout1 = `2021_JED0050_BP_Prezentace.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25594 strings out of 479382
- 497530 string characters out of 5867828
- 1203466 words of memory out of 5000000
- 42147 multiletter control sequences out of 15000+600000
- 411097 words of font info for 54 fonts, out of 8000000 for 9000
+ 26324 strings out of 479382
+ 514540 string characters out of 5867828
+ 1067379 words of memory out of 5000000
+ 42807 multiletter control sequences out of 15000+600000
+ 412814 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 125i,16n,126p,759b,1671s stack positions out of 5000i,500n,10000p,200000b,80000s
-<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pf
+ 125i,16n,126p,1840b,4759s stack positions out of 5000i,500n,10000p,200000b,80000s
+{d:/Skola-SW/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
+c}<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pf
 b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pf
 b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pf
 b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
 ><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
-
-Output written on 2021_JED0050_BP_Prezentace.pdf (10 pages, 92020 bytes).
+<d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pf
+b><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.p
+fb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.p
+fb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb><d:/Skola-SW/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sftt1095.pf
+b>
+Output written on 2021_JED0050_BP_Prezentace.pdf (20 pages, 1016272 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 288 compressed objects within 3 object streams
- 21 named destinations out of 1000 (max. 500000)
- 96 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 693 PDF objects out of 1000 (max. 8388607)
+ 607 compressed objects within 7 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 222 words of extra memory for PDF output out of 10000 (max. 10000000)
 

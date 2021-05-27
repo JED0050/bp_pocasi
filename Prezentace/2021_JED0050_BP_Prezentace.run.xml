@@ -44,7 +44,8 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>2021_JED0050_BP_Prezentace.bcf</file>
+      <file>2021_JED0050_BP_Prezentace.aux</file>
+      <file>2021_JED0050_BP_Prezentace-blx.bib</file>
     </provides>
     <requires type="dynamic">
       <file>2021_JED0050_BP_Prezentace.bbl</file>
@@ -54,6 +55,7 @@
       <file>iso-numeric.dbx</file>
       <file>blx-compat.def</file>
       <file>blx-case-expl3.def</file>
+      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>iso.bbx</file>
       <file>iso-numeric.bbx</file>
@@ -63,16 +65,19 @@
       <file>biblatex.cfg</file>
       <file>czech.lbx</file>
       <file>czech-iso.lbx</file>
+      <file>english.lbx</file>
+      <file>english-iso.lbx</file>
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="0">
-    <generic>biber</generic>
+    <generic>bibtex</generic>
     <cmdline>
-      <binary>biber</binary>
+      <binary>bibtex</binary>
+      <option>-min-crossrefs 2</option>
       <infile>2021_JED0050_BP_Prezentace</infile>
     </cmdline>
     <input>
-      <file>2021_JED0050_BP_Prezentace.bcf</file>
+      <file>2021_JED0050_BP_Prezentace.aux</file>
     </input>
     <output>
       <file>2021_JED0050_BP_Prezentace.bbl</file>
@@ -81,7 +86,14 @@
       <file>2021_JED0050_BP_Prezentace.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>2021_JED0050_BP_Prezentace.bcf</file>
+      <file>2021_JED0050_BP_Prezentace.aux</file>
+      <file>2021_JED0050_BP_Prezentace-blx.bib</file>
+    </requires>
+    <requires type="editable">
+      <file>citace.bib</file>
+    </requires>
+    <requires type="static">
+      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>

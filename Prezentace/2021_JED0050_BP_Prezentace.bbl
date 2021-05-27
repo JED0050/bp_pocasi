@@ -1,0 +1,143 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{coltrian}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{alecjacobson}
+    \field{title}{Interpolace trojuhelnik}
+    \verb{url}
+    \verb https://www.alecjacobson.com/weblog/?p=3398
+    \endverb
+    \field{year}{2021}
+    \field{urlday}{27}
+    \field{urlmonth}{05}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{chmi}{online}{}
+    \field{labeltitlesource}{title}
+    \field{subtitle}{chmi}
+    \field{title}{Radar.bourky}
+    \verb{url}
+    \verb http://radar.bourky.cz/data/pacz2gmaps.z\_max3d.20201001.1600.0.png
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{01}
+    \field{urlmonth}{10}
+    \field{urlyear}{2020}
+  \endentry
+
+  \entry{yrno}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Yr.no}
+    \verb{url}
+    \verb https://www.yr.no/en
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{owm}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{OpenWeatherMap}
+    \verb{url}
+    \verb https://openweathermap.org/
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{weun}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{WeatherUnlocked}
+    \verb{url}
+    \verb http://www.weatherunlocked.com/
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{04}
+    \field{urlmonth}{04}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{medard}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Medard-online}
+    \verb{url}
+    \verb http://www.medard-online.cz/apiforecast?run=210313_06&forecast=precip
+    \verb &layer=eu&step=13
+    \endverb
+    \field{langid}{czech}
+    \field{year}{2021}
+    \field{urlday}{24}
+    \field{urlmonth}{01}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{shull}{online}{}
+    \name{author}{2}{}{%
+      {{hash=SD}{%
+         family={Sinclair},
+         familyi={S\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=AP}{%
+         family={Atkin},
+         familyi={A\bibinitperiod},
+         given={Phil},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SDAP1}
+    \strng{fullhash}{SDAP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{S-hull: a fast sweep-hull routine for Delaunay triangulation}
+    \verb{url}
+    \verb http://www.s-hull.org/
+    \endverb
+    \field{langid}{english}
+    \field{year}{2021}
+    \field{urlday}{16}
+    \field{urlmonth}{03}
+    \field{urlyear}{2021}
+  \endentry
+
+  \entry{interp}{online}{}
+    \field{labeltitlesource}{title}
+    \field{title}{Interpolating in a Triangle}
+    \verb{url}
+    \verb https://codeplea.com/triangular-interpolation
+    \endverb
+    \field{langid}{english}
+    \field{year}{2021}
+    \field{urlday}{16}
+    \field{urlmonth}{03}
+    \field{urlyear}{2021}
+  \endentry
+\enddatalist
+\endinput
