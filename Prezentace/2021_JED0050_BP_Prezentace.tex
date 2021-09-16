@@ -6,13 +6,16 @@
 \usepackage[backend=bibtex, style=iso-numeric, alldates=iso]{biblatex}
 
 \usetheme{Madrid}
-\usecolortheme{default}% - nic / default == modrá
+\definecolor{UBCblue}{rgb}{0, 0.698, 0.674}
+\usecolortheme[named=UBCblue]{structure}
 
-\title{Webová služba pro sběr a vizualizaci předpovědí počasí}
+\title[Bakalářská práce]{Webová služba pro sběr a vizualizaci předpovědí počasí}
 \subtitle{Web Service for Collection and Visualization of Weather Forecasts}
-\author{Jan Jedlička JED0050}
-\institute{VŠB-TUO}
+\author[Jan Jedlička JED0050]{Jan Jedlička JED0050 \\ {\small Vedoucí: Ing. Jan Janoušek}}
+\institute[]{FEI, VŠB-TUO}
 \date{2021}
+
+\titlegraphic{\includegraphics[scale=0.2]{figures/vsb logo.jpg}}
 
 \addbibresource{citace.bib}
 
